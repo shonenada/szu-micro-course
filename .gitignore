@@ -39,3 +39,7 @@ nosetests.xml
 venv/
 
 mooc/assets/components/
+
+# Configure files
+development.conf
+production.conf
