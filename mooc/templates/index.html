@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+
+{% block htmlhead %}
+<link href="{{ url_for('static', filename='styles/index.css')}}" media="all" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block main %}
+<div id="main">
+    <div id="wrapper" class="w1170 center-block">
+        <div id="left">
+            <div class="course-category">
+                <span class="course-category-title">Course Category</span>
+                <div class="course-container">
+                    <div class="course-box">
+                        <div class="course-info">
+                            <div class="icon">
+                                <img src="http://itercast.com/assets/icons/course-01.png" />
+                            </div>
+                            <div class="course-title">
+                                Linux基本操作
+                            </div>
+                            <div class="course-description">
+                                <p>课程包含Linux安装，图形界面下的基本使用...</p>
+                            </div>
+                        </div>
+                        <div class="course-record">
+                            <div class="course-num"><span>x</span> 个课程</div>
+                            <div class="learned-num"><span>xxxx</span> 个同学学习</div>
+                        </div>
+                        <div class="shadow"></div>
+                    </div>
+                </div>
+
+                <div class="course-container">
+                    <div class="course-box">
+                        <div class="course-info">
+                            <div class="icon">
+                                <img src="http://itercast.com/assets/icons/course-01.png" />
+                            </div>
+                            <div class="course-title">
+                                Linux基本操作
+                            </div>
+                            <div class="course-description">
+                                <p>课程包含Linux安装，图形界面下的基本使用...</p>
+                            </div>
+                        </div>
+                        <div class="course-record">
+                            <div class="course-num"><span>x</span> 个课程</div>
+                            <div class="learned-num"><span>xxxx</span> 个同学学习</div>
+                        </div>
+                        <div class="shadow"></div>
+                    </div>
+                </div>
+
+                <div class="course-container">
+                    <div class="course-box">
+                        <div class="course-info">
+                            <div class="icon">
+                                <img src="http://itercast.com/assets/icons/course-01.png" />
+                            </div>
+                            <div class="course-title">
+                                Linux基本操作
+                            </div>
+                            <div class="course-description">
+                                <p>课程包含Linux安装，图形界面下的基本使用...</p>
+                            </div>
+                        </div>
+                        <div class="course-record">
+                            <div class="course-num"><span>x</span> 个课程</div>
+                            <div class="learned-num"><span>xxxx</span> 个同学学习</div>
+                        </div>
+                        <div class="shadow"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="course-category">
+                <span class="course-category-title">Course Category</span>
+                <div class="course-container">
+                    <div class="course-box">
+                        <div class="course-info">
+                            <div class="icon">
+                                <img src="http://itercast.com/assets/icons/course-01.png" />
+                            </div>
+                            <div class="course-title">
+                                Linux基本操作
+                            </div>
+                            <div class="course-description">
+                                <p>课程包含Linux安装，图形界面下的基本使用...</p>
+                            </div>
+                        </div>
+                        <div class="course-record">
+                            <div class="course-num"><span>x</span> 个课程</div>
+                            <div class="learned-num"><span>xxxx</span> 个同学学习</div>
+                        </div>
+                        <div class="shadow"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="right">
+            <div class="info-wraper">
+                <div id="learn-act" class="info-box">
+                    <div class="title">
+                        学习动态
+                    </div>
+                    <div class="content">
+                        <div class="content-list">
+                            <div class="icon">
+                                <img src="/static/images/avatar.png">
+                            </div>
+                            <div class="tip">
+                                <span class="tip-text username">xxx</span>
+                                <span class="tip-text time">xx分钟前</span>
+                                <span class="tip-text">学习了</span>
+                                <span class="course-name">Linux基础</span>
+                            </div>
+                        </div>
+                        <div class="content-list">
+                            <div class="icon">
+                                <img src="/static/images/avatar.png">
+                            </div>
+                            <div class="tip">
+                                <span class="tip-text username">xxx</span>
+                                <span class="tip-text time">xx分钟前</span>
+                                <span class="tip-text">学习了</span>
+                                <span class="course-name">Linux基础</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="shadow">
+                </div>
+            </div>
+
+            <div class="info-wraper">
+                <div id="last-course" class="info-box">
+                    <div class="title">
+                        最新课程
+                    </div>
+                    <div class="content">
+                        <div class="content-list">
+                            <div class="icon">
+                                <img src="/static/images/avatar.png">
+                            </div>
+                            <div class="tip">
+                                <span class="tip-text username">xxx</span>
+                                <span class="tip-text time">xx分钟前</span>
+                                <span class="tip-text">添加了</span>
+                                <span class="course-name">Linux基础</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="wraper-foot">
+                    所有课程
+                </div>
+                <div class="shadow">
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
