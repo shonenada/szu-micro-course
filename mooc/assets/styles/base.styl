@@ -18,9 +18,18 @@ body
     background: #fff;
 
     & .banner
-        background: #6b7d8a;
+        position: relative;
+        background: #fff url(base_root + '/static/images/header-background.png') no-repeat;
         width: 100%;
-        height: 300px;
+        height: 280px;
+
+        & #banner-text
+            font-family: arial;
+            position: absolute;
+            top: 30%;
+            left: 10%;
+            font-size: 36px;
+            color: #fff;
 
     & #nav-container
         padding: 10px;
@@ -28,9 +37,9 @@ body
         & #logo
             display: inline-block;
             text-indent: -9999em;
-            width: 390px;
-            height: 80px;
-            background: url(base_root + '/static/images/mooc-logo.png') no-repeat;
+            width: 147px;
+            height: 58px;
+            background: url(base_root + '/static/images/mooc-logo.png') no-repeat center;
 
         & #nav
             float: right;
