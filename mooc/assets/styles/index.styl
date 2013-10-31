@@ -1,3 +1,5 @@
+@import 'func.styl'
+
 #main
     background: #dce5eb;
     overflow: hidden;
@@ -8,8 +10,8 @@
         overflow: hidden;
 
     & .shadow
+        bottom-border-radius 3
         background: #cad6df;
-        border-radius: 0 0 5px 5px;
         margin: 0 auto;
         height: 5px;
 
@@ -39,7 +41,7 @@
                 float: left;
 
                 & .course-info
-                    border-radius: 5px 5px 0 0;
+                    top-border-radius 3
                     background: #fff;
                     padding: 15px;
                     overflow: hidden;
@@ -59,7 +61,7 @@
                         line-height: 1.3em;
 
                 & .course-record
-                    border-radius: 0 0 5px 5px;
+                    bottom-border-radius 3
                     background: #eff5fa;
                     padding: 0 15px;
                     height: 40px;
@@ -95,11 +97,17 @@
                 text-align: center;
                 font-size: 14px;
 
+            & #learn-act
+                bottom-border-radius 3
+
+            & #all-course-btn
+                bottom-border-radius 3
+
             & .info-box
                 padding: 12px 0 0 0;
                 background: #fff;
                 text-indent: 20px;
-                border-radius: 3px;
+                top-border-radius 3
 
                 & .title
                     padding-bottom: 10px;
