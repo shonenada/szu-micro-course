@@ -31,6 +31,10 @@ def check():
 def syncdb():
     with application.test_request_context():
         # import all Models here
+        from mooc.account.model import *
+        from mooc.course.model import *
+        from mooc.master.model import *
+        from mooc.qa.model import *        
         db.create_all()
     print 'Finished!'
 
