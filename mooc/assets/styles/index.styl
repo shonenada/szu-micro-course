@@ -1,3 +1,4 @@
+@import 'global_var.styl'
 @import 'func.styl'
 
 #category_list
@@ -46,7 +47,7 @@
 
     & #left
         float: left;
-        width: 800px;
+        width: 780px;
 
         & .course-category
             margin-top: 10px;
@@ -122,6 +123,33 @@
                 & .shadow
                     width: 370px;
 
+        & #category_list
+            margin-top: 10px;
+            margin-bottom: 30px;
+
+            & a
+                margin: 0;
+                padding: 0 10px 0 0;
+
+                &:hover
+                    background: #ccd9e2;
+                    color: #626f7c;
+
+                &:before
+                    line-height: 40px;
+                    content: url(base_root + '/static/images/arrow.png');
+                    margin: 0 10px 0 0;
+
+            & li:first-child
+                & a
+                    padding-left: 10px;
+
+                & a:before
+                    content: '';
+
+            & li:last-child
+                & a
+                    color: #ff5400;
 
     & #right
         float: right;

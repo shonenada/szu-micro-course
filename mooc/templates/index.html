@@ -1,106 +1,22 @@
 {% extends 'layout.html' %}
 
-    {% block banner %}
-    <div id="header-banner" class="banner">
-        <div id="banner-text">
-            <p>深圳大学墨客.</p>
-        </div>
+{% block banner %}
+<div id="header-banner" class="banner">
+    <div id="banner-text">
+        <p>深圳大学墨客.</p>
     </div>
-    {% endblock %}
-        {% block left %}
-        <div id="left">
-            <div class="course-category">
-                <span class="course-category-title"><a href="#">Course Category</a></span>
-                <div class="course-container">
-                    <div class="course-box">
-                        <div class="course-info">
-                            <div class="icon">
-                                <img src="http://itercast.com/assets/icons/course-01.png" />
-                            </div>
-                            <div class="course-title">
-                                Linux基本操作
-                            </div>
-                            <div class="course-description">
-                                <p>课程包含Linux安装，图形界面下的基本使用...</p>
-                            </div>
-                        </div>
-                        <div class="course-record">
-                            <div class="course-num"><span>x</span> 个课程</div>
-                            <div class="learned-num"><span>xxxx</span> 个同学学习</div>
-                        </div>
-                        <div class="shadow"></div>
-                    </div>
-                </div>
+</div>
+{% endblock %}
 
-                <div class="course-container">
-                    <div class="course-box">
-                        <div class="course-info">
-                            <div class="icon">
-                                <img src="http://itercast.com/assets/icons/course-01.png" />
-                            </div>
-                            <div class="course-title">
-                                Linux基本操作
-                            </div>
-                            <div class="course-description">
-                                <p>课程包含Linux安装，图形界面下的基本使用...</p>
-                            </div>
-                        </div>
-                        <div class="course-record">
-                            <div class="course-num"><span>x</span> 个课程</div>
-                            <div class="learned-num"><span>xxxx</span> 个同学学习</div>
-                        </div>
-                        <div class="shadow"></div>
-                    </div>
-                </div>
+{% block left %}
+<div id="left">
+    <div class="course-category">
+        <span class="course-category-title"><a href="/courses/category/2">Course Category</a></span>
+        {% include 'course_box.html' %}
+    </div>
+</div>
+{% endblock %}
 
-                <div class="course-container">
-                    <div class="course-box">
-                        <div class="course-info">
-                            <div class="icon">
-                                <img src="http://itercast.com/assets/icons/course-01.png" />
-                            </div>
-                            <div class="course-title">
-                                Linux基本操作
-                            </div>
-                            <div class="course-description">
-                                <p>课程包含Linux安装，图形界面下的基本使用...</p>
-                            </div>
-                        </div>
-                        <div class="course-record">
-                            <div class="course-num"><span>x</span> 个课程</div>
-                            <div class="learned-num"><span>xxxx</span> 个同学学习</div>
-                        </div>
-                        <div class="shadow"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="course-category">
-                <span class="course-category-title">Course Category</span>
-                <div class="course-container">
-                    <div class="course-box">
-                        <div class="course-info">
-                            <div class="icon">
-                                <img src="http://itercast.com/assets/icons/course-01.png" />
-                            </div>
-                            <div class="course-title">
-                                Linux基本操作
-                            </div>
-                            <div class="course-description">
-                                <p>课程包含Linux安装，图形界面下的基本使用...</p>
-                            </div>
-                        </div>
-                        <div class="course-record">
-                            <div class="course-num"><span>x</span> 个课程</div>
-                            <div class="learned-num"><span>xxxx</span> 个同学学习</div>
-                        </div>
-                        <div class="shadow"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {% endblock %}
-
-        {% block right %}
-        {% include 'right.html' %}
-        {% endblock %}
+{% block right %}
+{% include 'right.html' %}
+{% endblock %}
