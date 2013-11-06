@@ -3,7 +3,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}MOOC @ SZU{% endblock %}</title>
+    <title>{% block title %}深大微课程 - WeiCourse{% endblock %}</title>
     <meta name="keywords" content="深圳大学,墨客,MOOC,mooc,深圳大学墨客" />
     <meta name="description" content="深圳大学墨客，提供免费的教学视频。" />
     <link href="{{ url_for('static', filename='components/reset-css/index.css')}}" media="all" rel="stylesheet" type="text/css" />
@@ -26,13 +26,7 @@
             </ul>
         </div>
     </div>
-    {% block banner %}
-    <div id="header-banner" class="banner">
-        <div id="banner-text">
-            <p>深圳大学墨客.</p>
-        </div>
-    </div>
-    {% endblock %}
+    {% block banner %}{% endblock %}
 </header>
 {% endblock %}
 
