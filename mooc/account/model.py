@@ -9,8 +9,10 @@ class College(db.Model):
     __tablename__ = 'college'
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(20))
+    name = db.Column(db.String(20), unique=True)
     order = db.Column(db.Integer)
+    account_id = db.Column(db.Integer, db.ForeignKey('college.id'))
+    clip_id = db.Column(db.Integer, db.ForeignKey('clip.id'))
 
 
 class Account(db.Model):
@@ -31,9 +33,6 @@ class Account(db.Model):
     name = db.Column(db.String(20))
     gender = db.Column(db.Boolean, default=True)
     account_type = db.Column(db.Integer)
-    college_id = db.Column(db.Integer, db.ForeignKey('college.id'))
-    college = db.relationship("College",
-                              backref=db.backref('account'))
     email = db.Column(db.String(50), unique=True)
     phone = db.Column(db.String(11), unique=True)
     short_phone = db.Column(db.String(6), unique=True)
@@ -42,6 +41,14 @@ class Account(db.Model):
     created = db.Column(db.DateTime, default=datetime.now)
     last_ip = db.Column(db.String(40))
     last_login = db.Column(db.DateTime, default=datetime.now)
+    learn_record_id = db.Column(db.Integer, db.ForeignKey('learn_record.id'))
+    question_id = db.Column(db.Integer, db.ForeignKey('question.id'))
+    answer_id = db.Column(db.Integer, db.ForeignKey('answer.id'))
+    college = db.relationship("College", backref=db.backref('account'),
+                              lazy='dynamic', uselist=False)
+    teacher_id = db.Column(db.Integer, db.ForeignKey('teacher.id'),
+                           nullable=True)
+    course_id = db.Column(db.Integer, db.ForeignKey('course.id'))
 
 
 class Teacher(db.Model):
@@ -50,8 +57,8 @@ class Teacher(db.Model):
     __tablename__ = 'teacher'
 
     id = db.Column(db.Integer, primary_key=True)
-    account_id = db.Column(db.Integer, db.ForeignKey('account.id'))
-    account = db.relationship("Account",
-                              backref=db.backref('teacher'))
+    account = db.relationship("Account", backref=db.backref('teacher'),
+                              lazy='dynamic', uselist=False)
     title = db.Column(db.String(10))
     description = db.Column(db.Text)
+    clip_id = db.Column(db.Integer, db.ForeignKey('clip.id'))
