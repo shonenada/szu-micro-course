@@ -32,8 +32,8 @@ def syncdb():
     with application.test_request_context():
         # import all Models here
         from mooc.account.model import College, Account, Teacher
-        from mooc.course.model import Course, Clip, LearnRecord
-        from mooc.master.model import Tag
+        from mooc.course.model import Course, Clip, LearnRecord, Category
+        from mooc.master.model import ClipTag, CourseTag
         from mooc.qa.model import Question, Answer, UpDownRecord
         db.create_all()
     print 'Finished!'

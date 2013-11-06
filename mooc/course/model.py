@@ -3,6 +3,25 @@ from datetime import datetime
 from mooc.app import db
 
 
+clip_tags = db.Table('clip_tags',
+    db.Column('tag_id', db.Integer, db.ForeignKey('clip_tag.id')),
+    db.Column('clip_id', db.Integer, db.ForeignKey('clip.id'))
+)
+
+course_tags = db.Table('course_tags',
+    db.Column('tag_id', db.Integer, db.ForeignKey('course_tag.id')),
+    db.Column('course_id', db.Integer, db.ForeignKey('course.id'))
+)
+
+
+class Category(db.Model):
+
+    __tablename__ = 'category'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(20))
+
+
 class Course(db.Model):
     """Model of Course"""
     
@@ -15,6 +34,10 @@ class Course(db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey('account.id'))
     author = db.relationship("Account", backref=db.backref('course'))
     created = db.Column(db.DateTime, default=datetime.now)
+    category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
+    category = db.relationship('Category', backref=db.backref('course.id'))
+    tags = db.relationship('CourseTag', secondary=course_tags,
+                           backref=db.backref('course', lazy='dynamic'))
 
 
 class Clip(db.Model):
@@ -43,6 +66,8 @@ class Clip(db.Model):
     published = db.Column(db.Boolean, default=False)
     read_count = db.Column(db.Integer, default=0)
     play_count = db.Column(db.Integer, default=0)
+    tags = db.relationship('ClipTag', secondary=clip_tags,
+                           backref=db.backref('clip', lazy='dynamic'))
 
 
 class LearnRecord(db.Model):
