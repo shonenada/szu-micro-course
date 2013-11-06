@@ -2,8 +2,10 @@
 
 {% block htmlhead %}
 <link href="{{ url_for('static', filename='styles/index.css')}}" media="all" rel="stylesheet" type="text/css" />
+<!--[if lt IE9]>
 <link href="{{ url_for('static', filename='styles/animate.css')}}" media="all" rel="stylesheet" type="text/css" />
 <script src="{{ url_for('static', filename='scripts/ui/animate.js')}}"></script>
+<![endif]-->
 {% endblock %}
 
 {% block main %}

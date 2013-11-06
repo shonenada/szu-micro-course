@@ -1,8 +1,37 @@
 @import 'func.styl'
 
+#category_list
+    top-border-radius 5
+    bottom-border-radius 5
+    background: #ccd9e2;
+    margin-top: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    overflow: hidden;
+
+    & ul li
+        float: left;
+
+        & a
+            display: block;
+            height: 40px;
+            color: #7b8896;
+            line-height: 40px;
+            padding: 0 10px 0 10px;
+            text-align: center;
+            transition(0.25s)
+
+            &:hover
+                background: #fff;
+
+    & ul li:first-child a
+        padding-left: 20px;
+
+
 #main
     background: #dce5eb;
     overflow: hidden;
+    width: 100%;
 
     & #wrapper
         padding-bottom: 20px;
@@ -35,6 +64,10 @@
             float: left;
             margin-right: 20px;
             margin-bottom: 20px;
+            transition(0.25s)
+            
+            &:hover
+                transform-translate3d 0 -2px 0
 
             & .course-box
                 width: 380px;
@@ -87,7 +120,11 @@
         width: 360px;
 
         & .info-wraper
+            transition(0.25s)
             margin-bottom: 20px;
+
+            &:hover
+                transform-translate3d 0 -2px 0
 
             & .wraper-foot
                 width: 360px;
