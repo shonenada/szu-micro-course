@@ -75,6 +75,7 @@ class Clip(db.Model):
     clip_last = db.Column(db.String(30))
     published = db.Column(db.Boolean, default=False)
     read_count = db.Column(db.Integer, default=0)
+    order = db.Column(db.Integer, default=1)
     play_count = db.Column(db.Integer, default=0)
     learn_record_id = db.Column(db.Integer, db.ForeignKey('learn_record.id'))
     question_id = db.Column(db.Integer, db.ForeignKey('question.id'))
