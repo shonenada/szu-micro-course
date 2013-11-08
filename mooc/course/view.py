@@ -17,3 +17,8 @@ def subject(sid):
 @course_app.route('/courses/subject/<sid>/category/<cid>')
 def category(sid, cid):
     return render_template('category.html');
+
+
+@course_app.route('/courses/subject/<sid>/category/<catid>/course/<courid>')
+def course(sid, catid, courid):
+    return render_template('course_list.html')

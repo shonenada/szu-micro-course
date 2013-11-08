@@ -1,0 +1,43 @@
+{% extends 'layout.html' %}
+
+{% block left %}
+<div id="left">
+    <div id="category_list">
+        <ul>
+            <li><a href="/courses">课程库</a></li>
+            <li><a href="/courses/subject/2">Subject</a></li>
+            <li><a>Category</a></li>
+        </ul>
+    </div>
+
+    <div class="full-width-box">
+        <div id="category-intro">
+            <div class="course-container">
+                <div class="course-box">
+                    <div class="course-info">
+                        <div class="icon">
+                            <img src="http://itercast.com/assets/icons/course-01.png" />
+                        </div>
+                        <div class="course-title">
+                            Linux基本操作
+                        </div>
+                        <div class="course-description">
+                            <p>课程包含Linux安装，图形界面下的基本使用...</p>
+                        </div>
+                    </div>
+                    <div class="course-record">
+                        <div class="course-num"><span>x</span> 个课程</div>
+                        <div class="learned-num"><span>xxxx</span> 个同学学习</div>
+                    </div>
+                    <div class="shadow"></div>
+                </div>
+            </div>
+        </div>
+        视频列表
+        <div id="clip-list">
+            {% include 'clip_box.html' %}
+        </div>
+    </div>
+
+</div>
+{% endblock %}

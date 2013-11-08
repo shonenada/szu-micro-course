@@ -116,11 +116,14 @@
 
                     & .course-num
                         float: left;
+                        border-right: solid 2px #cad6df;
+                        padding-right: 20px;
                         & span
                             font-weight: bold;
 
                     & .learned-num
-                        float: right;
+                        margin-left: 20px;
+                        float: left;
                         & span
                             font-weight: bold;
 
@@ -154,6 +157,16 @@
             & li:last-child
                 & a
                     color: #ff5400;
+
+        & .full-width-box
+            & .course-container, .course-box
+                width: 100%;
+
+            & .shadow
+                width: 98% !important;
+
+            & #clip-list
+                margin-top: 20px;
 
     & #right
         float: right;
