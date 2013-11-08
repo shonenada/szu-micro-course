@@ -65,6 +65,7 @@ class Clip(db.Model):
     clip_last = db.Column(db.String(30))
     published = db.Column(db.Boolean, default=False)
     read_count = db.Column(db.Integer, default=0)
+    order = db.Column(db.Integer, default=1)
     play_count = db.Column(db.Integer, default=0)
     tags = db.relationship('ClipTag', secondary=clip_tags,
                            backref=db.backref('clip', lazy='dynamic'))
