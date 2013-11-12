@@ -1,7 +1,66 @@
 {% extends 'layout.html' %}
 
 {% block left %}
-<div id="left">
+<div id="player">
+    <video src="http://112.124.15.99:8888/web-basic/1.mp4" controls="controls">
+        Your browser does not support the video tag.
+    </video>
+</div>
+
+<div id="clip-intro">
+    <h2>Web基本概念</h2>
+    <p>讲解如何在Linux下安装MySQL 5数据库，以及MySQL数据库的初始化及基本操作。</p>
+    <div id="category_info">
+        <ul>
+            <li><a href="{{ url_for('course.courses') }}">课程库</a></li>
+            <li><a href="{{ url_for('course.subject', sid='1') }}">Subject</a></li>
+            <li><a href="{{ url_for('course.category', sid=1, cid=2)}}">Category</a></li>
+            <li><a>Web基本概念</a></li>
+        </ul>
+    </div>
+</div>
+<div class="shadow"></div>
+
+<div id="clip-info">
+
+    <div id="clip-info-left">
+
+        <div id="clip-btns">
+            <ul>
+                <li><a href="#" class="current">知识点</a></li>
+                <li><a href="#">相关问题</a></li>
+            </ul>
+        </div>
+
+        <div id="clip-tips">
+        <p>CentOS6和RHEL6系统的YUM中包含了MySQL安装包，版本是MySQL5。rpm软件包的名称是mysql-server。<br />
+        使用以下命令可以安装MySQL数据库：<br />
+        yum install -y mysql-server
+        </p>
+        </div>
+        <div class="shadow"></div>
+
+    </div>
+
+    <div id="clip-info-right">
+        <div id="clip-who-learning">
+            <h2>谁在学习此课程</h2>
+            <div id="leanring">
+                <div class="content-list">
+                    <div class="icon">
+                        <img src="/static/images/avatar.png">
+                    </div>
+                    <div class="tip">
+                        <span class="tip-text username">xxx</span>
+                        <span class="tip-text time">xx分钟前</span>
+                        <span class="tip-text">学习了</span>
+                        <span class="course-name">Linux基础</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="shadow"></div>
+    </div>
 </div>
 {% endblock %}
 
