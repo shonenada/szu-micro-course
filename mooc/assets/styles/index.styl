@@ -40,10 +40,11 @@
         overflow: hidden;
 
     & .shadow
-        bottom-border-radius 3
-        background: #cad6df;
-        margin: 0 auto;
         height: 5px;
+        width: 99%;
+        margin: 0 auto;
+        background: #cad6df;
+        bottom-border-radius 3
 
     & #left
         float: left;
@@ -236,3 +237,153 @@
             & .shadow
                 width: 350px;
 
+    #player
+        width: 100%;
+        background: #000;
+
+        & video
+            width: 100%;
+
+    #clip-intro
+        width: 100%;
+        background: #fff;
+        padding: 25px;
+        margin: 0px;
+
+        & h2
+            font-size: 22px !important;
+            color: #515c73 !important;
+            line-height: 30px;
+
+        & p
+            font-size: 14px;
+            margin: 10px 0 10px 0;
+
+        & #category_info
+
+            overflow: hidden;
+
+            & ul li
+                float: left;
+
+                & a
+                    font-size: 14px;
+                    margin: 0;
+                    display: block;
+                    height: 40px;
+                    color: #7b8896;
+                    line-height: 40px;
+                    font-weight: bold;
+                    transition(0.25s)
+
+                    &:hover
+                        color: #ff5400;
+
+                    &:before
+                        padding: 0 10px 0 10px;
+                        line-height: 40px;
+                        content: url(base_root + '/static/images/arrow.png');
+
+            & li:first-child
+                & a
+                    &:before
+                        padding: 0px;
+                        content: '';
+
+            & li:last-child
+                & a
+                    color: #ff5400;
+
+    #clip-info
+
+        margin-top: 20px;
+
+        & .shadow
+            width: 99%;
+
+        & #clip-info-left
+            width: 780px;
+            float: left;
+
+        & #clip-btns
+            width: 100%;
+            overflow: hidden;
+
+            & li:first-child
+                & a
+                    margin: 0px 5px 0px 0px;
+
+            & ul li
+                float: left;
+
+                & a
+                    top-border-radius 5
+                    font-weight: bold;
+                    display: block;
+                    color: #7b8896;
+                    background: #ccd7e0;
+                    padding: 7px 21px 8px;
+                    font-size: 14px;
+                    margin: 0px 5px 0px 5px;
+
+                & a.current
+                    background: #fff;
+                    color: #ff5400;
+
+        & #clip-tips
+            background: #fff;
+            padding: 10px;
+            font-size: 14px;
+            line-height: 1.5em;
+            top-border-radius 5
+            bottom-border-radius 5
+            -webkit-border-top-left-radius: 0px;
+            -moz-border-radius-topleft: 0px;
+            border-top-left-radius: 0px;
+
+        & #clip-info-right
+            float: right;
+            width: 360px;
+
+            & .shadow
+                bottom-border-radius 5
+
+            & #clip-who-learning
+                bottom-border-radius 5
+                top-border-radius 5
+                background: #fff;
+
+                & h2
+                    color: #515c73;
+                    padding: 10px 10px 10px 15px;
+                    font-size: 15px;
+                    border-bottom: 1px solid #dce5eb;
+
+                & #leanring
+                    padding: 20px;
+
+                & .content-list
+                    display: block;
+                    margin-bottom: 15px;
+                    clear: both;
+                    overflow: hidden;
+
+                    & .icon
+                        float: left;
+
+                    & .icon img
+                        width: 40px;
+                        height: 40px;
+
+                    & .tip
+                        float: left;
+                        margin-left: 5px;
+                        
+                        & .tip-text
+                            font-size: 14px;
+                            color: #a5b4c1;
+
+                        & .course-name
+                            float: left;
+                            line-height: 1.8em;
+                            font-size: 16px;

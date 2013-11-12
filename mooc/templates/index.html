@@ -12,7 +12,7 @@
 <div id="left">
     <div class="course-category">
         <span class="course-category-title"><a href="{{ url_for('course.subject', sid=1) }}">Course Subject</a></span>
-        {% include 'course_box.html' %}
+        <a href="{{ url_for('course.course', course_id=2) }}">{% include 'course_box.html' %}</a>
     </div>
 </div>
 {% endblock %}
