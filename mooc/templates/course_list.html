@@ -4,8 +4,8 @@
 <div id="left">
     <div id="category_list">
         <ul>
-            <li><a href="/courses">课程库</a></li>
-            <li><a href="/courses/subject/2">Subject</a></li>
+            <li><a href="{{ url_for('course.courses')}}">课程库</a></li>
+            <li><a href="{{url_for('course.subject', sid=2)}}">Subject</a></li>
             <li><a>Category</a></li>
         </ul>
     </div>
@@ -35,7 +35,7 @@
         </div>
         视频列表
         <div id="clip-list">
-            {% include 'clip_box.html' %}
+            <a href="{{ url_for('course.clip', clip_id=3) }}">{% include 'clip_box.html' %}</a>
         </div>
     </div>
 

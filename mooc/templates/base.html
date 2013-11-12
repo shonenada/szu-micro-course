@@ -19,10 +19,10 @@
 {% block header %}
 <header id="header">
     <div id="nav-container" class="w1170 center-block">
-        <a href="/" id="logo">MOOC @ SZU</a>
+        <a href="{{ url_for('master.index') }}" id="logo">MOOC @ SZU</a>
         <div id="nav">
             <ul>
-                <li><a href="/courses">课程库</a></li>
+                <li><a href="{{url_for('course.courses')}}">课程库</a></li>
                 <li><a href="/signin">登录</a></li>
             </ul>
         </div>

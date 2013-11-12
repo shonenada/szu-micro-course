@@ -3,14 +3,14 @@
 <div id="left">
     <div id="category_list">
         <ul>
-            <li><a href="/courses">课程库</a></li>
-            <li><a href="/courses/subject/1">Subject</a></li>
-            <li><a href="/courses/subject/1/category/2">Category</a></li>
+            <li><a href="{{ url_for('course.courses') }}">课程库</a></li>
+            <li><a href="{{ url_for('course.subject', sid='1') }}">Subject</a></li>
+            <li><a href="{{ url_for('course.category', sid=1, cid=2)}}">Category</a></li>
         </ul>
     </div>
     <div class="course-category">
         <span class="course-category-title">Course Category</span>
-        <a href="/courses/subject/1/category/2/course/3">{% include 'course_box.html' %}</a>
+        <a href="{{ url_for('course.course', course_id=3) }}">{% include 'course_box.html' %}</a>
     </div>
 </div>
 {% endblock %}

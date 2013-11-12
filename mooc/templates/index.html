@@ -11,7 +11,7 @@
 {% block left %}
 <div id="left">
     <div class="course-category">
-        <span class="course-category-title"><a href="/courses/subject/2">Course Subject</a></span>
+        <span class="course-category-title"><a href="{{ url_for('course.subject', sid=1) }}">Course Subject</a></span>
         {% include 'course_box.html' %}
     </div>
 </div>
