@@ -19,6 +19,11 @@ def category(sid, cid):
     return render_template('category.html');
 
 
-@course_app.route('/courses/subject/<sid>/category/<catid>/course/<courid>')
-def course(sid, catid, courid):
+@course_app.route('/courses/subject/<sid>/category/<catid>/course/<course_id>')
+def course(sid, catid, course_id):
     return render_template('course_list.html')
+
+
+@course_app.route('/courses/subject/<sid>/category/<catid>/course/<courid>/clip/<clip_id>')
+def course(sid, catid, course_id, clip_id):
+    return render_template('clip.html')
