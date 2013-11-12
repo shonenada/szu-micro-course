@@ -26,7 +26,7 @@ class Account(db.Model):
     TYPE_OTHER = 3
 
     id = db.Column(db.Integer, primary_key=True)
-    account = db.Column(db.String(6), unique=True)
+    card_id = db.Column(db.String(6), unique=True)
     password = db.Column(db.String(128))
     number = db.Column(db.String(10), unique=True)
     nickname = db.Column(db.String(16), unique=True)
@@ -44,11 +44,13 @@ class Account(db.Model):
     learn_record_id = db.Column(db.Integer, db.ForeignKey('learn_record.id'))
     question_id = db.Column(db.Integer, db.ForeignKey('question.id'))
     answer_id = db.Column(db.Integer, db.ForeignKey('answer.id'))
-    college = db.relationship("College", backref=db.backref('account'),
-                              lazy='dynamic', uselist=False)
-    teacher_id = db.Column(db.Integer, db.ForeignKey('teacher.id'),
-                           nullable=True)
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'))
+    up_down_record_id = db.Column(db.Integer,
+                                  db.ForeignKey('up_down_record.id'))
+    college = db.relationship("College", backref=db.backref('account'),
+                              uselist=False)
+    teacher_id = db.relationship("Teacher", backref=db.backref('account'),
+                                 uselist=False)
 
 
 class Teacher(db.Model):
@@ -57,8 +59,7 @@ class Teacher(db.Model):
     __tablename__ = 'teacher'
 
     id = db.Column(db.Integer, primary_key=True)
-    account = db.relationship("Account", backref=db.backref('teacher'),
-                              lazy='dynamic', uselist=False)
+    account_id = db.Column(db.Integer, db.ForeignKey('account.id'))
     title = db.Column(db.String(10))
     description = db.Column(db.Text)
     clip_id = db.Column(db.Integer, db.ForeignKey('clip.id'))
