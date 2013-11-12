@@ -1,11 +1,15 @@
+@import 'global_var.styl'
 font_for_windows = "Microsoft YaHei";
 font_for_mac = "Hiragino Sans GB";
 font_for_linux = "WenQuanYi Micro Hei";
-base_root = 'http://localhost:13800'
 
 body
     color: #75818b;
     font-family: arial, font_for_mac, font_for_windows, font_for_linux, sans-serif;
+    
+    & a
+        color: #75818b;
+        text-decoration: none;
 
 .w1170
     width: 1170px;
@@ -20,7 +24,6 @@ body
     & .banner
         position: relative;
         background: #fff url(base_root + '/static/images/header-background.png') no-repeat;
-        width: 100%;
         height: 280px;
 
         & #banner-text
@@ -48,7 +51,9 @@ body
 
             & a
                 color: #6b7488;
-                text-decoration: none;
+
+            & a.nav_current
+                color: #ff5400;
 
             & ul li
                 padding: 0 20px 0 20px;
@@ -78,7 +83,6 @@ body
 
             & a
                 color: #333333;
-                text-decoration: none;
 
         & li:before
             content: '| ';

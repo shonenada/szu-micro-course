@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+{% block left %}
+<div id="left">
+    <div id="category_list">
+        <ul>
+            <li><a href="/courses">课程库</a></li>
+            <li><a>Subject</a></li>
+        </ul>
+    </div>
+    <div class="course-category">
+        <span class="course-category-title">Course Subject</span>
+        <a href="/courses/subject/1/category/2">
+            {% include 'course_box.html' %}
+        </a>
+    </div>
+</div>
+{% endblock %}
