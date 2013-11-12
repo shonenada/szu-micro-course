@@ -15,9 +15,9 @@ class Question(db.Model):
     read_count = db.Column(db.Integer, default=0)
     up_count = db.Column(db.Integer, default=0)
     author = db.relationship('Account', backref=db.backref('question'),
-                             uselist=False, lazy='dynamic')
+                             uselist=False)
     clip = db.relationship('Clip', backref=db.backref('question'),
-                           uselist=False, lazy='dynamic')
+                           uselist=False)
 
 
 class Answer(db.Model):
@@ -30,15 +30,15 @@ class Answer(db.Model):
     down_count = db.Column(db.Integer, default=0)
     created = db.Column(db.DateTime, default=datetime.now)
     edit_time = db.Column(db.DateTime, default=datetime.now)
-    up_down_record_id = db.Column(db.Integer,
-                                  db.ForeignKey('up_down_record.id'))
     parent_id = db.Column(db.Integer, db.ForeignKey('answer.id'))
     parent = db.relationship('Answer', backref=db.backref('answer'),
-                            uselist=False, lazy='dynamic')
+                             uselist=False)
+    up_down_record_id = db.Column(db.Integer,
+                                  db.ForeignKey('up_down_record.id'))
     author = db.relationship('Account', backref=db.backref('answer'),
-                             uselist=False, lazy='dynamic')
+                             uselist=False)
     clip = db.relationship('Clip', backref=db.backref('answer'),
-                           uselist=False, lazy='dynamic')
+                           uselist=False)
 
 
 class UpDownRecord(db.Model):
@@ -51,8 +51,11 @@ class UpDownRecord(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     up_down = db.Column(db.Integer, default=TYPE_UP)
     craeted = db.Column(db.DateTime, default=datetime.now)
-    author_id = db.Column(db.Integer, db.ForeignKey('account.id'))
-    author = db.relationship('Account', backref=db.backref('up_down_record'),
-                             uselist=False, lazy='dynamic')
-    answer = db.relationship('Answer', backref=db.backref('up_down_record'),
-                             uselist=False, lazy='dynamic')
+    author = db.relationship(
+        'Account',
+        backref=db.backref('up_down_record'),
+        uselist=False)
+    answer = db.relationship(
+        'Answer',
+        backref=db.backref('up_down_record'),
+        uselist=False)
