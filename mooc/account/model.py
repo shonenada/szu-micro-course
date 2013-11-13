@@ -3,18 +3,6 @@ from datetime import datetime
 from mooc.app import db
 
 
-class College(db.Model):
-    """Model of College"""
-
-    __tablename__ = 'college'
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(20), unique=True)
-    order = db.Column(db.Integer)
-    account_id = db.Column(db.Integer, db.ForeignKey('college.id'))
-    clip_id = db.Column(db.Integer, db.ForeignKey('clip.id'))
-
-
 class Account(db.Model):
     """Model of account."""
 
@@ -28,7 +16,7 @@ class Account(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     card_id = db.Column(db.String(6), unique=True)
     password = db.Column(db.String(128))
-    number = db.Column(db.String(10), unique=True)
+    stu_number = db.Column(db.String(10), unique=True)
     nickname = db.Column(db.String(16), unique=True)
     name = db.Column(db.String(20))
     gender = db.Column(db.Boolean, default=True)
@@ -41,16 +29,35 @@ class Account(db.Model):
     created = db.Column(db.DateTime, default=datetime.now)
     last_ip = db.Column(db.String(40))
     last_login = db.Column(db.DateTime, default=datetime.now)
-    learn_record_id = db.Column(db.Integer, db.ForeignKey('learn_record.id'))
-    question_id = db.Column(db.Integer, db.ForeignKey('question.id'))
-    answer_id = db.Column(db.Integer, db.ForeignKey('answer.id'))
-    course_id = db.Column(db.Integer, db.ForeignKey('course.id'))
-    up_down_record_id = db.Column(db.Integer,
-                                  db.ForeignKey('up_down_record.id'))
-    college = db.relationship("College", backref=db.backref('account'),
-                              uselist=False)
-    teacher_id = db.relationship("Teacher", backref=db.backref('account'),
-                                 uselist=False)
+    college = db.relationship("College", backref='account', uselist=False)
+    teacher = db.relationship("Teacher", backref='account', uselist=False)
+    learn_record = db.relationship('LearnRecord', backref='author',
+                                   uselist=True)
+    question = db.relationship('Question', backref='author',
+                               uselist=True, lazy='dynamic')
+    answer = db.relationship('Answer', backref='author',
+                             uselist=True, lazy='dynamic')
+    course = db.relationship("Course", backref='author',
+                             uselist=True, lazy='dynamic')
+    up_down_record = db.relationship('UpDownRecord', backref='author',
+                                     uselist=True, lazy='dynamic')
+
+    def __init__(self, card_id, stu_number):
+        self.card_id = card_id
+        self.stu_number = stu_number
+
+
+class College(db.Model):
+    """Model of College"""
+
+    __tablename__ = 'college'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(20), unique=True)
+    order = db.Column(db.Integer)
+    account_id = db.Column(db.Integer, db.ForeignKey('account.id'))
+    clip = db.relationship('Clip', backref='college', 
+                           lazy='dynamic', uselist=True)
 
 
 class Teacher(db.Model):
@@ -59,7 +66,7 @@ class Teacher(db.Model):
     __tablename__ = 'teacher'
 
     id = db.Column(db.Integer, primary_key=True)
-    account_id = db.Column(db.Integer, db.ForeignKey('account.id'))
     title = db.Column(db.String(10))
     description = db.Column(db.Text)
-    clip_id = db.Column(db.Integer, db.ForeignKey('clip.id'))
+    clip = db.relationship('Clip', backref='teacher', lazy='dynamic')
+    account_id = db.Column(db.Integer, db.ForeignKey('account.id'))

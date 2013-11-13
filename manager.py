@@ -31,11 +31,11 @@ def check():
 def syncdb():
     with application.test_request_context():
         # import all Models here
-        from mooc.qa.model import Question, Answer, UpDownRecord
-        from mooc.account.model import College, Account, Teacher
-        from mooc.course.model import (ClipTag, CourseTag, Subject, Category,
-                                       Course, Clip, LearnRecord,
+        from mooc.account.model import Account, College, Teacher
+        from mooc.course.model import (Subject, Category, Course, Clip,
+                                       LearnRecord, ClipTag, CourseTag,
                                        clip_tags, course_tags)
+        from mooc.qa.model import UpDownRecord, Answer, Question
         db.create_all()
     print 'Finished!'
 
