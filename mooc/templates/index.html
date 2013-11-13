@@ -10,10 +10,14 @@
 
 {% block left %}
 <div id="left">
+    {% for s in subjects %}
     <div class="course-category">
-        <span class="course-category-title"><a href="{{ url_for('course.subject', sid=1) }}">Course Subject</a></span>
-        <a href="{{ url_for('course.course', course_id=2) }}">{% include 'course_box.html' %}</a>
+        <span class="course-category-title"><a href="{{ url_for('course.subject', sid=s.id) }}">{{ s.name }}</a></span>
+        {% for c in s.category[0].course %}
+        <a href="{{ url_for('course.course', course_id=c.id) }}">{% include 'course_box.html' %}</a>
+        {% endfor %}
     </div>
+    {% endfor %}
 </div>
 {% endblock %}
 
