@@ -1,9 +1,11 @@
 from flask import Flask
 
-from mooc.extensions import gears, db
-from mooc.extensions import setup_compilers, setup_compressors, setup_database
+from mooc.extensions import gears, setup_compilers, setup_compressors
+from mooc.extensions import db, setup_database
+from mooc.template import setup_filter
 from mooc.master.view import master_app
 from mooc.course.view import course_app
+from mooc.course.service import get_learn_records, get_last_clip
 
 
 def create_app(import_name=None, config=None):
@@ -25,5 +27,10 @@ def create_app(import_name=None, config=None):
 
     app.register_blueprint(master_app)
     app.register_blueprint(course_app)
+
+    app.before_request(get_learn_records)
+    app.before_request(get_last_clip)
+
+    setup_filter(app)
 
     return app
