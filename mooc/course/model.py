@@ -1,6 +1,8 @@
 from datetime import datetime
 
 from mooc.app import db
+from mooc.account.model import Account
+from mooc.qa.model import Question
 
 
 clip_tags = db.Table(
@@ -16,21 +18,6 @@ course_tags = db.Table(
 )
 
 
-class ClipTag(db.Model):
-    __tablename__ = 'clip_tag'
-
-    id = db.Column(db.Integer, primary_key=True)
-    tag = db.Column(db.String(20))
-
-
-class CourseTag(db.Model):
-
-    __tablename__ = 'course_tag'
-
-    id = db.Column(db.Integer, primary_key=True)
-    tag = db.Column(db.String(20))
-
-
 class Subject(db.Model):
 
     __tablename__ = 'subject'
@@ -38,7 +25,7 @@ class Subject(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20))
     description = db.Column(db.Text)
-    category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
+    category = db.relationship('Category', backref='subject', lazy='dynamic')
 
 
 class Category(db.Model):
@@ -48,9 +35,8 @@ class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20))
     description = db.Column(db.Text)
-    subject = db.relationship('Subject', uselist=True, lazy='dynamic',
-                              backref=db.backref('category'))
-    course_id = db.Column(db.Integer, db.ForeignKey('course.id'))
+    subject_id = db.Column(db.Integer, db.ForeignKey('subject.id'))
+    course = db.relationship('Course', backref='category', lazy='dynamcic')
 
 
 class Course(db.Model):
@@ -64,11 +50,9 @@ class Course(db.Model):
     status = db.Column(db.Integer)
     logo_url = db.Column(db.String(50))
     created = db.Column(db.DateTime, default=datetime.now)
-    clip_id = db.Column(db.Integer, db.ForeignKey('clip.id'))
-    author = db.relationship("Account", backref=db.backref('course'),
-                             uselist=False)
-    category = db.relationship('Category', backref=db.backref('course.id'),
-                               uselist=False)
+    author_id = db.Column(db.Integer, db.ForeignKey('account.id'))
+    category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
+    clip = db.relationship('Clip', backref=db.backref('course'), uselist=True)
     tags = db.relationship('CourseTag', secondary=course_tags,
                            backref=db.backref('course', lazy='dynamic'))
 
@@ -94,15 +78,15 @@ class Clip(db.Model):
     read_count = db.Column(db.Integer, default=0)
     order = db.Column(db.Integer, default=1)
     play_count = db.Column(db.Integer, default=0)
-    learn_record_id = db.Column(db.Integer, db.ForeignKey('learn_record.id'))
-    question_id = db.Column(db.Integer, db.ForeignKey('question.id'))
-    answer_id = db.Column(db.Integer, db.ForeignKey('answer.id'))
-    course = db.relationship('Course', backref=db.backref('clip'),
-                             uselist=False)
-    college = db.relationship('College', backref=db.backref('clip'),
-                              uselist=False)
-    teacher = db.relationship("Teacher", backref=db.backref('clip'),
-                              uselist=False)
+    course_id = db.Column(db.Integer, db.ForeignKey('course.id'))
+    college_id = db.Column(db.Integer, db.ForeignKey('college.id'))
+    teacher_id = db.Column(db.Integer, db.ForeignKey('teacher.id'))
+    learn_record = db.relationship('LearnRecord', backref=db.backref('clip'),
+                                   uselist=True, lazy='dynamic')
+    question = db.relationship('Question', backref=db.backref('clip'),
+                             uselist=True, lazy='dynamic')
+    answer = db.relationship('Answer', backref=db.backref('clip'),
+                             uselist=True, lazy='dynamic')
     tags = db.relationship('ClipTag', secondary=clip_tags,
                            backref=db.backref('clip'))
 
@@ -114,7 +98,20 @@ class LearnRecord(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     created = db.Column(db.DateTime, default=datetime.now)
     star_count = db.Column(db.Integer, default=0)
-    account = db.relationship('Account', backref=db.backref('learn_record'),
-                              uselist=False)
-    clip = db.relationship('Clip', backref=db.backref('learn_record'),
-                           uselist=False)
+    clip_id = db.Column(db.Integer, db.ForeignKey('clip.id'))
+    author_id = db.Column(db.Integer, db.ForeignKey('account.id'))
+
+
+class ClipTag(db.Model):
+    __tablename__ = 'clip_tag'
+
+    id = db.Column(db.Integer, primary_key=True)
+    tag = db.Column(db.String(20))
+
+
+class CourseTag(db.Model):
+
+    __tablename__ = 'course_tag'
+
+    id = db.Column(db.Integer, primary_key=True)
+    tag = db.Column(db.String(20))
