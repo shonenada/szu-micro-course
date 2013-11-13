@@ -2,20 +2,21 @@
 
 {% block left %}
 <div id="player">
-    <video src="http://112.124.15.99:8888/web-basic/1.mp4" controls="controls">
+    <video src="{{ clip.clip_url }}" controls="controls">
         Your browser does not support the video tag.
     </video>
 </div>
 
 <div id="clip-intro">
-    <h2>Web基本概念</h2>
-    <p>讲解如何在Linux下安装MySQL 5数据库，以及MySQL数据库的初始化及基本操作。</p>
+    <h2>{{ clip.name }}</h2>
+    <p>{{ clip.description }}</p>
     <div id="category_info">
         <ul>
             <li><a href="{{ url_for('course.courses') }}">课程库</a></li>
-            <li><a href="{{ url_for('course.subject', sid='1') }}">Subject</a></li>
-            <li><a href="{{ url_for('course.category', sid=1, cid=2)}}">Category</a></li>
-            <li><a>Web基本概念</a></li>
+            <li><a href="{{ url_for('course.subject', sid=clip.course.category.subject.id) }}">{{ clip.course.category.subject.name }}</a></li>
+            <li><a href="{{ url_for('course.category', sid=clip.course.category.subject.id, cid=clip.course.category.id)}}">{{ clip.course.category.name }}</a></li>
+            <li><a href="{{ url_for('course.course', course_id=clip.course.id) }}">{{ clip.course.name }}</a></li>
+            <li><a>{{ clip.name }}</a></li>
         </ul>
     </div>
 </div>
@@ -33,10 +34,7 @@
         </div>
 
         <div id="clip-tips">
-        <p>CentOS6和RHEL6系统的YUM中包含了MySQL安装包，版本是MySQL5。rpm软件包的名称是mysql-server。<br />
-        使用以下命令可以安装MySQL数据库：<br />
-        yum install -y mysql-server
-        </p>
+        <p>{{ clip.prepare_knowledge }}</p>
         </div>
         <div class="shadow"></div>
 
@@ -46,17 +44,19 @@
         <div id="clip-who-learning">
             <h2>谁在学习此课程</h2>
             <div id="leanring">
+                {% for l in learning %}
                 <div class="content-list">
                     <div class="icon">
-                        <img src="/static/images/avatar.png">
+                        <img src="{{ l.author.avatar }}">
                     </div>
                     <div class="tip">
-                        <span class="tip-text username">xxx</span>
-                        <span class="tip-text time">xx分钟前</span>
+                        <span class="tip-text username">{{ l.author.nickname }}</span>
+                        <span class="tip-text time">{{ l.created | friendly_date }}</span>
                         <span class="tip-text">学习了</span>
-                        <span class="course-name">Linux基础</span>
+                        <span class="course-name">{{ l.clip.name }}</span>
                     </div>
                 </div>
+                {% endfor %}
             </div>
         </div>
         <div class="shadow"></div>
