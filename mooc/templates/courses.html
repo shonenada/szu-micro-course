@@ -3,18 +3,30 @@
 {% block before_main %}
 <div id="category_list" class="w1170 center-block">
     <ul>
-        <li><a href="/courses/subject/1">subject_1</a></li>
-        <li><a href="/courses/subject/2">subject_2</a></li>
-        <li><a href="/courses/subject/3">subject_3</a></li>
+        {% for s in subjects %}
+        <li><a href="/courses/subject/{{s.id}}">{{ s.name }}</a></li>
+        {% endfor %}
     </ul>
 </div>
 {% endblock %}
 
 {% block left %}
     <div id="left">
+        {% for s in subjects %}
         <div class="course-category">
-            <span class="course-category-title"><a href="/courses/subject/1/category/2">Course Category</a></span>
-            {% include 'course_box.html' %}
+            {% for cat in s.category %}
+            <span class="course-category-title">
+                <a href="{{ url_for('course.category', sid=s.id, cid=cat.id) }}">
+                    {{cat.name}}
+                </a>
+            </span>
+            {% for c in cat.course %}
+            <a href="{{ url_for('course.course', course_id=c.id) }}">
+                {% include 'course_box.html' %}
+            </a>
+            {% endfor %}
+            {% endfor %}
         </div>
+        {% endfor %}
     </div>
 {% endblock %}

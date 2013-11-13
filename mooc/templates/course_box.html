@@ -2,18 +2,18 @@
     <div class="course-box">
         <div class="course-info">
             <div class="icon">
-                <img src="http://itercast.com/assets/icons/course-01.png" />
+                <img src="{{ c.logo_url }}" />
             </div>
             <div class="course-title">
-                Linux基本操作
+                {{ c.name }}
             </div>
             <div class="course-description">
-                <p>课程包含Linux安装，图形界面下的基本使用...</p>
+                <p>{{ c.description }}</p>
             </div>
         </div>
         <div class="course-record">
-            <div class="course-num"><span>x</span> 个课程</div>
-            <div class="learned-num"><span>xxxx</span> 个同学学习</div>
+            <div class="course-num"><span>{{ c.clip|count }}</span> 个课程</div>
+            <div class="learned-num"><span>xxx</span> 个同学学习</div>
         </div>
         <div class="shadow"></div>
     </div>

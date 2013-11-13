@@ -5,8 +5,9 @@
     <div id="category_list">
         <ul>
             <li><a href="{{ url_for('course.courses')}}">课程库</a></li>
-            <li><a href="{{url_for('course.subject', sid=2)}}">Subject</a></li>
-            <li><a>Category</a></li>
+            <li><a href="{{url_for('course.subject', sid=this_course.category.subject.id)}}">{{ this_course.category.subject.name }}</a></li>
+            <li><a href="{{ url_for('course.category', sid=this_course.category.id, cid=this_course.category.id)}}">{{ this_course.category.name }}</a></li>
+            <li><a>{{ this_course.name }}</a></li>
         </ul>
     </div>
 
@@ -16,26 +17,29 @@
                 <div class="course-box">
                     <div class="course-info">
                         <div class="icon">
-                            <img src="http://itercast.com/assets/icons/course-01.png" />
+                            <img src="{{ this_course.logo_url }}" />
                         </div>
                         <div class="course-title">
-                            Linux基本操作
+                            {{ this_course.name }}
                         </div>
                         <div class="course-description">
-                            <p>课程包含Linux安装，图形界面下的基本使用...</p>
+                            <p>{{ this_course.description }}</p>
                         </div>
                     </div>
                     <div class="course-record">
-                        <div class="course-num"><span>x</span> 个课程</div>
+                        <div class="course-num"><span>{{ this_course.clip|count }}</span> 个课程</div>
                         <div class="learned-num"><span>xxxx</span> 个同学学习</div>
                     </div>
                     <div class="shadow"></div>
                 </div>
             </div>
         </div>
+
         视频列表
         <div id="clip-list">
-            <a href="{{ url_for('course.clip', clip_id=3) }}">{% include 'clip_box.html' %}</a>
+            {% for clip in this_course.clip %}
+            <a href="{{ url_for('course.clip', clip_id=clip.id) }}">{% include 'clip_box.html' %}</a>
+            {% endfor %}
         </div>
     </div>
 
