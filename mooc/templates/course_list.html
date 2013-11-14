@@ -28,7 +28,7 @@
                     </div>
                     <div class="course-record">
                         <div class="course-num"><span>{{ this_course.clip|count }}</span> 个课程</div>
-                        <div class="learned-num"><span>xxxx</span> 个同学学习</div>
+                        <div class="learned-num"><span>{{ this_course|learn_count }}</span> 个同学学习</div>
                     </div>
                     <div class="shadow"></div>
                 </div>
@@ -37,7 +37,7 @@
 
         视频列表
         <div id="clip-list">
-            {% for clip in this_course.clip %}
+            {% for clip in clips %}
             <a href="{{ url_for('course.clip', clip_id=clip.id) }}">{% include 'clip_box.html' %}</a>
             {% endfor %}
         </div>

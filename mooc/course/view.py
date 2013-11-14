@@ -29,11 +29,15 @@ def category(sid, cid):
 @course_app.route('/course/<course_id>')
 def course(course_id):
     this_course = Course.query.get(course_id)
-    return render_template('course_list.html', this_course=this_course)
+    clips = (Clip.query.filter_by(course_id=course_id)
+                 .order_by(Clip.order).all())
+    return render_template('course_list.html',
+                           this_course=this_course, clips=clips)
 
 
 @course_app.route('/lecture/<clip_id>')
 def clip(clip_id):
     clip = Clip.query.get(clip_id)
-    who_is_learning = LearnRecord.query.filter_by(clip_id=clip_id).limit(10).all()
+    who_is_learning = (LearnRecord.query.filter_by(clip_id=clip_id)
+                                  .limit(10).all())
     return render_template('clip.html', clip=clip, learning=who_is_learning)
