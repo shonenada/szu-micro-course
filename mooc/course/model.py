@@ -59,13 +59,14 @@ class Course(db.Model):
 
     __tablename__ = 'course'
 
-    STATE_VALUES = ('finished', 'updating', 'coming')
+    COURSE_STATE_VALUES = ('finished', 'updating', 'coming')
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30))
     description = db.Column(db.Text)
-    _state = db.Column('state', db.Enum(name='course_state', *STATE_VALUES))
-    state = enumdef('_state', STATE_VALUES)
+    _state = db.Column('state', db.Enum(name='course_state',
+                                        *COURSE_STATE_VALUES))
+    state = enumdef('_state', COURSE_STATE_VALUES)
     logo_url = db.Column(db.String(50))
     created = db.Column(db.DateTime, default=datetime.utcnow())
     author_id = db.Column(db.Integer, db.ForeignKey('account.id'))
@@ -74,9 +75,10 @@ class Course(db.Model):
     tags = db.relationship('CourseTag', secondary=course_tags,
                            backref=db.backref('course', lazy='dynamic'))
 
-    def __init__(self, name, description, logo_url, state=None):
+    def __init__(self, name, description, author_id, logo_url, state=None):
         self.name = name
         self.description = description
+        self.author_id = author_id
         self.created = datetime.utcnow()
         self.logo_url = logo_url
         self.state = state if state else 'coming'
@@ -89,6 +91,8 @@ class Clip(db.Model):
     """Model of Course"""
 
     __tablename__ = 'clip'
+
+    CLIP_STATE_VALUES = ('published', 'unpublished', 'recording')
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20))
@@ -103,10 +107,12 @@ class Clip(db.Model):
     upload_time = db.Column(db.DateTime)
     clip_url = db.Column(db.String(150))
     clip_last = db.Column(db.String(30))
-    published = db.Column(db.Boolean, default=False)
+    _state = db.Column('state', db.Enum(name='clip_state', *CLIP_STATE_VALUES))
+    state = enumdef('_state', CLIP_STATE_VALUES)
     read_count = db.Column(db.Integer, default=0)
     order = db.Column(db.Integer, default=1)
     play_count = db.Column(db.Integer, default=0)
+    author_id = db.Column(db.Integer, db.ForeignKey('account.id'))
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'))
     college_id = db.Column(db.Integer, db.ForeignKey('college.id'))
     teacher_id = db.Column(db.Integer, db.ForeignKey('teacher.id'))

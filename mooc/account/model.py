@@ -27,9 +27,9 @@ class Account(db.Model):
     short_phone = db.Column(db.String(6), unique=hashed_True)
     qq = db.Column(db.String(15), unique=True)
     avatar = db.Column(db.String(250))
-    created = db.Column(db.DateTime, default=datetime.now)
+    created = db.Column(db.DateTime, default=datetime.utcnow())
+    last_login = db.Column(db.DateTime, default=datetime.utcnow())
     last_ip = db.Column(db.String(40))
-    last_login = db.Column(db.DateTime, default=datetime.now)
     salt = db.Column(db.String(32), nullable=False)
     _account_type = db.Column('account_tpye',
                               db.Enum(name='account_type', *TYPE_VALUES))
@@ -46,6 +46,8 @@ class Account(db.Model):
                              uselist=True, lazy='dynamic')
     course = db.relationship("Course", backref='author',
                              uselist=True, lazy='dynamic')
+    clip = db.relationship("Clip", backref='author',
+                           uselist=True, lazy='dynamic')
     up_down_record = db.relationship('UpDownRecord', backref='author',
                                      uselist=True, lazy='dynamic')
 
@@ -55,6 +57,8 @@ class Account(db.Model):
         self.stu_number = stu_number
         self.hashed_password = set_passwd(raw_password)
         self.nickname = nickname
+        self.created = datetime.utcnow()
+        self.last_login = datetime.utcnow()
         self.set_account_type(user_type)
         self.state = 'unactivated'
 
