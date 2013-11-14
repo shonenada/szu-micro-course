@@ -102,14 +102,18 @@ class College(db.Model):
     __tablename__ = 'college'
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(20), unique=True)
+    name = db.Column(db.String(20), unique=True, nullable=True)
     order = db.Column(db.Integer)
     account_id = db.Column(db.Integer, db.ForeignKey('account.id'))
     clip = db.relationship('Clip', backref='college',
                            lazy='dynamic', uselist=True)
 
-    def __init__(self):
-        pass
+    def __init__(self, name, order=None):
+        self.name = name
+        self.order = order if order else 9999
+
+    def __repr__(self):
+        return "<College %s, %d>" % (self.name, self.order)
 
 
 class Teacher(db.Model):
