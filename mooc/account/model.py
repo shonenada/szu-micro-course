@@ -30,18 +30,18 @@ class User(db.Model):
     salt = db.Column(db.String(32), nullable=False)
     _state = db.Column('state', db.Enum(name='user_state', *USER_STATE_VALUES))
     state = enumdef('_state', USER_STATE_VALUES)
-    learn_record = db.relationship('LearnRecord', backref='szu_account',
-                                   uselist=True)
-    question = db.relationship('Question', backref='author',
-                               uselist=True, lazy='dynamic')
-    answer = db.relationship('Answer', backref='author',
-                             uselist=True, lazy='dynamic')
-    course = db.relationship("Course", backref='author',
-                             uselist=True, lazy='dynamic')
-    clip = db.relationship("Clip", backref='author',
-                           uselist=True, lazy='dynamic')
-    up_down_record = db.relationship('UpDownRecord', backref='author',
-                                     uselist=True, lazy='dynamic')
+    learn_records = db.relationship('LearnRecord', backref='user',
+                                    uselist=True)
+    questions = db.relationship('Question', backref='author',
+                                uselist=True, lazy='dynamic')
+    answers = db.relationship('Answer', backref='author',
+                              uselist=True, lazy='dynamic')
+    courses = db.relationship("Course", backref='author',
+                              uselist=True, lazy='dynamic')
+    clips = db.relationship("Clip", backref='author',
+                            uselist=True, lazy='dynamic')
+    up_down_records = db.relationship('UpDownRecord', backref='user',
+                                      uselist=True, lazy='dynamic')
 
     def __init__(self, username, raw_passwd, nickname, is_male=True):
         self.username = username
@@ -98,7 +98,8 @@ class SzuAccount(db.Model):
     short_phone = db.Column(db.String(6), unique=True)
     szu_account_type = enumdef('_szu_account_type', TYPE_VALUES)
     _szu_account_type = db.Column('szu_account_tpye',
-                              db.Enum(name='szu_account_type', *TYPE_VALUES))
+                                  db.Enum(name='szu_account_type',
+                                  *TYPE_VALUES))
     college = db.relationship("College", backref='szu_account', uselist=False)
     teacher = db.relationship("Teacher", backref='szu_account', uselist=False)
 
@@ -129,8 +130,8 @@ class College(db.Model):
     name = db.Column(db.String(20), unique=True, nullable=True)
     order = db.Column(db.Integer)
     szu_account_id = db.Column(db.Integer, db.ForeignKey('szu_account.id'))
-    clip = db.relationship('Clip', backref='college',
-                           lazy='dynamic', uselist=True)
+    clips = db.relationship('Clip', backref='college',
+                            lazy='dynamic', uselist=True)
 
     def __init__(self, name, order=None):
         self.name = name
@@ -148,13 +149,13 @@ class Teacher(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(10))
     description = db.Column(db.Text)
-    clip = db.relationship('Clip', backref='teacher', lazy='dynamic')
+    clips = db.relationship('Clip', backref='teacher', lazy='dynamic')
     szu_account_id = db.Column(db.Integer, db.ForeignKey('szu_account.id'))
 
-    def __init__(self, title, description, szu_account_id):
+    def __init__(self, title, description, szu_account):
         self.title = title
         self.description = description
-        self.szu_account_id = szu_account_id
+        self.szu_account = szu_account
 
     def __repr__(self):
         return "<Teacher %s>" % (self.szu_account_id)

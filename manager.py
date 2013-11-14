@@ -28,7 +28,7 @@ def check():
 
 
 @manager.command
-def syncdb():
+def createdb():
     with application.test_request_context():
         # import all Models here
         from mooc.account.model import User, SzuAccount, College, Teacher
@@ -37,7 +37,22 @@ def syncdb():
                                        clip_tags, course_tags)
         from mooc.qa.model import UpDownRecord, Answer, Question
         db.create_all()
-    print 'Finished!'
+    print 'Created Database!'
+
+
+@manager.command
+def initdb():
+    with application.test_request_context():
+        # Initial data for test
+        from fixture import init_db
+        init_db()
+    print "Initialized Database!"
+
+
+@manager.command
+def syncdb():
+    createdb()
+    initdb()
 
 
 if __name__ == '__main__':

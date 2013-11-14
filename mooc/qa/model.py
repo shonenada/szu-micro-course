@@ -13,13 +13,13 @@ class UpDownRecord(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     up_or_down = db.Column(db.Integer, nullable=False)
     craeted = db.Column(db.DateTime, default=datetime.utcnow())
-    author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     answer = db.relationship('Answer', backref=db.backref('up_down_record'),
                              uselist=False)
 
-    def __init__(self, author_id, up_or_down):
+    def __init__(self, user, up_or_down):
         self.created = datetime.utcnow()
-        self.author_id = author_id
+        self.user = user
         if up_or_down in (TYPE_UP, TYPE_DOWN):
             self.up_or_down = up_or_down
         else:
@@ -43,15 +43,15 @@ class Answer(db.Model):
     up_down_record_id = db.Column(db.Integer,
                                   db.ForeignKey('up_down_record.id'))
 
-    def __init__(self, content, question_id, clip_id, author_id, parent_id=0):
+    def __init__(self, content, question, clip, author, parent=None):
         self.content = content
-        self.question_id = question_id
-        self.clip_id = clip_id
-        self.author_id = author_id
-        self.parent_id = parent_id
-        self.created = datetime.utcnow()
+        self.question = question
+        self.clip = clip
+        self.author = author
+        self.parent = parent
         self.up_count = 0
         self.down_count = 0
+        self.created = datetime.utcnow()
         edit_time = datetime.utcnow()
 
 
@@ -68,14 +68,14 @@ class Question(db.Model):
     up_count = db.Column(db.Integer, default=0)
     clip_id = db.Column(db.Integer, db.ForeignKey('clip.id'))
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    answer = db.relationship('Answer', backref='question', lazy='dynamic')
+    answers = db.relationship('Answer', backref='question', lazy='dynamic')
 
-    def __init__(self, title, content, clip_id, author_id):
+    def __init__(self, title, content, clip, author):
         self.title = title
         self.content = content
-        self.clip_id = clip_id
-        self.author_id = author_id
+        self.clip = clip
+        self.author = author
+        self.up_count = 0
+        self.read_count = 0
         self.created = datetime.utcnow()
         self.edit_time = datetime.utcnow()
-        self.read_count = 0
-        self.up_count = 0
