@@ -30,10 +30,22 @@ class User(db.Model):
     salt = db.Column(db.String(32), nullable=False)
     _state = db.Column('state', db.Enum(name='user_state', *USER_STATE_VALUES))
     state = enumdef('_state', USER_STATE_VALUES)
+    learn_record = db.relationship('LearnRecord', backref='szu_account',
+                                   uselist=True)
+    question = db.relationship('Question', backref='author',
+                               uselist=True, lazy='dynamic')
+    answer = db.relationship('Answer', backref='author',
+                             uselist=True, lazy='dynamic')
+    course = db.relationship("Course", backref='author',
+                             uselist=True, lazy='dynamic')
+    clip = db.relationship("Clip", backref='author',
+                           uselist=True, lazy='dynamic')
+    up_down_record = db.relationship('UpDownRecord', backref='author',
+                                     uselist=True, lazy='dynamic')
 
     def __init__(self, username, raw_passwd, nickname, is_male=True):
         self.username = username
-        self.hashed_password = self.set_passwd(raw_passwd)
+        self.set_passwd(raw_passwd)
         self.nickname = nickname
         self.is_male = is_male
         self.created = datetime.utcnow()
@@ -47,8 +59,8 @@ class User(db.Model):
         return "<User:%s(%s)>" % (self.username, self.nickname)
 
     def set_passwd(self, raw_passwd):
-        self.salt = uuid4.hex
-        self.hashed_password = hash_password(self.salt, raw_passwd)
+        self.salt = uuid4().hex
+        self.hashed_password = self._hash_password(self.salt, raw_passwd)
 
     def active(self):
         self._transform_state(from_state='unactivated', to_state='normal')
@@ -60,7 +72,7 @@ class User(db.Model):
         self._transform_state(from_state='frozen', to_state='normal')
 
     @staticmethod
-    def hash_password(salt, password):
+    def _hash_password(salt, password):
         hashed = sha256()
         hashed.update("<%s|%s>" % (salt, password))
         return hashed.hexdigest()
@@ -89,23 +101,13 @@ class SzuAccount(db.Model):
                               db.Enum(name='szu_account_type', *TYPE_VALUES))
     college = db.relationship("College", backref='szu_account', uselist=False)
     teacher = db.relationship("Teacher", backref='szu_account', uselist=False)
-    learn_record = db.relationship('LearnRecord', backref='szu_account',
-                                   uselist=True)
-    question = db.relationship('Question', backref='author',
-                               uselist=True, lazy='dynamic')
-    answer = db.relationship('Answer', backref='author',
-                             uselist=True, lazy='dynamic')
-    course = db.relationship("Course", backref='author',
-                             uselist=True, lazy='dynamic')
-    clip = db.relationship("Clip", backref='author',
-                           uselist=True, lazy='dynamic')
-    up_down_record = db.relationship('UpDownRecord', backref='author',
-                                     uselist=True, lazy='dynamic')
 
-    def __init__(self, user, card_id, stu_number, szu_account_type):
+
+    def __init__(self, user, card_id, stu_number, college, szu_account_type):
         self.user = user
         self.card_id = card_id
         self.stu_number = stu_number
+        self.college = college
         self.set_account_type(szu_account_type)
 
     def __repr__(self):

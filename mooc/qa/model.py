@@ -13,7 +13,7 @@ class UpDownRecord(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     up_or_down = db.Column(db.Integer, nullable=False)
     craeted = db.Column(db.DateTime, default=datetime.utcnow())
-    author_id = db.Column(db.Integer, db.ForeignKey('account.id'))
+    author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     answer = db.relationship('Answer', backref=db.backref('up_down_record'),
                              uselist=False)
 
@@ -38,7 +38,7 @@ class Answer(db.Model):
     edit_time = db.Column(db.DateTime, default=datetime.utcnow())
     question_id = db.Column(db.Integer, db.ForeignKey('question.id'))
     clip_id = db.Column(db.Integer, db.ForeignKey('clip.id'))
-    author_id = db.Column(db.Integer, db.ForeignKey('account.id'))
+    author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     parent_id = db.Column(db.Integer)
     up_down_record_id = db.Column(db.Integer,
                                   db.ForeignKey('up_down_record.id'))
@@ -67,7 +67,7 @@ class Question(db.Model):
     read_count = db.Column(db.Integer, default=0)
     up_count = db.Column(db.Integer, default=0)
     clip_id = db.Column(db.Integer, db.ForeignKey('clip.id'))
-    author_id = db.Column(db.Integer, db.ForeignKey('account.id'))
+    author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     answer = db.relationship('Answer', backref='question', lazy='dynamic')
 
     def __init__(self, title, content, clip_id, author_id):
