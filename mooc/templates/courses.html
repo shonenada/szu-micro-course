@@ -12,16 +12,16 @@
 
 {% block left %}
     <div id="left">
-        {% for s in subjects %}
+        {% for subject in subjects %}
         <div class="course-category">
-            {% for cat in s.category %}
+            {% for cat in subject.categorys %}
             <span class="course-category-title">
-                <a href="{{ url_for('course.category', sid=s.id, cid=cat.id) }}">
+                <a href="{{ url_for('course.category', sid=subject.id, cid=cat.id) }}">
                     {{cat.name}}
                 </a>
             </span>
-            {% for c in cat.course %}
-            <a href="{{ url_for('course.course', course_id=c.id) }}">
+            {% for course in cat.courses %}
+            <a href="{{ url_for('course.course', course_id=course.id) }}">
                 {% include 'course_box.html' %}
             </a>
             {% endfor %}

@@ -1,21 +1,25 @@
         <div id="right">
-            {% if learn_record %}
+            {% if learn_records %}
             <div class="info-wraper">
                 <div id="learn-act" class="info-box">
                     <div class="title">
                         学习动态
                     </div>
                     <div class="content">
-                        {% for r in learn_record %}
+                        {% for record in learn_records %}
                         <div class="content-list">
                             <div class="icon">
-                                <img src="{{ r.author.avatar }}">
+                                <img src="{{ record.user.avatar }}">
                             </div>
                             <div class="tip">
-                                <span class="tip-text username">{{ r.author.nickname }}</span>
-                                <span class="tip-text time">{{ r.created }}分钟前</span>
+                                <span class="tip-text username">{{ record.user.nickname }}</span>
+                                <span class="tip-text time">{{ record.created | friendly_time }}</span>
                                 <span class="tip-text">学习了</span>
-                                <span class="course-name">{{ r.clip.name }}</span>
+                                <span class="course-name">
+                                    <a href="{{ url_for('course.clip', clip_id=record.clip.id) }}">
+                                    {{ record.clip.name }}
+                                    </a>
+                                </span>
                             </div>
                         </div>
                         {% endfor %}
@@ -26,21 +30,21 @@
             </div>
             {% endif %}
 
-            {% if last_clip %}
+            {% if last_clips %}
             <div class="info-wraper">
                 <div id="last-course" class="info-box">
                     <div class="title">
                         最新课程
                     </div>
                     <div class="content">
-                        {% for lc in last_clip %}
+                        {% for lc in last_clips %}
                         <div class="content-list">
                             <div class="icon">
                                 <img src="{{ lc.course.logo_url }}">
                             </div>
                             <div class="tip">
-                                <span class="tip-text username">{{ lc.course.author.name }}</span>
-                                <span class="tip-text time">{{ lc.upload_time | friendly_date }}</span>
+                                <span class="tip-text username">{{ lc.course.author.nickname }}</span>
+                                <span class="tip-text time">{{ lc.upload_time | friendly_time }}</span>
                                 <span class="tip-text">添加了</span>
                                 <span class="course-name">
                                     <a href="{{ url_for('course.clip', clip_id=lc.id) }}">

@@ -223,7 +223,6 @@
                             height: 40px;
 
                         & .tip
-                            float: left;
                             
                             & .tip-text
                                 font-size: 14px;
@@ -340,6 +339,7 @@
             -webkit-border-top-left-radius: 0px;
             -moz-border-radius-topleft: 0px;
             border-top-left-radius: 0px;
+            text-indent: 1em;
 
         & #clip-info-right
             float: right;
@@ -368,6 +368,9 @@
                     clear: both;
                     overflow: hidden;
 
+                    &:last-child
+                        margin-bottom: 0px;
+
                     & .icon
                         float: left;
 
@@ -376,8 +379,7 @@
                         height: 40px;
 
                     & .tip
-                        float: left;
-                        margin-left: 5px;
+                        margin-left: 50px;
                         
                         & .tip-text
                             font-size: 14px;
