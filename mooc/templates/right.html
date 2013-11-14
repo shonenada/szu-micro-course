@@ -12,9 +12,11 @@
                                 <img src="{{ record.user.avatar }}">
                             </div>
                             <div class="tip">
+                                <div>
                                 <span class="tip-text username">{{ record.user.nickname }}</span>
                                 <span class="tip-text time">{{ record.created | friendly_time }}</span>
                                 <span class="tip-text">学习了</span>
+                                </div>
                                 <span class="course-name">
                                     <a href="{{ url_for('course.clip', clip_id=record.clip.id) }}">
                                     {{ record.clip.name }}
@@ -43,9 +45,11 @@
                                 <img src="{{ lc.course.logo_url }}">
                             </div>
                             <div class="tip">
+                                <div>
                                 <span class="tip-text username">{{ lc.course.author.nickname }}</span>
                                 <span class="tip-text time">{{ lc.upload_time | friendly_time }}</span>
                                 <span class="tip-text">添加了</span>
+                                </div>
                                 <span class="course-name">
                                     <a href="{{ url_for('course.clip', clip_id=lc.id) }}">
                                         {{ lc.name }}

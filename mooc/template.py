@@ -5,6 +5,7 @@ from mooc.course.service import learn_count
 _filters = {
     'friendly_time': friendly_time,
     'learn_count': learn_count,
+    'enumerate': (lambda x: enumerate(x)),
 }
 
 
