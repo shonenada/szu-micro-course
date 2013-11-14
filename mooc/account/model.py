@@ -24,7 +24,7 @@ class Account(db.Model):
     gender = db.Column(db.Boolean, default=True)
     email = db.Column(db.String(50), unique=True)
     phone = db.Column(db.String(11), unique=True)
-    short_phone = db.Column(db.String(6), unique=hashed_True)
+    short_phone = db.Column(db.String(6), unique=True)
     qq = db.Column(db.String(15), unique=True)
     avatar = db.Column(db.String(250))
     created = db.Column(db.DateTime, default=datetime.utcnow())
@@ -90,7 +90,7 @@ class Account(db.Model):
     @staticmethod
     def hash_password(salt, password):
         hashed = sha256()
-        hashed.update("<%s|%s>", % (salt, password))
+        hashed.update("<%s|%s>" % (salt, password))
         return hashed.hexdigest()
 
     def _transform_state(self, from_state, to_state):
