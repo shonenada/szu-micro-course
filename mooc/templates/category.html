@@ -10,8 +10,8 @@
     </div>
     <div class="course-category">
         <span class="course-category-title">{{ this_category.name }}</span>
-        {% for c in this_category.course %}
-        <a href="{{ url_for('course.course', course_id=c.id) }}">
+        {% for course in this_category.courses %}
+        <a href="{{ url_for('course.course', course_id=course.id) }}">
             {% include 'course_box.html' %}
         </a>
         {% endfor %}

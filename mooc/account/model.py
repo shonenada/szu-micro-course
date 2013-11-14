@@ -2,6 +2,8 @@ from uuid import uuid4
 from hashlib import sha256
 from datetime import datetime
 
+from flask import url_for
+
 from mooc.app import db
 from mooc.utils import enumdef
 from mooc.exception import UserStateException
@@ -51,6 +53,7 @@ class User(db.Model):
         self.created = datetime.utcnow()
         self.last_login = datetime.utcnow()
         self.state = 'unactivated'
+        self.avatar = url_for('static', filename='images/default_avatar.png')
 
     def __unicode__(self):
         return self.nickname

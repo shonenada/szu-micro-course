@@ -13,8 +13,8 @@
     {% for s in subjects %}
     <div class="course-category">
         <span class="course-category-title"><a href="{{ url_for('course.subject', sid=s.id) }}">{{ s.name }}</a></span>
-        {% for c in s.category[0].course %}
-        <a href="{{ url_for('course.course', course_id=c.id) }}">{% include 'course_box.html' %}</a>
+        {% for course in s.categorys[0].courses %}
+        <a href="{{ url_for('course.course', course_id=course.id) }}">{% include 'course_box.html' %}</a>
         {% endfor %}
     </div>
     {% endfor %}

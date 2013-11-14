@@ -7,15 +7,16 @@
             <li><a>{{ this_subject.name }}</a></li>
         </ul>
     </div>
-    {% for cat in this_subject.category %}
+    {% for cat in this_subject.categorys %}
     <div class="course-category">
         <span class="course-category-title">
-            <a href="{{ url_for('course.category', sid=cat.subject.id, cid=cat.id) }}">   {{cat.name}}
+            <a href="{{ url_for('course.category', sid=cat.subject.id, cid=cat.id) }}">
+            {{ cat.name }}
             </a>
         </span>
         <a href="{{ url_for('course.category', sid=this_subject.id, cid=cat.id) }}">
-            {% for c in cat.course %}
-            <a href="{{ url_for('course.course', course_id=c.id) }}">
+            {% for course in cat.courses %}
+            <a href="{{ url_for('course.course', course_id=course.id) }}">
                 {% include 'course_box.html' %}
             </a>
             {% endfor %}

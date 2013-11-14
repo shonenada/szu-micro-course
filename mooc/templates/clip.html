@@ -2,7 +2,7 @@
 
 {% block left %}
 <div id="player">
-    <video src="{{ clip.clip_url }}" controls="controls">
+    <video src="{{ clip.video_url }}" controls="controls">
         Your browser does not support the video tag.
     </video>
 </div>
@@ -34,7 +34,7 @@
         </div>
 
         <div id="clip-tips">
-        <p>{{ clip.prepare_knowledge }}</p>
+        <p>{{ clip.knowledge_point|safe }}</p>
         </div>
         <div class="shadow"></div>
 
@@ -47,11 +47,11 @@
                 {% for l in learning %}
                 <div class="content-list">
                     <div class="icon">
-                        <img src="{{ l.author.avatar }}">
+                        <img src="{{ l.user.avatar }}">
                     </div>
                     <div class="tip">
-                        <span class="tip-text username">{{ l.author.nickname }}</span>
-                        <span class="tip-text time">{{ l.created | friendly_date }}</span>
+                        <span class="tip-text username">{{ l.user.nickname }}</span>
+                        <span class="tip-text time">{{ l.created | friendly_time }}</span>
                         <span class="tip-text">学习了</span>
                         <span class="course-name">{{ l.clip.name }}</span>
                     </div>
