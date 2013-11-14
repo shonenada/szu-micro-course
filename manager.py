@@ -31,7 +31,7 @@ def check():
 def syncdb():
     with application.test_request_context():
         # import all Models here
-        from mooc.account.model import Account, College, Teacher
+        from mooc.account.model import User, SzuAccount, College, Teacher
         from mooc.course.model import (Subject, Category, Course, Clip,
                                        LearnRecord, ClipTag, CourseTag,
                                        clip_tags, course_tags)
