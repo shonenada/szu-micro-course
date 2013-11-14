@@ -126,3 +126,11 @@ class Teacher(db.Model):
     description = db.Column(db.Text)
     clip = db.relationship('Clip', backref='teacher', lazy='dynamic')
     account_id = db.Column(db.Integer, db.ForeignKey('account.id'))
+
+    def __init__(self, title, description, account_id):
+        self.title = title
+        self.description = description
+        self.account_id = account_id
+
+    def __repr__(self):
+        return "<Teacher %s>" % (self.account_id)
