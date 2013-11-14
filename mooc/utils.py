@@ -2,8 +2,8 @@
 from datetime import datetime
 
 
-def friendly_date(time):
-    now = datetime.now()
+def friendly_time(time):
+    now = datetime.utcnow()
     if type(time) is datetime:
         diff = now - time
     elif not time:

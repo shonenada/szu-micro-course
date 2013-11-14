@@ -1,9 +1,9 @@
-from mooc.utils import friendly_date
+from mooc.utils import friendly_time
 from mooc.course.service import learn_count
 
 
 _filters = {
-    'friendly_date': friendly_date,
+    'friendly_time': friendly_time,
     'learn_count': learn_count,
 }
 
