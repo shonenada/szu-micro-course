@@ -44,13 +44,11 @@ class Category(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20))
-    description = db.Column(db.Text)
     subject_id = db.Column(db.Integer, db.ForeignKey('subject.id'))
     courses = db.relationship('Course', backref='category', lazy='dynamcic')
 
-    def __init__(self, name, description, subject):
+    def __init__(self, name, subject):
         self.name = name
-        self.description = description
         self.subject = subject
 
     def __repr__(self):
