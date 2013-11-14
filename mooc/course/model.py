@@ -26,7 +26,7 @@ class Subject(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20))
     description = db.Column(db.Text)
-    category = db.relationship('Category', backref='subject', lazy='dynamic')
+    categorys = db.relationship('Category', backref='subject', lazy='dynamic')
 
     def __init__(self, name, description):
         self.name = name
@@ -44,12 +44,12 @@ class Category(db.Model):
     name = db.Column(db.String(20))
     description = db.Column(db.Text)
     subject_id = db.Column(db.Integer, db.ForeignKey('subject.id'))
-    course = db.relationship('Course', backref='category', lazy='dynamcic')
+    courses = db.relationship('Course', backref='category', lazy='dynamcic')
 
-    def __init__(self, name, description, subject_id):
+    def __init__(self, name, description, subject):
         self.name = name
         self.description = description
-        self.subject_id = subject_id
+        self.subject = subject
 
     def __repr__(self):
         return "<Category %s>" % self.name
@@ -72,15 +72,15 @@ class Course(db.Model):
     created = db.Column(db.DateTime, default=datetime.utcnow())
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
-    clip = db.relationship('Clip', backref=db.backref('course'), uselist=True)
+    clips = db.relationship('Clip', backref=db.backref('course'), uselist=True)
     tags = db.relationship('CourseTag', secondary=course_tags,
                            backref=db.backref('course', lazy='dynamic'))
 
-    def __init__(self, name, description, author_id, category_id, logo_url):
+    def __init__(self, name, description, author, category, logo_url):
         self.name = name
         self.description = description
-        self.author_id = author_id
-        self.category_id = category_id
+        self.author = author
+        self.category = category
         self.created = datetime.utcnow()
         self.logo_url = logo_url
 
@@ -126,21 +126,21 @@ class Clip(db.Model):
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'))
     college_id = db.Column(db.Integer, db.ForeignKey('college.id'))
     teacher_id = db.Column(db.Integer, db.ForeignKey('teacher.id'))
-    learn_record = db.relationship('LearnRecord', backref=db.backref('clip'),
-                                   uselist=True, lazy='dynamic')
-    question = db.relationship('Question', backref=db.backref('clip'),
-                             uselist=True, lazy='dynamic')
-    answer = db.relationship('Answer', backref=db.backref('clip'),
-                             uselist=True, lazy='dynamic')
+    learn_records = db.relationship('LearnRecord', backref=db.backref('clip'),
+                                    uselist=True, lazy='dynamic')
+    questions = db.relationship('Question', backref=db.backref('clip'),
+                                uselist=True, lazy='dynamic')
+    answers = db.relationship('Answer', backref=db.backref('clip'),
+                              uselist=True, lazy='dynamic')
     tags = db.relationship('ClipTag', secondary=clip_tags,
                            backref=db.backref('clip'))
 
-    def __init__(self, name, description, author_id, course_id,
-                 order=None, published=False):
+    def __init__(self, name, description, author, course, order=None,
+                 published=False):
         self.name = name
         self.description = description
-        self.author_id = author_id
-        self.course_id = course_id
+        self.author = author
+        self.course = course
         self.published = published
         self.order = order if order else 9999
         self.created = datetime.utcnow()
@@ -161,9 +161,9 @@ class LearnRecord(db.Model):
     clip_id = db.Column(db.Integer, db.ForeignKey('clip.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
-    def __init__(self, clip_id, user_id):
-        self.clip_id = clip_id
-        self.user_id = user_id
+    def __init__(self, clip, user):
+        self.clip = clip
+        self.user = user
         self.star_count = 0
         self.created = datetime.utcnow()
 
