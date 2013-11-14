@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from mooc.app import db
-from mooc.account.model import Account
+from mooc.account.model import SzuAccount
 from mooc.qa.model import Question
 from mooc.utils import enumdef
 
@@ -70,19 +70,28 @@ class Course(db.Model):
     state = enumdef('_state', COURSE_STATE_VALUES)
     logo_url = db.Column(db.String(50))
     created = db.Column(db.DateTime, default=datetime.utcnow())
-    author_id = db.Column(db.Integer, db.ForeignKey('account.id'))
+    author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
     clip = db.relationship('Clip', backref=db.backref('course'), uselist=True)
     tags = db.relationship('CourseTag', secondary=course_tags,
                            backref=db.backref('course', lazy='dynamic'))
 
-    def __init__(self, name, description, author_id, logo_url, state=None):
+    def __init__(self, name, description, author_id, category_id, logo_url):
         self.name = name
         self.description = description
         self.author_id = author_id
+        self.category_id = category_id
         self.created = datetime.utcnow()
         self.logo_url = logo_url
-        self.state = state if state else 'coming'
+
+    def set_finished(self):
+        self.state = 'finished'
+
+    def set_updating(self):
+        self.state = 'updating'
+
+    def set_coming(self):
+        self.state = 'coming'
 
     def __repr__(self):
         return "<Course %s>" % self.name
@@ -113,7 +122,7 @@ class Clip(db.Model):
     read_count = db.Column(db.Integer, default=0)
     order = db.Column(db.Integer, default=1)
     play_count = db.Column(db.Integer, default=0)
-    author_id = db.Column(db.Integer, db.ForeignKey('account.id'))
+    author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'))
     college_id = db.Column(db.Integer, db.ForeignKey('college.id'))
     teacher_id = db.Column(db.Integer, db.ForeignKey('teacher.id'))
@@ -126,14 +135,17 @@ class Clip(db.Model):
     tags = db.relationship('ClipTag', secondary=clip_tags,
                            backref=db.backref('clip'))
 
-    def __init__(self, name, description, order=None, published=False):
+    def __init__(self, name, description, author_id, course_id,
+                 order=None, published=False):
         self.name = name
         self.description = description
+        self.author_id = author_id
+        self.course_id = course_id
+        self.published = published
+        self.order = order if order else 9999
         self.created = datetime.utcnow()
         self.read_count = 0
         self.play_count = 0
-        self.published = published
-        self.order = order if order else 9999
 
     def __repr__(self):
         return "<Clip %s>" % self.name
@@ -147,11 +159,11 @@ class LearnRecord(db.Model):
     created = db.Column(db.DateTime, default=datetime.utcnow())
     star_count = db.Column(db.Integer, default=0)
     clip_id = db.Column(db.Integer, db.ForeignKey('clip.id'))
-    account_id = db.Column(db.Integer, db.ForeignKey('account.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
-    def __init__(self, clip_id, account_id):
+    def __init__(self, clip_id, user_id):
         self.clip_id = clip_id
-        self.account_id = account_id
+        self.user_id = user_id
         self.star_count = 0
         self.created = datetime.utcnow()
 
