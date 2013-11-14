@@ -3,6 +3,7 @@ from datetime import datetime
 from mooc.app import db
 from mooc.account.model import Account
 from mooc.qa.model import Question
+from mooc.utils import enumdef
 
 
 clip_tags = db.Table(
@@ -27,6 +28,13 @@ class Subject(db.Model):
     description = db.Column(db.Text)
     category = db.relationship('Category', backref='subject', lazy='dynamic')
 
+    def __init__(self, name, description):
+        self.name = name
+        self.description = description
+
+    def __repr__(self):
+        return "<Subject %s>" % self.name
+
 
 class Category(db.Model):
 
@@ -38,23 +46,46 @@ class Category(db.Model):
     subject_id = db.Column(db.Integer, db.ForeignKey('subject.id'))
     course = db.relationship('Course', backref='category', lazy='dynamcic')
 
+    def __init__(self, name, description, subject_id):
+        self.name = name
+        self.description = description
+        self.subject_id = subject_id
+
+    def __repr__(self):
+        return "<Category %s>" % self.name
+
 
 class Course(db.Model):
     """Model of Course"""
 
     __tablename__ = 'course'
 
+    COURSE_STATE_VALUES = ('finished', 'updating', 'coming')
+
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30))
     description = db.Column(db.Text)
-    status = db.Column(db.Integer)
+    _state = db.Column('state', db.Enum(name='course_state',
+                                        *COURSE_STATE_VALUES))
+    state = enumdef('_state', COURSE_STATE_VALUES)
     logo_url = db.Column(db.String(50))
-    created = db.Column(db.DateTime, default=datetime.now)
+    created = db.Column(db.DateTime, default=datetime.utcnow())
     author_id = db.Column(db.Integer, db.ForeignKey('account.id'))
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
     clip = db.relationship('Clip', backref=db.backref('course'), uselist=True)
     tags = db.relationship('CourseTag', secondary=course_tags,
                            backref=db.backref('course', lazy='dynamic'))
+
+    def __init__(self, name, description, author_id, logo_url, state=None):
+        self.name = name
+        self.description = description
+        self.author_id = author_id
+        self.created = datetime.utcnow()
+        self.logo_url = logo_url
+        self.state = state if state else 'coming'
+
+    def __repr__(self):
+        return "<Course %s>" % self.name
 
 
 class Clip(db.Model):
@@ -62,8 +93,11 @@ class Clip(db.Model):
 
     __tablename__ = 'clip'
 
+    CLIP_STATE_VALUES = ('published', 'unpublished', 'recording')
+
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20))
+    created = db.Column(db.DateTime, default=datetime.utcnow())
     knowledge_point = db.Column(db.Text)
     prepare_knowledge = db.Column(db.Text)
     chapter = db.Column(db.String(512))
@@ -74,10 +108,12 @@ class Clip(db.Model):
     upload_time = db.Column(db.DateTime)
     clip_url = db.Column(db.String(150))
     clip_last = db.Column(db.String(30))
-    published = db.Column(db.Boolean, default=False)
+    _state = db.Column('state', db.Enum(name='clip_state', *CLIP_STATE_VALUES))
+    state = enumdef('_state', CLIP_STATE_VALUES)
     read_count = db.Column(db.Integer, default=0)
     order = db.Column(db.Integer, default=1)
     play_count = db.Column(db.Integer, default=0)
+    author_id = db.Column(db.Integer, db.ForeignKey('account.id'))
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'))
     college_id = db.Column(db.Integer, db.ForeignKey('college.id'))
     teacher_id = db.Column(db.Integer, db.ForeignKey('teacher.id'))
@@ -90,16 +126,34 @@ class Clip(db.Model):
     tags = db.relationship('ClipTag', secondary=clip_tags,
                            backref=db.backref('clip'))
 
+    def __init__(self, name, description, order=None, published=False):
+        self.name = name
+        self.description = description
+        self.created = datetime.utcnow()
+        self.read_count = 0
+        self.play_count = 0
+        self.published = published
+        self.order = order if order else 9999
+
+    def __repr__(self):
+        return "<Clip %s>" % self.name
+
 
 class LearnRecord(db.Model):
 
     __tablename__ = 'learn_record'
 
     id = db.Column(db.Integer, primary_key=True)
-    created = db.Column(db.DateTime, default=datetime.now)
+    created = db.Column(db.DateTime, default=datetime.utcnow())
     star_count = db.Column(db.Integer, default=0)
     clip_id = db.Column(db.Integer, db.ForeignKey('clip.id'))
-    author_id = db.Column(db.Integer, db.ForeignKey('account.id'))
+    account_id = db.Column(db.Integer, db.ForeignKey('account.id'))
+
+    def __init__(self, clip_id, account_id):
+        self.clip_id = clip_id
+        self.account_id = account_id
+        self.star_count = 0
+        self.created = datetime.utcnow()
 
 
 class ClipTag(db.Model):
