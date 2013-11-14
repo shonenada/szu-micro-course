@@ -1,5 +1,7 @@
 from datetime import datetime
 
+from flask import url_for
+
 from mooc.app import db
 from mooc.account.model import SzuAccount
 from mooc.qa.model import Question
@@ -76,13 +78,14 @@ class Course(db.Model):
     tags = db.relationship('CourseTag', secondary=course_tags,
                            backref=db.backref('course', lazy='dynamic'))
 
-    def __init__(self, name, description, author, category, logo_url):
+    def __init__(self, name, description, author, category):
         self.name = name
         self.description = description
         self.author = author
         self.category = category
         self.created = datetime.utcnow()
-        self.logo_url = logo_url
+        self.logo_url = url_for('static',
+                                filename='images/default_course_logo.png')
 
     def set_finished(self):
         self.state = 'finished'
@@ -106,17 +109,17 @@ class Clip(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20))
+    description = db.Column(db.Text)
     created = db.Column(db.DateTime, default=datetime.utcnow())
     knowledge_point = db.Column(db.Text)
     prepare_knowledge = db.Column(db.Text)
     chapter = db.Column(db.String(512))
     term = db.Column(db.String(512))
-    description = db.Column(db.Text)
     record_time = db.Column(db.DateTime)
     record_address = db.Column(db.String(256))
     upload_time = db.Column(db.DateTime)
-    clip_url = db.Column(db.String(150))
-    clip_last = db.Column(db.String(30))
+    video_url = db.Column(db.String(150))
+    video_length = db.Column(db.Integer)
     _state = db.Column('state', db.Enum(name='clip_state', *CLIP_STATE_VALUES))
     state = enumdef('_state', CLIP_STATE_VALUES)
     read_count = db.Column(db.Integer, default=0)
@@ -142,10 +145,13 @@ class Clip(db.Model):
         self.author = author
         self.course = course
         self.published = published
-        self.order = order if order else 9999
-        self.created = datetime.utcnow()
+        self.video_url = ''
         self.read_count = 0
         self.play_count = 0
+        self.video_length = 0
+        self.order = order if order else 9999
+        self.created = datetime.utcnow()
+        self.upload_time = datetime.utcnow()
 
     def __repr__(self):
         return "<Clip %s>" % self.name
