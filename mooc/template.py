@@ -6,6 +6,7 @@ _filters = {
     'friendly_time': friendly_time,
     'learn_count': learn_count,
     'enumerate': (lambda x: enumerate(x)),
+    'ellipsis': (lambda x, l, f='...': "%s%s" % (x[:l], f if len(x) > l else '')),
 }
 
 
