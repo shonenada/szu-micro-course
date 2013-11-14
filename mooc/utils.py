@@ -34,3 +34,14 @@ def friendly_date(time):
     if day_diff < 365:
         return str(day_diff / 30) + u"月前"
     return str(day_diff / 365) + u"年前"
+
+
+def enumdef(attr_name, attr_values):
+    descriptor = property(lambda self: getattr(self, attr_name))
+
+    @descriptor.setter
+    def descriptor(self, value):
+        assert(value in attr_values)
+        setattr(self, attr_name, value)
+
+    return descriptor
