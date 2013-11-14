@@ -7,76 +7,48 @@ from mooc.utils import enumdef
 from mooc.exception import UserStateException
 
 
-class Account(db.Model):
-    """Model of account."""
+class User(db.Model):
+    """Model of user."""
 
-    __tablename__ = 'account'
+    __tablename__ = 'user'
 
-    TYPE_VALUES = ('undergrade', 'graduate', 'teacher', 'other')
-    STATE_VALUES = ('normal', 'frozen', 'deleted', 'unactivated')
+    USER_STATE_VALUES = ('normal', 'frozen', 'deleted', 'unactivated')
 
     id = db.Column(db.Integer, primary_key=True)
-    card_id = db.Column(db.String(6), unique=True)
+    username = db.Column(db.String(30), nullable=True)
     hashed_password = db.Column(db.String(128))
-    stu_number = db.Column(db.String(10), unique=True)
     nickname = db.Column(db.String(16), unique=True)
     name = db.Column(db.String(20))
-    gender = db.Column(db.Boolean, default=True)
+    is_male = db.Column(db.Boolean, default=True)
     email = db.Column(db.String(50), unique=True)
     phone = db.Column(db.String(11), unique=True)
-    short_phone = db.Column(db.String(6), unique=True)
     qq = db.Column(db.String(15), unique=True)
     avatar = db.Column(db.String(250))
     created = db.Column(db.DateTime, default=datetime.utcnow())
     last_login = db.Column(db.DateTime, default=datetime.utcnow())
     last_ip = db.Column(db.String(40))
     salt = db.Column(db.String(32), nullable=False)
-    _account_type = db.Column('account_tpye',
-                              db.Enum(name='account_type', *TYPE_VALUES))
-    _state = db.Column('state', db.Enum(name='account_state', *STATE_VALUES))
-    account_type = enumdef('_account_type', TYPE_VALUES)
-    state = enumdef('_state', STATE_VALUES)
-    college = db.relationship("College", backref='account', uselist=False)
-    teacher = db.relationship("Teacher", backref='account', uselist=False)
-    learn_record = db.relationship('LearnRecord', backref='author',
-                                   uselist=True)
-    question = db.relationship('Question', backref='author',
-                               uselist=True, lazy='dynamic')
-    answer = db.relationship('Answer', backref='author',
-                             uselist=True, lazy='dynamic')
-    course = db.relationship("Course", backref='author',
-                             uselist=True, lazy='dynamic')
-    clip = db.relationship("Clip", backref='author',
-                           uselist=True, lazy='dynamic')
-    up_down_record = db.relationship('UpDownRecord', backref='author',
-                                     uselist=True, lazy='dynamic')
+    _state = db.Column('state', db.Enum(name='user_state', *USER_STATE_VALUES))
+    state = enumdef('_state', USER_STATE_VALUES)
 
-    def __init__(self, card_id, stu_number, raw_password,
-                nickname, account_type):
-        self.card_id = card_id
-        self.stu_number = stu_number
-        self.hashed_password = set_passwd(raw_password)
+    def __init__(self, username, raw_passwd, nickname, is_male=True):
+        self.username = username
+        self.hashed_password = self.set_passwd(raw_passwd)
         self.nickname = nickname
+        self.is_male = is_male
         self.created = datetime.utcnow()
         self.last_login = datetime.utcnow()
-        self.set_account_type(user_type)
         self.state = 'unactivated'
 
     def __unicode__(self):
         return self.nickname
 
     def __repr__(self):
-        return "<Account:%s(%s)>" % (self.stu_number, self.nickname)
+        return "<User:%s(%s)>" % (self.username, self.nickname)
 
     def set_passwd(self, raw_passwd):
         self.salt = uuid4.hex
         self.hashed_password = hash_password(self.salt, raw_passwd)
-
-    def set_account_type(self, account_type):
-        if account_type in self.TYPE_VALUES:
-            self.account_type = account_type
-        else:
-            self.account_type = 'other'
 
     def active(self):
         self._transform_state(from_state='unactivated', to_state='normal')
@@ -100,6 +72,52 @@ class Account(db.Model):
             raise UserStateException("The state of user is mismatched!")
 
 
+class SzuAccount(db.Model):
+
+    __tablename__ = 'szu_account'
+
+    TYPE_VALUES = ('undergrade', 'graduate', 'teacher', 'other')
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship('User', backref='user', uselist=False)
+    card_id = db.Column(db.String(6), unique=True)
+    stu_number = db.Column(db.String(10), unique=True)
+    short_phone = db.Column(db.String(6), unique=True)
+    szu_account_type = enumdef('_szu_account_type', TYPE_VALUES)
+    _szu_account_type = db.Column('szu_account_tpye',
+                              db.Enum(name='szu_account_type', *TYPE_VALUES))
+    college = db.relationship("College", backref='szu_account', uselist=False)
+    teacher = db.relationship("Teacher", backref='szu_account', uselist=False)
+    learn_record = db.relationship('LearnRecord', backref='szu_account',
+                                   uselist=True)
+    question = db.relationship('Question', backref='author',
+                               uselist=True, lazy='dynamic')
+    answer = db.relationship('Answer', backref='author',
+                             uselist=True, lazy='dynamic')
+    course = db.relationship("Course", backref='author',
+                             uselist=True, lazy='dynamic')
+    clip = db.relationship("Clip", backref='author',
+                           uselist=True, lazy='dynamic')
+    up_down_record = db.relationship('UpDownRecord', backref='author',
+                                     uselist=True, lazy='dynamic')
+
+    def __init__(self, user, card_id, stu_number, szu_account_type):
+        self.user = user
+        self.card_id = card_id
+        self.stu_number = stu_number
+        self.set_account_type(szu_account_type)
+
+    def __repr__(self):
+        return "<SzuAccount %s>" % (self.stu_number)
+
+    def set_account_type(self, szu_account_type):
+        if szu_account_type in self.TYPE_VALUES:
+            self.szu_account_type = szu_account_type
+        else:
+            self.szu_account_type = 'other'
+
+
 class College(db.Model):
     """Model of College"""
 
@@ -108,7 +126,7 @@ class College(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), unique=True, nullable=True)
     order = db.Column(db.Integer)
-    account_id = db.Column(db.Integer, db.ForeignKey('account.id'))
+    szu_account_id = db.Column(db.Integer, db.ForeignKey('szu_account.id'))
     clip = db.relationship('Clip', backref='college',
                            lazy='dynamic', uselist=True)
 
@@ -129,12 +147,12 @@ class Teacher(db.Model):
     title = db.Column(db.String(10))
     description = db.Column(db.Text)
     clip = db.relationship('Clip', backref='teacher', lazy='dynamic')
-    account_id = db.Column(db.Integer, db.ForeignKey('account.id'))
+    szu_account_id = db.Column(db.Integer, db.ForeignKey('szu_account.id'))
 
-    def __init__(self, title, description, account_id):
+    def __init__(self, title, description, szu_account_id):
         self.title = title
         self.description = description
-        self.account_id = account_id
+        self.szu_account_id = szu_account_id
 
     def __repr__(self):
-        return "<Teacher %s>" % (self.account_id)
+        return "<Teacher %s>" % (self.szu_account_id)
