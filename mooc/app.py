@@ -4,6 +4,7 @@ from mooc.extensions import gears, setup_compilers, setup_compressors
 from mooc.extensions import db, setup_database
 from mooc.template import setup_filter
 from mooc.master.view import master_app
+from mooc.account.view import account_app
 from mooc.course.view import course_app
 from mooc.course.service import get_learn_records, get_last_clip
 
@@ -26,6 +27,7 @@ def create_app(import_name=None, config=None):
     setup_database(app)
 
     app.register_blueprint(master_app)
+    app.register_blueprint(account_app)
     app.register_blueprint(course_app)
 
     app.before_request(get_learn_records)
