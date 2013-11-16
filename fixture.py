@@ -14,7 +14,7 @@ def _init_college():
 
 def _init_user():
     global shonenada, key
-    shonenada = User('shonenad', '000000', 'shonenada', True)
+    shonenada = User('shonenada', '000000', 'shonenada', True)
     key = User('key', '123456', 'key', True)
     db.session.add(shonenada)
     db.session.add(key)
