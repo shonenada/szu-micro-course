@@ -1,5 +1,8 @@
 {% extends 'layout.html' %}
 
+{% block static_files %}
+<script src="{{ url_for('static', filename='scripts/clip.js')}}"></script>
+{% endblock %}
 {% block left %}
 <div id="player">
     <video src="{{ clip.video_url }}" controls="controls">
@@ -28,13 +31,26 @@
 
         <div id="clip-btns">
             <ul>
-                <li><a href="#" class="current">知识点</a></li>
-                <li><a href="#">相关问题</a></li>
+                <li><a href="javascript:void(0);" id="btn-knowledge-point" class="clip-btns current">知识点</a></li>
+                <li><a href="javascript:void(0);" id="btn-questions" class="clip-btns">相关问题</a></li>
+                <li><a href="javascript:void(0);" id="btn-evaluation" class="clip-btns">课程测评</a></li>
+                <li><a href="javascript:void(0);" id="btn-video-resource" class="clip-btns">下载视频资源</a></li>
             </ul>
         </div>
 
         <div id="clip-tips">
-        <p>{{ clip.knowledge_point|safe }}</p>
+            <div id="clip-knowledge-point" class="clip-bar">
+            <p>{{ clip.knowledge_point|safe }}</p>
+            </div>
+            <div id="clip-questions" class="clip-bar clip-hidden">
+                相关问题
+            </div>
+            <div id="clip-evaluation" class="clip-bar clip-hidden">
+                测评
+            </div>
+            <div id="clip-video-resource" class="clip-bar clip-hidden">
+                资源
+            </div>
         </div>
         <div class="shadow"></div>
 

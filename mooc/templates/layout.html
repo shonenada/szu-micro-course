@@ -6,6 +6,7 @@
 <link href="{{ url_for('static', filename='styles/animate.css')}}" media="all" rel="stylesheet" type="text/css" />
 <script src="{{ url_for('static', filename='scripts/ui/animate.js')}}"></script>
 <![endif]-->
+{% block static_files %}{% endblock %}
 {% endblock %}
 
 {% block main %}
