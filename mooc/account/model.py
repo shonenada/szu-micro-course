@@ -79,6 +79,18 @@ class User(db.Model):
         _hashed_password = self._hash_password(self.salt, raw_passwd)
         return (self.hashed_password == _hashed_password)
 
+    def is_active(self):
+        return (self.state == 'normal')
+
+    def is_anonymous(self):
+        return (self.username is None)
+
+    def get_id(self):
+        return self.id
+
+    def is_authenticated(self):
+        return (self.state == 'normal')
+
     def active(self):
         self._transform_state(from_state='unactivated', to_state='normal')
 
