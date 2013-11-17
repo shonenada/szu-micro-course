@@ -4,6 +4,8 @@
     "dependencies": {
         "jquery": "~1.10.2",
         "reset-css": "http://meyerweb.com/eric/tools/css/reset/reset.css",
-        "animate.css": "2.1.0"
+        "animate.css": "2.1.0",
+        "bootstrap": "2.1.1",
+        "font-awesome": "2.0"
     }
 }

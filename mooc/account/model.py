@@ -3,17 +3,27 @@ from hashlib import sha256
 from datetime import datetime
 
 from flask import url_for
+from flask.ext.sqlalchemy import BaseQuery
 
 from mooc.app import db
 from mooc.utils import enumdef
 from mooc.exception import UserStateException
 
 
+class UserQuery(BaseQuery):
+
+    def authenticate(self, username, raw_passwd):
+        user = self.filter(User.username==username).first()
+        if user and user.check_password(raw_passwd):
+            return user
+        return None
+
+
 class User(db.Model):
     """Model of user."""
 
     __tablename__ = 'user'
-
+    query_class = UserQuery
     USER_STATE_VALUES = ('normal', 'frozen', 'deleted', 'unactivated')
 
     id = db.Column(db.Integer, primary_key=True)
@@ -47,7 +57,7 @@ class User(db.Model):
 
     def __init__(self, username, raw_passwd, nickname, is_male=True):
         self.username = username
-        self.set_passwd(raw_passwd)
+        self.change_password(raw_passwd)
         self.nickname = nickname
         self.is_male = is_male
         self.created = datetime.utcnow()
@@ -61,9 +71,25 @@ class User(db.Model):
     def __repr__(self):
         return "<User:%s(%s)>" % (self.username, self.nickname)
 
-    def set_passwd(self, raw_passwd):
+    def change_password(self, raw_passwd):
         self.salt = uuid4().hex
         self.hashed_password = self._hash_password(self.salt, raw_passwd)
+
+    def check_password(self, raw_passwd):
+        _hashed_password = self._hash_password(self.salt, raw_passwd)
+        return (self.hashed_password == _hashed_password)
+
+    def is_active(self):
+        return (self.state == 'normal')
+
+    def is_anonymous(self):
+        return (self.username is None)
+
+    def get_id(self):
+        return self.id
+
+    def is_authenticated(self):
+        return (self.state == 'normal')
 
     def active(self):
         self._transform_state(from_state='unactivated', to_state='normal')

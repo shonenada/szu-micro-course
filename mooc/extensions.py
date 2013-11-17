@@ -1,5 +1,6 @@
 from flask.ext.gears import Gears
 from flask.ext.sqlalchemy import SQLAlchemy
+from flask.ext.login import LoginManager
 from gears.compressors import SlimItCompressor
 from gears_stylus import StylusCompiler
 from gears_clean_css import CleanCSSCompressor
@@ -8,6 +9,7 @@ from gears_coffeescript import CoffeeScriptCompiler
 
 gears = Gears()
 db = SQLAlchemy()
+login_manager = LoginManager()
 
 _compilers = {
     '.styl': StylusCompiler.as_handler(),
