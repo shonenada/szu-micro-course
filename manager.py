@@ -10,7 +10,7 @@ from mooc.app import db
 
 app_root = os.path.dirname(os.path.realpath(__name__))
 
-application = create_app('mooc')
+application = create_app('mooc', os.path.join(app_root, 'development.conf'))
 server = Server(port=13800)
 manager = Manager(application)
 manager.add_command("runserver", server)
