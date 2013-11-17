@@ -14,9 +14,11 @@ def create_app(import_name=None, config=None):
     app = Flask(import_name or __name__)
 
     app.config.from_object('mooc.settings')
-    app.config.from_pyfile(config)
 
-    if app.config['SENTRY_ON']:
+    if config:
+        app.config.from_pyfile(config)
+
+    if app.config.get('SENTRY_ON', False):
         from raven.contrib.flask import Sentry
         sentry = Sentry(app)
 

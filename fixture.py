@@ -22,8 +22,8 @@ def _init_user():
 
 def _init_szu_account():
     global shonenada_account, key_account
-    shonenada_account = SzuAccount(shonenada, 123456, 20111150000, csse, 'undergrade')
-    key_account = SzuAccount(key, 654321, 20111150999, csse, 'teacher')
+    shonenada_account = SzuAccount(shonenada, '112020', '2011150000', csse, 'undergrade')
+    key_account = SzuAccount(key, '113030', '2011150999', csse, 'teacher')
     db.session.add(shonenada_account)
     db.session.add(key_account)
 

@@ -9,9 +9,8 @@ from mooc.app import db
 
 
 app_root = os.path.dirname(os.path.realpath(__name__))
-conf = 'development.conf'
 
-application = create_app('mooc', os.path.join(app_root, conf))
+application = create_app('mooc')
 server = Server(port=13800)
 manager = Manager(application)
 manager.add_command("runserver", server)
@@ -27,8 +26,10 @@ def check():
     pep8()
 
 
-@manager.command
-def createdb():
+@manager.option('-c', '--config', default="development.conf")
+def createdb(config):
+    config_file = os.path.join(app_root, config)
+    application.config.from_pyfile(config_file)
     with application.test_request_context():
         # import all Models here
         from mooc.account.model import User, SzuAccount, College, Teacher
@@ -40,8 +41,10 @@ def createdb():
     print 'Created Database!'
 
 
-@manager.command
-def initdb():
+@manager.option('-c', '--config', default="development.conf")
+def initdb(config):
+    config_file = os.path.join(app_root, config)
+    application.config.from_pyfile(config_file)
     with application.test_request_context():
         # Initial data for test
         from fixture import init_db
@@ -49,10 +52,10 @@ def initdb():
     print "Initialized Database!"
 
 
-@manager.command
-def syncdb():
-    createdb()
-    initdb()
+@manager.option('-c', '--config', default="development.conf")
+def syncdb(config):
+    createdb(config)
+    initdb(config)
 
 
 if __name__ == '__main__':
