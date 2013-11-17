@@ -1,0 +1,74 @@
+@import 'func.styl'
+
+@keyframes mouse-on-fade-in
+    0%
+        opacity: 0.4;
+    100%
+        opacity: 1;
+
+@keyframes mouse-out-fade-out
+    0%
+        opacity: 1;
+    100%
+        opacity: 0.4;
+
+#flash-messages-container
+    width: 80%;
+    margin: 20px;
+    line-height: 1.4;
+    z-index: 9999;
+    font: 13px Helvetica, arial, sans-serif;
+
+    & .flash-message-box
+        width: 100%;
+        padding: 15px;
+        border: 1px solid;
+        border-radius: 4px;
+        border-color: #aaa;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+        text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+        opacity: 0.4;
+        bind-animate mouse-out-fade-out 200ms;
+
+        &:hover
+            bind-animate mouse-on-fade-in 200ms;
+            opacity: 1;
+
+        & .message-box-btn
+            float: right;
+            font-size: 20px;
+            line-height: 15px;
+
+
+    & .message-box-notice
+        color: #264c72;
+        border-color: #97c1da;
+        background-color: #d0e3ef;
+        linear-background(#d8ebf8, #d0e3ef);
+
+        & .close-btn
+            color: #264c72;
+
+    & .message-box-warn
+        color: #613A00;
+        border-color: #dca874;
+        background-color: #f5dac0;
+        linear-background(#ffe3c8, #f5dac0);
+
+        & .close-btn
+            color: #613A00;
+
+    & .message-box-error
+        color: #911;
+        background-color: #efd0d0;
+        border-color: #da9797;
+        background-repeat: repeat-x;
+        linear-background(#f8d8d8, #efd0d0);
+
+        & .close-btn
+            color: #911;
+
+.message-box-fixed
+    position: fixed;
+    margin-left: -40% !important;
+    left: 50%;
