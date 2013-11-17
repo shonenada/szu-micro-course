@@ -1,19 +1,9 @@
 from time import time
 
-from flask import g, session
-
-from mooc.account.model import User, SzuAccount
-
-
-def login(user, expires=129600):
-    if type(user) is User:
-        g.current_user = user
-        expires += time()
-        session['uid'] = (user.id, expires)
-        return user
-    return None
+from mooc.extensions import login_manager
+from mooc.account.model import User
 
 
-def logout():
-    del session['uid']
-    g.current_user = None
+@login_manager.user_loader
+def load_user(userid):
+    return User.get(userid)
