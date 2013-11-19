@@ -18,11 +18,12 @@ def signin():
         return redirect(url_for('master.index'))
     form = SignInForm()
     if form.validate_on_submit():
-        username = request.form['username']
-        raw_passwd = request.form['password']
+        username = request.form['username'].strip()
+        raw_passwd = request.form['password'].strip()
+        is_remember_me = request.form.get('remember_me', 'f') == 'y'
         user = User.query.authenticate(username, raw_passwd)
         if user:
-            login_user(user, force=True)
+            login_user(user, force=True, remember=is_remember_me)
             flash(u'登录成功, %s 欢迎' % user.username, 'notice')
             return redirect(url_for('master.index'))
         else:
