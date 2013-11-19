@@ -1,21 +1,15 @@
 @import 'func.styl'
 
 @keyframes mouse-on-fade-in
-    0%
-        opacity: 0.9;
     100%
         opacity: 1;
 
 @keyframes mouse-out-fade-out
-    0%
-        opacity: 1;
     100%
         opacity: 0.9;
 
 
 @keyframes fade-out
-    0%
-        opacity: 1;
     100%
         opacity: 0;
 
@@ -27,7 +21,7 @@
     font: 13px Helvetica, arial, sans-serif;
 
     & .fade-out
-        bind-animate fade-out 200ms;
+        bind-animate fade-out 500ms;
         opacity: 0;
 
     & .bind-animate
