@@ -1,6 +1,8 @@
 #-*- coding: utf-8 -*-
 from datetime import datetime
 
+from flask import flash as f
+
 
 def friendly_time(time):
     now = datetime.utcnow()
@@ -45,3 +47,24 @@ def enumdef(attr_name, attr_values):
         setattr(self, attr_name, value)
 
     return descriptor
+
+
+def flash(message, category='message', form_errors=False):
+    def form_errors_parse(form_errors):
+        for v in form_errors.values():
+            yield ", ".join(v)
+
+    if isinstance(message, (str, unicode)):
+        f(message=message, category=category)
+
+    if isinstance(message, dict):
+        if form_errors:
+            f(message=', '.join([v for v in form_errors_parse(message)]), category=category)
+        else:
+            f(message=', '.join(message.values()))
+
+    if isinstance(message, list):
+        f(message=', '.join(message), category=category)
+
+    if isinstance(message, tuple):
+        f(message=', '.join([v for v in message]), category=category)
