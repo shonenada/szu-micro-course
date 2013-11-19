@@ -16,8 +16,6 @@
 #flash-messages-container
     margin-top: 20px;
     font: 13px Helvetica, arial, sans-serif;
-    text-align: center;
-    line-height: 1.4;
     z-index: 9999;
 
     & .fade-out
@@ -31,8 +29,11 @@
             bind-animate mouse-on-fade-in 200ms;
             opacity: 1;
 
+    & .message-box-btn
+        float: left;
+        display: block;
+
     & .flash-message-box
-        padding: 15px 30px 15px 30px;
         border: 1px solid;
         border-radius: 4px;
         border-color: #aaa;
@@ -40,12 +41,13 @@
         text-shadow: 0 1px 0 rgba(255,255,255,0.5);
         margin: 5px 0 5px 0;
         opacity: 0.8;
+        padding: 15px 30px 15px 30px;
 
-        & .message-box-btn
-            float: right;
-            font-size: 20px;
-            line-height: 15px;
-
+    & .message-box-message
+        color: #666;
+        border-color: #aaa;
+        background-color: #ccc;
+        linear-background(#eee, #ccc);
 
     & .message-box-notice
         color: #264c72;
@@ -53,17 +55,11 @@
         background-color: #d0e3ef;
         linear-background(#d8ebf8, #d0e3ef);
 
-        & .close-btn
-            color: #264c72;
-
     & .message-box-warn
         color: #613A00;
         border-color: #dca874;
         background-color: #f5dac0;
         linear-background(#ffe3c8, #f5dac0);
-
-        & .close-btn
-            color: #613A00;
 
     & .message-box-error
         color: #911;
@@ -71,9 +67,6 @@
         border-color: #da9797;
         background-repeat: repeat-x;
         linear-background(#f8d8d8, #efd0d0);
-
-        & .close-btn
-            color: #911;
 
 .message-box-fixed
     left: 50%;
