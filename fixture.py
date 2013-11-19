@@ -16,6 +16,8 @@ def _init_user():
     global shonenada, key
     shonenada = User('shonenada', '000000', 'shonenada', True)
     key = User('key', '123456', 'key', True)
+    shonenada.active()
+    key.active()
     db.session.add(shonenada)
     db.session.add(key)
 
