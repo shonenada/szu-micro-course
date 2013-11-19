@@ -19,9 +19,9 @@ $ ->
         element_width = $(this).width() + element_padding * 2;
         $(this).css({'margin-left': '-' + element_width / 2 + 'px'});
 
-    # setTimeout ->
-    #     fade_out($("#flash-messages-container > a"));
-    #     return;
-    # , 2500
+    setTimeout ->
+        fade_out($("#flash-messages-container > a"));
+        return;
+    , 2500
 
     return;
