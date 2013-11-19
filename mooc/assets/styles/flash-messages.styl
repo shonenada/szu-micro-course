@@ -6,19 +6,19 @@
 
 @keyframes mouse-out-fade-out
     100%
-        opacity: 0.9;
-
+        opacity: 0.8;
 
 @keyframes fade-out
     100%
         opacity: 0;
 
+
 #flash-messages-container
-    width: 80%;
-    margin: 20px;
+    margin-top: 20px;
+    font: 13px Helvetica, arial, sans-serif;
+    text-align: center;
     line-height: 1.4;
     z-index: 9999;
-    font: 13px Helvetica, arial, sans-serif;
 
     & .fade-out
         bind-animate fade-out 500ms;
@@ -26,21 +26,20 @@
 
     & .bind-animate
         bind-animate mouse-out-fade-out 200ms;
-        opacity: 0.9;
+        opacity: 0.8;
         &:hover
             bind-animate mouse-on-fade-in 200ms;
             opacity: 1;
 
     & .flash-message-box
-        width: 100%;
-        padding: 15px;
+        padding: 15px 30px 15px 30px;
         border: 1px solid;
         border-radius: 4px;
         border-color: #aaa;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
         text-shadow: 0 1px 0 rgba(255,255,255,0.5);
-        opacity: 0.9;
-
+        margin: 5px 0 5px 0;
+        opacity: 0.8;
 
         & .message-box-btn
             float: right;
@@ -77,6 +76,5 @@
             color: #911;
 
 .message-box-fixed
-    position: fixed;
-    margin-left: -40% !important;
     left: 50%;
+    position: fixed;
