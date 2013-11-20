@@ -9,10 +9,12 @@
     <link href="{{ url_for('static', filename='components/reset-css/index.css')}}" media="all" rel="stylesheet" type="text/css" />
     <link href="{{ url_for('static', filename='styles/base.css')}}" media="all" rel="stylesheet" type="text/css" />
     <link href="{{ url_for('static', filename='styles/flash-messages.css')}}" media="all" rel="stylesheet" type="text/css" />
+    <link href="{{ url_for('static', filename='styles/dropdown.css')}}" media="all" rel="stylesheet" type="text/css" />
     <script src="{{ url_for('static', filename='components/jquery/jquery.min.js') }}" language="javascript"></script>
     <script src="{{ url_for('static', filename='scripts/global.js') }}" language="javascript"></script>
-    <script src="{{ url_for('static', filename='scripts/nav.js') }}" language="javascript"></script>
+    <script src="{{ url_for('static', filename='scripts/plugins/mini-dropdown.js') }}" language="javascript"></script>
     <script src="{{ url_for('static', filename='scripts/flash-message.js') }}" language="javascript"></script>
+    <script src="{{ url_for('static', filename='scripts/nav.js') }}" language="javascript"></script>
     {% block htmlhead %}
     {% endblock %}
 </head>
@@ -24,9 +26,19 @@
     <div id="nav-container" class="w1170 center-block">
         <a href="{{ url_for('master.index') }}" id="logo">WeiCourse</a>
         <div id="nav">
-            <ul>
+            <ul class="dropdown-nav">
                 <li><a href="{{url_for('course.courses')}}">课程库</a></li>
+                {% if current_user.is_anonymous() %}
                 <li><a href="{{ url_for('account.signin') }}">登录</a></li>
+                {% else %}
+                <li>
+                    <a href="#">{{ current_user.username }}</a>
+                    <ul class="dropdown">
+                        <li><a href="{{ url_for('account.people', uid=current_user.id) }}">个人主页</a></li>
+                        <li><a href="{{ url_for('account.signout') }}">退出</a></li>
+                    </ul>
+                </li>
+                {% endif %}
             </ul>
         </div>
     </div>
