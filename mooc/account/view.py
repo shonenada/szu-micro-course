@@ -44,3 +44,13 @@ def signout():
     logout_user()
     flash(u'退出成功', 'notice')
     return redirect(url_for('master.index'))
+
+
+@account_app.route('/people/<int:uid>')
+def people(uid):
+    pass
+
+
+@account_app.route('/setting/account')
+def setting():
+    pass

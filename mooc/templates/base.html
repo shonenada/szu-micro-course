@@ -32,9 +32,10 @@
                 <li><a href="{{ url_for('account.signin') }}">登录</a></li>
                 {% else %}
                 <li>
-                    <a href="#">{{ current_user.username }}</a>
+                    <a href="#" class="user_logged">{{ current_user.username }}</a>
                     <ul class="dropdown">
                         <li><a href="{{ url_for('account.people', uid=current_user.id) }}">个人主页</a></li>
+                        <li><a href="{{ url_for('account.setting') }}">设置</a></li>
                         <li><a href="{{ url_for('account.signout') }}">退出</a></li>
                     </ul>
                 </li>
