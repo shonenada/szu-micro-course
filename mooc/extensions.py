@@ -1,6 +1,7 @@
 from flask.ext.gears import Gears
 from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.login import LoginManager
+from flask.ext.login import LoginManager, current_user
+from flask_rbac import RBAC
 from gears.compressors import SlimItCompressor
 from gears_stylus import StylusCompiler
 from gears_clean_css import CleanCSSCompressor
@@ -10,6 +11,7 @@ from gears_coffeescript import CoffeeScriptCompiler
 gears = Gears()
 db = SQLAlchemy()
 login_manager = LoginManager()
+rbac = RBAC()
 
 _compilers = {
     '.styl': StylusCompiler.as_handler(),
@@ -48,3 +50,11 @@ def setup_database(app):
                             db.engine.url.host in ("", ":memory:"))
         if app.config["DEBUG"] and is_sqlite_memory:
             db.create_all()
+
+
+def setup_rbac(app):
+    from mooc.account.model import User, Role
+    _rbac = app.extensions['rbac'].rbac
+    _rbac.set_role_model(Role)
+    _rbac.set_user_model(User)
+    _rbac.set_user_loader(lambda *args: current_user)

@@ -4,6 +4,7 @@ from datetime import datetime
 
 from flask import url_for
 from flask.ext.sqlalchemy import BaseQuery
+from flask_rbac import RBACRoleMixinModel, RBACUserMixinModel
 
 from mooc.app import db
 from mooc.utils import enumdef
@@ -19,7 +20,45 @@ class UserQuery(BaseQuery):
         return None
 
 
-class User(db.Model):
+roles_parents = db.Table('roles_parents',
+    db.Column('role_id', db.Integer, db.ForeignKey('role.id')),
+    db.Column('parent_id', db.Integer, db.ForeignKey('role.id'))
+)
+
+users_roles = db.Table('users_roles',
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
+    db.Column('role_id', db.Integer, db.ForeignKey('role.id'))
+)
+
+
+class Role(db.Model, RBACRoleMixinModel):
+
+    __tablename__ = 'role'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(20))
+    parents = db.relationship('Role', secondary=roles_parents,
+                              primaryjoin=id==roles_parents.c.role_id,
+                              secondaryjoin=id==roles_parents.c.parent_id,
+                              backref=db.backref('children', lazy='dynamic'))
+    users = db.relationship('User', secondary=users_roles,
+                            backref=db.backref('roles', lazy='dynamic'))
+
+    def __init__(self, name):
+        self.name = name
+
+    def __unicode__(self):
+        return self.name
+
+    def __repr__(self):
+        return "<Role: %s>" % self.name
+
+    @staticmethod
+    def get_by_name(name):
+        return self.query.filter_by(name=name).first()
+
+
+class User(db.Model, RBACUserMixinModel):
     """Model of user."""
 
     __tablename__ = 'user'
