@@ -1,8 +1,10 @@
 from flask import Flask
 
+
 from mooc.extensions import gears, setup_compilers, setup_compressors
 from mooc.extensions import db, setup_database
 from mooc.extensions import login_manager
+from mooc.extensions import rbac, setup_rbac
 from mooc.template import setup_filter
 from mooc.master.view import master_app
 from mooc.account.view import account_app
@@ -30,6 +32,9 @@ def create_app(import_name=None, config=None):
     setup_database(app)
 
     login_manager.init_app(app)
+
+    rbac.init_app(app)
+    setup_rbac(app)
 
     app.register_blueprint(master_app)
     app.register_blueprint(account_app)
