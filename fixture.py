@@ -2,8 +2,18 @@
 from datetime import datetime
 
 from mooc.app import db
-from mooc.account.model import User, SzuAccount, College, Teacher
+from mooc.account.model import User, SzuAccount, College, Teacher, Role
 from mooc.course.model import Subject, Category, Course, Clip, LearnRecord
+
+
+def _init_role():
+    global roles
+    roles = (
+        Role('everyone'), Role('local_user'), Role('student'),
+        Role('teacher'), Role('super_admin')
+    )
+    for role in roles:
+        db.session.add(role)
 
 
 def _init_college():
@@ -18,6 +28,8 @@ def _init_user():
     key = User('key', '123456', 'key', True)
     shonenada.active()
     key.active()
+    shonenada.roles.append(roles[4])
+    key.roles.append(roles[3])
     db.session.add(shonenada)
     db.session.add(key)
 
@@ -140,6 +152,7 @@ def _init_learn_record():
 
 
 def init_db():
+    _init_role()
     _init_college()
     _init_user()
     _init_szu_account()
