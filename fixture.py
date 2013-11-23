@@ -12,6 +12,10 @@ def _init_role():
         Role('everyone'), Role('local_user'), Role('student'),
         Role('teacher'), Role('super_admin')
     )
+    roles[1].parents.append(roles[0])
+    roles[2].parents.append(roles[1])
+    roles[3].parents.append(roles[1])
+    roles[4].parents.append(roles[1])
     for role in roles:
         db.session.add(role)
 

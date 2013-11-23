@@ -9,5 +9,5 @@ def has_perm(method, endpoint):
     is_allowed = False
     if hasattr(current_user, 'roles'):
         for role in current_user.roles:
-            is_allowed = is_allowed and rbac.check_permission(role, method, view_func)
+            is_allowed = is_allowed or rbac.check_permission(role, method, view_func)
     return is_allowed
