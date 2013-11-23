@@ -1,7 +1,5 @@
-from flask import g
-
-from mooc.app import rbac
 from mooc.utils import friendly_time
+from mooc.master.service import has_perm
 from mooc.course.service import learn_count
 
 
@@ -15,7 +13,7 @@ _filters = {
 
 
 _functions = {
-    'has_perm': rbac.has_permission,
+    'has_perm': has_perm,
 }
 
 
