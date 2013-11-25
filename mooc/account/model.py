@@ -160,16 +160,21 @@ class SzuAccount(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    user = db.relationship('User', backref='user', uselist=False)
     card_id = db.Column(db.String(6), unique=True)
     stu_number = db.Column(db.String(10), unique=True)
     short_phone = db.Column(db.String(6), unique=True)
     szu_account_type = enumdef('_szu_account_type', TYPE_VALUES)
-    _szu_account_type = db.Column('szu_account_tpye',
-                                  db.Enum(name='szu_account_type',
-                                  *TYPE_VALUES))
-    college = db.relationship("College", backref='szu_account', uselist=False)
-    teacher = db.relationship("Teacher", backref='szu_account', uselist=False)
+    _szu_account_type = db.Column(
+        'szu_account_tpye', db.Enum(name='szu_account_type', *TYPE_VALUES))
+    user = db.relationship(
+        'User', uselist=False,
+        backref=db.backref('szu_account', uselist=False))
+    college = db.relationship(
+        "College", uselist=False,
+        backref=db.backref('szu_account', uselist=False))
+    teacher = db.relationship(
+        "Teacher", uselist=False,
+        backref=db.backref('szu_account', uselist=False))
 
 
     def __init__(self, user, card_id, stu_number, college, szu_account_type):
