@@ -1,0 +1,44 @@
+{%- extends 'admin/master.html' %}
+{%- import 'utils.jinja' as utils %}
+
+{%- block breadcrumb %}
+<li><a href="{{ url_for('master.master_account_list') }}">Accoun Manage</a><span class="divider">/</span><li>
+<li class="active">List</li>
+{%- endblock %}
+
+            {%- block content %}
+            <div class="row-fluid">
+                <div class="block">
+                    <a href="#tablewidget" class="block-heading" data-toggle="collapse">Users</a>
+                    <div id="tablewidget" class="block-body collapse in">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>Name</th>
+                                    <th>Gender</th>
+                                    <th>Stu Num</th>
+                                    <th>Nickname</th>
+                                    <th>State</th>
+                                    <th>Operation</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {%- for user in user_pagination.items %}
+                                <tr>
+                                    <td><a href="{{ url_for('account.people', username=user.username) }}">{{ user.username }}</a></td>
+                                    <td>{{ user.name }}</td>
+                                    <td>{%- if user.is_male %}Male{%- else %}Female{%- endif %}</td>
+                                    <td>{{ user.szu_account.stu_number }}</td>
+                                    <td>{{ user.nickname }}</td>
+                                    <td>{{ user.state }}</td>
+                                    <td>Edit | Delete</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <p>{{ utils.render_pagination(user_pagination, 'master.master_account_list')|safe }}</p>
+            </div>
+            {%- endblock %}
