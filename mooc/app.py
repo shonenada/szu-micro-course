@@ -5,6 +5,7 @@ from mooc.extensions import gears, setup_compilers, setup_compressors
 from mooc.extensions import db, setup_database
 from mooc.extensions import login_manager
 from mooc.extensions import rbac, setup_rbac
+from mooc.extensions import csrf
 from mooc.template import setup_filter, setup_func
 from mooc.master.view import master_app
 from mooc.account.view import account_app
@@ -35,6 +36,8 @@ def create_app(import_name=None, config=None):
 
     rbac.init_app(app)
     setup_rbac(app)
+
+    csrf.init_app(app)
 
     app.register_blueprint(master_app)
     app.register_blueprint(account_app)

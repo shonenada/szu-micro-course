@@ -1,6 +1,7 @@
 from flask.ext.gears import Gears
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager, current_user
+from flask.ext.seasurf import SeaSurf
 from flask_rbac import RBAC
 from gears.compressors import SlimItCompressor
 from gears_stylus import StylusCompiler
@@ -12,6 +13,7 @@ gears = Gears()
 db = SQLAlchemy()
 login_manager = LoginManager()
 rbac = RBAC()
+csrf = SeaSurf()
 
 _compilers = {
     '.styl': StylusCompiler.as_handler(),
