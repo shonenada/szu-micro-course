@@ -14,8 +14,9 @@ class UpDownRecord(db.Model):
     up_or_down = db.Column(db.Integer, nullable=False)
     craeted = db.Column(db.DateTime, default=datetime.utcnow())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    answer = db.relationship('Answer', backref=db.backref('up_down_record'),
-                             uselist=False)
+    answer = db.relationship(
+        'Answer', uselist=False,
+        backref=db.backref('up_down_record', uselist=False))
 
     def __init__(self, user, up_or_down):
         self.created = datetime.utcnow()

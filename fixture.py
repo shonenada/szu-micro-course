@@ -113,7 +113,7 @@ def _init_course():
 def _init_clip():
     global clips
     clips = (
-        Clip(u'.多位加法器：串行加法器', u'本课程为您讲解多位加法器：串行加法器', shonenada, courses[0], 1, True),
+        Clip(u'多位加法器：串行加法器', u'本课程为您讲解多位加法器：串行加法器', shonenada, courses[0], 1, True),
 
         Clip(u'GNOME图形界面基本操作', u'本课程为您讲解Linux系统主流图形界面GNOME的基本操作使用', shonenada, courses[1], 1, True),
         Clip(u'命令行BASH的基本操作', u'本课程为您讲解Linux命令行界面（CLI）BASH的基本操作使用', shonenada, courses[1], 2, True),

@@ -158,6 +158,7 @@ class SzuAccount(db.Model):
     __tablename__ = 'szu_account'
 
     TYPE_VALUES = ('undergrade', 'graduate', 'teacher', 'other')
+    TYPE_TEXTS = ('Undergrade', 'Graduate', 'Teacher', 'Other')
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
@@ -176,7 +177,6 @@ class SzuAccount(db.Model):
     teacher = db.relationship(
         "Teacher", uselist=False,
         backref=db.backref('szu_account', uselist=False))
-
 
     def __init__(self, user, card_id, stu_number, college, szu_account_type):
         self.user = user
@@ -210,6 +210,9 @@ class College(db.Model):
     def __init__(self, name, order=None):
         self.name = name
         self.order = order if order else 9999
+
+    def __str__(self):
+        return ("%s" % self.name)
 
     def __repr__(self):
         return "<College %s, %d>" % (self.name, self.order)
