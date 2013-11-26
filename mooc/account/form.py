@@ -1,11 +1,11 @@
 #-*-coding: utf-8 -*-
 from flask_wtf import Form
-from wtforms import TextField, BooleanField, PasswordField
+from wtforms import StringField, BooleanField, PasswordField
 from wtforms.validators import InputRequired
 
 
 class SignInForm(Form):
-    username = TextField(
+    username = StringField(
         u'用户名',
         validators=[InputRequired(message=u'用户名不能为空')])
     password = PasswordField(

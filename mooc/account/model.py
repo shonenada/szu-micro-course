@@ -64,6 +64,7 @@ class User(db.Model, RBACUserMixinModel):
     __tablename__ = 'user'
     query_class = UserQuery
     USER_STATE_VALUES = ('normal', 'frozen', 'deleted', 'unactivated')
+    USER_STATE_TEXTS = ('Normal', 'Frozen', 'Deleted', 'Unactivated')
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(30), nullable=True)
@@ -157,20 +158,25 @@ class SzuAccount(db.Model):
     __tablename__ = 'szu_account'
 
     TYPE_VALUES = ('undergrade', 'graduate', 'teacher', 'other')
+    TYPE_TEXTS = ('Undergrade', 'Graduate', 'Teacher', 'Other')
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    user = db.relationship('User', backref='user', uselist=False)
     card_id = db.Column(db.String(6), unique=True)
     stu_number = db.Column(db.String(10), unique=True)
     short_phone = db.Column(db.String(6), unique=True)
     szu_account_type = enumdef('_szu_account_type', TYPE_VALUES)
-    _szu_account_type = db.Column('szu_account_tpye',
-                                  db.Enum(name='szu_account_type',
-                                  *TYPE_VALUES))
-    college = db.relationship("College", backref='szu_account', uselist=False)
-    teacher = db.relationship("Teacher", backref='szu_account', uselist=False)
-
+    _szu_account_type = db.Column(
+        'szu_account_tpye', db.Enum(name='szu_account_type', *TYPE_VALUES))
+    user = db.relationship(
+        'User', uselist=False,
+        backref=db.backref('szu_account', uselist=False))
+    college = db.relationship(
+        "College", uselist=False,
+        backref=db.backref('szu_account', uselist=False))
+    teacher = db.relationship(
+        "Teacher", uselist=False,
+        backref=db.backref('szu_account', uselist=False))
 
     def __init__(self, user, card_id, stu_number, college, szu_account_type):
         self.user = user
@@ -204,6 +210,9 @@ class College(db.Model):
     def __init__(self, name, order=None):
         self.name = name
         self.order = order if order else 9999
+
+    def __str__(self):
+        return ("%s" % self.name)
 
     def __repr__(self):
         return "<College %s, %d>" % (self.name, self.order)

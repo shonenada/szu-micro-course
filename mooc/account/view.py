@@ -3,6 +3,7 @@ from flask import Blueprint
 from flask import render_template, request, url_for, redirect
 from flask.ext.login import login_user, logout_user, current_user
 
+from mooc.app import rbac, csrf
 from mooc.utils import flash
 from mooc.account.model import User
 from mooc.account.form import SignInForm
@@ -12,7 +13,9 @@ from mooc.account.service import load_user
 account_app = Blueprint('account', __name__, template_folder='../templates')
 
 
+@csrf.exempt
 @account_app.route('/signin', methods=['GET', 'POST'])
+@rbac.allow(['everyone'], ['GET', 'POST'])
 def signin():
     if not current_user.is_anonymous():
         return redirect(url_for('master.index'))
@@ -40,14 +43,15 @@ def forgot_password():
 
 
 @account_app.route('/logout')
+@rbac.allow(['everyone'], ['GET'])
 def signout():
     logout_user()
     flash(u'退出成功', 'notice')
     return redirect(url_for('master.index'))
 
 
-@account_app.route('/people/<int:uid>')
-def people(uid):
+@account_app.route('/people/<username>')
+def people(username):
     pass
 
 
