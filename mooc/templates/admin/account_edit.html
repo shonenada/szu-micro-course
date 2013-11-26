@@ -8,11 +8,6 @@
 
 {%- block content %}
 <div class="row-fluid">
-    <div class="btn-toolbar">
-        <button class="btn btn-primary" id="save-btn"><i class="icon-save"></i> Save</button>
-        <a href="#delete-modal" data-toggle="modal" class="btn delete-btns">Delete</a>
-    </div>
-
     <div class="well">
         <ul class="nav nav-tabs">
           <li class="active"><a href="#profile" data-toggle="tab">Profile</a></li>
@@ -35,14 +30,19 @@
                     {{ user_form.last_ip.label }} {{ user_form.last_ip(readonly=True, class='input-xlarge') }}
                     {{ user_form.state.label }} {{ user_form.state(class='input-xlarge') }}
                 </form>
+                <div class="btn-toolbar">
+                    <button class="btn btn-primary" id="save-btn"><span class="icon-save"></span> Save</button>
+                    <a class="btn btn-danger delete-btns" href="#delete-modal" data-toggle="modal"><span class="icon-trash"></span> Delete</a>
+                    <a class="btn delete-btns" href="{{ url_for('master.master_account_list') }}" data-toggle="modal">Cancel</a>
+                </div>
             </div>
 
             <div class="tab-pane fade" id="password">
                 <form id="password-form">
                     <label>New Password</label>
-                    <input type="password" class="input-xlarge">
+                    <input name="password" type="password" class="input-xlarge">
                     <div>
-                        <button class="btn btn-primary">Update</button>
+                        <button id="change-password-btn" class="btn btn-primary">Update</button>
                     </div>
                 </form>
             </div>
@@ -80,14 +80,10 @@ $(function(){
                 else{
                     location.href = "{{ url_for('master.master_account_list') }}";
                 }
-            },
-            error: function() {
-                $S.error('程序发生错误，请联系管理员！');
             }
         });
     });
-});
-$(function(){
+
     $('#profile-form').submit(function(){
         $.ajax({
             url: "{{ url_for('master.master_account_edit', uid=uid) }}",
@@ -101,9 +97,24 @@ $(function(){
                 else{
                     location.href = "{{ url_for('master.master_account_edit', uid=uid) }}";
                 }
-            },
-            error: function() {
-                $S.error('程序发生错误，请联系管理员！');
+            }
+        });
+        return false;
+    });
+
+    $('#password-form').submit(function(){
+        $.ajax({
+            url: "{{ url_for('master.master_account_password', uid=uid) }}",
+            type: 'put',
+            dataType: 'json',
+            data: $(this).serialize(),
+            success: function(response) {
+                if(response.success){
+                    location.href = "{{ url_for('master.master_account_edit', uid=uid) }}";
+                }
+                else{
+                    location.href = "{{ url_for('master.master_account_edit', uid=uid) }}";
+                }
             }
         });
         return false;
@@ -112,6 +123,11 @@ $(function(){
     $("#save-btn").click(function(){
         $('#profile-form').submit();
     })
+
+    $("#change-password-btn").click(function() {
+        $("#password-form").submit();
+    });
+
 });
 </script>
 {%- endblock %}
