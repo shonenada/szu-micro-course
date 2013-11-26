@@ -37,7 +37,7 @@
                         {% if has_perm('GET', 'master.master_index') %}
                         <li><a href="{{ url_for('master.master_index') }}">系统管理</a></li>
                         {% endif %}
-                        <li><a href="{{ url_for('account.people', uid=current_user.id) }}">个人主页</a></li>
+                        <li><a href="{{ url_for('account.people', username=current_user.username) }}">个人主页</a></li>
                         <li><a href="{{ url_for('account.setting') }}">设置</a></li>
                         <li><a href="{{ url_for('account.signout') }}">退出</a></li>
                     </ul>
