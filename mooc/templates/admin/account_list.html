@@ -6,43 +6,85 @@
 <li class="active">List</li>
 {%- endblock %}
 
-            {%- block content %}
-            <div class="row-fluid">
-                <div class="btn-toolbar">
-                    <button class="btn btn-primary"><span class="icon-plus"></span> New User</button>
-                </div>
-                <div class="well">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Username</th>
-                                <th>Name</th>
-                                <th>Gender</th>
-                                <th>Stu Num</th>
-                                <th>Nickname</th>
-                                <th>State</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {%- for user in user_pagination.items %}
-                            <tr>
-                                <td><a href="{{ url_for('account.people', username=user.username) }}">{{ user.username }}</a></td>
-                                <td>{{ user.name }}</td>
-                                <td>{%- if user.is_male %}Male{%- else %}Female{%- endif %}</td>
-                                <td>{{ user.szu_account.stu_number }}</td>
-                                <td>{{ user.nickname }}</td>
-                                <td>{{ user.state }}</td>
-                                <td>
-                                    <a href="{{ url_for('master.master_account_edit', uid=user.id) }}"><span class="icon-pencil"></span></a>
-                                     | 
-                                    <a href="{{ url_for('master.master_account_delete', uid=user.id) }}"><span class="icon-remove"></span></a>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            {{ utils.render_pagination(user_pagination, 'master.master_account_list')|safe }}
-            {%- endblock %}
+{%- block content %}
+<div class="row-fluid">
+    <div class="btn-toolbar">
+        <button class="btn btn-primary"><span class="icon-plus"></span> New User</button>
+    </div>
+    <div class="well">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Name</th>
+                    <th>Gender</th>
+                    <th>Stu Num</th>
+                    <th>Nickname</th>
+                    <th>State</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {%- for user in user_pagination.items %}
+                <tr>
+                    <td><a href="{{ url_for('account.people', username=user.username) }}">{{ user.username }}</a></td>
+                    <td>{{ user.name }}</td>
+                    <td>{%- if user.is_male %}Male{%- else %}Female{%- endif %}</td>
+                    <td>{{ user.szu_account.stu_number }}</td>
+                    <td>{{ user.nickname }}</td>
+                    <td>{{ user.state }}</td>
+                    <td>
+                        <a href="{{ url_for('master.master_account_edit', uid=user.id) }}"><span class="icon-pencil"></span></a>
+                         | 
+                        <a href="#delete-modal" role="button" data="{{ user.id }}" class="delete-btns" data-toggle="modal"><span class="icon-remove"></span></a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{{ utils.render_pagination(user_pagination, 'master.master_account_list')|safe }}
+
+<div class="modal small hide fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="delete-modal-label" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="delete-modal-label">Delete Confirmation</h3>
+    </div>
+    <div class="modal-body">
+        <p class="error-text"><i class="icon-warning-sign modal-icon"></i>Are you sure you want to delete the user?</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+        <button class="btn btn-danger" id="confirm-delete-btn" data-dismiss="modal">Delete</button>
+    </div>
+</div>
+{%- endblock %}
+
+{%- block scripts %}
+<script>
+$(function(){
+    $(".delete-btns").on('click', function(e){
+        window.delete_id = $(this).attr('data');
+    })
+    $("#confirm-delete-btn").click(function(){
+        $.ajax({
+            url: "{{ url_for('master.master_account_delete', uid=9999) }}".replace('9999', window.delete_id),
+            type: 'delete',
+            dataType: 'json',
+            data: {'_crsf_token': getCookie('_crsf_token') },
+            success: function(response) {
+                if(response.success){
+                    location.href = "{{ url_for('master.master_account_list') }}";
+                }
+                else{
+                    location.href = "{{ url_for('master.master_account_list') }}";
+                }
+            },
+            error: function() {
+                $S.error('程序发生错误，请联系管理员！');
+            }
+        });
+    });
+});</script>
+{%- endblock %}

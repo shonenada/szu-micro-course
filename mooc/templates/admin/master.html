@@ -10,7 +10,12 @@
     <link href="{{ url_for('static', filename='components/bootstrap/docs/assets/css/bootstrap.css')}}" media="all" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/admin-theme.css') }}">
     <link href="{{ url_for('static', filename='components/font-awesome/css/font-awesome.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{ url_for('static', filename='styles/flash-messages.css')}}" media="all" rel="stylesheet" type="text/css" />
     <script src="{{ url_for('static', filename='components/jquery/jquery.min.js') }}" language="javascript"></script>
+    <script src="{{ url_for('static', filename='scripts/plugins/cookies_for_ajax.js') }}" language="javascript"></script>
+    <script src="{{ url_for('static', filename='scripts/flash-message.js') }}" language="javascript"></script>
+    {%- block htmlhead %}
+    {%- endblock %}
     <!-- Demo page code -->
     <style type="text/css">
         #line-chart {
@@ -50,6 +55,7 @@
 <!--[if (gt IE 9)|!(IE)]><!--> 
 <body class=""> 
 <!--<![endif]-->
+{% include 'flash-message.html' %}
     <div class="navbar">
         <div class="navbar-inner">
                 <ul class="nav pull-right">
@@ -114,7 +120,7 @@
                                     <th>First Name</th>
                                     <th>Last Name</th>
                                     <th>Username</th>
-                                </tr>
+                            </tr>
                           </thead>
                           <tbody>
                                 <tr>
@@ -137,12 +143,8 @@
         </div>
     </div>
     <script src="{{ url_for('static', filename='components/bootstrap/docs/assets/js/bootstrap.js' )}}"></script>
-    <script type="text/javascript">
-        $("[rel=tooltip]").tooltip();
-        $(function() {
-            $('.demo-cancel-click').click(function(){return false;});
-        });
-    </script>
+    {%- block scripts %}
+    {%- endblock %}
 </body>
 </html>
 

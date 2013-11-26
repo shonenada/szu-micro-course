@@ -50,8 +50,8 @@ def enumdef(attr_name, attr_values):
 
 
 def flash(message, category='message', form_errors=False):
-    def form_errors_parse(form_errors):
-        for v in form_errors.values():
+    def form_errors_parse(form_errors_message):
+        for v in form_errors_message.values():
             yield ", ".join(v)
 
     if isinstance(message, (str, unicode)):
@@ -61,7 +61,7 @@ def flash(message, category='message', form_errors=False):
         if form_errors:
             f(message=', '.join([v for v in form_errors_parse(message)]), category=category)
         else:
-            f(message=', '.join(message.values()))
+            f(message=', '.join(message.values()), category=category)
 
     if isinstance(message, list):
         f(message=', '.join(message), category=category)

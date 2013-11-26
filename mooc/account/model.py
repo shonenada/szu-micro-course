@@ -64,6 +64,7 @@ class User(db.Model, RBACUserMixinModel):
     __tablename__ = 'user'
     query_class = UserQuery
     USER_STATE_VALUES = ('normal', 'frozen', 'deleted', 'unactivated')
+    USER_STATE_TEXTS = ('Normal', 'Frozen', 'Deleted', 'Unactivated')
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(30), nullable=True)
