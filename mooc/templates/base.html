@@ -3,60 +3,63 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}深大微课程 - MicroLecture{% endblock %}</title>
+    <title>{%- block title %}深大微课程 - MicroLecture{%- endblock %}</title>
     <meta name="keywords" content="深圳大学,墨客,MOOC,mooc,深圳大学墨客,microlecture" />
     <meta name="description" content="深圳大学墨客，提供免费的教学视频。" />
-    <link href="{{ url_for('static', filename='components/reset-css/index.css')}}" media="all" rel="stylesheet" type="text/css" />
-    <link href="{{ url_for('static', filename='styles/base.css')}}" media="all" rel="stylesheet" type="text/css" />
-    <link href="{{ url_for('static', filename='styles/flash-messages.css')}}" media="all" rel="stylesheet" type="text/css" />
-    <link href="{{ url_for('static', filename='styles/dropdown.css')}}" media="all" rel="stylesheet" type="text/css" />
-    <script src="{{ url_for('static', filename='components/jquery/jquery.min.js') }}" language="javascript"></script>
-    <script src="{{ url_for('static', filename='scripts/global.js') }}" language="javascript"></script>
-    <script src="{{ url_for('static', filename='scripts/plugins/mini-dropdown.js') }}" language="javascript"></script>
-    <script src="{{ url_for('static', filename='scripts/flash-message.js') }}" language="javascript"></script>
-    <script src="{{ url_for('static', filename='scripts/nav.js') }}" language="javascript"></script>
-    {% block htmlhead %}
-    {% endblock %}
+    <link href="{{ url_for('static', filename='components/reset-css/index.css')}}" media="all" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='styles/base.css')}}" media="all" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='styles/flash-messages.css')}}" media="all" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='styles/dropdown.css')}}" media="all" rel="stylesheet" />
+    <script src="{{ url_for('static', filename='components/jquery/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/global.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/plugins/mini-dropdown.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/flash-message.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/nav.js') }}"></script>
+    {%- block htmlhead %}
+    {%- endblock %}
 </head>
 
 <body>
-{% include 'flash-message.html' %}
-{% block header %}
-<header id="header">
-    <div id="nav-container" class="w1170 center-block">
-        <a href="{{ url_for('master.index') }}" id="logo">WeiCourse</a>
-        <div id="nav">
+{%- include 'flash-message.html' %}
+{%- block header %}
+<header id="header" class='full-width'>
+    <div id="nav-container" class="wrapper">
+        <a href="{{ url_for('master.index') }}" id="logo">微课程</a>
+        <nav id="nav">
             <ul class="dropdown-nav">
+                <li class="home-link"><a href="{{url_for('master.index')}}">首页</a></li>
                 <li><a href="{{url_for('course.courses')}}">课程库</a></li>
-                {% if current_user.is_anonymous() %}
+                <li><a href="#">问答系统</a></li>
+                <li><a href="#">课程资源</a></li>
+                {%- if current_user.is_anonymous() %}
                 <li><a href="{{ url_for('account.signin') }}">登录</a></li>
-                {% else %}
+                {%- else %}
                 <li>
                     <a href="{{ url_for('account.setting') }}" class="user_logged">{{ current_user.username }}</a>
                     <ul class="dropdown">
-                        {% if has_perm('GET', 'master.master_index') %}
+                        {%- if has_perm('GET', 'master.master_index') %}
                         <li><a href="{{ url_for('master.master_index') }}">系统管理</a></li>
-                        {% endif %}
+                        {%- endif %}
                         <li><a href="{{ url_for('account.people', username=current_user.username) }}">个人主页</a></li>
                         <li><a href="{{ url_for('account.setting') }}">设置</a></li>
                         <li><a href="{{ url_for('account.signout') }}">退出</a></li>
                     </ul>
                 </li>
-                {% endif %}
+                {%- endif %}
             </ul>
-        </div>
+        </nav>
     </div>
-    {% block banner %}{% endblock %}
+    {%- block header_banner %}{%- endblock %}
 </header>
-{% endblock %}
+{%- endblock %}
 
-{% block main %}
-{% endblock %}
+{%- block main %}
+{%- endblock %}
 
-{% block footer %}
+{%- block footer %}
 <footer id="footer">
-    <div id="footer-banner" class="banner">
-        
+    <div id="footer-banner" class="banner full-width">
+        {%- block footer_banner %}{%- endblock %}
     </div>
     <div id="link">
         <ul>
@@ -70,7 +73,6 @@
         版权所有 &copy; 深圳大学 2013
     </div>
 </footer>
-{% endblock %}
-
+{%- endblock %}
 </body>
 </html>

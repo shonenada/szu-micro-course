@@ -11,12 +11,12 @@
         </ul>
     </div>
 
-    <div class="full-width-box">
+    <div class="container">
         <div id="category-intro">
             <div class="course-container">
                 <div class="course-box">
                     <div class="course-info">
-                        <div class="icon">
+                        <div class="icon small-icon">
                             <img src="{{ this_course.logo_url }}" />
                         </div>
                         <div class="course-title">
@@ -35,10 +35,11 @@
             </div>
         </div>
 
-        视频列表
+        <div>视频列表</div>
+
         <div id="clip-list">
             {% for idx, clip in clips|enumerate %}
-            <a href="{{ url_for('course.clip', clip_id=clip.id) }}">{% include 'clip_box.html' %}</a>
+            <a href="{{ url_for('course.clip', clip_id=clip.id) }}" class="clip_box_wrapper">{% include 'clip_box.html' %}</a>
             {% endfor %}
         </div>
     </div>

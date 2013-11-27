@@ -1,192 +1,226 @@
 @import 'global_var.styl'
 @import 'func.styl'
 
+#header
+
+    & .banner
+        width 100%
+        height 280px
+        background #fff url(base_root + '/static/images/header-background.png') repeat-x
+        background-size auto 364px
+
+        & #banner-text
+            color #fff
+            font-size 36px
+            line-height 280px
+            font-family arial
+
 #category_list
     top-border-radius 5
     bottom-border-radius 5
-    background: #ccd9e2;
-    margin-top: 40px;
-    font-size: 14px;
-    font-weight: bold;
-    overflow: hidden;
+    background #ccd9e2
+    margin-top 40px
+    font-size 14px
+    font-weight bold
+    overflow hidden
 
     & ul li
-        float: left;
+        float left
 
         & a
-            display: block;
-            height: 40px;
-            color: #7b8896;
-            line-height: 40px;
-            padding: 0 10px 0 10px;
-            text-align: center;
-            transition(0.25s)
+            display block
+            height 40px
+            color #7b8896
+            line-height 40px
+            padding 0 10px 0 10px
+            text-align center
+            transition 0.25s
 
             &:hover
-                background: #fff;
+                background #fff
 
     & ul li:first-child a
-        padding-left: 20px;
+        padding-left 20px
 
 
 #main
-    background: #dce5eb;
-    overflow: hidden;
-    width: 100%;
+    background #dce5eb
+    overflow hidden
+    width 100%
 
     & #wrapper
-        padding-bottom: 20px;
-        padding-top: 20px;
-        overflow: hidden;
-
-    & .shadow
-        height: 5px;
-        width: 99%;
-        margin: 0 auto;
-        background: #cad6df;
-        bottom-border-radius 3
+        padding-bottom 20px
+        padding-top 30px
+        overflow hidden
 
     & #left
-        float: left;
-        width: 800px;
+        float left
+        width 69%
 
         & .course-category
-            margin-top: 10px;
-            display: block;
-            overflow: hidden;
-            zoom: 1;
+            display block
+            overflow hidden
+            width 100%
+
+            & .course_box_wrapper
+                width 48%
+                display block
+                float left
+                margin-right 2%
+                margin-bottom 20px
 
             & .course-category-title
-                display: block;
-                color: #75818b;
-                font-size: 18px;
-                margin-bottom: 15px;
+                display block
+                color #75818b
+                font-size 18px
+                margin-bottom 15px
 
                 & a
-                    color: #75818b;
-                    transition(0.25s)
+                    color #75818b
+                    transition 0.25s
 
                     &:hover
-                        color: #aa5400;
+                        color #aa5400
 
         & .course-container
-            float: left;
-            margin-right: 20px;
-            margin-bottom: 20px;
-            transition(0.25s)
+            float left
+            transition 0.25s
+            width 100%
             
             &:hover
                 transform-translate3d 0 -2px 0
 
             & .course-box
-                width: 380px;
-                float: left; 
+                width 100%
+                float left
 
                 & .course-info
                     top-border-radius 3
-                    background: #fff;
-                    padding: 15px;
-                    overflow: hidden;
+                    background #fff
+                    padding 15px
+                    overflow hidden
 
                     & .icon
-                        float: left;
-                        margin: 0 10px 0 0;
+                        float left
+                        width 30%
 
                         & img
-                            width: 70px;
-                            height: 70px;
+                            width 90%
+
+                    & .small-icon
+                        width 10%
 
                     & .course-title
-                        font-weight: bold;
-                        margin-bottom: 0.6em;
+                        font-weight bold
+                        margin-bottom 0.6em
+                        text-overflow ellipsis
+                        white-space nowrap
+                        overflow hidden
 
                         &:hover
-                            color: #ff5400;
+                            color #ff5400
 
                     & .course-description
-                        font-size: 14px;
-                        line-height: 1.3em;
+                        font-size 14px
+                        line-height 1.3em
+                        text-overflow ellipsis
+                        overflow hidden
+
+                        & .ellipsis-60
+                            display inline
+
+                        & .ellipsis-20
+                            display none
 
                 & .course-record
                     bottom-border-radius 3
-                    background: #eff5fa;
-                    padding: 0 15px;
-                    height: 40px;
-                    font-size: 14px;
-                    line-height: 40px;
+                    background #eff5fa
+                    padding 0 15px
+                    height 40px
+                    font-size 14px
+                    line-height 40px
 
                     & .course-num
-                        float: left;
-                        border-right: solid 2px #cad6df;
-                        padding-right: 20px;
+                        float left
+                        border-right solid 2px #cad6df
+                        padding-right 20px
                         & span
-                            font-weight: bold;
+                            font-weight bold
 
                     & .learned-num
-                        margin-left: 20px;
-                        float: left;
+                        margin-left 20px
+                        float left
                         & span
-                            font-weight: bold;
-
-                & .shadow
-                    width: 370px;
+                            font-weight bold
 
         & #category_list
-            margin-top: 10px;
-            margin-bottom: 30px;
+            margin-top 10px
+            margin-bottom 30px
 
             & a
-                margin: 0;
-                padding: 0 10px 0 0;
+                margin 0
+                padding 0 10px 0 0
 
                 &:hover
-                    background: #ccd9e2;
-                    color: #626f7c;
+                    background #ccd9e2
+                    color #626f7c
 
                 &:before
-                    line-height: 40px;
-                    content: url(base_root + '/static/images/arrow.png');
-                    margin: 0 10px 0 0;
+                    line-height 40px
+                    content url(base_root + '/static/images/arrow.png')
+                    margin 0 10px 0 0
 
             & li:first-child
                 & a
-                    padding-left: 10px;
+                    padding-left 10px
 
                 & a:before
-                    content: '';
+                    content ''
 
             & li:last-child
                 & a
-                    color: #ff5400;
+                    color #ff5400
 
-        & .full-width-box
-            & .course-container, .course-box
-                width: 100%;
+        & .container
 
-            & .shadow
-                width: 98% !important;
+            & #category-intro
+                width 100%
+                float left
+                margin-bottom 20px
 
             & #clip-list
-                margin-top: 20px;
+                width 100%
+                margin-top 20px
+
+                & .clip_box_wrapper
+                    width 100%
+                    display block
+                    float left
+                    margin-bottom 10px
+
+            & .course-container, .course-box
+                width 100%
+
 
     & #right
-        float: right;
-        width: 360px;
+        float right
+        width 30%
 
         & .info-wraper
-            transition(0.25s)
-            margin-bottom: 20px;
+            transition 0.25s
+            margin-bottom 20px
+            width 98%
 
             &:hover
                 transform-translate3d 0 -2px 0
 
             & .wraper-foot
-                width: 360px;
-                background: #eff5fa;
-                height: 40px;
-                line-height: 40px;
-                text-align: center;
-                font-size: 14px;
+                width 100%
+                background #eff5fa
+                height 40px
+                line-height 40px
+                text-align center
+                font-size 14px
 
             & #learn-act
                 bottom-border-radius 3
@@ -195,158 +229,154 @@
                 bottom-border-radius 3
 
             & .info-box
-                padding: 12px 0 0 0;
-                background: #fff;
-                text-indent: 20px;
+                padding 12px 0 0 0
+                background #fff
+                text-indent 20px
                 top-border-radius 3
 
                 & .title
-                    padding-bottom: 10px;
-                    border-bottom: 1px solid #dce5eb;
-                    font-size: 16px;
+                    padding-bottom 10px
+                    border-bottom 1px solid #dce5eb
+                    font-size 16px
 
                 & .content
-                    margin-top: 20px;
-                    overflow: hidden;
+                    margin-top 20px
+                    overflow hidden
 
                     & .content-list
-                        display: block;
-                        margin-bottom: 15px;
-                        clear: both;
-                        overflow: hidden;
+                        display block
+                        margin-bottom 15px
+                        clear both
+                        overflow hidden
 
                         & .icon
-                            float: left;
+                            float left
 
                         & .icon img
-                            width: 40px;
-                            height: 40px;
+                            width 40px
+                            height 40px
 
                         & .tip
                             
                             & .tip-text
-                                font-size: 14px;
-                                color: #a5b4c1;
+                                font-size 14px
+                                color #a5b4c1
 
                             & .course-name
-                                float: left;
-                                line-height: 1.8em;
-                                font-size: 16px;
+                                float left
+                                line-height 1.8em
+                                font-size 16px
 
-            & .shadow
-                width: 350px;
-
-    #player
-        width: 100%;
-        background: #000;
+    & #player
+        width 100%
+        padding 2px 1% 0 1%
+        background #333
 
         & video
-            width: 100%;
+            width 98%
+            margin 0 auto
 
-    #clip-intro
-        width: 100%;
-        background: #fff;
-        padding: 25px;
-        margin: 0px;
+    & #clip-intro
+        width 100%
+        background #fff
+        padding 25px
+        margin 0px
 
         & h2
-            font-size: 22px !important;
-            color: #515c73 !important;
-            line-height: 30px;
+            font-size 22px !important
+            color #515c73 !important
+            line-height 30px
 
         & p
-            font-size: 14px;
-            margin: 10px 0 10px 0;
+            font-size 14px
+            margin 10px 0 10px 0
 
         & #category_info
 
-            overflow: hidden;
+            overflow hidden
 
             & ul li
-                float: left;
+                float left
 
                 & a
-                    font-size: 14px;
-                    margin: 0;
-                    display: block;
-                    height: 40px;
-                    color: #7b8896;
-                    line-height: 40px;
-                    font-weight: bold;
-                    transition(0.25s)
+                    font-size 14px
+                    margin 0
+                    display block
+                    height 40px
+                    color #7b8896
+                    line-height 40px
+                    font-weight bold
+                    transition0.25s
 
                     &:hover
-                        color: #ff5400;
+                        color #ff5400
 
                     &:before
-                        padding: 0 10px 0 10px;
-                        line-height: 40px;
-                        content: url(base_root + '/static/images/arrow.png');
+                        padding 0 10px 0 10px
+                        line-height 40px
+                        content url(base_root + '/static/images/arrow.png')
 
             & li:first-child
                 & a
                     &:before
-                        padding: 0px;
-                        content: '';
+                        padding 0px
+                        content ''
 
             & li:last-child
                 & a
-                    color: #ff5400;
+                    color #ff5400
 
-    #clip-info
-
-        margin-top: 20px;
-
-        & .shadow
-            width: 99%;
+    & #clip-info
+        width 100%
+        margin-top 20px
 
         & #clip-info-left
-            width: 780px;
-            float: left;
+            width 69%
+            float left
 
         & #clip-btns
-            width: 100%;
-            overflow: hidden;
+            width 100%
+            overflow hidden
 
             & li:first-child
                 & a
-                    margin: 0px 5px 0px 0px;
+                    margin 0px 5px 0px 0px
 
             & ul li
-                float: left;
+                float left
 
                 & a
                     top-border-radius 5
-                    font-weight: bold;
-                    display: block;
-                    color: #7b8896;
-                    background: #ccd7e0;
-                    padding: 7px 21px 8px;
-                    font-size: 14px;
-                    margin: 0px 5px 0px 5px;
+                    font-weight bold
+                    display block
+                    color #7b8896
+                    background #ccd7e0
+                    padding 7px 21px 8px
+                    font-size 14px
+                    margin 0px 5px 0px 5px
 
                 & a.current
-                    background: #fff;
-                    color: #ff5400;
+                    background #fff
+                    color #ff5400
 
         & #clip-tips
-            background: #fff;
-            padding: 10px;
-            font-size: 14px;
-            line-height: 1.5em;
+            background #fff
+            padding 10px
+            font-size 14px
+            line-height 1.5em
             top-border-radius 5
             bottom-border-radius 5
-            -webkit-border-top-left-radius: 0px;
-            -moz-border-radius-topleft: 0px;
-            border-top-left-radius: 0px;
-            text-indent: 1em;
+            -webkit-border-top-left-radius 0px
+            -moz-border-radius-topleft 0px
+            border-top-left-radius 0px
+            text-indent 1em
 
             & .clip-hidden
-                display: none;
+                display none
             
         & #clip-info-right
-            float: right;
-            width: 360px;
+            float right
+            width 30%
 
             & .shadow
                 bottom-border-radius 5
@@ -354,41 +384,54 @@
             & #clip-who-learning
                 bottom-border-radius 5
                 top-border-radius 5
-                background: #fff;
+                background #fff
 
                 & h2
-                    color: #515c73;
-                    padding: 10px 10px 10px 15px;
-                    font-size: 15px;
-                    border-bottom: 1px solid #dce5eb;
+                    color #515c73
+                    padding 10px 10px 10px 15px
+                    font-size 15px
+                    border-bottom 1px solid #dce5eb
 
                 & #leanring
-                    padding: 20px;
+                    padding 20px
 
                 & .content-list
-                    display: block;
-                    margin-bottom: 15px;
-                    clear: both;
-                    overflow: hidden;
+                    display block
+                    margin-bottom 15px
+                    clear both
+                    overflow hidden
 
                     &:last-child
-                        margin-bottom: 0px;
+                        margin-bottom 0px
 
                     & .icon
-                        float: left;
+                        float left
 
                     & .icon img
-                        width: 40px;
-                        height: 40px;
+                        width 40px
+                        height 40px
 
                     & .tip
-                        margin-left: 50px;
+                        margin-left 50px
                         
                         & .tip-text
-                            font-size: 14px;
-                            color: #a5b4c1;
+                            font-size 14px
+                            color #a5b4c1
 
                         & .course-name
-                            float: left;
-                            line-height: 1.8em;
-                            font-size: 16px;
+                            float left
+                            line-height 1.8em
+                            font-size 16px
+
+
+@media screen and (max-width: 1150px)
+    @import 'screen-1150'
+
+@media screen and (max-width: 850px)
+    @import 'screen-850'
+
+@media screen and (max-width: 720px)
+    @import 'screen-720'
+
+@media screen and (max-width: 550px)
+    @import 'screen-550'

@@ -8,7 +8,8 @@
                 {{ course.name }}
             </div>
             <div class="course-description">
-                <p>{{ course.description|ellipsis(60) }}</p>
+                <p class="ellipsis-60">{{ course.description|ellipsis(60) }}</p>
+                <p class="ellipsis-20">{{ course.description|ellipsis(20) }}</p>
             </div>
         </div>
         <div class="course-record">
