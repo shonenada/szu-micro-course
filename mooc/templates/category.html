@@ -11,7 +11,7 @@
     <div class="course-category">
         <span class="course-category-title">{{ this_category.name }}</span>
         {% for course in this_category.courses %}
-        <a href="{{ url_for('course.course', course_id=course.id) }}">
+        <a href="{{ url_for('course.course', course_id=course.id) }}" class="course_box_wrapper">
             {% include 'course_box.html' %}
         </a>
         {% endfor %}

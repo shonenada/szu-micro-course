@@ -46,4 +46,4 @@ def clip(clip_id):
     clip = Clip.query.get(clip_id)
     who_is_learning = (LearnRecord.query.filter_by(clip_id=clip_id)
                                   .limit(10).all())
-    return render_template('clip.html', clip=clip, learning=who_is_learning)
+    return render_template('lecture.html', clip=clip, learning=who_is_learning)

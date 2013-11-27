@@ -34,7 +34,7 @@
                 <li><a href="javascript:void(0);" id="btn-knowledge-point" class="clip-btns current">知识点</a></li>
                 <li><a href="javascript:void(0);" id="btn-questions" class="clip-btns">相关问题</a></li>
                 <li><a href="javascript:void(0);" id="btn-evaluation" class="clip-btns">课程测评</a></li>
-                <li><a href="javascript:void(0);" id="btn-video-resource" class="clip-btns">下载视频资源</a></li>
+                <li><a href="javascript:void(0);" id="btn-video-resource" class="clip-btns">课程资源</a></li>
             </ul>
         </div>
 
@@ -66,9 +66,11 @@
                         <img src="{{ l.user.avatar }}">
                     </div>
                     <div class="tip">
+                        <div>
                         <span class="tip-text username">{{ l.user.nickname }}</span>
                         <span class="tip-text time">{{ l.created | friendly_time }}</span>
                         <span class="tip-text">学习了</span>
+                        </div>
                         <span class="course-name">{{ l.clip.name }}</span>
                     </div>
                 </div>
