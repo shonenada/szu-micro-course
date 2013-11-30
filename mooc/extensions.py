@@ -30,6 +30,11 @@ def gears_environment(app):
     return app.extensions['gears']['environment']
 
 
+def setup_gears_environment(app):
+    env = gears_environment(app)
+    env.fingerprinting = app.config.get('GEARS_FINGERPRINTING', True)
+
+
 def setup_compilers(app):
     env = gears_environment(app)
     for extension, compiler in _compilers.iteritems():

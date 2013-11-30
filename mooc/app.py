@@ -2,6 +2,7 @@ from flask import Flask
 
 
 from mooc.extensions import gears, setup_compilers, setup_compressors
+from mooc.extensions import setup_gears_environment
 from mooc.extensions import db, setup_database
 from mooc.extensions import login_manager
 from mooc.extensions import rbac, setup_rbac
@@ -26,6 +27,7 @@ def create_app(import_name=None, config=None):
         sentry = Sentry(app)
 
     gears.init_app(app)
+    setup_gears_environment(app)
     setup_compressors(app)
     setup_compilers(app)
 

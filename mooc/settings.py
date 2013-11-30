@@ -1,1 +1,2 @@
 # Settings for MOOC
+GEARS_FINGERPRINTING = False
