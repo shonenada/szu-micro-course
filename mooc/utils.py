@@ -59,7 +59,8 @@ def flash(message, category='message', form_errors=False):
 
     if isinstance(message, dict):
         if form_errors:
-            f(message=', '.join([v for v in form_errors_parse(message)]), category=category)
+            f(message=', '.join([v for v in form_errors_parse(message)]),
+              category=category)
         else:
             f(message=', '.join(message.values()), category=category)
 

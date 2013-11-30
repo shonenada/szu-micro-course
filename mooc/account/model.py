@@ -14,18 +14,20 @@ from mooc.exception import UserStateException
 class UserQuery(BaseQuery):
 
     def authenticate(self, username, raw_passwd):
-        user = self.filter(User.username==username).first()
+        user = self.filter(User.username == username).first()
         if user and user.check_password(raw_passwd):
             return user
         return None
 
 
-roles_parents = db.Table('roles_parents',
+roles_parents = db.Table(
+    'roles_parents',
     db.Column('role_id', db.Integer, db.ForeignKey('role.id')),
     db.Column('parent_id', db.Integer, db.ForeignKey('role.id'))
 )
 
-users_roles = db.Table('users_roles',
+users_roles = db.Table(
+    'users_roles',
     db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
     db.Column('role_id', db.Integer, db.ForeignKey('role.id'))
 )
@@ -38,8 +40,8 @@ class Role(db.Model, RBACRoleMixinModel):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20))
     parents = db.relationship('Role', secondary=roles_parents,
-                              primaryjoin=id==roles_parents.c.role_id,
-                              secondaryjoin=id==roles_parents.c.parent_id,
+                              primaryjoin=(id == roles_parents.c.role_id),
+                              secondaryjoin=(id == roles_parents.c.parent_id),
                               backref=db.backref('children', lazy='dynamic'))
     users = db.relationship('User', secondary=users_roles,
                             backref=db.backref('roles', lazy='dynamic'))

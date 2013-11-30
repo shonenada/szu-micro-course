@@ -4,6 +4,7 @@ from flask.ext.script import Manager, Server
 
 from develop_tools.clean import clean as cln
 from develop_tools.pep8 import pep8
+from develop_tools.search import search
 from mooc.app import create_app
 from mooc.app import db
 
@@ -62,6 +63,12 @@ def initdb(config):
 def syncdb(config):
     createdb(config)
     initdb(config)
+
+
+@manager.command
+def find(content, path='./', suffix='py'):
+    file_pattern = r"^[a-zA-Z0-9_]+\.(" + suffix + ")$"
+    search(path, file_pattern, content)
 
 
 if __name__ == '__main__':
