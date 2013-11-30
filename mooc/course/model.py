@@ -8,10 +8,10 @@ from mooc.qa.model import Question
 from mooc.utils import enumdef
 
 
-clip_tags = db.Table(
-    'clip_tags',
-    db.Column('tag_id', db.Integer, db.ForeignKey('clip_tag.id')),
-    db.Column('clip_id', db.Integer, db.ForeignKey('clip.id'))
+lecture_tags = db.Table(
+    'lecture_tags',
+    db.Column('tag_id', db.Integer, db.ForeignKey('lecture_tag.id')),
+    db.Column('lecture_id', db.Integer, db.ForeignKey('lecture.id'))
 )
 
 course_tags = db.Table(
@@ -72,7 +72,8 @@ class Course(db.Model):
     created = db.Column(db.DateTime, default=datetime.utcnow())
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
-    clips = db.relationship('Clip', backref=db.backref('course'), uselist=True)
+    lectures = db.relationship('Lecture',
+                               backref=db.backref('course'), uselist=True)
     tags = db.relationship('CourseTag', secondary=course_tags,
                            backref=db.backref('course', lazy='dynamic'))
 
@@ -98,12 +99,12 @@ class Course(db.Model):
         return "<Course %s>" % self.name
 
 
-class Clip(db.Model):
+class Lecture(db.Model):
     """Model of Course"""
 
-    __tablename__ = 'clip'
+    __tablename__ = 'lecture'
 
-    CLIP_STATE_VALUES = ('published', 'unpublished', 'recording')
+    LECTURE_STATE_VALUES = ('published', 'unpublished', 'recording')
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20))
@@ -118,8 +119,9 @@ class Clip(db.Model):
     upload_time = db.Column(db.DateTime)
     video_url = db.Column(db.String(150))
     video_length = db.Column(db.Integer)
-    _state = db.Column('state', db.Enum(name='clip_state', *CLIP_STATE_VALUES))
-    state = enumdef('_state', CLIP_STATE_VALUES)
+    _state = db.Column('state', db.Enum(name='lecture_state',
+                                        *LECTURE_STATE_VALUES))
+    state = enumdef('_state', LECTURE_STATE_VALUES)
     read_count = db.Column(db.Integer, default=0)
     order = db.Column(db.Integer, default=1)
     play_count = db.Column(db.Integer, default=0)
@@ -127,14 +129,14 @@ class Clip(db.Model):
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'))
     college_id = db.Column(db.Integer, db.ForeignKey('college.id'))
     teacher_id = db.Column(db.Integer, db.ForeignKey('teacher.id'))
-    learn_records = db.relationship('LearnRecord', backref=db.backref('clip'),
+    learn_records = db.relationship('LearnRecord', backref=db.backref('lecture'),
                                     uselist=True, lazy='dynamic')
-    questions = db.relationship('Question', backref=db.backref('clip'),
+    questions = db.relationship('Question', backref=db.backref('lecture'),
                                 uselist=True, lazy='dynamic')
-    answers = db.relationship('Answer', backref=db.backref('clip'),
+    answers = db.relationship('Answer', backref=db.backref('lecture'),
                               uselist=True, lazy='dynamic')
-    tags = db.relationship('ClipTag', secondary=clip_tags,
-                           backref=db.backref('clip'))
+    tags = db.relationship('LectureTag', secondary=lecture_tags,
+                           backref=db.backref('lecture'))
 
     def __init__(self, name, description, author, course, order=None,
                  published=False):
@@ -152,7 +154,7 @@ class Clip(db.Model):
         self.upload_time = datetime.utcnow()
 
     def __repr__(self):
-        return "<Clip %s>" % self.name
+        return "<Lecture %s>" % self.name
 
 
 class LearnRecord(db.Model):
@@ -162,18 +164,18 @@ class LearnRecord(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     created = db.Column(db.DateTime, default=datetime.utcnow())
     star_count = db.Column(db.Integer, default=0)
-    clip_id = db.Column(db.Integer, db.ForeignKey('clip.id'))
+    lecture_id = db.Column(db.Integer, db.ForeignKey('lecture.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
-    def __init__(self, clip, user):
-        self.clip = clip
+    def __init__(self, lecture, user):
+        self.lecture = lecture
         self.user = user
         self.star_count = 0
         self.created = datetime.utcnow()
 
 
-class ClipTag(db.Model):
-    __tablename__ = 'clip_tag'
+class LectureTag(db.Model):
+    __tablename__ = 'lecture_tag'
 
     id = db.Column(db.Integer, primary_key=True)
     tag = db.Column(db.String(20))

@@ -3,7 +3,7 @@ from datetime import datetime
 
 from mooc.app import db
 from mooc.account.model import User, SzuAccount, College, Teacher, Role
-from mooc.course.model import Subject, Category, Course, Clip, LearnRecord
+from mooc.course.model import Subject, Category, Course, Lecture, LearnRecord
 
 
 def _init_role():
@@ -110,48 +110,48 @@ def _init_course():
         db.session.add(course)
 
 
-def _init_clip():
-    global clips
-    clips = (
-        Clip(u'多位加法器：串行加法器', u'本课程为您讲解多位加法器：串行加法器', shonenada, courses[0], 1, True),
+def _init_lecture():
+    global lectures
+    lectures = (
+        Lecture(u'多位加法器：串行加法器', u'本课程为您讲解多位加法器：串行加法器', shonenada, courses[0], 1, True),
 
-        Clip(u'GNOME图形界面基本操作', u'本课程为您讲解Linux系统主流图形界面GNOME的基本操作使用', shonenada, courses[1], 1, True),
-        Clip(u'命令行BASH的基本操作', u'本课程为您讲解Linux命令行界面（CLI）BASH的基本操作使用', shonenada, courses[1], 2, True),
+        Lecture(u'GNOME图形界面基本操作', u'本课程为您讲解Linux系统主流图形界面GNOME的基本操作使用', shonenada, courses[1], 1, True),
+        Lecture(u'命令行BASH的基本操作', u'本课程为您讲解Linux命令行界面（CLI）BASH的基本操作使用', shonenada, courses[1], 2, True),
 
-        Clip(u'磁盘基本概念', u'本课程为您讲解磁盘的基本概念，包括磁盘结构、扇区、磁臂、柱面的概念以及MBR、GPT的分区管理知识', shonenada, courses[2], 1, True),
+        Lecture(u'磁盘基本概念', u'本课程为您讲解磁盘的基本概念，包括磁盘结构、扇区、磁臂、柱面的概念以及MBR、GPT的分区管理知识', shonenada, courses[2], 1, True),
     )
 
-    clips[0].knowledge_point = u'<ul><li>知识点1</li><li>知识点2</li><li>...</li></ul>'
-    clips[0].record_time = datetime(2013, 11, 06)
-    clips[0].record_address = u'教学楼A101'
-    clips[0].video_url = 'http://mooc.shonenada.com/static/upload/videos/2013-11-06.caiye.mp4'
-    clips[0].video_length = 16
+    lectures[0].knowledge_point = u'<ul><li>知识点1</li><li>知识点2</li><li>...</li></ul>'
+    lectures[0].record_time = datetime(2013, 11, 06)
+    lectures[0].record_address = u'教学楼A101'
+    lectures[0].video_url = 'http://mooc.shonenada.com/static/upload/videos/2013-11-06.caiye.mp4'
+    lectures[0].video_length = 16
 
-    clips[1].knowledge_point = u'<ul><li>GNOME最早诞生于1999年，主要由redhat员工开发</li><li>GNOME是Linux系统以及其他类Unix系统下使用最为广泛的开源图形化界面系统</li><li>GNOME使用X11作为底层图形驱动服务</li></ul>'
-    clips[1].record_time = datetime(2013, 11, 12)
-    clips[1].record_address = u'教学楼A210'
-    clips[1].video_url = 'http://112.124.15.99:8888//linux-basic/2.mp4'
-    clips[1].video_length = 42
+    lectures[1].knowledge_point = u'<ul><li>GNOME最早诞生于1999年，主要由redhat员工开发</li><li>GNOME是Linux系统以及其他类Unix系统下使用最为广泛的开源图形化界面系统</li><li>GNOME使用X11作为底层图形驱动服务</li></ul>'
+    lectures[1].record_time = datetime(2013, 11, 12)
+    lectures[1].record_address = u'教学楼A210'
+    lectures[1].video_url = 'http://112.124.15.99:8888//linux-basic/2.mp4'
+    lectures[1].video_length = 42
 
-    clips[2].knowledge_point = u'<ul><li>Shell（壳）是用户与操作系统底层（通常是内核）之间交互的中介程序，负责将用户指令、操作传递给操作系统底层</li><li>Shell一般分为：图形化Shell（GUI）、命令行Shell（CLI）</li><li>Linux中一般默认GUI为：GNOME，默认CLI为：BASH</li><li>BASH提示符以#或$起始，#代表当前用户为root用户，$代表当前用户为普通用户</li><li>我们可以通过键盘上的Tab按键对命令或文件名进行自动补全</li><li>BASH会记录我们以往操作的命令，可以通过history命令查看</li><li>BASH可以通过以下方式调用历史记录以简化操作：</li></ul><div><strong>!! &nbsp; &nbsp; &nbsp; 重复前一个命令</strong></div><div><strong>!字符 &nbsp; 重复前一个以指定字符开头的命令</strong><br><strong>!num &nbsp; 按历史记录序号执行命令</strong><br><strong>!?abc &nbsp;重复之前包含abc的命令</strong><br><strong>!-n &nbsp; &nbsp; 重复n个命令之前那个命令</strong></div><ul><li>我们可以通过 ctrl + r 来对历史记录进行搜索查询</li><li>命令su可以切换用户</li><li>命令passwd可以修改当前用户的密码</li><li>命令id可以显示当前用户的信息</li><li>通过在命令后追加一个&amp;，可以将该命令放入后台运行</li><li>通过以下命令可以管理后台作业：</li></ul><p><strong>jobs &nbsp;显示后台作业</strong><br><strong>fg &nbsp; &nbsp;将后台作业调到前台执行</strong><br><strong>bg &nbsp; &nbsp;继续执行一个后台作业</strong></p>'
-    clips[2].record_time = datetime(2013, 11, 13)
-    clips[2].record_address = u'教学楼A313'
-    clips[2].video_url = 'http://112.124.15.99:8888//linux-basic/3.mp4'
-    clips[2].video_length = 23
+    lectures[2].knowledge_point = u'<ul><li>Shell（壳）是用户与操作系统底层（通常是内核）之间交互的中介程序，负责将用户指令、操作传递给操作系统底层</li><li>Shell一般分为：图形化Shell（GUI）、命令行Shell（CLI）</li><li>Linux中一般默认GUI为：GNOME，默认CLI为：BASH</li><li>BASH提示符以#或$起始，#代表当前用户为root用户，$代表当前用户为普通用户</li><li>我们可以通过键盘上的Tab按键对命令或文件名进行自动补全</li><li>BASH会记录我们以往操作的命令，可以通过history命令查看</li><li>BASH可以通过以下方式调用历史记录以简化操作：</li></ul><div><strong>!! &nbsp; &nbsp; &nbsp; 重复前一个命令</strong></div><div><strong>!字符 &nbsp; 重复前一个以指定字符开头的命令</strong><br><strong>!num &nbsp; 按历史记录序号执行命令</strong><br><strong>!?abc &nbsp;重复之前包含abc的命令</strong><br><strong>!-n &nbsp; &nbsp; 重复n个命令之前那个命令</strong></div><ul><li>我们可以通过 ctrl + r 来对历史记录进行搜索查询</li><li>命令su可以切换用户</li><li>命令passwd可以修改当前用户的密码</li><li>命令id可以显示当前用户的信息</li><li>通过在命令后追加一个&amp;，可以将该命令放入后台运行</li><li>通过以下命令可以管理后台作业：</li></ul><p><strong>jobs &nbsp;显示后台作业</strong><br><strong>fg &nbsp; &nbsp;将后台作业调到前台执行</strong><br><strong>bg &nbsp; &nbsp;继续执行一个后台作业</strong></p>'
+    lectures[2].record_time = datetime(2013, 11, 13)
+    lectures[2].record_address = u'教学楼A313'
+    lectures[2].video_url = 'http://112.124.15.99:8888//linux-basic/3.mp4'
+    lectures[2].video_length = 23
 
-    clips[3].knowledge_point = u'<p>磁盘基本概念：</p><p><strong>cylinder（柱面）</strong></p><p><strong>sector（扇区）</strong></p><p><strong>head（磁头）</strong></p><p>Linux系统中，磁盘以磁盘文件形式保存在/dev目录下，文件名以hd或sd开头（IDE设备以hd开头，usb、sata、SCSI、SAS等设备以sd开头），以a、b、c等表示编号，如第一块硬盘叫做/dev/sda，第二块叫做/dev/sdb，以此类推</p><p>分区使用设备名+分区号形式表示，如第一个磁盘的第一个分区：/dev/sda1，第二个分区：/dev/sda2</p><p>MBR是PC架构计算机使用的最为广泛的分区机制，特点如下：</p><p><strong>支持32位及64位系统</strong></p><p><strong>支持的分区数量有限</strong></p><p><strong>支持最大空间为2T</strong></p><p>MBR分区概念：</p><p><strong>主分区</strong></p><p><strong>扩展分区</strong></p><p><strong>逻辑分区</strong></p><p>GPT是较MBR更新、更先进的分区机制，应用于支持uEFI的计算机上，特点如下：</p><p><strong>支持超过2T的空间</strong></p><p><strong>向后兼容MBR</strong></p><p><strong>必须使用64bit系统</strong></p><p><strong>底层硬件必须使用EFI</strong></p><p>&nbsp;</p>'
-    clips[3].record_time = datetime(2013, 11, 15)
-    clips[3].record_address = u'教学楼A313'
-    clips[3].video_url = 'http://112.124.15.99:8888//linux-basic/9.mp4'
-    clips[3].video_length = 23
+    lectures[3].knowledge_point = u'<p>磁盘基本概念：</p><p><strong>cylinder（柱面）</strong></p><p><strong>sector（扇区）</strong></p><p><strong>head（磁头）</strong></p><p>Linux系统中，磁盘以磁盘文件形式保存在/dev目录下，文件名以hd或sd开头（IDE设备以hd开头，usb、sata、SCSI、SAS等设备以sd开头），以a、b、c等表示编号，如第一块硬盘叫做/dev/sda，第二块叫做/dev/sdb，以此类推</p><p>分区使用设备名+分区号形式表示，如第一个磁盘的第一个分区：/dev/sda1，第二个分区：/dev/sda2</p><p>MBR是PC架构计算机使用的最为广泛的分区机制，特点如下：</p><p><strong>支持32位及64位系统</strong></p><p><strong>支持的分区数量有限</strong></p><p><strong>支持最大空间为2T</strong></p><p>MBR分区概念：</p><p><strong>主分区</strong></p><p><strong>扩展分区</strong></p><p><strong>逻辑分区</strong></p><p>GPT是较MBR更新、更先进的分区机制，应用于支持uEFI的计算机上，特点如下：</p><p><strong>支持超过2T的空间</strong></p><p><strong>向后兼容MBR</strong></p><p><strong>必须使用64bit系统</strong></p><p><strong>底层硬件必须使用EFI</strong></p><p>&nbsp;</p>'
+    lectures[3].record_time = datetime(2013, 11, 15)
+    lectures[3].record_address = u'教学楼A313'
+    lectures[3].video_url = 'http://112.124.15.99:8888//linux-basic/9.mp4'
+    lectures[3].video_length = 23
 
-    for clip in clips:
-        db.session.add(clip)
+    for lecture in lectures:
+        db.session.add(lecture)
 
 
 def _init_learn_record():
-    for clip in clips:
-        learn_record = LearnRecord(clip, shonenada)
+    for lecture in lectures:
+        learn_record = LearnRecord(lecture, shonenada)
         db.session.add(learn_record)
 
 
@@ -164,6 +164,6 @@ def init_db():
     _init_subject()
     _init_category()
     _init_course()
-    _init_clip()
+    _init_lecture()
     _init_learn_record()
     db.session.commit()

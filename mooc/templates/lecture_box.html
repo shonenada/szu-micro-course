@@ -2,18 +2,18 @@
     <div class="course-box">
         <div class="course-info">
             <div class="icon small-icon">
-                <img src="{{ url_for('static', filename='images/clip_icon.png') }}" />
+                <img src="{{ url_for('static', filename='images/lecture_icon.png') }}" />
             </div>
             <div class="course-title">
-                {{ clip.name }}
+                {{ lecture.name }}
             </div>
             <div class="course-description">
-                <p>{{ clip.description }}</p>
+                <p>{{ lecture.description }}</p>
             </div>
         </div>
         <div class="course-record">
             <div class="course-num"><span>#{{ idx+1 }}</span></div>
-            <div class="learned-num"><span>{{ clip.video_length }}</span> 分钟</div>
+            <div class="learned-num"><span>{{ lecture.video_length }}</span> 分钟</div>
         </div>
         <div class="shadow"></div>
     </div>
