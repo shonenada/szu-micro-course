@@ -1,54 +1,54 @@
 {% extends 'layout.html' %}
 
 {% block static_files %}
-<script src="{{ url_for('static', filename='scripts/clip.js')}}"></script>
+<script src="{{ url_for('static', filename='scripts/lecture.js')}}"></script>
 {% endblock %}
 {% block left %}
 <div id="player">
-    <video src="{{ clip.video_url }}" controls="controls" autoplay="autoplay">
+    <video src="{{ lecture.video_url }}" controls="controls" autoplay="autoplay">
         Your browser does not support the video tag.
     </video>
 </div>
 
-<div id="clip-intro">
-    <h2>{{ clip.name }}</h2>
-    <p>{{ clip.description }}</p>
+<div id="lecture-intro">
+    <h2>{{ lecture.name }}</h2>
+    <p>{{ lecture.description }}</p>
     <div id="category_info">
         <ul>
             <li><a href="{{ url_for('course.courses') }}">课程库</a></li>
-            <li><a href="{{ url_for('course.subject', sid=clip.course.category.subject.id) }}">{{ clip.course.category.subject.name }}</a></li>
-            <li><a href="{{ url_for('course.category', sid=clip.course.category.subject.id, cid=clip.course.category.id)}}">{{ clip.course.category.name }}</a></li>
-            <li><a href="{{ url_for('course.course', course_id=clip.course.id) }}">{{ clip.course.name }}</a></li>
-            <li><a>{{ clip.name }}</a></li>
+            <li><a href="{{ url_for('course.subject', sid=lecture.course.category.subject.id) }}">{{ lecture.course.category.subject.name }}</a></li>
+            <li><a href="{{ url_for('course.category', sid=lecture.course.category.subject.id, cid=lecture.course.category.id)}}">{{ lecture.course.category.name }}</a></li>
+            <li><a href="{{ url_for('course.course', course_id=lecture.course.id) }}">{{ lecture.course.name }}</a></li>
+            <li><a>{{ lecture.name }}</a></li>
         </ul>
     </div>
 </div>
 <div class="shadow"></div>
 
-<div id="clip-info">
+<div id="lecture-info">
 
-    <div id="clip-info-left">
+    <div id="lecture-info-left">
 
-        <div id="clip-btns">
+        <div id="lecture-btns">
             <ul>
-                <li><a href="javascript:void(0);" id="btn-knowledge-point" class="clip-btns current">知识点</a></li>
-                <li><a href="javascript:void(0);" id="btn-questions" class="clip-btns">相关问题</a></li>
-                <li><a href="javascript:void(0);" id="btn-evaluation" class="clip-btns">课程测评</a></li>
-                <li><a href="javascript:void(0);" id="btn-video-resource" class="clip-btns">课程资源</a></li>
+                <li><a href="javascript:void(0);" id="btn-knowledge-point" class="lecture-btns current">知识点</a></li>
+                <li><a href="javascript:void(0);" id="btn-questions" class="lecture-btns">相关问题</a></li>
+                <li><a href="javascript:void(0);" id="btn-evaluation" class="lecture-btns">课程测评</a></li>
+                <li><a href="javascript:void(0);" id="btn-video-resource" class="lecture-btns">课程资源</a></li>
             </ul>
         </div>
 
-        <div id="clip-tips">
-            <div id="clip-knowledge-point" class="clip-bar">
-            <p>{{ clip.knowledge_point|safe }}</p>
+        <div id="lecture-tips">
+            <div id="lecture-knowledge-point" class="lecture-bar">
+            <p>{{ lecture.knowledge_point|safe }}</p>
             </div>
-            <div id="clip-questions" class="clip-bar clip-hidden">
+            <div id="lecture-questions" class="lecture-bar lecture-hidden">
                 相关问题
             </div>
-            <div id="clip-evaluation" class="clip-bar clip-hidden">
+            <div id="lecture-evaluation" class="lecture-bar lecture-hidden">
                 测评
             </div>
-            <div id="clip-video-resource" class="clip-bar clip-hidden">
+            <div id="lecture-video-resource" class="lecture-bar lecture-hidden">
                 资源
             </div>
         </div>
@@ -56,8 +56,8 @@
 
     </div>
 
-    <div id="clip-info-right">
-        <div id="clip-who-learning">
+    <div id="lecture-info-right">
+        <div id="lecture-who-learning">
             <h2>谁在学习此课程</h2>
             <div id="leanring">
                 {% for l in learning %}
@@ -71,7 +71,7 @@
                         <span class="tip-text time">{{ l.created | friendly_time }}</span>
                         <span class="tip-text">学习了</span>
                         </div>
-                        <span class="course-name">{{ l.clip.name }}</span>
+                        <span class="course-name">{{ l.lecture.name }}</span>
                     </div>
                 </div>
                 {% endfor %}

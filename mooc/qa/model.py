@@ -38,16 +38,16 @@ class Answer(db.Model):
     created = db.Column(db.DateTime, default=datetime.utcnow())
     edit_time = db.Column(db.DateTime, default=datetime.utcnow())
     question_id = db.Column(db.Integer, db.ForeignKey('question.id'))
-    clip_id = db.Column(db.Integer, db.ForeignKey('clip.id'))
+    lecture_id = db.Column(db.Integer, db.ForeignKey('lecture.id'))
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     parent_id = db.Column(db.Integer)
     up_down_record_id = db.Column(db.Integer,
                                   db.ForeignKey('up_down_record.id'))
 
-    def __init__(self, content, question, clip, author, parent=None):
+    def __init__(self, content, question, lecture, author, parent=None):
         self.content = content
         self.question = question
-        self.clip = clip
+        self.lecture = lecture
         self.author = author
         self.parent = parent
         self.up_count = 0
@@ -67,14 +67,14 @@ class Question(db.Model):
     edit_time = db.Column(db.DateTime, default=datetime.now)
     read_count = db.Column(db.Integer, default=0)
     up_count = db.Column(db.Integer, default=0)
-    clip_id = db.Column(db.Integer, db.ForeignKey('clip.id'))
+    lecture_id = db.Column(db.Integer, db.ForeignKey('lecture.id'))
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     answers = db.relationship('Answer', backref='question', lazy='dynamic')
 
-    def __init__(self, title, content, clip, author):
+    def __init__(self, title, content, lecture, author):
         self.title = title
         self.content = content
-        self.clip = clip
+        self.lecture = lecture
         self.author = author
         self.up_count = 0
         self.read_count = 0

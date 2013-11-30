@@ -10,7 +10,7 @@ from mooc.template import setup_filter, setup_func
 from mooc.master.view import master_app
 from mooc.account.view import account_app
 from mooc.course.view import course_app
-from mooc.course.service import get_learn_records, get_last_clip
+from mooc.course.service import get_learn_records, get_last_lecture
 
 
 def create_app(import_name=None, config=None):
@@ -44,7 +44,7 @@ def create_app(import_name=None, config=None):
     app.register_blueprint(course_app)
 
     app.before_request(get_learn_records)
-    app.before_request(get_last_clip)
+    app.before_request(get_last_lecture)
 
     setup_filter(app)
     setup_func(app)

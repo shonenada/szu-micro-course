@@ -92,7 +92,7 @@ class User(db.Model, RBACUserMixinModel):
                               uselist=True, lazy='dynamic')
     courses = db.relationship("Course", backref='author',
                               uselist=True, lazy='dynamic')
-    clips = db.relationship("Clip", backref='author',
+    lectures = db.relationship("Lecture", backref='author',
                             uselist=True, lazy='dynamic')
     up_down_records = db.relationship('UpDownRecord', backref='user',
                                       uselist=True, lazy='dynamic')
@@ -206,7 +206,7 @@ class College(db.Model):
     name = db.Column(db.String(20), unique=True, nullable=True)
     order = db.Column(db.Integer)
     szu_account_id = db.Column(db.Integer, db.ForeignKey('szu_account.id'))
-    clips = db.relationship('Clip', backref='college',
+    lectures = db.relationship('Lecture', backref='college',
                             lazy='dynamic', uselist=True)
 
     def __init__(self, name, order=None):
@@ -228,7 +228,7 @@ class Teacher(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(10))
     description = db.Column(db.Text)
-    clips = db.relationship('Clip', backref='teacher', lazy='dynamic')
+    lectures = db.relationship('Lecture', backref='teacher', lazy='dynamic')
     szu_account_id = db.Column(db.Integer, db.ForeignKey('szu_account.id'))
 
     def __init__(self, title, description, szu_account):

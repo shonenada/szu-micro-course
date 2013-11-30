@@ -18,8 +18,8 @@
                                 <span class="tip-text">学习了</span>
                                 </div>
                                 <span class="course-name">
-                                    <a href="{{ url_for('course.clip', clip_id=record.clip.id) }}">
-                                    {{ record.clip.name }}
+                                    <a href="{{ url_for('course.lecture', lecture_id=record.lecture.id) }}">
+                                    {{ record.lecture.name }}
                                     </a>
                                 </span>
                             </div>
@@ -32,14 +32,14 @@
             </div>
             {% endif %}
 
-            {% if last_clips %}
+            {% if last_lectures %}
             <div class="info-wraper">
                 <div id="last-course" class="info-box">
                     <div class="title">
                         最新课程
                     </div>
                     <div class="content">
-                        {% for lc in last_clips %}
+                        {% for lc in last_lectures %}
                         <div class="content-list">
                             <div class="icon">
                                 <img src="{{ lc.course.logo_url }}">
@@ -51,7 +51,7 @@
                                 <span class="tip-text">添加了</span>
                                 </div>
                                 <span class="course-name">
-                                    <a href="{{ url_for('course.clip', clip_id=lc.id) }}">
+                                    <a href="{{ url_for('course.lecture', lecture_id=lc.id) }}">
                                         {{ lc.name }}
                                     </a>
                                 </span>

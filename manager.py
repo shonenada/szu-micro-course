@@ -28,28 +28,26 @@ def check():
 
 
 @manager.command
-def run():
-    application.run(host='0.0.0.0', port=13800, debug=True)
+def run(port=13800):
+    application.run(host='0.0.0.0', port=port, debug=True)
 
 
-@manager.option('-c', '--config', default="development.conf")
-def createdb(config):
+def createdb(config="development.conf"):
     config_file = os.path.join(app_root, config)
     application.config.from_pyfile(config_file)
     with application.test_request_context():
         # import all Models here
         from mooc.account.model import (User, SzuAccount, College, Teacher,
                                         Role, roles_parents, users_roles)
-        from mooc.course.model import (Subject, Category, Course, Clip,
-                                       LearnRecord, ClipTag, CourseTag,
-                                       clip_tags, course_tags)
+        from mooc.course.model import (Subject, Category, Course, Lecture,
+                                       LearnRecord, LectureTag, CourseTag,
+                                       lecture_tags, course_tags)
         from mooc.qa.model import UpDownRecord, Answer, Question
         db.create_all()
     print 'Created Database!'
 
 
-@manager.option('-c', '--config', default="development.conf")
-def initdb(config):
+def initdb(config="development.conf"):
     config_file = os.path.join(app_root, config)
     application.config.from_pyfile(config_file)
     with application.test_request_context():
@@ -59,8 +57,8 @@ def initdb(config):
     print "Initialized Database!"
 
 
-@manager.option('-c', '--config', default="development.conf")
-def syncdb(config):
+@manager.command
+def syncdb(config="development.conf"):
     createdb(config)
     initdb(config)
 

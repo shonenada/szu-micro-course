@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, abort
 
 from mooc.app import rbac
-from mooc.course.model import Subject, Category, Course, Clip, LearnRecord
+from mooc.course.model import Subject, Category, Course, Lecture, LearnRecord
 
 
 course_app = Blueprint('course', __name__, template_folder='../templates')
@@ -34,16 +34,17 @@ def category(sid, cid):
 @rbac.allow(['everyone'], ['GET'])
 def course(course_id):
     this_course = Course.query.get(course_id)
-    clips = (Clip.query.filter_by(course_id=course_id)
-                 .order_by(Clip.order).all())
+    lectures = (Lecture.query.filter_by(course_id=course_id)
+                 .order_by(Lecture.order).all())
     return render_template('course_list.html',
-                           this_course=this_course, clips=clips)
+                           this_course=this_course, lectures=lectures)
 
 
-@course_app.route('/lecture/<clip_id>')
+@course_app.route('/lecture/<lecture_id>')
 @rbac.allow(['everyone'], ['GET'])
-def clip(clip_id):
-    clip = Clip.query.get(clip_id)
-    who_is_learning = (LearnRecord.query.filter_by(clip_id=clip_id)
+def lecture(lecture_id):
+    lecture = Lecture.query.get(lecture_id)
+    who_is_learning = (LearnRecord.query.filter_by(lecture_id=lecture_id)
                                   .limit(10).all())
-    return render_template('lecture.html', clip=clip, learning=who_is_learning)
+    return render_template('lecture.html',
+                           lecture=lecture, learning=who_is_learning)
