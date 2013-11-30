@@ -26,6 +26,11 @@ def check():
     pep8()
 
 
+@manager.command
+def run():
+    application.run(host='0.0.0.0', port=13800, debug=True)
+
+
 @manager.option('-c', '--config', default="development.conf")
 def createdb(config):
     config_file = os.path.join(app_root, config)
