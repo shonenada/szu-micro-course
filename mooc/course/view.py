@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template, abort
+#-*- coding: utf-8 -*-
+from flask import Blueprint, render_template, abort, json
 
 from mooc.app import rbac
 from mooc.course.model import Subject, Category, Course, Lecture, LearnRecord
@@ -48,3 +49,20 @@ def lecture(lecture_id):
                                   .limit(10).all())
     return render_template('lecture.html',
                            lecture=lecture, learning=who_is_learning)
+
+
+@course_app.route('/lecture/<lecture_id>/questions')
+@rbac.allow(['everyone'], ['GET'])
+def lecture_quretions(lecture_id):
+    return json.dumps(
+        [
+            {'time': '1.0',
+             'q': '问题题目一',
+             'a': ['选项1', '选项2', '选项3']
+            },
+            {'time': '8.0',
+             'q': '问题题目二',
+             'a': ['问题二选项1', '问题二选项2', '问题二选项3']
+            },
+        ]
+    )
