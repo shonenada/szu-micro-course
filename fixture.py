@@ -125,7 +125,7 @@ def _init_lecture():
     lectures[0].knowledge_point = u'<ul><li>知识点1</li><li>知识点2</li><li>...</li></ul>'
     lectures[0].record_time = datetime(2013, 11, 06)
     lectures[0].record_address = u'教学楼A101'
-    lectures[0].video_url = 'http://localhost:13100/video.mp4'
+    lectures[0].video_url = 'http://mooc.shonenada.com/static/upload/videos/2013-11-06.caiye.mp4'
     lectures[0].video_length = 16
 
     lectures[1].knowledge_point = u'<ul><li>GNOME最早诞生于1999年，主要由redhat员工开发</li><li>GNOME是Linux系统以及其他类Unix系统下使用最为广泛的开源图形化界面系统</li><li>GNOME使用X11作为底层图形驱动服务</li></ul>'
