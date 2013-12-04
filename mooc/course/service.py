@@ -17,3 +17,17 @@ def learn_count(course):
     for lecture in course.lectures:
         learn_count = learn_count + lecture.learn_records.count()
     return learn_count
+
+
+def quiz_to_json(quizs):
+    json_quizs = []
+    for q in quizs:
+        _q = {}
+        _q['id'], _q['question'], _q['time_at'] = q.id, q.question, q.time_at
+        _q['options'] = []
+        for op in q.options:
+            _op = {}
+            _op['id'], _op['content'] = op.id, op.content
+            _q['options'].append(_op)
+        json_quizs.append(_q)
+    return json_quizs

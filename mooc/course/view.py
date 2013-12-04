@@ -1,8 +1,10 @@
 #-*- coding: utf-8 -*-
-from flask import Blueprint, render_template, abort, json
+from flask import Blueprint, render_template, abort, json, request, jsonify
 
-from mooc.app import rbac
+from mooc.app import rbac, csrf
 from mooc.course.model import Subject, Category, Course, Lecture, LearnRecord
+from mooc.course.model import Quiz, QuizOption
+from mooc.course.service import quiz_to_json
 
 
 course_app = Blueprint('course', __name__, template_folder='../templates')
@@ -54,15 +56,19 @@ def lecture(lecture_id):
 @course_app.route('/lecture/<lecture_id>/questions')
 @rbac.allow(['everyone'], ['GET'])
 def lecture_quretions(lecture_id):
-    return json.dumps(
-        [
-            {'time': '1.0',
-             'q': '问题题目一',
-             'a': ['选项1', '选项2', '选项3']
-            },
-            {'time': '8.0',
-             'q': '问题题目二',
-             'a': ['问题二选项1', '问题二选项2', '问题二选项3']
-            },
-        ]
-    )
+    _quizs = Quiz.query.filter_by(lecture_id=lecture_id).all()
+    quizs = quiz_to_json(_quizs)
+    return json.dumps(quizs)
+
+
+@course_app.route('/lecture/<lecture_id>/check', methods=['POST'])
+@rbac.allow(['everyone'], ['POST'])
+@csrf.exempt
+def lecture_check(lecture_id):
+    quiz_id = request.form.get('quiz_id', None)
+    answer_id = request.form.get('answer_id', None)
+    if answer_id:
+        option = QuizOption.query.get(answer_id)
+        if option.is_answer and int(option.quiz_id) == int(quiz_id):
+            return jsonify(success=True)
+    return jsonify(success=False)
