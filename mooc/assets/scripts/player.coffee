@@ -5,7 +5,6 @@ $ ->
     window.lecture_id = 0
 
     $("#player-mask").hide()
-    $("#tips").hide()
 
     window.register_lecture_id = (lecture_id) ->
         window.lecture_id = lecture_id
@@ -29,6 +28,7 @@ $ ->
         for item in data
             if (Math.abs(currentTime - item.time_at) < 0.5)
                 $("#player-mask > form > .opts").empty()
+                $("#player-mask > #question-form > .question > .tips").empty()
                 $("#player-mask").height($("#player-container").height() - 120)
                 $("#player-mask").width($("#player-container").width() - 200)
                 $("#quiz_id").attr('value', item.id)
@@ -50,12 +50,12 @@ $ ->
                 success: (res) ->
                     if (res.success)
                         $("#player-mask").hide()
+                        $("#player-mask > #question-form > .question > .tips").empty()
                         checkTimer = setInterval(check_duration, 1000)
                         obj.play()
                         return ;
                     else
                         $("#player-mask > #question-form > .question > .tips").html "回答错误，请重新回答"
-                        $("#player-mask > #question-form > .question > .tips").show()
                         return ;
                     return ;
             }
