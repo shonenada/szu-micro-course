@@ -5,21 +5,31 @@
 <link href="{{ url_for('static', filename='components/bootstrap/docs/assets/css/bootstrap.css')}}" media="all" rel="stylesheet" />
 <script src="{{ url_for('static', filename='scripts/lecture.js')}}"></script>
 <script src="{{ url_for('static', filename='scripts/player.js')}}"></script>
+
+<script>
+$(function(){
+    window.register_lecture_id({{ lecture.id }})
+})
+</script>
 {% endblock %}
 {% block left %}
 <div id="player-container">
     <video src="{{ lecture.video_url }}" controls="controls" autoplay="autoplay" id="player">
         Your browser does not support the video tag.
     </video>
-
     <div id="player-mask">
-        <form>
-        <div class="quetion"></div>
-        <div class="opts"></div>
-        <div class="btns">
-            <p><a id="continue-btn" href="#" class="btn btn-success">Continue</a></p>
-            <p><a id="skip-btn" href="#" class="btn btn-primary" onclick="javascript:void(0)">Skip</a></p>
-        </div>
+        <form id="question-form">
+            <input type="hidden" value="" name="quiz_id" id="quiz_id" />
+            <div class="question">
+                <span class="question-title"></span>
+                <span class="tips"></span>
+            </div>
+            <div class="opts"></div>
+            <div class="btns">
+                <p><a id="continue-btn" href="javascript:void(0);" class="btn btn-success">Continue</a></p>
+                <p><a id="skip-btn" href="javascript:void(0);" class="btn btn-primary" onclick="javascript:void(0)">Skip</a></p>
+            </div>
+            
         </form>
     </div>
 </div>
