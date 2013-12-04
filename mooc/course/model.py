@@ -157,6 +157,36 @@ class Lecture(db.Model):
         return "<Lecture %s>" % self.name
 
 
+class Quiz(db.Model):
+
+    __tablename__ = 'quiz'
+
+    id = db.Column(db.Integer, primary_key=True)
+    question = db.Column(db.String(100))
+    time_at = db.Column(db.Integer)
+    lecture_id = db.Column(db.Integer, db.ForeignKey('lecture.id'))
+    lecture = db.relationship('Lecture',
+        backref=db.backref('quizs', uselist=True), uselist=False)
+    options = db.relationship('QuizOption', backref='quiz', uselist=True)
+
+    def __init__(self, question):
+        self.question = question
+
+
+class QuizOption(db.Model):
+
+    __tablename__ = 'quiz_option'
+
+    id = db.Column(db.Integer, primary_key=True)
+    quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'))
+    content = db.Column(db.String(100))
+    is_answer = db.Column(db.Boolean(), default=False)
+
+    def __init__(self, content, is_answer=False):
+        self.content = content
+        self.is_answer = is_answer
+
+
 class LearnRecord(db.Model):
 
     __tablename__ = 'learn_record'

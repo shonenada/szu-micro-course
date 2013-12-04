@@ -4,6 +4,7 @@ from datetime import datetime
 from mooc.app import db
 from mooc.account.model import User, SzuAccount, College, Teacher, Role
 from mooc.course.model import Subject, Category, Course, Lecture, LearnRecord
+from mooc.course.model import Quiz, QuizOption
 
 
 def _init_role():
@@ -124,7 +125,7 @@ def _init_lecture():
     lectures[0].knowledge_point = u'<ul><li>知识点1</li><li>知识点2</li><li>...</li></ul>'
     lectures[0].record_time = datetime(2013, 11, 06)
     lectures[0].record_address = u'教学楼A101'
-    lectures[0].video_url = 'http://mooc.shonenada.com/static/upload/videos/2013-11-06.caiye.mp4'
+    lectures[0].video_url = 'http://localhost:13100/video.mp4'
     lectures[0].video_length = 16
 
     lectures[1].knowledge_point = u'<ul><li>GNOME最早诞生于1999年，主要由redhat员工开发</li><li>GNOME是Linux系统以及其他类Unix系统下使用最为广泛的开源图形化界面系统</li><li>GNOME使用X11作为底层图形驱动服务</li></ul>'
@@ -155,6 +156,43 @@ def _init_learn_record():
         db.session.add(learn_record)
 
 
+def _init_quiz_option():
+    global options
+    options = (
+        QuizOption(u'各位同时相加', is_answer=True),
+        QuizOption(u'不同位顺序相加', is_answer=False),
+        QuizOption(u'存在着进位信号的传递', is_answer=True),
+        QuizOption(u'进行相加的数的大小', is_answer=False),
+        QuizOption(u'正确答案', is_answer=True),
+        QuizOption(u'错误答案', is_answer=False),
+    )
+    for option in options:
+        db.session.add(option)
+
+
+def _init_quiz():
+    global quizs
+    quizs = (
+        Quiz(u'串行加法器的特点'),
+        Quiz(u'影响速度的主要因素'),
+        Quiz(u'请选择正确答案'),
+    )
+    quizs[0].time_at = 350
+    quizs[0].lecture = lectures[0]
+    quizs[0].options.append(options[0])
+    quizs[0].options.append(options[1])
+    quizs[1].time_at = 400
+    quizs[1].lecture = lectures[0]
+    quizs[1].options.append(options[2])
+    quizs[1].options.append(options[3])
+    quizs[2].time_at = 3
+    quizs[2].lecture = lectures[0]
+    quizs[2].options.append(options[4])
+    quizs[2].options.append(options[5])
+    for quiz in quizs:
+        db.session.add(quiz)
+
+
 def init_db():
     _init_role()
     _init_college()
@@ -166,4 +204,6 @@ def init_db():
     _init_course()
     _init_lecture()
     _init_learn_record()
+    _init_quiz_option()
+    _init_quiz()
     db.session.commit()
