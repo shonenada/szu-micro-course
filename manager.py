@@ -32,6 +32,7 @@ def run(port=13800):
     application.run(host='0.0.0.0', port=port, debug=True)
 
 
+@manager.command
 def createdb(config="development.conf"):
     config_file = os.path.join(app_root, config)
     application.config.from_pyfile(config_file)
@@ -47,6 +48,7 @@ def createdb(config="development.conf"):
     print 'Created Database!'
 
 
+@manager.command
 def initdb(config="development.conf"):
     config_file = os.path.join(app_root, config)
     application.config.from_pyfile(config_file)

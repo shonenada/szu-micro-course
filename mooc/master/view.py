@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template
 from flask import request, redirect, url_for, jsonify
 
-from mooc.app import rbac, db, csrf
+from mooc.app import rbac, db
 from mooc.utils import flash
 from mooc.account.model import User, SzuAccount, College
 from mooc.course.model import Subject
