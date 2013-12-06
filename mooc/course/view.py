@@ -49,7 +49,8 @@ def lecture(lecture_id):
     lecture = Lecture.query.get(lecture_id)
     who_is_learning = (LearnRecord.query.filter_by(lecture_id=lecture_id)
                                   .limit(10).all())
-    return render_template('lecture.html',
+    quizs = Quiz.query.filter_by(lecture_id=lecture_id)
+    return render_template('lecture.html', quizs=quizs,
                            lecture=lecture, learning=who_is_learning)
 
 
