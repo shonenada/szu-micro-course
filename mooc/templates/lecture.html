@@ -70,18 +70,18 @@ $(function(){
                 相关问题
             </div>
             <div id="lecture-quiz" class="lecture-bar lecture-hidden">
-                <form id="lecture-quiz-form">
-                {% for quiz in quizs %}
-                <div id="quiz-title">{{ quiz.question }}</div>
-                <div id="quiz-option">
-                <ul>
-                    {% for op in quiz.options %}
-                    <li>{{ op.content }}</li>
-                    {% endfor %}
-                </ul>
-                </div>
+                {% for index, quiz in quizs|enumerate %}
+                <div class="quiz-item" id="quiz-item-{{quiz.id}}">
+                    <div class="quiz-title" id="quiz-title-{{quiz.id}}">{{ index + 1 }}.{{ quiz.question }}<span></span></div>
+                    <div class="quiz-option" id="quiz-option-{{quiz.id}}">
+                        <ul>
+                            {% for op in quiz.options %}
+                            <li><label><input name="quiz-{{index}}" onclick="window.check_answer({{lecture.id}}, {{quiz.id}}, {{op.id}}, '{{op.content}}')" type="radio"/>{{ op.content }}</label></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    </div>
                 {% endfor %}
-                </form>
             </div>
             <div id="lecture-video-resource" class="lecture-bar lecture-hidden">
                 <ul>
