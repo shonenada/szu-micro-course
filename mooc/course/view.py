@@ -49,7 +49,8 @@ def lecture(lecture_id):
     lecture = Lecture.query.get(lecture_id)
     who_is_learning = (LearnRecord.query.filter_by(lecture_id=lecture_id)
                                   .limit(10).all())
-    quizs = Quiz.query.filter_by(lecture_id=lecture_id)
+    quizs = (Quiz.query.filter_by(lecture_id=lecture_id)
+                 .order_by(Quiz.order.desc()).order_by(Quiz.id.desc()))
     return render_template('lecture.html', quizs=quizs,
                            lecture=lecture, learning=who_is_learning)
 
@@ -57,7 +58,8 @@ def lecture(lecture_id):
 @course_app.route('/lecture/<lecture_id>/questions')
 @rbac.allow(['everyone'], ['GET'])
 def lecture_quretions(lecture_id):
-    _quizs = Quiz.query.filter_by(lecture_id=lecture_id).all()
+    _quizs = (Quiz.query.filter_by(lecture_id=lecture_id)
+                  .filter(Quiz.time_at != 0).all())
     quizs = quiz_to_json(_quizs)
     return json.dumps(quizs)
 

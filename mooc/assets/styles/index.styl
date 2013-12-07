@@ -372,18 +372,32 @@
             border-top-left-radius 0px
             text-indent 1em
 
-            & .lecture-bar ul
-                margin 0
-                padding 10px 0 10px 0
+            & .lecture-bar
+                & ul
+                    margin 0
+                    padding 10px 0 10px 0
+                & p
+                    padding 0
+                    margin 0
 
             & #lecture-quiz
 
-                & #quiz-title
+                & .quiz-title
                     font-size 16px
                     font-weight bold
 
-                & #quiz-option
+                    & span
+                        color #ff0000
+                        font-size 13px
+
+                & .quiz-option
                     font-size 14px
+
+                    & ul
+                        padding 0 0 10px 0
+
+                        & label
+                            margin 0
 
             & .lecture-hidden
                 display none

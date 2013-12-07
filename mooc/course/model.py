@@ -168,6 +168,7 @@ class Quiz(db.Model):
     lecture = db.relationship('Lecture',
         backref=db.backref('quizs', uselist=True), uselist=False)
     options = db.relationship('QuizOption', backref='quiz', uselist=True)
+    order = db.Column(db.Integer, default=100)
 
     def __init__(self, question):
         self.question = question
