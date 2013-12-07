@@ -57,7 +57,7 @@ $(function(){
             <ul>
                 <li><a href="javascript:void(0);" id="btn-knowledge-point" class="lecture-btns current">知识点</a></li>
                 <li><a href="javascript:void(0);" id="btn-questions" class="lecture-btns">相关问题</a></li>
-                <li><a href="javascript:void(0);" id="btn-evaluation" class="lecture-btns">课程测评</a></li>
+                <li><a href="javascript:void(0);" id="btn-quiz" class="lecture-btns">课程测评</a></li>
                 <li><a href="javascript:void(0);" id="btn-video-resource" class="lecture-btns">课程资源</a></li>
             </ul>
         </div>
@@ -69,11 +69,24 @@ $(function(){
             <div id="lecture-questions" class="lecture-bar lecture-hidden">
                 相关问题
             </div>
-            <div id="lecture-evaluation" class="lecture-bar lecture-hidden">
-                测评
+            <div id="lecture-quiz" class="lecture-bar lecture-hidden">
+                <form id="lecture-quiz-form">
+                {% for quiz in quizs %}
+                <div id="quiz-title">{{ quiz.question }}</div>
+                <div id="quiz-option">
+                <ul>
+                    {% for op in quiz.options %}
+                    <li>{{ op.content }}</li>
+                    {% endfor %}
+                </ul>
+                </div>
+                {% endfor %}
+                </form>
             </div>
             <div id="lecture-video-resource" class="lecture-bar lecture-hidden">
-                资源
+                <ul>
+                    <li><a href="{{ lecture.video_url }}">视频下载</a></li>
+                </ul>
             </div>
         </div>
         <div class="shadow"></div>
