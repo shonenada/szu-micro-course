@@ -43,3 +43,6 @@ mooc/assets/components/
 # Configure files
 development.conf
 production.conf
+
+# Mac File
+.DS_Store
