@@ -39,7 +39,7 @@
 
         <div id="lecture-list">
             {% for idx, lecture in lectures|enumerate %}
-            <a href="{{ url_for('course.lecture', lecture_id=lecture.id) }}" class="lecture_box_wrapper">{% include 'lecture_box.html' %}</a>
+            <a href="{{ url_for('course.lecture', lecture_id=lecture.id) }}" class="lecture_box_wrapper">{% include 'course/lecture_box.html' %}</a>
             {% endfor %}
         </div>
     </div>
