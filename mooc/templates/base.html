@@ -28,8 +28,8 @@
         <nav id="nav">
             <ul class="dropdown-nav">
                 <li class="home-link"><a href="{{url_for('master.index')}}">首页</a></li>
-                <li><a href="{{url_for('course.courses')}}">课程库</a></li>
-                <li><a href="#">问答系统</a></li>
+                <li><a href="{{ url_for('course.courses') }}">课程库</a></li>
+                <li><a href="{{ url_for('qa.question') }} ">问答系统</a></li>
                 <li><a href="#">课程资源</a></li>
                 {%- if current_user.is_anonymous() %}
                 <li><a href="{{ url_for('account.signin') }}">登录</a></li>
