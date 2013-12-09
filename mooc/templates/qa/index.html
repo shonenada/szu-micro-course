@@ -1,0 +1,50 @@
+{%- extends 'layout.html' %}
+
+{%- block static_files %}
+{%- endblock %}
+
+{%- block left %}
+<div id="left">
+    <div id="tips">
+        <ul>
+            <li><a href="#" id="lastest" class="current">最新</a></li>
+            <li><a href="#" id="hotest">热门</a></li>
+            <li><a href="#" id="none-answer">无回答</a></li>
+            <li><a href="#" id="fav">我关注的</a></li>
+        </ul>
+    </div>
+
+    <ul id="question-list">
+        <li class="question-item">
+            <div class="question-left-float question-stats">
+                <div class="question-left-float view-count">
+                    <p>3</p>次浏览
+                </div>
+                <div class="question-left-float respond-count">
+                    <p>0</p>个回答
+                </div>
+            </div>
+            <div class="question-left-float question-content">
+                <div class="question-title">一个小问题</div>
+                <div>
+                    <div class="question-tags question-left-float">
+                        <ul>
+                            <li>标签1</li>
+                            <li>标签2</li>
+                        </ul>
+                    </div>
+                    <div class="question-author question-left-float">
+                        <span>shonenada</span><span>11分钟前</span>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <div class="shadow"></div>
+</div>
+{%- endblock %}
+
+{%- block right %}
+<div id="right">
+</div>
+{%- endblock %}
