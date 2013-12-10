@@ -1,6 +1,17 @@
 from datetime import datetime
 
+from sqlalchemy import func, select
+from sqlalchemy.ext.hybrid import hybrid_property
+
 from mooc.app import db
+from mooc.utils import enumdef
+
+
+question_tags = db.Table(
+    'question_tags',
+    db.Column('tag_id', db.Integer, db.ForeignKey('question_tag.id')),
+    db.Column('question_id', db.Integer, db.ForeignKey('question.id'))
+)
 
 
 class UpDownRecord(db.Model):
@@ -31,6 +42,9 @@ class Answer(db.Model):
 
     __tablename__ = 'answer'
 
+    STATE_VALUE = ('normal', 'hot', 'deleted')
+    STATE_TEXT = ('Normal', 'Hot', 'Deleted')
+
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text)
     up_count = db.Column(db.Integer, default=0)
@@ -40,9 +54,12 @@ class Answer(db.Model):
     question_id = db.Column(db.Integer, db.ForeignKey('question.id'))
     lecture_id = db.Column(db.Integer, db.ForeignKey('lecture.id'))
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    anonymous = db.Column(db.Boolean, default=False)
     parent_id = db.Column(db.Integer)
     up_down_record_id = db.Column(db.Integer,
                                   db.ForeignKey('up_down_record.id'))
+    _state = db.Column('state', db.Enum(name='answer_state', *STATE_VALUE))
+    state = enumdef('_state', STATE_VALUE)
 
     def __init__(self, content, question, lecture, author, parent=None):
         self.content = content
@@ -54,11 +71,15 @@ class Answer(db.Model):
         self.down_count = 0
         self.created = datetime.utcnow()
         edit_time = datetime.utcnow()
+        self.state = 'normal'
 
 
 class Question(db.Model):
 
     __tablename__ = 'question'
+
+    STATE_VALUE = ('normal', 'hot', 'deleted')
+    STATE_TEXT = ('Normal', 'Hot', 'Deleted')
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(20))
@@ -69,7 +90,12 @@ class Question(db.Model):
     up_count = db.Column(db.Integer, default=0)
     lecture_id = db.Column(db.Integer, db.ForeignKey('lecture.id'))
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    answers = db.relationship('Answer', backref='question', lazy='dynamic')
+    anonymous = db.Column(db.Boolean, default=False)
+    answers = db.relationship('Answer', backref='question', uselist=True)
+    _state = db.Column('state', db.Enum(name='question_state', *STATE_VALUE))
+    state = enumdef('_state', STATE_VALUE)
+    tags = db.relationship('QuestionTag', secondary=question_tags,
+                           backref=db.backref('question'))
 
     def __init__(self, title, content, lecture, author):
         self.title = title
@@ -80,3 +106,22 @@ class Question(db.Model):
         self.read_count = 0
         self.created = datetime.utcnow()
         self.edit_time = datetime.utcnow()
+        self.state = 'normal'
+
+    @hybrid_property
+    def rank(self):
+        return self.up_count + self.answers.count()
+
+    @rank.expression
+    def rank(cls):
+        return func.abs(select([func.count(Answer.id)]).\
+                where(Answer.question_id==cls.id).\
+                label('answers_count') + cls.up_count)
+
+
+class QuestionTag(db.Model):
+
+    __tablename__ = 'question_tag'
+
+    id = db.Column(db.Integer, primary_key=True)
+    tag = db.Column(db.String(20))
