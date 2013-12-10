@@ -7,10 +7,10 @@
 <div id="left">
     <div id="tips">
         <ul>
-            <li><a href="{{ url_for('qa.lastest') }}" id="lastest" class="current">最新</a></li>
-            <li><a href="{{ url_for('qa.hotest') }}" id="hotest">热门</a></li>
-            <li><a href="#" id="none-answer">无回答</a></li>
-            <li><a href="#" id="fav">我关注的</a></li>
+            <li><a href="{{ url_for('qa.lastest') }}" id="lastest"{%- if type == 'lastest' %} class="current"{%- endif %}>最新</a></li>
+            <li><a href="{{ url_for('qa.hotest') }}" id="hotest"{%- if type == 'hotest' %} class="current"{%- endif %}>热门</a></li>
+            <li><a href="#" id="none-answer"{%- if type == 'no-answer' %} class="current"{%- endif %}>无回答</a></li>
+            <li><a href="#" id="fav"{%- if type == 'fav' %} class="current"{%- endif %}>我关注的</a></li>
         </ul>
     </div>
 

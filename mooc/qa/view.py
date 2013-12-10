@@ -18,11 +18,11 @@ def question():
 @rbac.allow(['everyone'], ['GET'])
 def lastest():
     page_num = int(request.args.get('page', 1))
-    question_query = (Question.query
-                         .filter(Question._state != Question.STATE_VALUE[0])
-                         .order_by(Question.created.desc()))
+    question_query = (Question.query.filter(Question._state != 'DELETED')
+                              .order_by(Question.created.desc()))
     questions = question_query.paginate(page_num, per_page=20)
-    return render_template('qa/question_list.html', questions=questions)
+    return render_template('qa/question_list.html',
+                           question_pagination=questions, type='lastest')
 
 
 @qa_app.route('/question/hotest')
@@ -33,4 +33,4 @@ def hotest():
                               .order_by(Question.rank.desc()))
     questions = question_query.paginate(page_num, per_page=20)
     return render_template('qa/question_list.html',
-                           question_pagination=questions)
+                           question_pagination=questions, type='hotest')
