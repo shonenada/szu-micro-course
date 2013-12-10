@@ -1,6 +1,6 @@
         <div id="right">
             {% if learn_records %}
-            <div class="info-wraper">
+            <div class="info-wrapper">
                 <div id="learn-act" class="info-box">
                     <div class="title">
                         学习动态
@@ -27,13 +27,12 @@
                         {% endfor %}
                     </div>
                 </div>
-                <div class="shadow">
-                </div>
+                <div class="shadow"></div>
             </div>
             {% endif %}
 
             {% if last_lectures %}
-            <div class="info-wraper">
+            <div class="info-wrapper">
                 <div id="last-course" class="info-box">
                     <div class="title">
                         最新课程
@@ -60,11 +59,10 @@
                         {% endfor %}
                     </div>
                 </div>
-                <div id="all-course-btn" class="wraper-foot">
+                <div id="all-course-btn" class="wrapper-foot">
                     <a href="{{ url_for('course.courses')}}">所有课程</a>
                 </div>
-                <div class="shadow">
-                </div>
+                <div class="shadow"></div>
             </div>
             {% endif %}
 

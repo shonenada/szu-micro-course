@@ -129,7 +129,8 @@ class Lecture(db.Model):
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'))
     college_id = db.Column(db.Integer, db.ForeignKey('college.id'))
     teacher_id = db.Column(db.Integer, db.ForeignKey('teacher.id'))
-    learn_records = db.relationship('LearnRecord', backref=db.backref('lecture'),
+    learn_records = db.relationship('LearnRecord',
+                                    backref=db.backref('lecture'),
                                     uselist=True, lazy='dynamic')
     questions = db.relationship('Question', backref=db.backref('lecture'),
                                 uselist=True, lazy='dynamic')
@@ -206,6 +207,7 @@ class LearnRecord(db.Model):
 
 
 class LectureTag(db.Model):
+
     __tablename__ = 'lecture_tag'
 
     id = db.Column(db.Integer, primary_key=True)
