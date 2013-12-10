@@ -14,14 +14,14 @@ course_app = Blueprint('course', __name__, template_folder='../templates')
 @rbac.allow(['everyone'], ['GET'])
 def courses():
     subjects = Subject.query.all()
-    return render_template('courses.html', subjects=subjects)
+    return render_template('course/courses.html', subjects=subjects)
 
 
 @course_app.route('/courses/subject/<sid>')
 @rbac.allow(['everyone'], ['GET'])
 def subject(sid):
     this_subject = Subject.query.get(sid)
-    return render_template('subject.html', this_subject=this_subject)
+    return render_template('course/subject.html', this_subject=this_subject)
 
 
 @course_app.route('/courses/subject/<sid>/category/<cid>')
@@ -30,7 +30,7 @@ def category(sid, cid):
     this_category = Category.query.get(cid)
     if int(this_category.subject.id) != int(sid):
         abort(404)
-    return render_template('category.html', this_category=this_category)
+    return render_template('course/category.html', this_category=this_category)
 
 
 @course_app.route('/course/<course_id>')
@@ -39,7 +39,7 @@ def course(course_id):
     this_course = Course.query.get(course_id)
     lectures = (Lecture.query.filter_by(course_id=course_id)
                  .order_by(Lecture.order).all())
-    return render_template('course_list.html',
+    return render_template('course/course_list.html',
                            this_course=this_course, lectures=lectures)
 
 
@@ -51,7 +51,7 @@ def lecture(lecture_id):
                                   .limit(10).all())
     quizs = (Quiz.query.filter_by(lecture_id=lecture_id)
                  .order_by(Quiz.order.desc()).order_by(Quiz.id.desc()))
-    return render_template('lecture.html', quizs=quizs,
+    return render_template('course/lecture.html', quizs=quizs,
                            lecture=lecture, learning=who_is_learning)
 
 
