@@ -112,7 +112,6 @@
                     float left
                     padding 3px
                     font-size 12px
-                    background #eee
                     top-border-radius 3px
                     bottom-border-radius 3px
 
@@ -166,21 +165,37 @@
                     top-border-radius 4px
                     bottom-border-radius 4px
 
-                    & span.vote-btn
-                        width: 0;
-                        height: 0;
-                        border: 6px solid transparent;
-                        font-size: 0;
-                        background-image: none;
-                        zoom 1
+                    &:hover
+                        background #ff5400
 
-                    & span.vote-up
-                        margin 2px 8px 8px 8px
-                        border-color transparent transparent #515c73
+                & span.vote-btn
+                    width 0
+                    height 0
+                    border solid transparent
+                    font-size 0
+                    background-image none
+                    border-width 8px 6px
 
-                    & span.vote-down
-                        margin 8px 8px 2px 8px
-                        border-color #515c73 transparent transparent
+                & a.vote-up
+                    border-color transparent transparent #515c73
+
+                    & > span
+                        border-color inherit
+                        margin 2px 8px 9px 8px
+
+                    &:hover
+                        border-color transparent transparent #fff
+
+
+                & a.vote-down
+                    border-color #515c73 transparent transparent
+
+                    & > span
+                        border-color inherit
+                        margin 9px 8px 1px 8px
+
+                    &:hover
+                        border-color #fff transparent transparent
 
     & #right
 
