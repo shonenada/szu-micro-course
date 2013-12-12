@@ -57,6 +57,13 @@
 
                 & .question-content
 
+                    & a
+                        transition 0.25s
+                        color #75818b
+
+                    & a:hover
+                        color #ff5400
+
                     & .question-title
                         line-height 36px
 
@@ -85,10 +92,102 @@
                             padding 3px 0 3px 0
                             font-size 12px
 
+        & #question-description
+            background #fff
+            top-border-radius 3px
+            bottom-border-radius 3px
+            overflow hidden
+
+            & #question-title
+                font-size 20px
+                padding 20px 20px 0px 20px
+
+            & #question-tags
+
+                margin 5px 20px 20px 20px
+                overflow hidden
+
+                & li
+                    margin 3px
+                    float left
+                    padding 3px
+                    font-size 12px
+                    background #eee
+                    top-border-radius 3px
+                    bottom-border-radius 3px
+
+                & li.author, li.time, li.count
+                    color #acacac
+                    float left
+                    background #fff
+                    font-size 12px
+
+                & li.avatar
+                    float right
+                    & img
+                        width 50px
+                        height 50px
+
+            & #question-content
+                padding-left 20px
+                padding-bottom 20px
+
+        & #question-answer
+
+            & #answers-list
+                & li
+                    padding 20px
+                    background #fff
+                    top-border-radius 3px
+                    bottom-border-radius 3px
+                    overflow hidden
+                    overflow hidden
+                    display block
+
+            & span
+                float left
+                margin 5px
+
+            & span.avatar
+                float right
+            
+                & img
+                    width 50px
+                    height 50px
+
+            & .vote-btns
+                overflow hidden
+
+                & a
+                    overflow hidden
+                    display block
+                    background #dce5eb
+                    margin 3px 0
+                    top-border-radius 4px
+                    bottom-border-radius 4px
+
+                    & span.vote-btn
+                        width: 0;
+                        height: 0;
+                        border: 6px solid transparent;
+                        font-size: 0;
+                        background-image: none;
+                        zoom 1
+
+                    & span.vote-up
+                        margin 2px 8px 8px 8px
+                        border-color transparent transparent #515c73
+
+                    & span.vote-down
+                        margin 8px 8px 2px 8px
+                        border-color #515c73 transparent transparent
+
     & #right
+
         & .info-wrapper .info-box .content .content-list li
 
             margin 15px 0 20px 0
+            float left
 
             & span
                 color #515c73

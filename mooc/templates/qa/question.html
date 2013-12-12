@@ -1,0 +1,59 @@
+{%- extends 'layout.html' %}
+
+{%- block left %}
+<div id="left">
+    <div id="question-description">
+        <div id="question-title">{{ question.title }}</div>
+        <ul id="question-tags">
+        {%- for tag in question.tags %}
+            <li>{{ tag.tag }}</li>
+        {%- endfor %}
+            <li class="author">{{ question.author.nickname }}</li>
+            <li class="time">{{ question.created | friendly_time }}</li>
+            <li class="count">{{ question.read_count }}次浏览</li>
+            <li class="avatar"><img src="{{ question.author.avatar }}" /></li>
+        </ul>
+        <div class="full-line"></div>
+        <div id="question-content">
+        {{ question.content }}
+        </div>
+    </div>
+    <div class="shadow"></div>
+
+    <div style="margin: 20px 0 20px 0;"></div>
+
+    <div id="question-answer">
+        <ul id="answers-list">
+            {%- for a in question.answers %}
+            <div style="margin: 20px 0 20px 0;"></div>
+            <li>
+                <span class="vote-btns">
+                    <a href="#vote-up">
+                        <span class="vote-btn vote-up"></span>
+                    </a>
+                    
+                    <a href="#vote-down">
+                        <span class="vote-btn vote-down"></span>
+                    </a>
+                </span>
+                <span class="author">
+                    {{ a.author.nickname }} {{ a.created | friendly_time }}
+                    <br />
+                    {{ a.up_count }}次赞同
+                </span>
+                <span class="avatar"><img src="{{ question.author.avatar }}" /></span>
+                <div style="clear: both;"></div>
+                <p class="content">{{ a.content }}</p>
+            </li>
+            <div class="shadow"></div>
+            {%- endfor %}
+        </ul>
+    </div>
+</div>
+{%- endblock %}
+
+{%- block right %}
+<div id="right">
+
+</div>
+{%- endblock %}
