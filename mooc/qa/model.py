@@ -28,11 +28,13 @@ class UpDownRecord(db.Model):
     answer = db.relationship(
         'Answer', uselist=False,
         backref=db.backref('up_down_record', uselist=False))
+    isdeleted = db.Column(db.Boolean, default=False)
 
     def __init__(self, user, up_or_down):
         self.created = datetime.utcnow()
         self.user = user
-        if up_or_down in (TYPE_UP, TYPE_DOWN):
+        self.isdeleted = False
+        if up_or_down in (self.TYPE_UP, self.TYPE_DOWN):
             self.up_or_down = up_or_down
         else:
             self.up_or_down = self.TYPE_UP
@@ -81,6 +83,10 @@ class Question(db.Model):
     STATE_VALUE = ('normal', 'hot', 'deleted')
     STATE_TEXT = ('Normal', 'Hot', 'Deleted')
 
+    WEIGHT_OF_READCOUNT = 0.2
+    WEIGHT_OF_UPCOUNT = 0.3
+    WEIGHT_OF_ANSWERCOUNT = 0.5
+
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(20))
     content = db.Column(db.Text)
@@ -95,7 +101,7 @@ class Question(db.Model):
     _state = db.Column('state', db.Enum(name='question_state', *STATE_VALUE))
     state = enumdef('_state', STATE_VALUE)
     tags = db.relationship('QuestionTag', secondary=question_tags,
-                           backref=db.backref('question'))
+                           backref=db.backref('questions'))
 
     def __init__(self, title, content, lecture, author):
         self.title = title
@@ -109,14 +115,29 @@ class Question(db.Model):
         self.state = 'normal'
 
     @hybrid_property
-    def rank(self):
-        return self.up_count + self.answers.count()
+    def answer_count(self):
+        return self.answers.count()
 
-    @rank.expression
-    def rank(cls):
-        return func.abs(select([func.count(Answer.id)]).\
-                where(Answer.question_id==cls.id).\
-                label('answers_count') + cls.up_count)
+    @answer_count.expression
+    def answer_count(cls):
+        return select([func.count(Answer.id)]).\
+                   where(Answer.question_id==cls.id).\
+                   label('answer_count')
+
+    @hybrid_property
+    def hotest(self):
+        return (self.answers.count() * self.WEIGHT_OF_ANSWERCOUNT +
+                self.up_count * self.WEIGHT_OF_UPCOUNT +
+                self.read_count * self.WEIGHT_OF_READCOUNT)
+
+    @hotest.expression
+    def hotest(cls):
+        ac = (select([func.count(Answer.id)]).
+              where(Answer.question_id==cls.id).
+              label('answers_count'))
+        return func.abs(ac * cls.WEIGHT_OF_ANSWERCOUNT +
+                        cls.up_count * cls.WEIGHT_OF_UPCOUNT +
+                        cls.read_count * cls .WEIGHT_OF_READCOUNT)
 
 
 class QuestionTag(db.Model):
@@ -125,3 +146,15 @@ class QuestionTag(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     tag = db.Column(db.String(20))
+
+    def __init__(self, tag):
+        self.tag = tag
+
+    @hybrid_property
+    def count(self):
+        return self.count()
+
+    @count.expression
+    def count(cls):
+        return (select([func.count(question_tags.c.tag_id)]).
+                where(cls.id == question_tags.c.tag_id).label('count'))

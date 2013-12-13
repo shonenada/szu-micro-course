@@ -1,0 +1,82 @@
+{%- extends 'layout.html' %}
+
+{%- block static_files %}
+<script src="{{ url_for('static', filename='scripts/question.js')}}"></script>
+{%- endblock %}
+
+{%- block left %}
+<div id="left">
+    <div id="question-description">
+        <div id="question-info">
+            <div id="question-title">{{ question.title }} {% if question.lecture %}<span>来自<a href="{{ url_for('course.lecture', lecture_id=question.lecture.id )}}">《{{ question.lecture.name }}》</a>课程的问题</span>{% endif %}</div>
+            <ul id="question-tags">
+            {%- for tag in question.tags %}
+                <li>{{ tag.tag }}</li>
+            {%- endfor %}
+                <li class="author">{{ question.author.nickname }}</li>
+                <li class="time">{{ question.created | friendly_time }}</li>
+                <li class="count">{{ question.read_count }}次浏览</li>
+            </ul>
+        </div>
+        <div class="avatar"><img src="{{ question.author.avatar | default('/static/images/default_avatar.png') }}" /></div>
+        <div class="clear"></div>
+        <div class="full-line"></div>
+        <div id="question-content">
+        {{ question.content }}
+        </div>
+    </div>
+    <div class="shadow"></div>
+
+    <div style="margin: 20px 0 20px 0;"></div>
+
+    <div id="question-answer">
+        <ul id="answers-list">
+            {%- for a in question.answers %}
+            {%- if not a.parent %}
+            <div style="margin: 20px 0 20px 0;"></div>
+            <li id="answer-{{ a.id }}">
+                <span class="vote-btns">
+                    <a href="#vote-up" class="vote-up" data="{{ a.id }}">
+                        <span class="vote-btn"></span>
+                    </a>
+
+                    <a href="#vote-down" class="vote-down" data="{{ a.id }}">
+                        <span class="vote-btn"></span>
+                     </a>
+                </span>
+                <span class="avatar"><img src="{{ question.author.avatar }}" /></span>
+                <div class="answer-info">
+                    <span class="author">{{ a.author.nickname }}</span>
+                    <span class="time">{{ a.created | friendly_time }}</span>
+                    <div class="clear"></div>
+                    <span class="up_count"><a>{{ a.up_count }}</a>次赞同</span>
+                </div>
+                <div class="clear"></div>
+                <p class="content">{{ a.content }}</p>
+            </li>
+            <div class="shadow"></div>
+            {%- endif %}
+            {%- endfor %}
+        </ul>
+    </div>
+
+    <div id="re-answer">
+        <form id="re-answer-form" action="{{ url_for('qa.answer', qid=question.id) }}">
+            <label>回答问题：</label>
+            <div>
+                <textarea name="answer"></textarea>
+            </div>
+            <input type="submit" value="回答" id="submit" />
+            <div class="clear"></div>
+        </form>
+    </div>
+    <div class="shadow"></div>
+
+</div>
+{%- endblock %}
+
+{%- block right %}
+<div id="right">
+
+</div>
+{%- endblock %}

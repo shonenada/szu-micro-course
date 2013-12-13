@@ -1,0 +1,35 @@
+{%- extends 'layout.html' %}
+
+{%- block static_files %}
+<script src="{{ url_for('static', filename='scripts/question.js')}}"></script>
+{%- endblock %}
+
+{%- block left %}
+<div id="left">
+    <span id="ask-label">提问</span>
+    <div id="ask">
+        <form id="ask-form">
+            {{ form.csrf_token }}
+            <li>{{ form.title(placeholder=form.title.label.text) }}</li>
+            <li>{{ form.content(cols="35", rows="20", placeholder=form.content.label.text) }}</li>
+            <span class="submit-btn"><input type="submit" value="提问" /></span>
+        </form>
+        <div class="clear"></div>
+    </div>
+    <div class="shadow"></div>
+</div>
+{%- endblock %}
+
+{%- block right %}
+<div id="right">
+    <div class="info-wrapper">
+        <div class="info-box">
+            <div class="title">提问准则</div>
+            <div class="content">
+                
+            </div>
+        </div>
+        <div class="shadow"></div>
+    </div>
+</div>
+{%- endblock %}

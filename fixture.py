@@ -5,7 +5,7 @@ from mooc.app import db
 from mooc.account.model import User, SzuAccount, College, Teacher, Role
 from mooc.course.model import Subject, Category, Course, Lecture, LearnRecord
 from mooc.course.model import Quiz, QuizOption
-from mooc.qa.model import Question, Answer
+from mooc.qa.model import Question, Answer, QuestionTag
 
 
 def _init_role():
@@ -194,14 +194,34 @@ def _init_quiz():
         db.session.add(quiz)
 
 
+def _init_question_tag():
+    global question_tags
+    question_tags = (
+        QuestionTag(u'问题标签1'),
+        QuestionTag(u'问题标签2'),
+        QuestionTag(u'问题标签3'),
+        QuestionTag(u'问题标签4')
+    )
+    for qt in question_tags:
+        db.session.add(qt)
+
+
 def _init_question():
     global questions
     questions = (
+        Question(u'空内容', u'问题细节', None, shonenada),
         Question(u'问题啦', u'问题细节', lectures[0], shonenada),
         Question(u'问题啦啦', u'问题细节节', lectures[0], shonenada),
         Question(u'问题啦啦啦', u'问题细节节节', lectures[0], shonenada),
     )
     questions[2].up_count = 2
+    questions[1].tags.append(question_tags[1])
+    questions[0].tags.append(question_tags[1])
+    questions[2].tags.append(question_tags[1])
+    questions[1].tags.append(question_tags[0])
+    questions[0].tags.append(question_tags[3])
+    questions[2].tags.append(question_tags[2])
+    questions[1].anonymous = True
     for question in questions:
         db.session.add(question)
 
@@ -209,6 +229,7 @@ def _init_question():
 def _init_answer():
     global answers
     answers = (
+        Answer(u'空内容', questions[0], None, shonenada),
         Answer(u'回答问题内容', questions[1], lectures[0], shonenada),
         Answer(u'回答问题内容2', questions[1], lectures[0], shonenada),
         Answer(u'回答问题内容3', questions[1], lectures[0], shonenada),
@@ -230,6 +251,7 @@ def init_db():
     _init_learn_record()
     _init_quiz_option()
     _init_quiz()
+    _init_question_tag()
     _init_question()
     _init_answer()
     db.session.commit()

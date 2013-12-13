@@ -93,7 +93,7 @@ class User(db.Model, RBACUserMixinModel):
     courses = db.relationship("Course", backref='author',
                               uselist=True, lazy='dynamic')
     lectures = db.relationship("Lecture", backref='author',
-                            uselist=True, lazy='dynamic')
+                               uselist=True, lazy='dynamic')
     up_down_records = db.relationship('UpDownRecord', backref='user',
                                       uselist=True, lazy='dynamic')
 
