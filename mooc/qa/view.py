@@ -6,6 +6,7 @@ from flask.ext.login import current_user
 
 from mooc.app import db, rbac
 from mooc.qa.model import Question, Answer, QuestionTag, UpDownRecord
+from mooc.qa.form import AskForm
 
 
 qa_app = Blueprint('qa', __name__, template_folder='../templates')
@@ -93,7 +94,6 @@ def vote_answer():
     db.session.add(answer)
     db.session.add(vote_record)
     db.session.commit()
-
     return jsonify(success=True, message=u'Success')
 
 
@@ -119,5 +119,7 @@ def ask():
         content = form.data.get('content')
         tags = form.data.get('tags')
         new_question = Question(title, content, None, current_user)
-        return None
-    return render_template('qa/ask.html')
+        db.session.add(new_question)
+        db.session.commit()
+        return jsonify(success=True)
+    return render_template('qa/ask.html', form=form)

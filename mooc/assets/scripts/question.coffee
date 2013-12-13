@@ -36,15 +36,40 @@ $ ->
 
     $("#re-answer-form").submit ->
         $.ajax {
-            url: $("#re-answer-form").attr('action')
+            url: $(this).attr('action')
             dataType: 'json'
-            data: $("#re-answer-form").serialize()
+            data: $(this).serialize()
             type: 'POST'
             success: (res) ->
                 if (res.success)
                     window.flash_message('提交成功')
                     setTimeout ->
                         location.reload()
+                    , 2000
+                    return ;
+                else
+                    window.flash_message(res.message, 'error')
+                    return ;
+                return ;
+            statusCode: {
+                405: ->
+                    window.flash_message('您未登录，无法进行操作', 'error')
+                    return ;
+                }
+            }
+        return false;
+
+    $("#ask-form").submit ->
+        $.ajax {
+            url: $(this).attr('action')
+            dataType: 'json'
+            data: $(this).serialize()
+            type: 'POST'
+            success: (res) ->
+                if (res.success)
+                    window.flash_message('您的提问已提交')
+                    setTimeout ->
+                        location.href = '/question'
                     , 2000
                     return ;
                 else

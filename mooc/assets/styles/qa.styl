@@ -276,18 +276,51 @@
                 font-size 16px
                 padding 8px
 
+        & #ask-label
+            padding 10px 20px
+            background #fff
+            top-border-radius 5px
+            font-size 14px
+            color #ff5400
 
+        & #ask
+            padding 20px
+            background #fff
+            bottom-border-radius 5px
+
+            & #ask-form
+
+                & li
+                    list-style none
+
+                    #title, #content
+                        font-size 14px
+                        padding 8px
+                        width 98%
+                        color #515c73
+                        border-radius 5px
+                        border solid 2px #b7c4ce
+
+                & input[type='submit']
+                    float right
+                    height 40px
+                    width 50px
+                    font-size 16px
+                    padding 8px
+                    margin-top 10px
     & #right
 
-        & .info-wrapper .info-box .content .content-list li
+        & .info-wrapper .info-box .content
+            padding 0 0 15px 0
 
-            margin 15px 0 20px 0
-            float left
+            & .content-list li
+                margin 15px 0 20px 0
+                float left
 
-            & span
-                color #515c73
-                padding 5px 10px 5px 10px
-                background #dce5eb
-                top-border-radius 5px
-                bottom-border-radius 5px
-                font-size 14px
+                & span
+                    color #515c73
+                    padding 5px 10px 5px 10px
+                    background #dce5eb
+                    top-border-radius 5px
+                    bottom-border-radius 5px
+                    font-size 14px
