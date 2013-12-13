@@ -98,6 +98,9 @@
             bottom-border-radius 3px
             overflow hidden
 
+            & #question-info
+                float left
+
             & #question-title
                 font-size 20px
                 padding 20px 20px 0px 20px
@@ -114,6 +117,7 @@
                     font-size 12px
                     top-border-radius 3px
                     bottom-border-radius 3px
+                    background #ecf1f4
 
                 & li.author, li.time, li.count
                     color #acacac
@@ -121,11 +125,13 @@
                     background #fff
                     font-size 12px
 
-                & li.avatar
-                    float right
-                    & img
-                        width 50px
-                        height 50px
+            & div.avatar
+                float right
+                margin-top 30px
+                margin-right 30px
+                & img
+                    width 50px
+                    height 50px
 
             & #question-content
                 padding-left 20px
@@ -196,6 +202,61 @@
 
                     &:hover
                         border-color #fff transparent transparent
+
+            & div.answer-info
+                float left
+
+                & span.author
+                    line-height 16px
+                    font-size 14px
+                    font-weight bold
+                    color #515c73
+
+                & span.time
+                    font-size 14px
+                    font-weight normal
+                    color #ABB5BD
+                    line-height 16px
+
+                & span.up_count
+                    line-height 16px
+                    font-size 12px
+
+            & p.content
+                font-size 14px
+                text-indent 2em
+                margin 10px
+                padding 5px
+
+        & #re-answer
+            background #fff
+            margin 20px 0 0 0
+            padding 20px
+            top-border-radius 3px
+            bottom-border-radius 3px
+            
+            & div
+                width 95%
+                margin 0 auto
+                margin-top 10px
+                margin-bottom 10px
+
+            & textarea
+                width 100%
+                height 15em;
+                top-border-radius 5px
+                bottom-border-radius 5px
+                border 2px solid #b7c4ce
+                padding 10px
+                font-size 14px
+
+            & input[type='submit']
+                float right
+                height 40px
+                width 50px
+                font-size 16px
+                padding 8px
+
 
     & #right
 
