@@ -209,6 +209,7 @@ def _init_question_tag():
 def _init_question():
     global questions
     questions = (
+        Question(u'空内容', u'问题细节', None, shonenada),
         Question(u'问题啦', u'问题细节', lectures[0], shonenada),
         Question(u'问题啦啦', u'问题细节节', lectures[0], shonenada),
         Question(u'问题啦啦啦', u'问题细节节节', lectures[0], shonenada),
@@ -228,6 +229,7 @@ def _init_question():
 def _init_answer():
     global answers
     answers = (
+        Answer(u'空内容', questions[0], None, shonenada),
         Answer(u'回答问题内容', questions[1], lectures[0], shonenada),
         Answer(u'回答问题内容2', questions[1], lectures[0], shonenada),
         Answer(u'回答问题内容3', questions[1], lectures[0], shonenada),
