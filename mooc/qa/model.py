@@ -28,11 +28,13 @@ class UpDownRecord(db.Model):
     answer = db.relationship(
         'Answer', uselist=False,
         backref=db.backref('up_down_record', uselist=False))
+    isdeleted = db.Column(db.Boolean, default=False)
 
     def __init__(self, user, up_or_down):
         self.created = datetime.utcnow()
         self.user = user
-        if up_or_down in (TYPE_UP, TYPE_DOWN):
+        self.isdeleted = False
+        if up_or_down in (self.TYPE_UP, self.TYPE_DOWN):
             self.up_or_down = up_or_down
         else:
             self.up_or_down = self.TYPE_UP
