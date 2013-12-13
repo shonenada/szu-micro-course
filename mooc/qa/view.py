@@ -36,7 +36,8 @@ def hotest():
     question_query = (Question.query.filter(Question._state != 'DELETED')
                               .order_by(Question.hotest.desc()))
     questions = question_query.paginate(page_num, per_page=20)
-    return render_template('qa/question_list.html',
+    hotest_tags = QuestionTag.query.order_by(QuestionTag.count.desc()).all()
+    return render_template('qa/question_list.html', hotest_tags=hotest_tags,
                            question_pagination=questions, type='hotest')
 
 
@@ -47,7 +48,8 @@ def noanswer():
     question_query = (Question.query.filter(Question._state != 'DELETED')
                               .filter(Question.answer_count == 0))
     questions = question_query.paginate(page_num, per_page=20)
-    return render_template('qa/question_list.html',
+    hotest_tags = QuestionTag.query.order_by(QuestionTag.count.desc()).all()
+    return render_template('qa/question_list.html', hotest_tags=hotest_tags,
                            question_pagination=questions, type='noanswer')
 
 
@@ -106,3 +108,16 @@ def answer(qid):
     db.session.add(answer)
     db.session.commit()
     return jsonify(success=True)
+
+
+@qa_app.route('/question/ask', methods=['GET', 'POST'])
+@rbac.allow(['local_user'], ['GET', 'POST'])
+def ask():
+    form = AskForm()
+    if form.validate_on_submit():
+        title = form.data.get('title')
+        content = form.data.get('content')
+        tags = form.data.get('tags')
+        new_question = Question(title, content, None, current_user)
+        return None
+    return render_template('qa/ask.html')

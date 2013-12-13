@@ -8,7 +8,7 @@
 <div id="left">
     <div id="question-description">
         <div id="question-info">
-            <div id="question-title">{{ question.title }}</div>
+            <div id="question-title">{{ question.title }} {% if question.lecture %}<span>来自<a href="{{ url_for('course.lecture', lecture_id=question.lecture.id )}}">《{{ question.lecture.name }}》</a>课程的问题</span>{% endif %}</div>
             <ul id="question-tags">
             {%- for tag in question.tags %}
                 <li>{{ tag.tag }}</li>
