@@ -5,6 +5,7 @@ from flask.ext.sqlalchemy import Pagination
 from flask.ext.login import current_user
 
 from mooc.app import db, rbac
+from mooc.course.model import Lecture
 from mooc.qa.model import Question, Answer, QuestionTag, UpDownRecord
 from mooc.qa.form import AskForm
 
@@ -114,12 +115,20 @@ def answer(qid):
 @rbac.allow(['local_user'], ['GET', 'POST'])
 def ask():
     form = AskForm()
+    if request.method == 'GET':
+        return render_template('qa/ask.html', form=form)
+
     if form.validate_on_submit():
         title = form.data.get('title')
         content = form.data.get('content')
         tags = form.data.get('tags')
         new_question = Question(title, content, None, current_user)
+        lecture_id = request.args.get('lecture_id', None)
+        if lecture_id:
+            lecture = Lecture.query.get(lecture_id)
+            new_question.lecture = lecture
         db.session.add(new_question)
         db.session.commit()
         return jsonify(success=True)
-    return render_template('qa/ask.html', form=form)
+    else:
+        return jsonify(success=False, message=form.errors.values())

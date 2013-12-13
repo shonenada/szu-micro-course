@@ -44,7 +44,8 @@ $ ->
                 if (res.success)
                     window.flash_message('提交成功')
                     setTimeout ->
-                        location.reload()
+                        document.location = document.referrer;
+                        return ;
                     , 2000
                     return ;
                 else
@@ -69,11 +70,11 @@ $ ->
                 if (res.success)
                     window.flash_message('您的提问已提交')
                     setTimeout ->
-                        location.href = '/question'
-                    , 2000
+                        document.location = document.referrer;
+                    , 1000
                     return ;
                 else
-                    window.flash_message(res.message, 'error')
+                    window.flash_message(res.message.join(', '), 'error')
                     return ;
                 return ;
             statusCode: {

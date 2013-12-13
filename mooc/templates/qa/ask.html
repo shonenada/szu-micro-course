@@ -8,7 +8,7 @@
 <div id="left">
     <span id="ask-label">提问</span>
     <div id="ask">
-        <form id="ask-form" action="{{ url_for('qa.ask') }}">
+        <form id="ask-form">
             {{ form.csrf_token }}
             <li>{{ form.title(placeholder=form.title.label.text) }}</li>
             <li>{{ form.content(cols="35", rows="20", placeholder=form.content.label.text) }}</li>
