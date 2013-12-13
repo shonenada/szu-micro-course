@@ -58,6 +58,7 @@ $(function(){
                 <li><a href="javascript:void(0);" id="btn-questions" class="lecture-btns">相关问题</a></li>
                 <li><a href="javascript:void(0);" id="btn-quiz" class="lecture-btns">课程测评</a></li>
                 <li><a href="javascript:void(0);" id="btn-video-resource" class="lecture-btns">课程资源</a></li>
+                <li class="ask"><a href="{{ url_for('qa.ask', lecture_id=lecture.id) }}" id="ask-btn" class="lecture-btns">提问</a></li>
             </ul>
         </div>
 
@@ -66,7 +67,11 @@ $(function(){
             <p>{{ lecture.knowledge_point|safe }}</p>
             </div>
             <div id="lecture-questions" class="lecture-bar lecture-hidden">
-                相关问题
+                <ul>
+                    {% for index, q in lecture.questions|enumerate %}
+                    <li><a target="_blank" href="{{ url_for('qa.view_question', qid=q.id) }}">{{ index+1 }}、{{ q.title }}</a></li>
+                    {% endfor %}
+                </ul>
             </div>
             <div id="lecture-quiz" class="lecture-bar lecture-hidden">
                 {% for index, quiz in quizs|enumerate %}
