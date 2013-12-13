@@ -1,9 +1,11 @@
 from sqlalchemy import func, select
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request
+from flask import jsonify, redirect, url_for
 from flask.ext.sqlalchemy import Pagination
+from flask.ext.login import current_user
 
 from mooc.app import db, rbac
-from mooc.qa.model import Question, Answer, QuestionTag
+from mooc.qa.model import Question, Answer, QuestionTag, UpDownRecord
 
 
 qa_app = Blueprint('qa', __name__, template_folder='../templates')
@@ -53,4 +55,54 @@ def noanswer():
 @rbac.allow(['everyone'], ['GET'])
 def view_question(qid):
     question = Question.query.get(qid)
+    question.read_count += 1
+    db.session.add(question)
+    db.session.commit()
     return render_template('qa/question.html', question=question)
+
+
+@qa_app.route('/question/vote', methods=['POST'])
+@rbac.allow(['local_user'], ['POST'])
+def vote_answer():
+    VALID_ACTION = ('up', 'down')
+    aid = int(request.form.get('aid', None))
+    action = request.form.get('action', None)
+    if not (aid or action in VALID_ACTION):
+        return jsonify(success=False, message=u'Error Params')
+
+    answer = Answer.query.get(aid)
+    if not answer:
+        return jsonify(success=False, message=u'Error params')
+
+    record = (UpDownRecord.query
+                          .filter(UpDownRecord.user_id ==
+                                  current_user.id)
+                          .filter(UpDownRecord.answer ==
+                                  answer).first())
+
+    if record:
+        return jsonify(success=False, message=u'You have voted!')
+    
+    vote_type = (UpDownRecord.TYPE_DOWN
+                 if action == 'down' else UpDownRecord.TYPE_UP)
+    vote_record = UpDownRecord(current_user, vote_type)
+    vote_record.answer = answer
+    answer.up_count += (1 if action == 'down' else -1)
+    db.session.add(answer)
+    db.session.add(vote_record)
+    db.session.commit()
+
+    return jsonify(success=True, message=u'Success')
+
+
+@qa_app.route('/question/<int:qid>/answer', methods=['POST'])
+@rbac.allow(['local_user'], ['POST'])
+def answer(qid):
+    question = Question.query.get(qid)
+    answer_text = request.form.get('answer', None)
+    if not answer_text:
+        return jsonify(success=False, message=u'Please answer the question')
+    answer = Answer(answer_text, question, question.lecture, current_user)
+    db.session.add(answer)
+    db.session.commit()
+    return jsonify(success=True)
