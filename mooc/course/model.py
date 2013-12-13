@@ -75,7 +75,7 @@ class Course(db.Model):
     lectures = db.relationship('Lecture',
                                backref=db.backref('course'), uselist=True)
     tags = db.relationship('CourseTag', secondary=course_tags,
-                           backref=db.backref('course', lazy='dynamic'))
+                           backref=db.backref('courses', lazy='dynamic'))
 
     def __init__(self, name, description, author, category):
         self.name = name
@@ -137,7 +137,7 @@ class Lecture(db.Model):
     answers = db.relationship('Answer', backref=db.backref('lecture'),
                               uselist=True, lazy='dynamic')
     tags = db.relationship('LectureTag', secondary=lecture_tags,
-                           backref=db.backref('lecture'))
+                           backref=db.backref('lectures'))
 
     def __init__(self, name, description, author, course, order=None,
                  published=False):
