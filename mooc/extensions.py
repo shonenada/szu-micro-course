@@ -1,3 +1,4 @@
+from flask import redirect, url_for, render_template
 from flask.ext.gears import Gears
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager, current_user
@@ -65,3 +66,17 @@ def setup_rbac(app):
     _rbac.set_role_model(Role)
     _rbac.set_user_model(User)
     _rbac.set_user_loader(lambda *args: current_user)
+
+
+def setup_error_pages(app):
+    @app.errorhandler(403)
+    def page_not_found(error):
+        return render_template('errors/403.html'), 403
+
+    @app.errorhandler(404)
+    def page_not_found(error):
+        return render_template('errors/404.html'), 404
+
+    @app.errorhandler(405)
+    def method_not_allow(error):
+        return render_template('errors/405.html'), 405

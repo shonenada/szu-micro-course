@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 
 from mooc.extensions import gears, setup_compilers, setup_compressors
 from mooc.extensions import setup_gears_environment
@@ -6,6 +6,7 @@ from mooc.extensions import db, setup_database
 from mooc.extensions import login_manager
 from mooc.extensions import rbac, setup_rbac
 from mooc.extensions import csrf
+from mooc.extensions import setup_error_pages
 from mooc.template import setup_filter, setup_func
 from mooc.master.view import master_app
 from mooc.account.view import account_app
@@ -43,6 +44,8 @@ def create_app(import_name=None, config=None):
 
     app.before_request(get_learn_records)
     app.before_request(get_last_lecture)
+
+    setup_error_pages(app)
 
     setup_filter(app)
     setup_func(app)
