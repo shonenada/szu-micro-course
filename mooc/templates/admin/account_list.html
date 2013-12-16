@@ -2,7 +2,7 @@
 {%- import 'utils.jinja' as utils %}
 
 {%- block breadcrumb %}
-<li><a href="{{ url_for('master.master_account_list') }}">Accoun Manage</a><span class="divider">/</span><li>
+<li><a href="{{ url_for('master.master_account_list') }}">Account Manage</a><span class="divider">/</span><li>
 <li class="active">List</li>
 {%- endblock %}
 
@@ -25,7 +25,7 @@
                 </tr>
             </thead>
             <tbody>
-                {%- for user in user_pagination.items %}
+                {%- for user in pagination.items %}
                 <tr>
                     <td><a href="{{ url_for('account.people', username=user.username) }}">{{ user.username }}</a></td>
                     <td>{{ user.name }}</td>
@@ -44,7 +44,7 @@
         </table>
     </div>
 </div>
-{{ utils.render_pagination(user_pagination, 'master.master_account_list')|safe }}
+{{ utils.render_pagination(pagination, 'master.master_account_list')|safe }}
 
 <div class="modal small hide fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="delete-modal-label" aria-hidden="true">
     <div class="modal-header">
