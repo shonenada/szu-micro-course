@@ -1,0 +1,20 @@
+{%- extends 'admin/base_list.html' %}
+
+{%- block thead %}
+    <th>Name</th>
+    <th>Description</th>
+{%- endblock %}
+
+{%- block tbody %}
+{%- for subject in pagination.items %}
+<tr>
+    <td>{{ subject.name }}</td>
+    <td>{{ subject.description | ellipsis(20) }}</td>
+    <td>
+        <a href="{{ url_for(endpoints['edit'], mid=subject.id) }}"><span class="icon-pencil"></span></a>
+         | 
+        <a href="#delete-modal" role="button" data="{{ subject.id }}" class="delete-btns" data-toggle="modal"><span class="icon-remove"></span></a>
+    </td>
+</tr>
+{% endfor %}
+{%- endblock %}

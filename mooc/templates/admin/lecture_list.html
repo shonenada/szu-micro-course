@@ -1,0 +1,32 @@
+{%- extends 'admin/base_list.html' %}
+
+{%- block thead %}
+    <th>Name</th>
+    <th>Description</th>
+    <th>Teacher</th>
+    <th>Course</th>
+    <th>College</th>
+{%- endblock %}
+
+{%- block tbody %}
+{%- for item in pagination.items %}
+<tr>
+    <td>{{ item.name }}</td>
+    <td>{{ item.description | ellipsis(20) }}</td>
+    <td>
+    {%- if item.course.teacher.szu_account.user.name %}
+    {{ item.course.teacher.szu_account.user.name }}
+    {%- else %}
+    {{ item.course.teacher.szu_account.user.nickname }}
+    {%- endif %}
+    </td>
+    <td>{{ item.course.name }}</td>
+    <td>{{ item.course.college.name }}</td>
+    <td>
+        <a href="{{ url_for(endpoints['edit'], mid=item.id) }}"><span class="icon-pencil"></span></a>
+         | 
+        <a href="#delete-modal" role="button" data="{{ item.id }}" class="delete-btns" data-toggle="modal"><span class="icon-remove"></span></a>
+    </td>
+</tr>
+{% endfor %}
+{%- endblock %}
