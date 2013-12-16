@@ -88,27 +88,28 @@ def _init_category():
 def _init_course():
     global courses
     courses = (
-        Course(u'数字逻辑与数字系统.多位加法器：串行加法器', u'课程介绍数字逻辑与数字系统', key, categorys[0]),
+        Course(u'数字逻辑与数字系统.多位加法器：串行加法器', u'课程介绍数字逻辑与数字系统', mr_key, categorys[0]),
 
-        Course(u'Linux基本操作', u'课程包含Linux图形界面下的日常操作维护及命令行（CLI）下的日常操作维护。', key, categorys[1]),
-        Course(u'Linux磁盘及文件系统管理', u'课程包括磁盘基本概念、文件系统的基本概念及分区、文件系统的创建管理。', key, categorys[1]),
-        Course(u'Linux下获取帮助', u'课程包括图形界面及命令行界面下如何获取所使用命令工具的帮助信息', key, categorys[1]),
+        Course(u'Linux基本操作', u'课程包含Linux图形界面下的日常操作维护及命令行（CLI）下的日常操作维护。', mr_key, categorys[1]),
+        Course(u'Linux磁盘及文件系统管理', u'课程包括磁盘基本概念、文件系统的基本概念及分区、文件系统的创建管理。', mr_key, categorys[1]),
+        Course(u'Linux下获取帮助', u'课程包括图形界面及命令行界面下如何获取所使用命令工具的帮助信息', mr_key, categorys[1]),
 
-        Course(u'rSyslog日志服务', u'本课程将为您介绍日志服务的基本概念及如何配置rsyslog服务', key, categorys[2]),
-        Course(u'DNS域名服务', u'课程包括DNS基本概念、DNS架构介绍、bind服务配置', key, categorys[2]),
+        Course(u'rSyslog日志服务', u'本课程将为您介绍日志服务的基本概念及如何配置rsyslog服务', mr_key, categorys[2]),
+        Course(u'DNS域名服务', u'课程包括DNS基本概念、DNS架构介绍、bind服务配置', mr_key, categorys[2]),
 
-        Course(u'磁盘管理：LVM逻辑卷', u'课程包括LVM逻辑卷基本概念、逻辑卷的创建删除及逻辑卷的拉伸缩小。', key, categorys[3]),
-        Course(u'Linux高级权限 - ACL', u'讲解如何通过访问控制列表（ACL）对Linux进行高级权限管理', key, categorys[3]),
+        Course(u'磁盘管理：LVM逻辑卷', u'课程包括LVM逻辑卷基本概念、逻辑卷的创建删除及逻辑卷的拉伸缩小。', mr_key, categorys[3]),
+        Course(u'Linux高级权限 - ACL', u'讲解如何通过访问控制列表（ACL）对Linux进行高级权限管理', mr_key, categorys[3]),
 
-        Course(u'MySQL数据库基础', u'介绍MySQL数据库的安装和配置，SQL语法，MySQL调优方式及实际配置案例，MySQL备份机制。', key, categorys[4]),
+        Course(u'MySQL数据库基础', u'介绍MySQL数据库的安装和配置，SQL语法，MySQL调优方式及实际配置案例，MySQL备份机制。', mr_key, categorys[4]),
 
-        Course(u'Oracle数据库入门基础', u'讲解Oracle数据库的常见知识、安装、管理及日常维护应用。', key, categorys[5]),
+        Course(u'Oracle数据库入门基础', u'讲解Oracle数据库的常见知识、安装、管理及日常维护应用。', mr_key, categorys[5]),
 
-        Course(u'Ruby 开发语言', u'Ruby 是一种跨平台、面向对象的动态类型编程语言。Ruby 体现了表达的一致性和简单性， 它不仅是一门编程语言，更是表达想法的一种简练方式。', key, categorys[6]),
+        Course(u'Ruby 开发语言', u'Ruby 是一种跨平台、面向对象的动态类型编程语言。Ruby 体现了表达的一致性和简单性， 它不仅是一门编程语言，更是表达想法的一种简练方式。', mr_key, categorys[6]),
         
-        Course(u'Python 语言基础', u'Python 是一种面向对象、直译式计算机程序设计语言，由Guido van Rossum于1989年底发明，第一个公开发行版发行于1991年。Python语法简捷而清晰，具有丰富和强大的类库。', key, categorys[7]),
+        Course(u'Python 语言基础', u'Python 是一种面向对象、直译式计算机程序设计语言，由Guido van Rossum于1989年底发明，第一个公开发行版发行于1991年。Python语法简捷而清晰，具有丰富和强大的类库。', mr_key, categorys[7]),
     )
     for course in courses:
+        course.college = csse
         db.session.add(course)
 
 
