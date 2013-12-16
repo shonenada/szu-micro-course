@@ -1,12 +1,17 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, current_app
 from flask import request, redirect, url_for, jsonify
 
 from mooc.app import rbac, db
 from mooc.utils import flash
 from mooc.account.model import User, SzuAccount, College
 from mooc.course.model import Subject
-from mooc.master.form import (MasterUserForm, MasterSzuAccountForm,
-                              MasterNewUserForm)
+from mooc.course.form import SubjectForm
+from mooc.account.form import UserForm, SzuAccountForm, NewUserForm
+from mooc.master.service import common_paginate, common_delete, common_edit
+from mooc.account.service import (update_user_state,
+                                  change_user_password,
+                                  create_user)
+from mooc.course.service import create_subject
 
 
 master_app = Blueprint('master', __name__, template_folder='../templates')
@@ -29,22 +34,22 @@ def master_index():
 @rbac.allow(['super_admin'], ['GET'])
 def master_account_list():
     page_num = int(request.args.get('page', 1))
-    user_query = User.query.filter(User._state != User.USER_STATE_VALUES[2])
-    user_pagination = user_query.paginate(page_num, per_page=20)
-    return render_template('admin/account_list.html',
-                           user_pagination=user_pagination)
+    pagination = common_paginate(
+        model = User,
+        page = page_num,
+        per_page = current_app.config.get('ADMIN_PAGESIZE')
+    )
+    return render_template('admin/account_list.html', pagination=pagination)
 
 
 @master_app.route('/master/account/<int:uid>/edit', methods=['GET', 'PUT'])
 @rbac.allow(['super_admin'], ['GET', 'PUT'])
 def master_account_edit(uid):
     user = User.query.get(uid)
-    user_form = MasterUserForm(request.form, user)
-    szu_account_form = MasterSzuAccountForm(request.form, user.szu_account)
+    user_form = UserForm(request.form, user)
+    szu_account_form = SzuAccountForm(request.form, user.szu_account)
     if user_form.validate_on_submit():
-        user.state = user_form.data['state']
-        db.session.add(user)
-        db.session.commit()
+        update_user_state(uid, user_form.data['state'])
         flash('Operated successfully!', 'notice')
         return jsonify(success=True)
     if user_form.errors:
@@ -58,10 +63,7 @@ def master_account_edit(uid):
 @master_app.route('/master/account/<int:uid>', methods=['DELETE'])
 @rbac.allow(['super_admin'], ['DELETE'])
 def master_account_delete(uid):
-    user = User.query.get(uid)
-    user.state = 'deleted'
-    db.session.add(user)
-    db.session.commit()
+    common_delete(User, uid)
     flash(message='Operated successfully!', category='notice')
     return jsonify(success=True)
 
@@ -70,10 +72,7 @@ def master_account_delete(uid):
 @rbac.allow(['super_admin'], ['PUT'])
 def master_account_password(uid):
     raw_passwd = request.form['password']
-    user = User.query.get(uid)
-    user.change_password(raw_passwd)
-    db.session.add(user)
-    db.session.commit()
+    change_user_password(uid, raw_passwd)
     flash(message='Operated successfully', category='notice')
     return jsonify(success=True)
 
@@ -81,23 +80,58 @@ def master_account_password(uid):
 @master_app.route('/master/account/new_user', methods=['GET', 'POST'])
 @rbac.allow(['super_admin'], ['GET', 'POST'])
 def master_account_new():
-    new_user_form = MasterNewUserForm(request.form)
+    new_user_form = NewUserForm(request.form)
     if new_user_form.validate_on_submit():
         data = new_user_form.data
-        college = data.get('college', None)
-        user = User(data['username'], data['raw_passwd'],
-                    data['nickname'], data['is_male'] is 'True')
-        user.name = data['name']
-        user.email = data['email']
-        user.phone = data['phone']
-        user.qq = data['qq']
-        user.state = data['state']
-        szu_account = SzuAccount(user, data['card_id'], data['stu_number'],
-                                 college, data['szu_account_type'])
-        szu_account.short_phone = data['short_phone']
-        db.session.add(user)
-        db.session.add(szu_account)
-        db.session.commit()
+        create_user(data)
         flash(message='Operated successfully', category='notice')
         return jsonify(success=True)
     return render_template('admin/account_new.html', form=new_user_form)
+
+
+@master_app.route('/master/subject', methods=['GET'])
+@rbac.allow(['super_admin'], ['GET'])
+def master_subject_list():
+    page_num = int(request.args.get('page', 1))
+    pagination = common_paginate(
+        model = Subject,
+        page = page_num,
+        per_page = current_app.config.get('ADMIN_PAGESIZE')
+    )
+    return render_template('admin/subject_list.html', pagination=pagination)
+
+
+@master_app.route('/master/subject/new', methods=['GET', 'POST'])
+@rbac.allow(['super_admin'], ['GET', 'POST'])
+def master_subject_new():
+    form = SubjectForm()
+    if form.validate_on_submit():
+        create_subject(form.data)
+        flash(message='Operated successfully', category='notice')
+        return jsonify(subject=True)
+    return render_template('admin/subject_new.html', form=form)
+
+
+@master_app.route('/master/subject/<int:sid>/edit', methods=['GET', 'PUT'])
+@rbac.allow(['super_admin'], ['GET', 'PUT'])
+def master_subject_edit(sid):
+    subject = Subject.query.get(sid)
+    form = SubjectForm(request.form, subject)
+    if form.validate_on_submit():
+        common_edit(subject, form.data)
+        flash('Operated successfully!', 'notice')
+        return jsonify(success=True)
+    if form.errors:
+        flash(message=form.errors, category='error', form_errors=True)
+        return jsonify(success=False)
+    return render_template('admin/subject_edit.html', sid=sid,
+                           form=form)
+
+
+@master_app.route('/master/subject/<int:sid>', methods=['DELETE'])
+@rbac.allow(['super_admin'], ['DELETE'])
+def master_subject_delete(sid):
+    common_delete(Subject, sid)
+    flash(message='Operated successfully!', category='notice')
+    return jsonify(success=True)
+
