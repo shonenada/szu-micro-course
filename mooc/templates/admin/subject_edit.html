@@ -1,0 +1,87 @@
+{%- extends 'admin/master.html' %}
+{%- import 'utils.jinja' as utils %}
+
+{%- block breadcrumb %}
+<li><a href="{{ url_for('master.master_subject_list') }}">Subject Manage</a><span class="divider">/</span><li>
+<li class="active">Show</li>
+{%- endblock %}
+
+{%- block content %}
+<div class="row-fluid">
+    <div class="well">
+        <div id="tab-content" class="tab-content">
+            <div class="tab-pane active in" id="subject">
+                <form id="subject-form">
+                    {{ form.csrf_token }}
+                    {{ form.name.label }} {{ form.name(class='input-xlarge')}}
+                    {{ form.description.label }} {{ form.description(class='input-xlarge', cols="35", rows="5")}}
+                </form>
+                <div class="btn-toolbar">
+                    <button class="btn btn-primary" id="save-btn"><span class="icon-save"></span> Save</button>
+                    <a class="btn btn-danger delete-btns" href="#delete-modal" data-toggle="modal"><span class="icon-trash"></span> Delete</a>
+                    <a class="btn delete-btns" href="{{ url_for('master.master_subject_list') }}" data-toggle="modal"> Cancel</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+<div class="modal small hide fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="delete-modal-label" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="delete-modal-label">Delete Confirmation</h3>
+    </div>
+    <div class="modal-body">
+        <p class="error-text"><i class="icon-warning-sign modal-icon"></i>Are you sure you want to delete the record?</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+        <button id="confirm-delete-btn" class="btn btn-danger" data-dismiss="modal">Delete</button>
+    </div>
+</div>
+{%- endblock %}
+
+{%- block scripts %}
+<script>
+$(function(){
+    $("#confirm-delete-btn").click(function(){
+        $.ajax({
+            url: "{{ url_for('master.master_subject_delete', sid=sid) }}",
+            type: 'delete',
+            dataType: 'json',
+            success: function(response) {
+                if(response.success){
+                    location.href = "{{ url_for('master.master_subject_list') }}";
+                }
+                else{
+                    location.href = "{{ url_for('master.master_subject_list') }}";
+                }
+            }
+        });
+    });
+
+    $('#subject-form').submit(function(){
+        $.ajax({
+            url: "{{ url_for('master.master_subject_edit', sid=sid) }}",
+            type: 'put',
+            dataType: 'json',
+            data: $(this).serialize(),
+            success: function(response) {
+                if(response.success){
+                    location.href = "{{ url_for('master.master_subject_list', sid=sid) }}";
+                }
+                else{
+                    location.href = "{{ url_for('master.master_subject_list', sid=sid) }}";
+                }
+            }
+        });
+        return false;
+    });
+
+    $("#save-btn").click(function(){
+        $('#subject-form').submit();
+    })
+
+});
+</script>
+{%- endblock %}

@@ -1,0 +1,56 @@
+{%- extends 'admin/master.html' %}
+{%- import 'utils.jinja' as utils %}
+
+{%- block breadcrumb %}
+<li><a href="{{ url_for('master.master_subject_list') }}">Subject Manage</a><span class="divider">/</span><li>
+<li class="active">New User</li>
+{%- endblock %}
+
+{%- block content %}
+<div class="row-fluid">
+    <div class="well">
+        <div id="tab-content" class="tab-content">
+            <div class="tab-pane active in" id="subject">
+                <form id="subject-form">
+                    {{ form.csrf_token }}
+                    {{ form.name.label }} {{ form.name(class='input-xlarge')}}
+                    {{ form.description.label }} {{ form.description(class='input-xlarge', cols="35", rows="5")}}
+                </form>
+            </div>
+            <div class="btn-toolbar">
+                <button class="btn btn-primary" id="save-btn"><i class="icon-save"></i> Save</button>
+                <a href="{{ url_for('master.master_subject_list') }}" data-toggle="modal" class="btn">Cancel</a>
+            </div>
+        </div>
+    </div>
+
+{%- endblock %}
+
+{%- block scripts %}
+<script>
+$(function(){
+    $('#subject-form').submit(function(){
+        $.ajax({
+            url: "{{ url_for('master.master_subject_new') }}",
+            type: 'post',
+            dataType: 'json',
+            data: $(this).serialize(),
+            success: function(response) {
+                if(response.success){
+                    location.href = "{{ url_for('master.master_subject_list') }}";
+                }
+                else{
+                    location.href = "{{ url_for('master.master_subject_list') }}";
+                }
+            }
+        });
+        return false;
+    });
+
+    $("#save-btn").click(function(){
+        $('#subject-form').submit();
+    })
+
+})
+</script>
+{%- endblock %}

@@ -1,6 +1,7 @@
 from flask import current_app as app
 
-from mooc.course.model import LearnRecord, Lecture
+from mooc.app import db
+from mooc.course.model import LearnRecord, Lecture, Subject
 
 
 def get_learn_records():
@@ -31,3 +32,9 @@ def quiz_to_json(quizs):
             _q['options'].append(_op)
         json_quizs.append(_q)
     return json_quizs
+
+
+def create_subject(data):
+    subject = Subject(data['name'], data['description'])
+    db.session.add(subject)
+    db.session.commit()
