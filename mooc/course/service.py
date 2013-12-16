@@ -1,7 +1,8 @@
 from flask import current_app as app
 
 from mooc.app import db
-from mooc.course.model import LearnRecord, Lecture, Subject
+from mooc.course.model import LearnRecord, Lecture
+from mooc.course.model import Subject, Category, Course, Lecture
 
 
 def get_learn_records():
@@ -37,4 +38,42 @@ def quiz_to_json(quizs):
 def create_subject(data):
     subject = Subject(data['name'], data['description'])
     db.session.add(subject)
+    db.session.commit()
+
+
+def create_category(data):
+    category = Category(data['name'], data['subject'])
+    db.session.add(category)
+    db.session.commit()
+
+
+def create_course(data):
+    course = Course(
+        data['name'],
+        data['description'],
+        data['teacher'],
+        data['category']
+    )
+    course.logo_url = data['logo_url']
+    db.session.add(course)
+    db.session.commit()
+
+
+def create_lecture(data):
+    lecture = Lecture(
+        data['name'],
+        data['description'],
+        data['teacher'],
+        data['course'],
+        data['order'],
+    )
+    lecture.prepare_knowledge = data['prepare_knowledge']
+    lecture.knowledge_point = data['knowledge_point']
+    lecture.chapter = data['chapter']
+    lecture.term = data['term']
+    lecture.record_time = data['record_time']
+    lecture.record_address = data['record_address']
+    lecture.video_url = data['video_url']
+    lecture.video_length = data['video_length']
+    db.session.add(lecture)
     db.session.commit()

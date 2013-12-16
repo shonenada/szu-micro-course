@@ -1,4 +1,6 @@
-from mooc.app import db
+from flask import current_app, request, render_template
+
+from mooc.app import db, rbac
 
 
 def common_paginate(model, page, per_page, filte=True):
@@ -25,3 +27,7 @@ def common_edit(obj, form_data, exceptions=()):
             setattr(obj, key, value)
     db.session.add(obj)
     db.session.commit()
+
+
+def common_create(model, data):
+    pass

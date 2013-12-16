@@ -40,6 +40,9 @@ class Subject(db.Model):
         self.description = description
         self.state = 'normal'
 
+    def __str__(self):
+        return ("%s" % self.name)
+
     def __repr__(self):
         return "<Subject %s>" % self.name
 
@@ -47,15 +50,23 @@ class Subject(db.Model):
 class Category(db.Model):
 
     __tablename__ = 'category'
+    CATEGORY_STATE_VALUES = ('normal', 'deleted')
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20))
     subject_id = db.Column(db.Integer, db.ForeignKey('subject.id'))
     courses = db.relationship('Course', backref='category', lazy='dynamcic')
+    _state = db.Column('state', db.Enum(name='course_state',
+                                        *CATEGORY_STATE_VALUES))
+    state = enumdef('_state', CATEGORY_STATE_VALUES)
 
     def __init__(self, name, subject):
         self.name = name
         self.subject = subject
+        self.state = 'normal'
+
+    def __str__(self):
+        return ("%s" % self.name)
 
     def __repr__(self):
         return "<Category %s>" % self.name
@@ -66,7 +77,7 @@ class Course(db.Model):
 
     __tablename__ = 'course'
 
-    COURSE_STATE_VALUES = ('finished', 'updating', 'coming')
+    COURSE_STATE_VALUES = ('finished', 'updating', 'coming', 'deleted')
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30))
@@ -76,19 +87,21 @@ class Course(db.Model):
     state = enumdef('_state', COURSE_STATE_VALUES)
     logo_url = db.Column(db.String(50))
     created = db.Column(db.DateTime, default=datetime.utcnow())
-    author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    teacher_id = db.Column(db.Integer, db.ForeignKey('teacher.id'))
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
+    college_id = db.Column(db.Integer, db.ForeignKey('college.id'))
     lectures = db.relationship('Lecture',
                                backref=db.backref('course'), uselist=True)
     tags = db.relationship('CourseTag', secondary=course_tags,
                            backref=db.backref('courses', lazy='dynamic'))
 
-    def __init__(self, name, description, author, category):
+    def __init__(self, name, description, teacher, category):
         self.name = name
         self.description = description
-        self.author = author
+        self.teacher = teacher
         self.category = category
         self.created = datetime.utcnow()
+        self._state = 'updating'
         self.logo_url = url_for('static',
                                 filename='images/default_course_logo.png')
 
@@ -101,6 +114,9 @@ class Course(db.Model):
     def set_coming(self):
         self.state = 'coming'
 
+    def __str__(self):
+        return ("%s" % self.name)
+
     def __repr__(self):
         return "<Course %s>" % self.name
 
@@ -110,7 +126,7 @@ class Lecture(db.Model):
 
     __tablename__ = 'lecture'
 
-    LECTURE_STATE_VALUES = ('published', 'unpublished', 'recording')
+    LECTURE_STATE_VALUES = ('published', 'unpublished', 'recording', 'deleted')
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20))
@@ -131,9 +147,7 @@ class Lecture(db.Model):
     read_count = db.Column(db.Integer, default=0)
     order = db.Column(db.Integer, default=1)
     play_count = db.Column(db.Integer, default=0)
-    author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'))
-    college_id = db.Column(db.Integer, db.ForeignKey('college.id'))
     teacher_id = db.Column(db.Integer, db.ForeignKey('teacher.id'))
     learn_records = db.relationship('LearnRecord',
                                     backref=db.backref('lecture'),
@@ -145,11 +159,11 @@ class Lecture(db.Model):
     tags = db.relationship('LectureTag', secondary=lecture_tags,
                            backref=db.backref('lectures'))
 
-    def __init__(self, name, description, author, course, order=None,
+    def __init__(self, name, description, teacher, course, order=None,
                  published=False):
         self.name = name
         self.description = description
-        self.author = author
+        self.teacher = teacher
         self.course = course
         self.published = published
         self.video_url = ''
@@ -159,6 +173,7 @@ class Lecture(db.Model):
         self.order = order if order else 9999
         self.created = datetime.utcnow()
         self.upload_time = datetime.utcnow()
+        self.state = 'published'
 
     def __repr__(self):
         return "<Lecture %s>" % self.name
