@@ -90,10 +90,6 @@ class User(db.Model, RBACUserMixinModel):
                                 uselist=True, lazy='dynamic')
     answers = db.relationship('Answer', backref='author',
                               uselist=True, lazy='dynamic')
-    courses = db.relationship("Course", backref='author',
-                              uselist=True, lazy='dynamic')
-    lectures = db.relationship("Lecture", backref='author',
-                               uselist=True, lazy='dynamic')
     up_down_records = db.relationship('UpDownRecord', backref='user',
                                       uselist=True, lazy='dynamic')
 
@@ -209,8 +205,8 @@ class College(db.Model):
     name = db.Column(db.String(20), unique=True, nullable=True)
     order = db.Column(db.Integer)
     szu_account_id = db.Column(db.Integer, db.ForeignKey('szu_account.id'))
-    lectures = db.relationship('Lecture', backref='college',
-                            lazy='dynamic', uselist=True)
+    courses = db.relationship('Course', backref='college',
+                              lazy='dynamic', uselist=True)
 
     def __init__(self, name, order=None):
         self.name = name
@@ -231,13 +227,21 @@ class Teacher(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(10))
     description = db.Column(db.Text)
-    lectures = db.relationship('Lecture', backref='teacher', lazy='dynamic')
+    lectures = db.relationship('Lecture', uselist=True,
+                               backref=db.backref('teacher', uselist=False))
+    courses = db.relationship("Course", uselist=True,
+                              backref=db.backref('teacher', uselist=False))
     szu_account_id = db.Column(db.Integer, db.ForeignKey('szu_account.id'))
 
     def __init__(self, title, description, szu_account):
         self.title = title
         self.description = description
         self.szu_account = szu_account
+
+    def __str__(self):
+        return ("%s" % self.szu_account.user.name
+                if self.szu_account.user.name
+                else self.szu_account.user.nickname)
 
     def __repr__(self):
         return "<Teacher %s>" % (self.szu_account_id)
