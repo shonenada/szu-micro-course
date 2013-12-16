@@ -25,14 +25,20 @@ class Subject(db.Model):
 
     __tablename__ = 'subject'
 
+    SUBJECT_STATE_VALUES = ('normal', 'deleted')
+
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20))
     description = db.Column(db.Text)
     categorys = db.relationship('Category', backref='subject', lazy='dynamic')
+    _state = db.Column('state', db.Enum(name='course_state',
+                                        *SUBJECT_STATE_VALUES))
+    state = enumdef('_state', SUBJECT_STATE_VALUES)
 
     def __init__(self, name, description):
         self.name = name
         self.description = description
+        self.state = 'normal'
 
     def __repr__(self):
         return "<Subject %s>" % self.name
