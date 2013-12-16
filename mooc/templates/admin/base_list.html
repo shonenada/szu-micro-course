@@ -1,0 +1,73 @@
+{%- extends 'admin/master.html' %}
+{%- import 'utils.jinja' as utils %}
+
+{%- block breadcrumb %}
+<li><a href="{{ url_for(endpoints['list']) }}">{{ model_name }} Manage</a><span class="divider">/</span><li>
+<li class="active">List</li>
+{%- endblock %}
+
+{%- block content %}
+<div class="row-fluid">
+    <div class="btn-toolbar">
+        <a class="btn btn-primary" href="{{ url_for(endpoints['create']) }}"><span class="icon-plus"></span> New {{ model_name }}</a>
+    </div>
+    <div class="well">
+        <table class="table">
+            <thead>
+                <tr>
+                {%- block thead %}
+                {%- endblock %}
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {%- block tbody %}
+                {%- endblock %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{{ utils.render_pagination(pagination, endpoints['list'])|safe }}
+
+<div class="modal small hide fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="delete-modal-label" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="delete-modal-label">Delete Confirmation</h3>
+    </div>
+    <div class="modal-body">
+        <p class="error-text"><i class="icon-warning-sign modal-icon"></i>Are you sure you want to delete the record?</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+        <button class="btn btn-danger" id="confirm-delete-btn" data-dismiss="modal">Delete</button>
+    </div>
+</div>
+{%- endblock %}
+
+{%- block scripts %}
+<script>
+$(function(){
+    $(".delete-btns").on('click', function(e){
+        window.delete_id = $(this).attr('data');
+    })
+    $("#confirm-delete-btn").click(function(){
+        $.ajax({
+            url: "{{ url_for(endpoints['delete'], mid=9999) }}".replace('9999', window.delete_id),
+            type: 'delete',
+            dataType: 'json',
+            data: {'_crsf_token': getCookie('_crsf_token') },
+            success: function(response) {
+                if(response.success){
+                    location.href = "{{ url_for(endpoints['list']) }}";
+                }
+                else{
+                    location.href = "{{ url_for(endpoints['list']) }}";
+                }
+            },
+            error: function() {
+                $S.error('程序发生错误，请联系管理员！');
+            }
+        });
+    });
+});</script>
+{%- endblock %}

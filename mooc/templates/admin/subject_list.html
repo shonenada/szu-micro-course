@@ -1,82 +1,20 @@
-{%- extends 'admin/master.html' %}
-{%- import 'utils.jinja' as utils %}
+{%- extends 'admin/base_list.html' %}
 
-{%- block breadcrumb %}
-<li><a href="{{ url_for('master.master_subject_list') }}">Subject Manage</a><span class="divider">/</span><li>
-<li class="active">List</li>
+{%- block thead %}
+    <th>Name</th>
+    <th>Description</th>
 {%- endblock %}
 
-{%- block content %}
-<div class="row-fluid">
-    <div class="btn-toolbar">
-        <a class="btn btn-primary" href="{{ url_for('master.master_subject_new') }}"><span class="icon-plus"></span> New Subject</a>
-    </div>
-    <div class="well">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>name</th>
-                    <th>description</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                {%- for subject in pagination.items %}
-                <tr>
-                    <td>{{ subject.name }}</td>
-                    <td>{{ subject.description | ellipsis(20) }}</td>
-                    <td>
-                        <a href="{{ url_for('master.master_subject_edit', sid=subject.id) }}"><span class="icon-pencil"></span></a>
-                         | 
-                        <a href="#delete-modal" role="button" data="{{ subject.id }}" class="delete-btns" data-toggle="modal"><span class="icon-remove"></span></a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-</div>
-{{ utils.render_pagination(pagination, 'master.master_subject_list')|safe }}
-
-<div class="modal small hide fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="delete-modal-label" aria-hidden="true">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="delete-modal-label">Delete Confirmation</h3>
-    </div>
-    <div class="modal-body">
-        <p class="error-text"><i class="icon-warning-sign modal-icon"></i>Are you sure you want to delete the record?</p>
-    </div>
-    <div class="modal-footer">
-        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-        <button class="btn btn-danger" id="confirm-delete-btn" data-dismiss="modal">Delete</button>
-    </div>
-</div>
-{%- endblock %}
-
-{%- block scripts %}
-<script>
-$(function(){
-    $(".delete-btns").on('click', function(e){
-        window.delete_id = $(this).attr('data');
-    })
-    $("#confirm-delete-btn").click(function(){
-        $.ajax({
-            url: "{{ url_for('master.master_subject_delete', sid=9999) }}".replace('9999', window.delete_id),
-            type: 'delete',
-            dataType: 'json',
-            data: {'_crsf_token': getCookie('_crsf_token') },
-            success: function(response) {
-                if(response.success){
-                    location.href = "{{ url_for('master.master_subject_list') }}";
-                }
-                else{
-                    location.href = "{{ url_for('master.master_subject_list') }}";
-                }
-            },
-            error: function() {
-                $S.error('程序发生错误，请联系管理员！');
-            }
-        });
-    });
-});</script>
+{%- block tbody %}
+{%- for subject in pagination.items %}
+<tr>
+    <td>{{ subject.name }}</td>
+    <td>{{ subject.description | ellipsis(20) }}</td>
+    <td>
+        <a href="{{ url_for(endpoints['edit'], mid=subject.id) }}"><span class="icon-pencil"></span></a>
+         | 
+        <a href="#delete-modal" role="button" data="{{ subject.id }}" class="delete-btns" data-toggle="modal"><span class="icon-remove"></span></a>
+    </td>
+</tr>
+{% endfor %}
 {%- endblock %}

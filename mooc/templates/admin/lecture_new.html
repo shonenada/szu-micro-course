@@ -1,0 +1,17 @@
+{%- extends 'admin/base_new.html' %}
+
+{%- block form_fields %}
+{{ form.name.label }} {{ form.name(class='input-xlarge') }}
+{{ form.term.label }} {{ form.term(class='input-xlarge') }}
+{{ form.chapter.label }} {{ form.chapter(class='input-xlarge') }}
+{{ form.record_time.label }} {{ form.record_time(class='input-xlarge') }}
+{{ form.record_address.label }} {{ form.record_address(class='input-xlarge') }}
+{{ form.video_url.label }} {{ form.video_url(class='input-xlarge') }}
+{{ form.video_length.label }} {{ form.video_length(class='input-xlarge') }}
+{{ form.order.label }} {{ form.order(class='input-xlarge') }}
+{{ form.course.label }} {{ form.course }}
+{{ form.teacher.label }} {{ form.teacher }}
+{{ form.prepare_knowledge.label }} {{ form.prepare_knowledge(class='input-xlarge', cols="35", rows="5") }}
+{{ form.knowledge_point.label }} {{ form.knowledge_point(class='input-xlarge', cols="35", rows="5") }}
+{{ form.description.label }} {{ form.description(class='input-xlarge', cols="35", rows="5")}}
+{%- endblock %}

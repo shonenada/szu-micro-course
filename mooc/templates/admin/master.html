@@ -90,9 +90,9 @@
         <a href="#course-menu" class="nav-header" data-toggle="collapse"><i class="icon-legal"></i>Course</a>
         <ul id="course-menu" class="nav nav-list collapse in">
             <li><a href="{{ url_for('master.master_subject_list') }}">Subjects Manage</a></li>
-            <li><a href="#">Categories Manage</a></li>
-            <li><a href="#">Courses Manage</a></li>
-            <li><a href="#">Clips Manage</a></li>
+            <li><a href="{{ url_for('master.master_category_list') }}">Categories Manage</a></li>
+            <li><a href="{{ url_for('master.master_course_list') }}">Courses Manage</a></li>
+            <li><a href="{{ url_for('master.master_lecture_list') }}">Lectures Manage</a></li>
         </ul>
     </div>
 
