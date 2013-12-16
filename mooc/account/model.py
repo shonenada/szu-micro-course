@@ -142,6 +142,9 @@ class User(db.Model, RBACUserMixinModel):
     def unfrozen(self):
         self._transform_state(from_state='frozen', to_state='normal')
 
+    def delete(self):
+        self._transform_state(from_state='normal', to_state='deleted')
+
     @staticmethod
     def _hash_password(salt, password):
         hashed = sha256()
