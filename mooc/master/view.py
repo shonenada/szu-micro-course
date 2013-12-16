@@ -4,17 +4,25 @@ from flask import request, redirect, url_for, jsonify
 from mooc.app import rbac, db
 from mooc.utils import flash
 from mooc.account.model import User, SzuAccount, College
-from mooc.course.model import Subject
-from mooc.course.form import SubjectForm
+from mooc.course.model import Subject, Category, Course, Lecture
+from mooc.course.form import SubjectForm, CategoryForm, CourseForm, LectureForm
 from mooc.account.form import UserForm, SzuAccountForm, NewUserForm
-from mooc.master.service import common_paginate, common_delete, common_edit
-from mooc.account.service import (update_user_state,
-                                  change_user_password,
-                                  create_user)
-from mooc.course.service import create_subject
+from mooc.master.utils import generate_all_controller
+from mooc.master.service import common_paginate, common_delete
+from mooc.account.service import update_user_state,\
+                                 change_user_password,\
+                                 create_user
+from mooc.course.service import create_subject, create_category,\
+                                create_course, create_lecture
 
 
 master_app = Blueprint('master', __name__, template_folder='../templates')
+
+
+generate_all_controller(master_app, Subject, SubjectForm, create_subject)
+generate_all_controller(master_app, Category, CategoryForm, create_category)
+generate_all_controller(master_app, Course, CourseForm, create_course)
+generate_all_controller(master_app, Lecture, LectureForm, create_lecture)
 
 
 @master_app.route('/')
@@ -87,51 +95,3 @@ def master_account_new():
         flash(message='Operated successfully', category='notice')
         return jsonify(success=True)
     return render_template('admin/account_new.html', form=new_user_form)
-
-
-@master_app.route('/master/subject', methods=['GET'])
-@rbac.allow(['super_admin'], ['GET'])
-def master_subject_list():
-    page_num = int(request.args.get('page', 1))
-    pagination = common_paginate(
-        model = Subject,
-        page = page_num,
-        per_page = current_app.config.get('ADMIN_PAGESIZE')
-    )
-    return render_template('admin/subject_list.html', pagination=pagination)
-
-
-@master_app.route('/master/subject/new', methods=['GET', 'POST'])
-@rbac.allow(['super_admin'], ['GET', 'POST'])
-def master_subject_new():
-    form = SubjectForm()
-    if form.validate_on_submit():
-        create_subject(form.data)
-        flash(message='Operated successfully', category='notice')
-        return jsonify(subject=True)
-    return render_template('admin/subject_new.html', form=form)
-
-
-@master_app.route('/master/subject/<int:sid>/edit', methods=['GET', 'PUT'])
-@rbac.allow(['super_admin'], ['GET', 'PUT'])
-def master_subject_edit(sid):
-    subject = Subject.query.get(sid)
-    form = SubjectForm(request.form, subject)
-    if form.validate_on_submit():
-        common_edit(subject, form.data)
-        flash('Operated successfully!', 'notice')
-        return jsonify(success=True)
-    if form.errors:
-        flash(message=form.errors, category='error', form_errors=True)
-        return jsonify(success=False)
-    return render_template('admin/subject_edit.html', sid=sid,
-                           form=form)
-
-
-@master_app.route('/master/subject/<int:sid>', methods=['DELETE'])
-@rbac.allow(['super_admin'], ['DELETE'])
-def master_subject_delete(sid):
-    common_delete(Subject, sid)
-    flash(message='Operated successfully!', category='notice')
-    return jsonify(success=True)
-
