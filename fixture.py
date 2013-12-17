@@ -116,12 +116,12 @@ def _init_course():
 def _init_lecture():
     global lectures
     lectures = (
-        Lecture(u'多位加法器：串行加法器', u'本课程为您讲解多位加法器：串行加法器', shonenada, courses[0], 1, True),
+        Lecture(u'多位加法器：串行加法器', u'本课程为您讲解多位加法器：串行加法器', mr_key, courses[0], 1, True),
 
-        Lecture(u'GNOME图形界面基本操作', u'本课程为您讲解Linux系统主流图形界面GNOME的基本操作使用', shonenada, courses[1], 1, True),
-        Lecture(u'命令行BASH的基本操作', u'本课程为您讲解Linux命令行界面（CLI）BASH的基本操作使用', shonenada, courses[1], 2, True),
+        Lecture(u'GNOME图形界面基本操作', u'本课程为您讲解Linux系统主流图形界面GNOME的基本操作使用', mr_key, courses[1], 1, True),
+        Lecture(u'命令行BASH的基本操作', u'本课程为您讲解Linux命令行界面（CLI）BASH的基本操作使用', mr_key, courses[1], 2, True),
 
-        Lecture(u'磁盘基本概念', u'本课程为您讲解磁盘的基本概念，包括磁盘结构、扇区、磁臂、柱面的概念以及MBR、GPT的分区管理知识', shonenada, courses[2], 1, True),
+        Lecture(u'磁盘基本概念', u'本课程为您讲解磁盘的基本概念，包括磁盘结构、扇区、磁臂、柱面的概念以及MBR、GPT的分区管理知识', mr_key, courses[2], 1, True),
     )
 
     lectures[0].knowledge_point = u'<ul><li>知识点1</li><li>知识点2</li><li>...</li></ul>'
