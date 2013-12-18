@@ -30,7 +30,7 @@ class Subject(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20))
     description = db.Column(db.Text)
-    categorys = db.relationship('Category', backref='subject', lazy='dynamic')
+    categories = db.relationship('Category', backref='subject', lazy='dynamic')
     _state = db.Column('state', db.Enum(name='course_state',
                                         *SUBJECT_STATE_VALUES))
     state = enumdef('_state', SUBJECT_STATE_VALUES)
@@ -45,6 +45,14 @@ class Subject(db.Model):
 
     def __repr__(self):
         return "<Subject %s>" % self.name
+
+    def delete(self, commit=True):
+        for category in self.categories:
+            category.delete(False)
+        self.state = 'deleted'
+        db.session.add(self)
+        if commit:
+            db.session.commit()
 
 
 class Category(db.Model):
@@ -70,6 +78,15 @@ class Category(db.Model):
 
     def __repr__(self):
         return "<Category %s>" % self.name
+
+    def delete(self, commit=True):
+        for course in self.courses:
+            course.delete(False)
+        self.subject = None
+        self.state = 'deleted'
+        db.session.add(self)
+        if commit:
+            db.session.commit()
 
 
 class Course(db.Model):
@@ -114,6 +131,20 @@ class Course(db.Model):
     def set_coming(self):
         self.state = 'coming'
 
+    def delete(self, commit=True):
+        for lecture in self.lectures:
+            lecture.delete(False)
+        for tag in self.tags:
+            tag.courses.remove(self)
+            db.session.add(tag)
+        self.category = None
+        self.teacher = None
+        self.college = None
+        self.state = 'deleted'
+        db.session.add(self)
+        if commit:
+            db.session.commit()
+
     def __str__(self):
         return ("%s" % self.name)
 
@@ -126,7 +157,7 @@ class Lecture(db.Model):
 
     __tablename__ = 'lecture'
 
-    LECTURE_STATE_VALUES = ('published', 'unpublished', 'recording', 'deleted')
+    LECTURE_STATE_VALUES = ('published', 'recording', 'coming', 'deleted')
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20))
@@ -175,6 +206,32 @@ class Lecture(db.Model):
         self.upload_time = datetime.utcnow()
         self.state = 'published'
 
+    def set_published(self):
+        self.state = 'published'
+
+    def set_recording(self):
+        self.state = 'recording'
+
+    def set_comming(self):
+        self.state = 'coming'
+
+    def delete(self, commit=True):
+        """Clean data in all relationships"""
+        for q in self.questions:
+            self.questions.remove(q)
+        for a in self.answers:
+            self.answers.remove(a)
+        for t in self.tags:
+            self.tags.remove(t)
+        for lr in self.learn_records:
+            lr.delete()
+        self.course = None
+        self.teacher = None
+        self.state = 'deleted'
+        db.session.add(self)
+        if commit:
+            db.session.commit()
+
     def __repr__(self):
         return "<Lecture %s>" % self.name
 
@@ -187,10 +244,11 @@ class Quiz(db.Model):
     question = db.Column(db.String(100))
     time_at = db.Column(db.Integer)
     lecture_id = db.Column(db.Integer, db.ForeignKey('lecture.id'))
-    lecture = db.relationship('Lecture',
+    order = db.Column(db.Integer, default=100)
+    lecture = db.relationship(
+        'Lecture',
         backref=db.backref('quizs', uselist=True), uselist=False)
     options = db.relationship('QuizOption', backref='quiz', uselist=True)
-    order = db.Column(db.Integer, default=100)
 
     def __init__(self, question):
         self.question = question
@@ -226,6 +284,9 @@ class LearnRecord(db.Model):
         self.star_count = 0
         self.created = datetime.utcnow()
 
+    def delete(self):
+        pass
+
 
 class LectureTag(db.Model):
 
@@ -241,3 +302,6 @@ class CourseTag(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     tag = db.Column(db.String(20))
+
+    def __init__(self, tag):
+        self.tag = tag

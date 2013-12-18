@@ -12,8 +12,8 @@ def common_paginate(model, page, per_page, filte=True):
 def common_delete(model, mid):
     obj = model.query.get(mid)
     if not obj:
-        raise RuntimeError('User is not found')
-    if hasattr(model, 'delete'):
+        raise RuntimeError('Model is not found')
+    if hasattr(obj, 'delete'):
         obj.delete()
     else:
         obj.state = 'deleted'

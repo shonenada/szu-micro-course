@@ -230,11 +230,15 @@ def _init_question():
 def _init_answer():
     global answers
     answers = (
-        Answer(u'空内容', questions[0], None, shonenada),
-        Answer(u'回答问题内容', questions[1], lectures[0], shonenada),
-        Answer(u'回答问题内容2', questions[1], lectures[0], shonenada),
-        Answer(u'回答问题内容3', questions[1], lectures[0], shonenada),
+        Answer(u'空内容', questions[0], shonenada),
+        Answer(u'回答问题内容', questions[1], shonenada),
+        Answer(u'回答问题内容2', questions[1], shonenada),
+        Answer(u'回答问题内容3', questions[1], shonenada),
     )
+    answers[0].lecture = None
+    answers[1].lecture = lectures[1]
+    answers[2].lecture = lectures[1]
+    answers[3].lecture = lectures[2]
     for answer in answers:
         db.session.add(answer)
 

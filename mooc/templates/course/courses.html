@@ -14,7 +14,7 @@
     <div id="left">
         {%- for subject in subjects %}
         <div class="course-category">
-            {%- for cat in subject.categorys %}
+            {%- for cat in subject.categories %}
             <span class="course-category-title">
                 <a href="{{ url_for('course.category', sid=subject.id, cid=cat.id) }}">
                     {{cat.name}}
