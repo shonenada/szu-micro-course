@@ -28,7 +28,7 @@ generate_all_controller(master_app, Lecture, LectureForm, create_lecture)
 @master_app.route('/')
 @rbac.allow(['everyone'], ['GET'])
 def index():
-    subjects = Subject.query.all()
+    subjects = Subject.query.filter(Subject._state != 'deleted').all()
     return render_template('index.html', subjects=subjects)
 
 
