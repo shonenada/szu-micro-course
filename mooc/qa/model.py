@@ -63,10 +63,10 @@ class Answer(db.Model):
     _state = db.Column('state', db.Enum(name='answer_state', *STATE_VALUE))
     state = enumdef('_state', STATE_VALUE)
 
-    def __init__(self, content, question, lecture, author, parent=None):
+    def __init__(self, content, question, author, parent=None):
         self.content = content
         self.question = question
-        self.lecture = lecture
+        self.lecture = question.lecture
         self.author = author
         self.parent = parent
         self.up_count = 0

@@ -105,7 +105,7 @@ def answer(qid):
     answer_text = request.form.get('answer', None)
     if not answer_text:
         return jsonify(success=False, message=u'Please answer the question')
-    answer = Answer(answer_text, question, question.lecture, current_user)
+    answer = Answer(answer_text, question, current_user)
     db.session.add(answer)
     db.session.commit()
     return jsonify(success=True)
