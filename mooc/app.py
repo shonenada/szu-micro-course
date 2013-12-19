@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask
 
 from mooc.extensions import gears, setup_compilers, setup_compressors
 from mooc.extensions import setup_gears_environment
