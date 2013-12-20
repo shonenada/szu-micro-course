@@ -10,14 +10,14 @@ $ ->
         , 500;
         return ;
 
-    $("#flash-messages-container > a").click ->
-        fade_out $(this)
-        return;
-
-    $(".message-box-fixed").children("a").children("div").each ->
-        element_padding = $(this).css('padding').split(' ')[1].replace('px', '')
-        element_width = $(this).width() + element_padding * 2;
-        $(this).css({'margin-left': '-' + element_width / 2 + 'px'});
+    bindAction = ->
+        $("#flash-messages-container > a").click ->
+            fade_out $(this)
+            return;
+        $(".message-box-fixed").children("a").children("div").each ->
+            element_padding = $(this).css('padding').split(' ')[1].replace('px', '')
+            element_width = $(this).width() + element_padding * 2;
+            $(this).css({'margin-left': '-' + element_width / 2 + 'px'});
 
     fadeOut = ->
         setTimeout ->
@@ -33,8 +33,10 @@ $ ->
         clear_html = $('<div style="clear:both;"></div>')
         $("#flash-messages-container").append(a_html)
         $("#flash-messages-container").append(clear_html)
+        bindAction()
         fadeOut()
         return;
 
+    bindAction()
     fadeOut()
     return;
