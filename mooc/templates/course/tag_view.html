@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+
+{% block left %}
+<div id="left">
+    <div id="category_list">
+        <ul>
+            <li><a href="{{ url_for('course.courses')}}">课程库</a></li>
+            <li><a>{{ tag }}</a></li>
+        </ul>
+    </div>
+
+    <div class="container">
+        <div id="lecture-list">
+            {% for idx, lecture in lectures|enumerate %}
+            <a href="{{ url_for('course.lecture', lecture_id=lecture.id) }}" class="lecture_box_wrapper">{% include 'course/lecture_box.html' %}</a>
+            {% endfor %}
+        </div>
+    </div>
+
+</div>
+{% endblock %}

@@ -3,7 +3,7 @@ from flask import Blueprint, render_template, abort, json, request, jsonify
 
 from mooc.app import rbac, csrf
 from mooc.course.model import Subject, Category, Course, Lecture, LearnRecord
-from mooc.course.model import Quiz, QuizOption
+from mooc.course.model import Quiz, QuizOption, LectureTag
 from mooc.course.service import quiz_to_json
 
 
@@ -75,3 +75,15 @@ def lecture_check(lecture_id):
         if option.is_answer and int(option.quiz_id) == int(quiz_id):
             return jsonify(success=True)
     return jsonify(success=False)
+
+
+@course_app.route('/lecture/tag/<tag>', methods=['GET'])
+@rbac.allow(['everyone'], ['GET'])
+def tag(tag):
+    tags = tag.split(' ')
+    lectures = set()
+    for t in tags:
+        this_tags = LectureTag.query.filter_by(tag=t).all()
+        for l_tag in this_tags:
+            lectures.update(l_tag.lectures)
+    return render_template('course/tag_view.html', lectures=lectures, tag=tag)
