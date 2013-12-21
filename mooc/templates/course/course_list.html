@@ -17,7 +17,7 @@
                 <div class="course-box">
                     <div class="course-info">
                         <div class="icon small-icon">
-                            <img src="{{ this_course.logo_url }}" />
+                            <img src="{{ this_course.logo_url or url_for('static', filename='images/default_course_logo.png') }}" />
                         </div>
                         <div class="course-title">
                             {{ this_course.name }}
