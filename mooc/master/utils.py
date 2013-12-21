@@ -21,7 +21,7 @@ def _get_endpoint(module_name, action):
     return endpoints[action].split('.', 1)[1]
 
 
-def generate_list_controller(blueprint, model):
+def generate_list_controller(blueprint, model, **kwargs):
     module_name = model.__name__.lower()
     @blueprint.route(
         rule = '/master/%s' % module_name,
@@ -44,8 +44,7 @@ def generate_list_controller(blueprint, model):
         )
 
 
-def generate_create_controller(blueprint, model,
-                               form_model, create_method=None):
+def generate_create_controller(blueprint, model,form_model, **kwargs):
     module_name = model.__name__.lower()
     @blueprint.route(
         rule = '/master/%s/new' % module_name,
@@ -55,6 +54,7 @@ def generate_create_controller(blueprint, model,
     @rbac.allow(['super_admin'], ['GET', 'POST'])
     def create_controller():
         form = form_model()
+        create_method = kwargs.pop('create_method', None)
         if form.validate_on_submit():
             if create_method:
                 create_method(form.data)
@@ -72,7 +72,7 @@ def generate_create_controller(blueprint, model,
         )
 
 
-def generate_edit_controller(blueprint, model, form_model):
+def generate_edit_controller(blueprint, model, form_model, **kwargs):
     module_name = model.__name__.lower()
     @blueprint.route(
         rule = '/master/%s/<int:mid>/edit' % module_name,
@@ -82,9 +82,13 @@ def generate_edit_controller(blueprint, model, form_model):
     @rbac.allow(['super_admin'], ['GET', 'PUT'])
     def edit_controller(mid):
         obj = model.query.get(mid)
-        form = form_model(request.form, obj)
+        form_args = kwargs.pop('form_args', None)
+        if form_args:
+            form = form_model(request.form, obj, **form_args)
+        else:
+            form = form_model(request.form, obj)
         if form.validate_on_submit():
-            common_edit(obj, form.data)
+            common_edit(obj, form.data, **kwargs)
             flash('Operated successfully!', 'notice')
             return jsonify(success=True)
         if form.errors:
@@ -98,7 +102,7 @@ def generate_edit_controller(blueprint, model, form_model):
         )
 
 
-def generate_delete_controller(blueprint, model):
+def generate_delete_controller(blueprint, model, **kwargs):
     module_name = model.__name__.lower()
     @blueprint.route(
         rule = '/master/%s/<int:mid>' % module_name,
@@ -112,8 +116,8 @@ def generate_delete_controller(blueprint, model):
         return jsonify(success=True)
 
 
-def generate_all_controller(blueprint, model, form_model, create_method=None):
-    generate_list_controller(blueprint, model)
-    generate_create_controller(blueprint, model, form_model, create_method)
-    generate_edit_controller(blueprint, model, form_model)
-    generate_delete_controller(blueprint, model)
+def generate_all_controller(blueprint, model, form_model, **kwargs):
+    generate_list_controller(blueprint, model, **kwargs)
+    generate_create_controller(blueprint, model, form_model,  **kwargs)
+    generate_edit_controller(blueprint, model, form_model, **kwargs)
+    generate_delete_controller(blueprint, model, **kwargs)
