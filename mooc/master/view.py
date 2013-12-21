@@ -19,10 +19,10 @@ from mooc.course.service import create_subject, create_category,\
 master_app = Blueprint('master', __name__, template_folder='../templates')
 
 
-generate_all_controller(master_app, Subject, SubjectForm, create_subject)
-generate_all_controller(master_app, Category, CategoryForm, create_category)
-generate_all_controller(master_app, Course, CourseForm, create_course)
-generate_all_controller(master_app, Lecture, LectureForm, create_lecture)
+generate_all_controller(master_app, Subject, SubjectForm, create_method=create_subject)
+generate_all_controller(master_app, Category, CategoryForm, create_method=create_category)
+generate_all_controller(master_app, Course, CourseForm, create_method=create_course)
+generate_all_controller(master_app, Lecture, LectureForm, create_method=create_lecture)
 
 
 @master_app.route('/')

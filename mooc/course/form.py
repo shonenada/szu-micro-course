@@ -1,10 +1,11 @@
 from flask_wtf import Form
-from wtforms import (StringField, IntegerField, DateField, TextAreaField)
+from wtforms import (StringField, IntegerField, DateField, TextField, TextAreaField)
 from wtforms.validators import InputRequired
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 
+from mooc.master.form import TagsField
 from mooc.account.model import Teacher, College
-from mooc.course.model import Subject, Course, Category
+from mooc.course.model import Subject, Course, Category, LectureTag
 
 
 subject_state_texts =  ('Normal', 'Deleted')
@@ -46,7 +47,6 @@ class CourseForm(Form):
 
 class LectureForm(Form):
 
-
     def courses():
         return Course.query.all()
 
@@ -63,8 +63,9 @@ class LectureForm(Form):
     record_time = DateField(label=u'Record Time')
     record_address = StringField(label=u'Record Address')
     video_url = StringField(label=u'Video URL')
-    video_length = IntegerField(label=u'Video Length')
+    video_length = IntegerField(label=u'Video Length (seconds)')
     logo_url = StringField(label=u'Logo URL')
     order = IntegerField(label=u'Order of lecture')
     course = QuerySelectField(query_factory=courses, allow_blank=False)
     teacher = QuerySelectField(query_factory=teachers, allow_blank=True)
+    tags = TagsField(tag_model=LectureTag, label=u'Tags')

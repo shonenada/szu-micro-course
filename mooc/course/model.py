@@ -1,6 +1,8 @@
 from datetime import datetime
 
 from flask import url_for
+from sqlalchemy import func, select
+from sqlalchemy.ext.hybrid import hybrid_property
 
 from mooc.app import db
 from mooc.account.model import SzuAccount
@@ -295,6 +297,24 @@ class LectureTag(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     tag = db.Column(db.String(20))
+
+    def __init__(self, tag):
+        self.tag = tag
+
+    def __str__(self):
+        return self.tag
+
+    def __unicode__(self):
+        return self.tag
+
+    @hybrid_property
+    def count(self):
+        return self.count()
+
+    @count.expression
+    def count(cls):
+        return (select([func.count(lecture_tags.c.tag_id)]).
+                where(cls.id == lecture_tags.c.tag_id).label('count'))
 
 
 class CourseTag(db.Model):

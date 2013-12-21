@@ -21,10 +21,12 @@ def common_delete(model, mid):
     db.session.commit()
 
 
-def common_edit(obj, form_data, exceptions=()):
+def common_edit(obj, form_data, **kwargs):
+    assignment = kwargs.pop('assignment', {})
     for key, value in form_data.iteritems():
-        if not key in exceptions:
-            setattr(obj, key, value)
+        setattr(obj, key, value)
+    for key, value in assignment.iteritems():
+        setattr(obj, key, value)
     db.session.add(obj)
     db.session.commit()
 

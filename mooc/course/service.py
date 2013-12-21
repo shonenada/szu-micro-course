@@ -1,17 +1,23 @@
 from flask import current_app as app
 
 from mooc.app import db
-from mooc.course.model import LearnRecord, Lecture
+from mooc.course.model import LearnRecord, Lecture, LectureTag
 from mooc.course.model import Subject, Category, Course, Lecture
 
 
 def get_learn_records():
-    app.jinja_env.globals['learn_records'] = LearnRecord.query.limit(10).all()
+    app.jinja_env.globals['learn_records'] = \
+    LearnRecord.query.order_by(LearnRecord.id.desc()).limit(10).all()
 
 
 def get_last_lecture():
-    app.jinja_env.globals['last_lecutres'] = \
+    app.jinja_env.globals['last_lectures'] = \
         Lecture.query.order_by(Lecture.upload_time.desc()).limit(10).all()
+
+
+def get_lecture_tags():
+    app.jinja_env.globals['lecture_tags'] = \
+        LectureTag.query.order_by(LectureTag.count.desc()).all()
 
 
 def learn_count(course):
@@ -75,5 +81,6 @@ def create_lecture(data):
     lecture.record_address = data['record_address']
     lecture.video_url = data['video_url']
     lecture.video_length = data['video_length']
+    lecture.tags = data['tags']
     db.session.add(lecture)
     db.session.commit()
