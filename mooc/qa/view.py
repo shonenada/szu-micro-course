@@ -132,3 +132,17 @@ def ask():
         return jsonify(success=True)
     else:
         return jsonify(success=False, message=form.errors.values())
+
+
+@qa_app.route('/qa/tag/<tag>')
+@rbac.allow(['everyone'], ['GET'])
+def tag(tag):
+    hotest_tags = QuestionTag.query.order_by(QuestionTag.count.desc()).all()
+    tags = tag.split(' ')
+    questions = set()
+    for t in tags:
+        this_tags = QuestionTag.query.filter_by(tag=t).all()
+        for l_tag in this_tags:
+            questions.update(l_tag.questions)
+    return render_template('qa/tag_view.html', hotest_tags=hotest_tags,
+                           questions=questions, tag=tag)

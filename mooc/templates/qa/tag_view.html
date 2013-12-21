@@ -4,16 +4,13 @@
 <div id="left">
     <div id="tips">
         <ul>
-            <li><a href="{{ url_for('qa.lastest') }}" id="lastest"{%- if type == 'lastest' %} class="current"{%- endif %}>最新</a></li>
-            <li><a href="{{ url_for('qa.hotest') }}" id="hotest"{%- if type == 'hotest' %} class="current"{%- endif %}>热门</a></li>
-            <li><a href="{{ url_for('qa.noanswer') }}" id="none-answer"{%- if type == 'noanswer' %} class="current"{%- endif %}>无回答</a></li>
+            <li><a href="javascript:void(0)" id="none-answer" class="current">{{ tag }}</a></li>
             <li class="ask"><a href="{{ url_for('qa.ask') }}" id="ask-btn">提问</a></li>
         </ul>
     </div>
 
     <ul id="question-list">
-        {%- if question_pagination.total > 0 %}
-        {%- for q in question_pagination.items %}
+        {%- for q in questions %}
         <li class="question-item">
             <div class="question-left-float question-stats">
                 <div class="question-left-float view-count">
@@ -41,7 +38,6 @@
             </div>
         </li>
         {%- endfor %}
-        {%- endif %}
     </ul>
     <div class="shadow"></div>
 </div>
