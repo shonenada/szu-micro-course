@@ -12,7 +12,7 @@ from mooc.master.view import master_app
 from mooc.account.view import account_app
 from mooc.course.view import course_app
 from mooc.qa.view import qa_app
-from mooc.course.service import get_learn_records, get_last_lecture
+from mooc.course.service import get_learn_records, get_last_lecture, get_lecture_tags
 
 
 def create_app(import_name=None, config=None):
@@ -44,6 +44,7 @@ def create_app(import_name=None, config=None):
 
     app.before_request(get_learn_records)
     app.before_request(get_last_lecture)
+    app.before_request(get_lecture_tags)
 
     setup_error_pages(app)
 
