@@ -54,7 +54,7 @@ def generate_create_controller(blueprint, model, form_model, **kwargs):
     @rbac.allow(['super_admin'], ['GET', 'POST'])
     def create_controller():
         form = form_model()
-        create_method = kwargs.pop('create_method')
+        create_method = kwargs.get('create_method')
         if form.validate_on_submit():
             if create_method:
                 create_method(form.data)
@@ -82,7 +82,7 @@ def generate_edit_controller(blueprint, model, form_model, **kwargs):
     @rbac.allow(['super_admin'], ['GET', 'PUT'])
     def edit_controller(mid):
         obj = model.query.get(mid)
-        form_args = kwargs.pop('form_args', None)
+        form_args = kwargs.get('form_args', None)
         if form_args:
             form = form_model(request.form, obj, **form_args)
         else:
