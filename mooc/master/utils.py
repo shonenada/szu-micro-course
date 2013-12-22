@@ -44,7 +44,7 @@ def generate_list_controller(blueprint, model, **kwargs):
         )
 
 
-def generate_create_controller(blueprint, model,form_model, **kwargs):
+def generate_create_controller(blueprint, model, form_model, **kwargs):
     module_name = model.__name__.lower()
     @blueprint.route(
         rule = '/master/%s/new' % module_name,
@@ -54,12 +54,12 @@ def generate_create_controller(blueprint, model,form_model, **kwargs):
     @rbac.allow(['super_admin'], ['GET', 'POST'])
     def create_controller():
         form = form_model()
-        create_method = kwargs.pop('create_method', None)
+        create_method = kwargs.pop('create_method')
         if form.validate_on_submit():
             if create_method:
                 create_method(form.data)
             else:
-                common_create(form.data)
+                common_create(model, form.data)
             flash(message='Operated successfully', category='notice')
             return jsonify(success=True)
         if form.errors:
