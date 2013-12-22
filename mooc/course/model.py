@@ -32,7 +32,7 @@ class Subject(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20))
     description = db.Column(db.Text)
-    categories = db.relationship('Category', backref='subject', lazy='dynamic')
+    categories = db.relationship('Category', backref='subject')
     _state = db.Column('state', db.Enum(name='course_state',
                                         *SUBJECT_STATE_VALUES))
     state = enumdef('_state', SUBJECT_STATE_VALUES)
@@ -47,6 +47,13 @@ class Subject(db.Model):
 
     def __repr__(self):
         return "<Subject %s>" % self.name
+
+    @hybrid_property
+    def courses(self):
+        courses = set()
+        for c in self.categories:
+            courses.update([course for course in c.courses])
+        return list(courses)
 
     def delete(self, commit=True):
         for category in self.categories:
@@ -65,7 +72,7 @@ class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20))
     subject_id = db.Column(db.Integer, db.ForeignKey('subject.id'))
-    courses = db.relationship('Course', backref='category', lazy='dynamcic')
+    courses = db.relationship('Course', backref='category')
     _state = db.Column('state', db.Enum(name='course_state',
                                         *CATEGORY_STATE_VALUES))
     state = enumdef('_state', CATEGORY_STATE_VALUES)
