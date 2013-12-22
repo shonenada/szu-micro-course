@@ -1,12 +1,12 @@
 from flask_wtf import Form
-from wtforms import (StringField, IntegerField, DateField, TextField, TextAreaField)
+from wtforms import (StringField, IntegerField, DateField, TextField, TextAreaField, SelectField)
 from wtforms.validators import InputRequired
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 
 from mooc.master.form import TagsField
 from mooc.master.model import Tag
 from mooc.account.model import Teacher, College
-from mooc.course.model import Subject, Course, Category
+from mooc.course.model import Subject, Course, Category, Resource, Lecture
 
 
 subject_state_texts =  ('Normal', 'Deleted')
@@ -71,3 +71,25 @@ class LectureForm(Form):
     course = QuerySelectField(query_factory=courses, allow_blank=False)
     teacher = QuerySelectField(query_factory=teachers, allow_blank=True)
     tags = TagsField(tag_model=Tag, label=u'Tags')
+
+
+class ResourceForm(Form):
+
+    def lectures():
+        return Lecture.query.all()
+
+    name = StringField(label=u'Name', validators=[InputRequired()])
+    resource_url = StringField(label=u'URL', validators=[InputRequired()])
+    category = SelectField(
+        label = u'Category',
+        choices = [(Resource.RESOURCE_CATEGORY[i],
+                    Resource.RESOURCE_CATEGORY[i]) for i in range(0, 4)],
+        validators = [InputRequired(message=u'Please choose the category')]
+    )
+    state = SelectField(
+        label = u'State',
+        choices = [(Resource.RESOURCE_STATE[i],
+                    Resource.RESOURCE_STATE[i]) for i in range(0, 2)],
+        validators=[InputRequired(message="Please choose the state.")]
+    )
+    lecture = QuerySelectField(query_factory=lectures, allow_blank=False)

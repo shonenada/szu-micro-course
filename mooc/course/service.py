@@ -3,8 +3,8 @@ from flask import current_app as app
 
 from mooc.app import db
 from mooc.master.model import Tag
-from mooc.course.model import LearnRecord, Lecture
-from mooc.course.model import Subject, Category, Course, Lecture
+from mooc.course.model import LearnRecord, Lecture, Resource
+from mooc.course.model import Subject, Category, Course
 
 
 def get_learn_records():
@@ -81,6 +81,16 @@ def create_lecture(data):
     lecture.video_length = data['video_length']
     lecture.tags = data['tags']
     db.session.add(lecture)
+    db.session.commit()
+
+
+def create_resource(data):
+    resource = Resource(data['name'])
+    resource.resource_url = data['resource_url']
+    resource.category = data['category']
+    resource.state = data['state']
+    resource.lecture = data['lecture']
+    db.session.add(resource)
     db.session.commit()
 
 
