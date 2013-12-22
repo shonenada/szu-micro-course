@@ -14,10 +14,14 @@
     <td>{{ item.name }}</td>
     <td>{{ item.description | ellipsis(20) }}</td>
     <td>
-    {%- if item.course.teacher.szu_account.user.name %}
-    {{ item.course.teacher.szu_account.user.name }}
+    {%- if item.teacher %}
+        {%- if item.teacher.szu_account.user.name %}
+        {{ item.teacher.szu_account.user.name }}
+        {%- else %}
+        {{ item.teacher.szu_account.user.nickname }}
+        {%- endif %}
     {%- else %}
-    {{ item.course.teacher.szu_account.user.nickname }}
+        无
     {%- endif %}
     </td>
     <td>{{ item.course.name }}</td>
