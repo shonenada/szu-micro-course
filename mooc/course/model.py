@@ -235,6 +235,12 @@ class Lecture(db.Model):
         if commit:
             db.session.commit()
 
+    def __str__(self):
+        return self.name
+        
+    def __unicode__(self):
+        return self.name
+
     def __repr__(self):
         return "<Lecture %s>" % self.name
 
@@ -315,6 +321,7 @@ class Resource(db.Model):
         self.name = name
         self.created = datetime.utcnow()
         self.category = 'other'
+        self.state = 'normal'
 
     def __repr__(self):
         return "<CourseResource %s>" % self.name
