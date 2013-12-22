@@ -38,11 +38,11 @@ def createdb(config="development.conf"):
     application.config.from_pyfile(config_file)
     with application.test_request_context():
         # import all Models here
+        from mooc.master.model import Tag
         from mooc.account.model import (User, SzuAccount, College, Teacher,
                                         Role, roles_parents, users_roles)
         from mooc.course.model import (Subject, Category, Course, Lecture,
-                                       LearnRecord, LectureTag, CourseTag,
-                                       lecture_tags, course_tags)
+                                       LearnRecord, lecture_tags, course_tags)
         from mooc.qa.model import UpDownRecord, Answer, Question
         db.create_all()
     print 'Created Database!'
