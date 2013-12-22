@@ -57,6 +57,7 @@ def create_course(data):
         data['teacher'],
         data['category']
     )
+    course.college = data['college']
     course.logo_url = data['logo_url']
     course.tags = data['tags']
     db.session.add(course)
