@@ -58,9 +58,9 @@ def _init_teacher():
 def _init_tags():
     global tags
     tags = (
-        Tag('标签1'),
-        Tag('标签2'),
-        Tag('标签3')
+        Tag(u'标签1'),
+        Tag(u'标签2'),
+        Tag(u'标签3')
     )
     for t in tags:
         db.session.add(t)
@@ -162,7 +162,7 @@ def _init_lecture():
     lectures[3].video_url = 'http://112.124.15.99:8888//linux-basic/9.mp4'
     lectures[3].video_length = 23
 
-    lecture.tags.append(tags[1])
+    lectures[0].tags.append(tags[1])
     for lecture in lectures:
         lecture.tags.append(tags[2])
         db.session.add(lecture)
