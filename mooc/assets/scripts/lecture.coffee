@@ -39,6 +39,7 @@ $ ->
         return ;
 
     $(".play-mask-close").click ->
+        obj = document.getElementById('player')
         $('.online-viewer-container').hide()
         obj.play()
 
