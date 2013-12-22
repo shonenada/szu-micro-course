@@ -172,11 +172,10 @@ def _init_resource():
     global resources
     resources = (
         Resource(u'资源'),
-        Resource(u'资源2'),
     )
     resources[0].lecture = lectures[0]
     resources[0].resource_url = '/static/upload/resources/pytest.pdf'
-    resources[1].lecture = lectures[0]
+    resources[0].category = 'pdf'
     for r in resources:
         db.session.add(r)
 
