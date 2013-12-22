@@ -1,6 +1,6 @@
 from mooc.app import rbac
 from mooc.utils import friendly_time
-from mooc.course.service import learn_count
+from mooc.course.service import learn_count, friendly_resource_category
 
 
 _filters = {
@@ -9,6 +9,7 @@ _filters = {
     'enumerate': (lambda x: enumerate(x)),
     'ellipsis': (lambda x, l, f='...': "%s%s" %
                  (x[:l], f if len(x) > l else '')),
+    'friendly_resource_category': friendly_resource_category,
 }
 
 

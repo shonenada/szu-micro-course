@@ -2,9 +2,10 @@
 from datetime import datetime
 
 from mooc.app import db
+from mooc.master.model import Tag
 from mooc.account.model import User, SzuAccount, College, Teacher, Role
 from mooc.course.model import Subject, Category, Course, Lecture, LearnRecord
-from mooc.course.model import Quiz, QuizOption
+from mooc.course.model import Quiz, QuizOption, Resource
 from mooc.qa.model import Question, Answer, QuestionTag
 
 
@@ -52,6 +53,17 @@ def _init_teacher():
     global mr_key
     mr_key = Teacher('teacher', 'KEY', key_account)
     db.session.add(mr_key)
+
+
+def _init_tags():
+    global tags
+    tags = (
+        Tag(u'标签1'),
+        Tag(u'标签2'),
+        Tag(u'标签3')
+    )
+    for t in tags:
+        db.session.add(t)
 
 
 def _init_subject():
@@ -108,7 +120,9 @@ def _init_course():
         
         Course(u'Python 语言基础', u'Python 是一种面向对象、直译式计算机程序设计语言，由Guido van Rossum于1989年底发明，第一个公开发行版发行于1991年。Python语法简捷而清晰，具有丰富和强大的类库。', mr_key, categorys[7]),
     )
+    courses[0].tags.append(tags[1])
     for course in courses:
+        course.tags.append(tags[0])
         course.college = csse
         db.session.add(course)
 
@@ -148,8 +162,22 @@ def _init_lecture():
     lectures[3].video_url = 'http://112.124.15.99:8888//linux-basic/9.mp4'
     lectures[3].video_length = 23
 
+    lectures[0].tags.append(tags[1])
     for lecture in lectures:
+        lecture.tags.append(tags[2])
         db.session.add(lecture)
+
+
+def _init_resource():
+    global resources
+    resources = (
+        Resource(u'资源'),
+    )
+    resources[0].lecture = lectures[0]
+    resources[0].resource_url = '/static/upload/resources/pytest.pdf'
+    resources[0].category = 'pdf'
+    for r in resources:
+        db.session.add(r)
 
 
 def _init_learn_record():
@@ -249,10 +277,12 @@ def init_db():
     _init_user()
     _init_szu_account()
     _init_teacher()
+    _init_tags()
     _init_subject()
     _init_category()
     _init_course()
     _init_lecture()
+    _init_resource()
     _init_learn_record()
     _init_quiz_option()
     _init_quiz()

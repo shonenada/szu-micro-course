@@ -1,3 +1,4 @@
+#-*-coding: utf-8 -*-
 from flask import current_app as app
 
 from mooc.app import db
@@ -81,3 +82,15 @@ def create_lecture(data):
     lecture.tags = data['tags']
     db.session.add(lecture)
     db.session.commit()
+
+
+def friendly_resource_category(category):
+    RESOURCE_CATEGORY = {'ppt': '演示文稿',
+                         'doc': '文档',
+                         'pdf': 'PDF',
+                         'video': '视频',
+                         'other': '其他'}
+    if category in RESOURCE_CATEGORY.keys():
+        return RESOURCE_CATEGORY[category]
+    else:
+        return '其他'

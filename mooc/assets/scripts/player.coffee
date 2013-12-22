@@ -4,7 +4,7 @@ $ ->
     checkTimer = null
     window.lecture_id = 0
 
-    $("#player-mask").hide()
+    $(".player-mask").hide()
 
     window.register_lecture_id = (lecture_id) ->
         window.lecture_id = lecture_id
@@ -27,15 +27,15 @@ $ ->
         currentTime = obj.currentTime
         for item in data
             if (Math.abs(currentTime - item.time_at) < 0.5)
-                $("#player-mask > form > .opts").empty()
-                $("#player-mask > #question-form > .question > .tips").empty()
-                $("#player-mask").height($("#player-container").height() - 120)
-                $("#player-mask").width($("#player-container").width() - 200)
+                $("#question-answer-mask > form > .opts").empty()
+                $("#question-answer-mask > #question-form > .question > .tips").empty()
+                $("#question-answer-mask").height($("#player-container").height() - 120)
+                $("#question-answer-mask").width($("#player-container").width() - 200)
                 $("#quiz_id").attr('value', item.id)
-                $("#player-mask > form > .question > .question-title").html(item.question)
+                $("#question-answer-mask > form > .question > .question-title").html(item.question)
                 for op in item.options
-                    $("#player-mask > form > .opts").append("<label><input name='answer_id' type='radio' value='" + op.id + "'>" + op.content + "</input></label>")
-                $("#player-mask").show()
+                    $("#question-answer-mask > form > .opts").append("<label><input name='answer_id' type='radio' value='" + op.id + "'>" + op.content + "</input></label>")
+                $("#question-answer-mask").show()
                 clearInterval(checkTimer)
                 obj.pause()
         return ;
@@ -49,13 +49,13 @@ $ ->
                 type: 'POST',
                 success: (res) ->
                     if (res.success)
-                        $("#player-mask").hide()
-                        $("#player-mask > #question-form > .question > .tips").empty()
+                        $("#question-answer-mask").hide()
+                        $("#question-answer-mask > #question-form > .question > .tips").empty()
                         checkTimer = setInterval(check_duration, 1000)
                         obj.play()
                         return ;
                     else
-                        $("#player-mask > #question-form > .question > .tips").html "回答错误，请重新回答"
+                        $("#question-answer-mask > #question-form > .question > .tips").html "回答错误，请重新回答"
                         return ;
                     return ;
             }
@@ -64,7 +64,7 @@ $ ->
 
     $("#skip-btn").click ->
         obj = document.getElementById('player')
-        $("#player-mask").hide()
+        $("#question-answer-mask").hide()
         checkTimer = setInterval(check_duration, 1000)
         obj.play()
         return ;

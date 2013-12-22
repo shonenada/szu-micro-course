@@ -25,4 +25,22 @@ $ ->
                     return ;
             }
         return ;
+
+    $(".online-view").click ->
+        obj = document.getElementById('player')
+        obj.pause()
+        id = $(this).attr('data')
+        $(".player-mask").hide()
+        $("#online-view-" + id).height($("#player-container").height() - 20)
+        $("#online-view-" + id).width($("#player-container").width() - 20)
+        $(".pdf-viewer").height($("#player-container").height() - 60)
+        $(".pdf-viewer").width($("#player-container").width() - 20)
+        $("#online-view-" + id).show()
+        return ;
+
+    $(".play-mask-close").click ->
+        obj = document.getElementById('player')
+        $('.online-viewer-container').hide()
+        obj.play()
+
     return ;
