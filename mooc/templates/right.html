@@ -62,7 +62,8 @@
                             </div>
                             <div class="tip">
                                 <div>
-                                <span class="tip-text username">{{ lc.course.teacher.szu_account.user.name or lc.course.teacher.szu_account.user.nickname or '管理员' }}</span>
+                                <span class="tip-text username">{% if not lc.course.teacher %}管理员{% else %}
+                                {{ lc.course.teacher.szu_account.user.name or lc.course.teacher.szu_account.user.nickname or '管理员' }}{% endif %}</span>
                                 <span class="tip-text time">{{ lc.upload_time | friendly_time }}</span>
                                 <span class="tip-text">发布了</span>
                                 </div>
