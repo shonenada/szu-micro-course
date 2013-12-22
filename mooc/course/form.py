@@ -4,8 +4,9 @@ from wtforms.validators import InputRequired
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 
 from mooc.master.form import TagsField
+from mooc.master.model import Tag
 from mooc.account.model import Teacher, College
-from mooc.course.model import Subject, Course, Category, LectureTag
+from mooc.course.model import Subject, Course, Category
 
 
 subject_state_texts =  ('Normal', 'Deleted')
@@ -43,6 +44,7 @@ class CourseForm(Form):
     teacher = QuerySelectField(query_factory=teachers, allow_blank=True)
     college = QuerySelectField(query_factory=colleges, allow_blank=False)
     category = QuerySelectField(query_factory=categories, allow_blank=False)
+    tags = TagsField(tag_model=Tag, label=u'Tags')
 
 
 class LectureForm(Form):
@@ -68,4 +70,4 @@ class LectureForm(Form):
     order = IntegerField(label=u'Order of lecture')
     course = QuerySelectField(query_factory=courses, allow_blank=False)
     teacher = QuerySelectField(query_factory=teachers, allow_blank=True)
-    tags = TagsField(tag_model=LectureTag, label=u'Tags')
+    tags = TagsField(tag_model=Tag, label=u'Tags')

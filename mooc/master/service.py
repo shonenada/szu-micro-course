@@ -1,6 +1,7 @@
-from flask import current_app, request, render_template
+from flask import current_app as app, request, render_template
 
 from mooc.app import db, rbac
+from mooc.master.model import Tag
 
 
 def common_paginate(model, page, per_page, filte=True):
@@ -33,3 +34,8 @@ def common_edit(obj, form_data, **kwargs):
 
 def common_create(model, data):
     pass
+
+
+def get_tags():
+    app.jinja_env.globals['tags'] = \
+        Tag.query.order_by(Tag.count.desc()).all()

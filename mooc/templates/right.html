@@ -1,13 +1,13 @@
         <div id="right">
-            {% if lecture_tags %}
+            {% if tags %}
             <div class="info-wrapper">
                 <div id="question-tags" class="info-box">
                     <div class="title">热门标签</div>
                     <div class="content">
                         <div class="content-list">
                             <ul>
-                                {%- for t in lecture_tags %}
-                                <li><span><a href="{{ url_for('course.tag', tag=t.tag) }}">{{ t.tag }}</a></span></li>
+                                {%- for t in tags %}
+                                <li><span><a href="{{ url_for('master.tag', tag=t.tag) }}">{{ t.tag }}</a></span></li>
                                 {%- endfor %}
                             </ul>
                         </div>

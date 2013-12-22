@@ -3,6 +3,7 @@ from flask import request, redirect, url_for, jsonify
 
 from mooc.app import rbac, db
 from mooc.utils import flash
+from mooc.master.model import Tag
 from mooc.account.model import User, SzuAccount, College
 from mooc.course.model import Subject, Category, Course, Lecture
 from mooc.course.form import SubjectForm, CategoryForm, CourseForm, LectureForm
@@ -95,3 +96,20 @@ def master_account_new():
         flash(message='Operated successfully', category='notice')
         return jsonify(success=True)
     return render_template('admin/account_new.html', form=new_user_form)
+
+
+@master_app.route('/tag/<tag>', methods=['GET'])
+@rbac.allow(['everyone'], ['GET'])
+def tag(tag):
+    tags = tag.split(' ')
+    things = set()
+    for t in tags:
+        this_tags = Tag.query.filter_by(tag=t).all()
+        for l_tag in this_tags:
+            if hasattr(l_tag, 'lectures'):
+                [setattr(x, 'type', 'lecture') for x in l_tag.lectures]
+                things.update(l_tag.lectures)
+            if hasattr(l_tag, 'courses'):
+                [setattr(x, 'type', 'course') for x in l_tag.courses]
+                things.update(l_tag.courses)
+    return render_template('tag_view.html', things=things, tag=tag)

@@ -12,13 +12,13 @@ from mooc.utils import enumdef
 
 lecture_tags = db.Table(
     'lecture_tags',
-    db.Column('tag_id', db.Integer, db.ForeignKey('lecture_tag.id')),
+    db.Column('tag_id', db.Integer, db.ForeignKey('tag.id')),
     db.Column('lecture_id', db.Integer, db.ForeignKey('lecture.id'))
 )
 
 course_tags = db.Table(
     'course_tags',
-    db.Column('tag_id', db.Integer, db.ForeignKey('course_tag.id')),
+    db.Column('tag_id', db.Integer, db.ForeignKey('tag.id')),
     db.Column('course_id', db.Integer, db.ForeignKey('course.id'))
 )
 
@@ -111,8 +111,8 @@ class Course(db.Model):
     college_id = db.Column(db.Integer, db.ForeignKey('college.id'))
     lectures = db.relationship('Lecture',
                                backref=db.backref('course'), uselist=True)
-    tags = db.relationship('CourseTag', secondary=course_tags,
-                           backref=db.backref('courses', lazy='dynamic'))
+    tags = db.relationship('Tag', secondary=course_tags,
+                           backref=db.backref('courses'))
 
     def __init__(self, name, description, teacher, category):
         self.name = name
@@ -190,7 +190,7 @@ class Lecture(db.Model):
                                 uselist=True, lazy='dynamic')
     answers = db.relationship('Answer', backref=db.backref('lecture'),
                               uselist=True, lazy='dynamic')
-    tags = db.relationship('LectureTag', secondary=lecture_tags,
+    tags = db.relationship('Tag', secondary=lecture_tags,
                            backref=db.backref('lectures'))
 
     def __init__(self, name, description, teacher, course, order=None,
@@ -289,40 +289,3 @@ class LearnRecord(db.Model):
 
     def delete(self):
         pass
-
-
-class LectureTag(db.Model):
-
-    __tablename__ = 'lecture_tag'
-
-    id = db.Column(db.Integer, primary_key=True)
-    tag = db.Column(db.String(20))
-
-    def __init__(self, tag):
-        self.tag = tag
-
-    def __str__(self):
-        return self.tag
-
-    def __unicode__(self):
-        return self.tag
-
-    @hybrid_property
-    def count(self):
-        return self.count()
-
-    @count.expression
-    def count(cls):
-        return (select([func.count(lecture_tags.c.tag_id)]).
-                where(cls.id == lecture_tags.c.tag_id).label('count'))
-
-
-class CourseTag(db.Model):
-
-    __tablename__ = 'course_tag'
-
-    id = db.Column(db.Integer, primary_key=True)
-    tag = db.Column(db.String(20))
-
-    def __init__(self, tag):
-        self.tag = tag
