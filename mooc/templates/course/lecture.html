@@ -2,6 +2,7 @@
 
 {% block static_files %}
 <link href="{{ url_for('static', filename='components/bootstrap/docs/assets/css/bootstrap.css')}}" media="all" rel="stylesheet" />
+<script src="{{ url_for('static', filename='scripts/plugins/flexpaper_flash.js')}}"></script>
 <script src="{{ url_for('static', filename='scripts/lecture.js')}}"></script>
 <script src="{{ url_for('static', filename='scripts/player.js')}}"></script>
 
@@ -16,7 +17,7 @@ $(function(){
     <video src="{{ lecture.video_url }}" controls="controls" autoplay="autoplay" id="player">
         Your browser does not support the video tag.
     </video>
-    <div id="player-mask">
+    <div id="question-answer-mask" class="player-mask">
         <form id="question-form">
             <input type="hidden" value="" name="quiz_id" id="quiz_id" />
             <div class="question">
@@ -28,9 +29,52 @@ $(function(){
                 <p><a id="continue-btn" href="javascript:void(0);" class="btn btn-success">Continue</a></p>
                 <p><a id="skip-btn" href="javascript:void(0);" class="btn btn-primary" onclick="javascript:void(0)">Skip</a></p>
             </div>
-            
         </form>
     </div>
+
+    {% for r in lecture.resources %}
+    {% if r.category in ('pdf') %}
+    <div class="player-mask narrow-border online-viewer-container" id="online-view-{{ r.id }}">
+        <a href="#" class="play-mask-close">关闭</a>
+        <embed class="pdf-viewer" src="{{ r.resource_url }}"></embed>
+    </div>
+    {% endif %}
+    {% if r.category in ('ppt', 'doc') %}
+    <div class="player-mask narrow-border online-viewer-container" id="online-view-{{ r.id }}">
+        <a href="#" class="play-mask-close">关闭</a>
+        <a class="online-view-container" id="online-view-container-{{ r.id }}" style="display:block; width: 100%; height: 100%"></a>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                if(window['ViewerMode'] == 'html'){$("#html5mode").hide();}else{$("#html5mode").show();}
+            });
+            var fp = new FlexPaperViewer(
+                    '/static/scripts/plugins/flexpaper/FlexPaperViewer',
+                    'online-view-container-{{ r.id }}', { config : {
+                        SwfFile : "{{ r.resource_url }}",
+                        Scale : 1.0,
+                        ZoomTime : 0.01,
+                        ZoomInterval : 0.2,
+                        FitPageOnLoad : false,
+                        FitWidthOnLoad : true,
+                        FullScreenAsMaxWindow : false,
+                        ProgressiveLoading : false,
+                        MinZoomSize : 0.2,
+                        MaxZoomSize : 5,
+                        SearchMatchAll : false,
+                        InitViewMode : 'Portrait',
+                        PrintPaperAsBitmap : false,
+                        RenderingOrder : 'flash,html',
+                        ViewModeToolsVisible : true,
+                        ZoomToolsVisible : true,
+                        NavToolsVisible : true,
+                        CursorToolsVisible : true,
+                        SearchToolsVisible : true,
+                        localeChain: 'zh_CN'
+                    }});
+        </script>
+    </div>
+    {% endif %}
+    {% endfor %}
 </div>
 
 <div id="lecture-intro">
@@ -88,9 +132,29 @@ $(function(){
                 {% endfor %}
             </div>
             <div id="lecture-video-resource" class="lecture-bar lecture-hidden">
-                <ul>
-                    <li><a href="{{ lecture.video_url }}">视频下载</a></li>
-                </ul>
+            <table class="resource-table">
+            <thead>
+            <tr>
+                <td>资源</td>
+                <td>类别</td>
+                <td>下载</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>视频下载</td>
+                <td>视频</td>
+                <td><a href="{{ lecture.video_url }}">下载</a></td>
+            </tr>
+            {% for r in lecture.resources %}
+            <tr>
+                <td>{{ r.name }}</td>
+                <td>{{ r.category|friendly_resource_category }}</td>
+                <td>{% if r.category in ('ppt', 'doc', 'pdf') %}<a href="#online-view-{{ r.id }}" id="online-view-{{ r.id }}" data="{{ r.id }}" class="online-view">在线浏览</a>{% endif %} <a href="{{ lecture.video_url }}">下载</a></td>
+            </tr>
+            {% endfor %}
+            </tbody>
+            </table>
             </div>
         </div>
         <div class="shadow"></div>
