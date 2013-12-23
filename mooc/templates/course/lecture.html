@@ -5,7 +5,15 @@
 <script src="{{ url_for('static', filename='scripts/plugins/flexpaper_flash.js')}}"></script>
 <script src="{{ url_for('static', filename='scripts/lecture.js')}}"></script>
 <script src="{{ url_for('static', filename='scripts/player.js')}}"></script>
-
+<!-- Fix the style effected by bootstrap -->
+<style>
+.dropdown {
+    position: absolute;
+}
+body {
+    font-family: arial, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+}
+</style>
 <script>
 $(function(){
     window.register_lecture_id({{ lecture.id }})
