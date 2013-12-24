@@ -1,3 +1,5 @@
+import sys
+
 from flask import Flask
 
 from mooc.extensions import gears, setup_compilers, setup_compressors
@@ -12,7 +14,7 @@ from mooc.master.view import master_app
 from mooc.account.view import account_app
 from mooc.course.view import course_app
 from mooc.qa.view import qa_app
-from mooc.master.service import get_tags
+from mooc.master.service import get_tags, setup_request_timer
 from mooc.course.service import get_learn_records, get_last_lecture
 
 
@@ -43,6 +45,7 @@ def create_app(import_name=None, config=None):
 
     csrf.init_app(app)
 
+    app.before_request(setup_request_timer)
     app.before_request(get_learn_records)
     app.before_request(get_last_lecture)
     app.before_request(get_tags)
