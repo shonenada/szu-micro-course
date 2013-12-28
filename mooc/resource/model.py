@@ -18,6 +18,7 @@ class Resource(db.Model):
     resource_url = db.Column(db.String(250))
     category = db.Column(db.Enum(name='lecture_state', *RESOURCE_CATEGORY))
     created = db.Column(db.DateTime)
+    view_count = db.Column(db.Integer, default=0)
     lecture_id = db.Column(db.Integer, db.ForeignKey('lecture.id'))
     lecture = db.relationship('Lecture', backref='resources', uselist=False)
     _state = db.Column('state', db.Enum(name='resource_state',
@@ -27,6 +28,7 @@ class Resource(db.Model):
     def __init__(self, name):
         self.name = name
         self.created = datetime.utcnow()
+        self.view_count = 0
         self.category = 'other'
         self.state = 'normal'
 
