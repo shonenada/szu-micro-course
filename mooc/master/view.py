@@ -5,9 +5,10 @@ from mooc.app import rbac, db
 from mooc.utils import flash
 from mooc.master.model import Tag
 from mooc.account.model import User, SzuAccount, College
-from mooc.course.model import Subject, Category, Course, Lecture, Resource
+from mooc.course.model import Subject, Category, Course, Lecture
+from mooc.resource.model import Resource
 from mooc.course.form import SubjectForm, CategoryForm, CourseForm, LectureForm
-from mooc.course.form import ResourceForm
+from mooc.resource.form import ResourceForm
 from mooc.account.form import UserForm, SzuAccountForm, NewUserForm
 from mooc.master.utils import generate_all_controller
 from mooc.master.service import common_paginate, common_delete
@@ -15,7 +16,8 @@ from mooc.account.service import update_user_state,\
                                  change_user_password,\
                                  create_user
 from mooc.course.service import create_subject, create_category,\
-                                create_course, create_lecture, create_resource
+                                create_course, create_lecture
+from mooc.resource.service import create_resource
 
 
 master_app = Blueprint('master', __name__, template_folder='../templates')

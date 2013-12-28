@@ -1,6 +1,7 @@
 from mooc.app import rbac
 from mooc.utils import friendly_time
-from mooc.course.service import learn_count, friendly_resource_category
+from mooc.course.service import learn_count
+from mooc.resource.service import friendly_resource_category
 
 
 _filters = {

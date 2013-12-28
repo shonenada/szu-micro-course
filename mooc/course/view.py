@@ -4,7 +4,8 @@ from flask import Blueprint, render_template, abort, json, request, jsonify
 from mooc.app import rbac, csrf
 from mooc.master.model import Tag
 from mooc.course.model import Subject, Category, Course, Lecture, LearnRecord
-from mooc.course.model import Quiz, QuizOption, Resource
+from mooc.course.model import Quiz, QuizOption
+from mooc.resource.model import Resource
 from mooc.course.service import quiz_to_json
 
 

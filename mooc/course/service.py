@@ -3,7 +3,7 @@ from flask import current_app as app
 
 from mooc.app import db
 from mooc.master.model import Tag
-from mooc.course.model import LearnRecord, Lecture, Resource
+from mooc.course.model import LearnRecord, Lecture
 from mooc.course.model import Subject, Category, Course
 
 
@@ -83,25 +83,3 @@ def create_lecture(data):
     lecture.tags = data['tags']
     db.session.add(lecture)
     db.session.commit()
-
-
-def create_resource(data):
-    resource = Resource(data['name'])
-    resource.resource_url = data['resource_url']
-    resource.category = data['category']
-    resource.state = data['state']
-    resource.lecture = data['lecture']
-    db.session.add(resource)
-    db.session.commit()
-
-
-def friendly_resource_category(category):
-    RESOURCE_CATEGORY = {'ppt': '演示文稿',
-                         'doc': '文档',
-                         'pdf': 'PDF',
-                         'video': '视频',
-                         'other': '其他'}
-    if category in RESOURCE_CATEGORY.keys():
-        return RESOURCE_CATEGORY[category]
-    else:
-        return '其他'
