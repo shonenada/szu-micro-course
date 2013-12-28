@@ -5,7 +5,8 @@ from mooc.app import db
 from mooc.master.model import Tag
 from mooc.account.model import User, SzuAccount, College, Teacher, Role
 from mooc.course.model import Subject, Category, Course, Lecture, LearnRecord
-from mooc.course.model import Quiz, QuizOption, Resource
+from mooc.course.model import Quiz, QuizOption
+from mooc.resource.model import Resource
 from mooc.qa.model import Question, Answer, QuestionTag
 
 
