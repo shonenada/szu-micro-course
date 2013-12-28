@@ -11,6 +11,7 @@ from mooc.template import setup_filter, setup_func
 from mooc.master.view import master_app
 from mooc.account.view import account_app
 from mooc.course.view import course_app
+from mooc.resource.view import resource_app
 from mooc.qa.view import qa_app
 from mooc.master.service import get_tags
 from mooc.course.service import get_learn_records, get_last_lecture
@@ -55,6 +56,7 @@ def create_app(import_name=None, config=None):
     app.register_blueprint(master_app)
     app.register_blueprint(account_app)
     app.register_blueprint(course_app)
+    app.register_blueprint(resource_app)
     app.register_blueprint(qa_app)
 
     return app
