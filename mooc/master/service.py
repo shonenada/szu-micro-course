@@ -1,4 +1,6 @@
-from flask import current_app as app, request, render_template
+import time
+
+from flask import current_app as app, request, render_template, g
 
 from mooc.app import db, rbac
 from mooc.master.model import Tag
@@ -39,3 +41,7 @@ def common_create(model, data):
 def get_tags():
     app.jinja_env.globals['tags'] = \
         Tag.query.order_by(Tag.count.desc()).all()
+
+
+def setup_request_timer():
+    g.request_start_time = time.time()
