@@ -25,7 +25,7 @@
                     </div>
                 </div>
                 <div class="course-record">
-                    <div class="course-num"><span>{{ item.lecture.name }}</span> 课程</div>
+                    <div class="course-num">课程：<span><a href="{{ url_for('course.lecture', lecture_id=item.lecture.id ) }}">{{ item.lecture.name }}</a></span></div>
                     <div class="learned-num"><span>{{ item.view_count }}</span> 次浏览</div>
                 </div>
                 <div class="shadow"></div>
