@@ -11,7 +11,7 @@
             <div id="question-title">{{ question.title }} {% if question.lecture %}<span>来自<a href="{{ url_for('course.lecture', lecture_id=question.lecture.id )}}">《{{ question.lecture.name }}》</a>课程的问题</span>{% endif %}</div>
             <ul id="question-tags">
             {%- for tag in question.tags %}
-                <li>{{ tag.tag }}</li>
+                <li><span><a href="{{ url_for('qa.tag', tag=tag.tag) }}">{{ tag.tag }}</a></span></li>
             {%- endfor %}
                 <li class="author">{{ question.author.nickname }}</li>
                 <li class="time">{{ question.created | friendly_time }}</li>
