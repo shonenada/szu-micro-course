@@ -3,11 +3,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{%- block title %}深大微课程 - MicroLecture{%- endblock %}</title>
     <meta name="keywords" content="深圳大学,墨客,MOOC,mooc,深圳大学墨客,microlecture" />
     <meta name="description" content="深圳大学墨客，提供免费的教学视频。" />
-    <link href="{{ url_for('static', filename='components/reset-css/index.css')}}" media="all" rel="stylesheet" />
-    <link href="{{ url_for('static', filename='styles/base.css')}}" media="all" rel="stylesheet" />
+    <title>{%- block title %}深大微课程 - MicroLecture{%- endblock %}</title>
+    <link href="{{ url_for('static', filename='styles/style.css')}}" media="all" rel="stylesheet" />
     <link href="{{ url_for('static', filename='styles/flash-messages.css')}}" media="all" rel="stylesheet" />
     <link href="{{ url_for('static', filename='styles/dropdown.css')}}" media="all" rel="stylesheet" />
     <script src="{{ url_for('static', filename='components/jquery/jquery.min.js') }}"></script>
@@ -28,7 +27,7 @@
         <a href="{{ url_for('master.index') }}" id="logo">微课程</a>
         <nav id="nav">
             <ul class="dropdown-nav">
-                <li class="home-link"><a href="{{url_for('master.index')}}">首页</a></li>
+                <li class="index-link"><a href="{{url_for('master.index')}}">首页</a></li>
                 <li><a href="{{ url_for('course.courses') }}">课程库</a></li>
                 <li><a href="{{ url_for('qa.question') }} ">问答系统</a></li>
                 <li><a href="{{ url_for('resource.list')}}">课程资源</a></li>

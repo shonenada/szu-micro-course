@@ -1,7 +1,7 @@
 {%- extends 'layout.html' %}
 
 {%- block main_head %}
-<div id="category_list" class="wrapper">
+<div id="category_list" class="category_list wrapper">
     <ul>
         {%- for s in subjects %}
         <li><a href="/courses/subject/{{s.id}}">{{ s.name }}</a></li>

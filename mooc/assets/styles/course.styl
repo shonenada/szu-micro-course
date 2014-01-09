@@ -1,147 +1,148 @@
 #main
-    & #left
-    
-        & .container
+  #left
+    .container
+      #category-intro
+        width 100%
+        float left
+        margin-bottom 20px
 
-            & #category-intro
-                width 100%
-                float left
-                margin-bottom 20px
+      #lecture-list
+        width 100%
+        margin-top 20px
 
-            & #lecture-list
-                width 100%
-                margin-top 20px
+        .lecture_box_wrapper
+          width 100%
+          display block
+          float left
+          margin-bottom 10px
 
-                & .lecture_box_wrapper
-                    width 100%
-                    display block
-                    float left
-                    margin-bottom 10px
+      .course-container, .course-box
+        width 100%
 
-            & .course-container, .course-box
-                width 100%
+    .course-category
+      display block
+      overflow hidden
+      width 100%
 
-        & .course-category
-            display block
-            overflow hidden
-            width 100%
+      .course_box_wrapper
+        width 48%
+        display block
+        float left
+        margin-right 2%
+        margin-bottom 20px
 
-            & .course_box_wrapper
-                width 48%
-                display block
-                float left
-                margin-right 2%
-                margin-bottom 20px
+      .course-category-title
+        display block
+        color #75818b
+        font-size 18px
+        margin-bottom 15px
 
-            & .course-category-title
-                display block
-                color #75818b
-                font-size 18px
-                margin-bottom 15px
+        a
+          color #75818b
+          transition 0.25s
 
-                & a
-                    color #75818b
-                    transition 0.25s
+          &:hover
+            color #aa5400
 
-                    &:hover
-                        color #aa5400
+    .course-container
+      float left
+      transition 0.25s
+      width 100%
+      
+      &:hover
+        transform-translate3d 0 -2px 0
 
-        & .course-container
+      .course-box
+        width 100%
+        float left
+
+        .course-info
+          top-border-radius 3
+          background #fff
+          padding 15px
+          overflow hidden
+
+          .icon
             float left
-            transition 0.25s
-            width 100%
-            
+            width 30%
+
+            img
+              width 90%
+
+          .small-icon
+            width 10%
+
+          .course-title
+            font-weight bold
+            margin-bottom 0.6em
+            text-overflow ellipsis
+            white-space nowrap
+            overflow hidden
+            font-size 18px
+
             &:hover
-                transform-translate3d 0 -2px 0
+              color #ff5400
 
-            & .course-box
-                width 100%
-                float left
+          .course-description
+            font-size 14px
+            line-height 1.3em
+            text-overflow ellipsis
+            overflow hidden
 
-                & .course-info
-                    top-border-radius 3
-                    background #fff
-                    padding 15px
-                    overflow hidden
+            .ellipsis-60
+              display inline
 
-                    & .icon
-                        float left
-                        width 30%
+            .ellipsis-20
+              display none
 
-                        & img
-                            width 90%
+        .course-record
+          bottom-border-radius 3
+          background #eff5fa
+          padding 0 15px
+          height 40px
+          font-size 14px
+          line-height 40px
 
-                    & .small-icon
-                        width 10%
+          .course-num
+            float left
+            border-right solid 2px #cad6df
+            padding-right 20px
+            
+            span
+              font-weight bold
 
-                    & .course-title
-                        font-weight bold
-                        margin-bottom 0.6em
-                        text-overflow ellipsis
-                        white-space nowrap
-                        overflow hidden
-                        font-size 18px
+          .learned-num
+            margin-left 20px
+            float left
+            
+            span
+              font-weight bold
 
-                        &:hover
-                            color #ff5400
+    #category_list
+      margin-top 10px
+      margin-bottom 30px
 
-                    & .course-description
-                        font-size 14px
-                        line-height 1.3em
-                        text-overflow ellipsis
-                        overflow hidden
+      a
+        margin 0
+        padding 0 10px 0 0
 
-                        & .ellipsis-60
-                            display inline
+        &:hover
+          background #ccd9e2
+          color #626f7c
 
-                        & .ellipsis-20
-                            display none
+        &:before
+          line-height 40px
+          content url('../images/arrow.png')
+          margin 0 10px 0 0
 
-                & .course-record
-                    bottom-border-radius 3
-                    background #eff5fa
-                    padding 0 15px
-                    height 40px
-                    font-size 14px
-                    line-height 40px
+      li:first-child
+        a
+          padding-left 10px
 
-                    & .course-num
-                        float left
-                        border-right solid 2px #cad6df
-                        padding-right 20px
-                        & span
-                            font-weight bold
+        :before
+          content ''
 
-                    & .learned-num
-                        margin-left 20px
-                        float left
-                        & span
-                            font-weight bold
+      li:last-child
 
-        & #category_list
-            margin-top 10px
-            margin-bottom 30px
-
-            & a
-                margin 0
-                padding 0 10px 0 0
-
-                &:hover
-                    background #ccd9e2
-                    color #626f7c
-
-                &:before
-                    line-height 40px
-                    content url('../images/arrow.png')
-                    margin 0 10px 0 0
-
-            & li:first-child
-                & a
-                    padding-left 10px
-
-                & a:before
-                    content ''
-
-            & li:last-child
-                & a
-                    color #ff5400
+        a
+          color #ff5400
