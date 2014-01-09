@@ -1,73 +1,73 @@
 @import 'func.styl'
 
 @keyframes mouse-on-fade-in
-    100%
-        opacity: 1;
+  100%
+    opacity 1
 
 @keyframes mouse-out-fade-out
-    100%
-        opacity: 0.8;
+  100%
+    opacity 0.8
 
 @keyframes fade-out
-    100%
-        opacity: 0;
-
+  100%
+    opacity 0
 
 #flash-messages-container
-    margin-top: 20px;
-    font: 13px Helvetica, arial, sans-serif;
-    z-index: 9999;
+  font 13px Helvetica, arial, sans-serif
+  margin-top 20px
+  z-index 9999
 
-    & .fade-out
-        bind-animate fade-out 500ms;
-        opacity: 0;
+  .fade-out
+    bind-animate fade-out 500ms
+    opacity 0
 
-    & .bind-animate
-        bind-animate mouse-out-fade-out 200ms;
-        opacity: 0.8;
-        &:hover
-            bind-animate mouse-on-fade-in 200ms;
-            opacity: 1;
+  .bind-animate
+    bind-animate mouse-out-fade-out 200ms
+    opacity 0.8
 
-    & .message-box-btn
-        float: left;
-        display: block;
+    &:hover
+      bind-animate mouse-on-fade-in 200ms
+      opacity 1
 
-    & .flash-message-box
-        border: 1px solid;
-        border-radius: 4px;
-        border-color: #aaa;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
-        text-shadow: 0 1px 0 rgba(255,255,255,0.5);
-        margin: 5px 0 5px 0;
-        opacity: 0.8;
-        padding: 15px 30px 15px 30px;
+  .message-box-btn
+    float left
+    display block
 
-    & .message-box-message
-        color: #666;
-        border-color: #aaa;
-        background-color: #ccc;
-        linear-background(#eee, #ccc);
+  .flash-message-box
+    border 1px solid
+    border-radius 4px
+    border-color #aaa
+    box-shadow 0 1px 3px rgba(0, 0, 0, 0.5)
+    text-shadow 0 1px 0 rgba(255,255,255,0.5)
+    margin 5px 0 5px 0
+    opacity 0.8
+    padding 15px 30px 15px 30px
 
-    & .message-box-notice
-        color: #264c72;
-        border-color: #97c1da;
-        background-color: #d0e3ef;
-        linear-background(#d8ebf8, #d0e3ef);
+  .message-box-message
+    color #666
+    border-color #aaa
+    background-color #ccc
+    linear-background (#eee, #ccc)
 
-    & .message-box-warn
-        color: #613A00;
-        border-color: #dca874;
-        background-color: #f5dac0;
-        linear-background(#ffe3c8, #f5dac0);
+  .message-box-notice
+    color #264c72
+    border-color #97c1da
+    background-color #d0e3ef
+    linear-background (#d8ebf8, #d0e3ef)
 
-    & .message-box-error
-        color: #911;
-        background-color: #efd0d0;
-        border-color: #da9797;
-        background-repeat: repeat-x;
-        linear-background(#f8d8d8, #efd0d0);
+  .message-box-warn
+    color #613A00
+    border-color #dca874
+    background-color #f5dac0
+    linear-background (#ffe3c8, #f5dac0)
+
+  .message-box-error
+    color #911
+    background-color #efd0d0
+    border-color #da9797
+    background-repeat repeat-x
+    linear-background (#f8d8d8, #efd0d0)
 
 .message-box-fixed
-    left: 50%;
-    position: fixed;
+  left 50%
+  position fixed
