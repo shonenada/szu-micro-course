@@ -1,57 +1,61 @@
 #header
-    & .banner
-        width 100%
-        height 280px
-        background #fff url('../images/header-background.png') repeat-x
-        background-size auto 364px
 
-        & #banner-text
-            color #fff
-            font-size 36px
-            line-height 280px
-            font-family arial
+  .banner
+    width 100%
+    height 280px
+    background #fff url('../images/header-background.png') repeat-x
+    background-size auto 364px
 
-#category_list
-    top-border-radius 5
-    bottom-border-radius 5
-    background #ccd9e2
-    margin-top 40px
-    font-size 14px
-    font-weight bold
-    overflow hidden
-
-    & ul li
-        float left
-
-        & a
-            display block
-            height 40px
-            color #7b8896
-            line-height 40px
-            padding 0 10px 0 10px
-            text-align center
-            transition 0.25s
-
-            &:hover
-                background #fff
-
-    & ul li:first-child a
-        padding-left 20px
+    #banner-text
+      color #fff
+      font-size 36px
+      line-height 280px
+      font-family arial
 
 #main
-    background #dce5eb
+  width 100%
+  overflow hidden
+  background #dce5eb
+
+  #wrapper
     overflow hidden
-    width 100%
+    padding-top 30px
+    padding-bottom 20px
 
-    & #wrapper
-        padding-bottom 20px
-        padding-top 30px
-        overflow hidden
+  #left
+    width 69%
+    float left
 
-    & #right
-        float right
-        width 30%
+  #right
+    width 30%
+    float right
 
-    & #left
-        float left
-        width 69%
+#category_list
+
+  top-border-radius 5
+  bottom-border-radius 5
+  background #ccd9e2
+  margin-top 40px
+  font-size 14px
+  font-weight bold
+  overflow hidden
+
+  ul li
+    float left
+
+    a
+      display block
+      height 40px
+      color #7b8896
+      line-height 40px
+      padding 0 10px 0 10px
+      text-align center
+      transition 0.25s
+
+      &:hover
+        background #fff
+
+  ul li:first-child
+
+    a
+      padding-left 20px
