@@ -3,10 +3,10 @@ from flask import Blueprint
 from flask import render_template, request, url_for, redirect
 from flask.ext.login import login_user, logout_user, current_user
 
-from mooc.app import rbac, csrf
+from mooc.app import rbac, csrf, db
 from mooc.utils import flash
 from mooc.account.model import User
-from mooc.account.form import SignInForm
+from mooc.account.form import SignInForm, SettingForm
 from mooc.account.service import load_user
 
 
@@ -51,10 +51,23 @@ def signout():
 
 
 @account_app.route('/people/<username>')
+@rbac.allow(['local_user'], ['GET'])
 def people(username):
     pass
 
 
-@account_app.route('/setting/account')
+@csrf.exempt
+@account_app.route('/account/setting', methods=['GET', 'POST'])
+@rbac.allow(['local_user'], ['GET', 'POST'])
 def setting():
-    pass
+    user = current_user
+    form = SettingForm(request.form, user)
+    if form.validate_on_submit():
+        form.populate_obj(user)
+        user.is_male = user.is_male == 'True'
+        db.session.add(user)
+        db.session.commit()
+        flash(message=u'修改成功', category='notice')
+    if form.errors:
+        flash(message=form.errors, category='warn', form_errors=True)
+    return render_template('account/setting.html', user=user, form=form)

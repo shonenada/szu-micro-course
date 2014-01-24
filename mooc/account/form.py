@@ -71,3 +71,20 @@ class NewUserForm(Form):
     state = SelectField(
         label=u'State', default=state_values[3],
         choices=[(state_values[i], state_texts[i]) for i in range(0, 4)])
+
+
+class SettingForm(Form):
+
+    def get_colleges():
+        return College.query.all()
+
+    name = StringField(label=u'姓名')
+    nickname = StringField(label=u'昵称')
+    is_male = SelectField(
+        label=u'性别', choices=[('True', u'男'), ('False', u'女')])
+    college = QuerySelectField(label=u'学院', query_factory=get_colleges, allow_blank=False)
+    card_id = StringField(label=u'校园卡号')
+    stu_number = StringField(label=u'学号')
+    email = StringField(label=u'邮箱')
+    phone = StringField(label=u'长号')
+    short_phone = StringField(label=u'短号')
