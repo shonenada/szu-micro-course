@@ -4,7 +4,7 @@ from datetime import datetime
 
 from flask import url_for
 from flask.ext.sqlalchemy import BaseQuery
-from flask_rbac import RBACRoleMixinModel, RBACUserMixinModel
+from flask_rbac import RoleMixin, UserMixin
 
 from mooc.app import db
 from mooc.utils import enumdef
@@ -33,7 +33,7 @@ users_roles = db.Table(
 )
 
 
-class Role(db.Model, RBACRoleMixinModel):
+class Role(RoleMixin, db.Model):
 
     __tablename__ = 'role'
 
@@ -47,7 +47,14 @@ class Role(db.Model, RBACRoleMixinModel):
                             backref=db.backref('roles', lazy='dynamic'))
 
     def __init__(self, name):
-        self.name = name
+        RoleMixin.__init__(self)
+
+    def add_parent(self, parent):
+        self.parents.append(parent)
+
+    def add_parents(self, *ps):
+        for parent in ps:
+            self.add_parent(parent)
 
     def __unicode__(self):
         return self.name
@@ -57,10 +64,10 @@ class Role(db.Model, RBACRoleMixinModel):
 
     @staticmethod
     def get_by_name(name):
-        return self.query.filter_by(name=name).first()
+        return Role.query.filter_by(name=name).first()
 
 
-class User(db.Model, RBACUserMixinModel):
+class User(db.Model, UserMixin):
     """Model of user."""
 
     __tablename__ = 'user'
