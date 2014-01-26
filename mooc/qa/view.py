@@ -86,7 +86,7 @@ def vote_answer():
 
     if record:
         return jsonify(success=False, message=u'You have voted!')
-    
+
     vote_type = (UpDownRecord.TYPE_DOWN
                  if action == 'down' else UpDownRecord.TYPE_UP)
     vote_record = UpDownRecord(current_user, vote_type)

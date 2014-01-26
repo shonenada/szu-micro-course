@@ -40,7 +40,7 @@ def category(sid, cid):
 def course(course_id):
     this_course = Course.query.get(course_id)
     lectures = (Lecture.query.filter_by(course_id=course_id)
-                 .order_by(Lecture.order).all())
+                .order_by(Lecture.order).all())
     return render_template('course/course_list.html',
                            this_course=this_course, lectures=lectures)
 

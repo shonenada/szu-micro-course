@@ -120,9 +120,9 @@ class Question(db.Model):
 
     @answer_count.expression
     def answer_count(cls):
-        return select([func.count(Answer.id)]).\
-                   where(Answer.question_id==cls.id).\
-                   label('answer_count')
+        return (select([func.count(Answer.id)]).
+                where(Answer.question_id == cls.id).
+                label('answer_count'))
 
     @hybrid_property
     def hotest(self):
@@ -133,7 +133,7 @@ class Question(db.Model):
     @hotest.expression
     def hotest(cls):
         ac = (select([func.count(Answer.id)]).
-              where(Answer.question_id==cls.id).
+              where(Answer.question_id == cls.id).
               label('answers_count'))
         return func.abs(ac * cls.WEIGHT_OF_ANSWERCOUNT +
                         cls.up_count * cls.WEIGHT_OF_UPCOUNT +

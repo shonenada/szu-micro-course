@@ -1,7 +1,8 @@
 from flask_wtf import Form
-from wtforms import (StringField, IntegerField, DateField, TextField, TextAreaField, SelectField)
 from wtforms.validators import InputRequired
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
+from wtforms import (StringField, IntegerField, DateField,
+                     TextField, TextAreaField, SelectField)
 
 from mooc.master.form import TagsField
 from mooc.master.model import Tag
@@ -10,8 +11,8 @@ from mooc.course.model import Subject, Course, Category, Lecture
 from mooc.resource.model import Resource
 
 
-subject_state_texts =  ('Normal', 'Deleted')
-subject_state_values =  ('normal', 'deleted')
+subject_state_texts = ('Normal', 'Deleted')
+subject_state_values = ('normal', 'deleted')
 
 
 class SubjectForm(Form):

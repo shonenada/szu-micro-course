@@ -2,8 +2,8 @@ from flask import request, render_template, current_app, jsonify
 
 from mooc.app import rbac
 from mooc.utils import flash
-from mooc.master.service import common_paginate, common_delete,\
-                                common_edit, common_create
+from mooc.master.service import (common_paginate, common_delete,
+                                 common_edit, common_create)
 
 
 def generate_endpoints(module_name):
@@ -23,33 +23,35 @@ def _get_endpoint(module_name, action):
 
 def generate_list_controller(blueprint, model, **kwargs):
     module_name = model.__name__.lower()
+
     @blueprint.route(
-        rule = '/master/%s' % module_name,
-        methods = ['GET'],
-        endpoint = _get_endpoint(module_name, 'list')
+        rule='/master/%s' % module_name,
+        methods=['GET'],
+        endpoint=_get_endpoint(module_name, 'list')
     )
     @rbac.allow(['super_admin'], ['GET'])
     def list_controller():
         page_num = int(request.args.get('page', 1))
         pagination = common_paginate(
-            model = model,
-            page = page_num,
-            per_page = current_app.config.get('ADMIN_PAGESIZE')
+            model=model,
+            page=page_num,
+            per_page=current_app.config.get('ADMIN_PAGESIZE')
         )
         return render_template(
             'admin/%s_list.html' % module_name,
-            pagination = pagination,
-            model_name = model.__name__,
-            endpoints = generate_endpoints(module_name)
+            pagination=pagination,
+            model_name=model.__name__,
+            endpoints=generate_endpoints(module_name)
         )
 
 
 def generate_create_controller(blueprint, model, form_model, **kwargs):
     module_name = model.__name__.lower()
+
     @blueprint.route(
-        rule = '/master/%s/new' % module_name,
-        methods = ['GET', 'POST'],
-        endpoint = _get_endpoint(module_name, 'create')
+        rule='/master/%s/new' % module_name,
+        methods=['GET', 'POST'],
+        endpoint=_get_endpoint(module_name, 'create')
     )
     @rbac.allow(['super_admin'], ['GET', 'POST'])
     def create_controller():
@@ -66,18 +68,19 @@ def generate_create_controller(blueprint, model, form_model, **kwargs):
             return jsonify(success=False, messages=form.errors.values())
         return render_template(
             'admin/%s_new.html' % module_name,
-            form = form,
-            model_name = model.__name__,
-            endpoints = generate_endpoints(module_name)
+            form=form,
+            model_name=model.__name__,
+            endpoints=generate_endpoints(module_name)
         )
 
 
 def generate_edit_controller(blueprint, model, form_model, **kwargs):
     module_name = model.__name__.lower()
+
     @blueprint.route(
-        rule = '/master/%s/<int:mid>/edit' % module_name,
-        methods = ['GET', 'PUT'],
-        endpoint = _get_endpoint(module_name, 'edit')
+        rule='/master/%s/<int:mid>/edit' % module_name,
+        methods=['GET', 'PUT'],
+        endpoint=_get_endpoint(module_name, 'edit')
     )
     @rbac.allow(['super_admin'], ['GET', 'PUT'])
     def edit_controller(mid):
@@ -95,19 +98,20 @@ def generate_edit_controller(blueprint, model, form_model, **kwargs):
             return jsonify(success=False, messages=form.errors.values())
         return render_template(
             'admin/%s_edit.html' % module_name,
-            mid = mid,
-            form = form,
-            model_name = model.__name__,
-            endpoints = generate_endpoints(module_name)
+            mid=mid,
+            form=form,
+            model_name=model.__name__,
+            endpoints=generate_endpoints(module_name)
         )
 
 
 def generate_delete_controller(blueprint, model, **kwargs):
     module_name = model.__name__.lower()
+
     @blueprint.route(
-        rule = '/master/%s/<int:mid>' % module_name,
-        methods = ['DELETE'],
-        endpoint = _get_endpoint(module_name, 'delete')
+        rule='/master/%s/<int:mid>' % module_name,
+        methods=['DELETE'],
+        endpoint=_get_endpoint(module_name, 'delete')
     )
     @rbac.allow(['super_admin'], ['DELETE'])
     def delete_controller(mid):

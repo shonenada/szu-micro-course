@@ -81,8 +81,17 @@ class SettingForm(Form):
     name = StringField(label=u'姓名')
     nickname = StringField(label=u'昵称')
     is_male = SelectField(
-        label=u'性别', choices=[('True', u'男'), ('False', u'女')])
-    college = QuerySelectField(label=u'学院', query_factory=get_colleges, allow_blank=False)
+        label=u'性别',
+        choices=[
+            ('True', u'男'),
+            ('False', u'女')
+        ]
+    )
+    college = QuerySelectField(
+        label=u'学院',
+        query_factory=get_colleges,
+        allow_blank=False
+    )
     card_id = StringField(label=u'校园卡号')
     stu_number = StringField(label=u'学号')
     email = StringField(label=u'邮箱')

@@ -5,7 +5,8 @@ from wtforms.widgets import TextInput
 class TagsField(Field):
     widget = TextInput()
 
-    def __init__(self, tag_model, label='', validators=None, sep=u' ', **kwargs):
+    def __init__(self, tag_model, label='', validators=None,
+                 sep=u' ', **kwargs):
         super(TagsField, self).__init__(label, validators, **kwargs)
         self.tag_model = tag_model
         self.sep = sep
@@ -15,7 +16,7 @@ class TagsField(Field):
             return self.sep.join([tag.tag for tag in self.data])
         else:
             return u''
-            
+
     def process_formdata(self, valuelist):
         if valuelist:
             self.data = []
@@ -33,7 +34,8 @@ class TagsField(Field):
 
     @classmethod
     def _remove_duplicates(cls, seq):
-        """Remove duplicates in a case insensitive, but case preserving manner"""
+        """Remove duplicates in a case insensitive,
+        but case preserving manner"""
         d = {}
         for item in seq:
             if item.lower() not in d:

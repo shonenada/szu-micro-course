@@ -12,11 +12,11 @@ from mooc.resource.form import ResourceForm
 from mooc.account.form import UserForm, SzuAccountForm, NewUserForm
 from mooc.master.utils import generate_all_controller
 from mooc.master.service import common_paginate, common_delete
-from mooc.account.service import update_user_state,\
-                                 change_user_password,\
-                                 create_user
-from mooc.course.service import create_subject, create_category,\
-                                create_course, create_lecture
+from mooc.account.service import (update_user_state,
+                                  change_user_password,
+                                  create_user)
+from mooc.course.service import (create_subject, create_category,
+                                 create_course, create_lecture)
 from mooc.resource.service import create_resource
 
 
@@ -24,30 +24,30 @@ master_app = Blueprint('master', __name__, template_folder='../templates')
 
 
 generate_all_controller(
-    blueprint = master_app,
-    model = Subject,
-    form_model = SubjectForm,
-    create_method = create_subject)
+    blueprint=master_app,
+    model=Subject,
+    form_model=SubjectForm,
+    create_method=create_subject)
 generate_all_controller(
-    blueprint = master_app,
-    model = Category,
-    form_model = CategoryForm,
-    create_method = create_category)
+    blueprint=master_app,
+    model=Category,
+    form_model=CategoryForm,
+    create_method=create_category)
 generate_all_controller(
-    blueprint = master_app,
-    model = Course,
-    form_model = CourseForm,
-    create_method = create_course)
+    blueprint=master_app,
+    model=Course,
+    form_model=CourseForm,
+    create_method=create_course)
 generate_all_controller(
-    blueprint = master_app,
-    model = Lecture,
-    form_model = LectureForm,
-    create_method = create_lecture)
+    blueprint=master_app,
+    model=Lecture,
+    form_model=LectureForm,
+    create_method=create_lecture)
 generate_all_controller(
-    blueprint = master_app,
-    model = Resource,
-    form_model = ResourceForm,
-    create_method = create_resource)
+    blueprint=master_app,
+    model=Resource,
+    form_model=ResourceForm,
+    create_method=create_resource)
 
 
 @master_app.route('/')
@@ -68,9 +68,9 @@ def master_index():
 def master_account_list():
     page_num = int(request.args.get('page', 1))
     pagination = common_paginate(
-        model = User,
-        page = page_num,
-        per_page = current_app.config.get('ADMIN_PAGESIZE')
+        model=User,
+        page=page_num,
+        per_page=current_app.config.get('ADMIN_PAGESIZE')
     )
     return render_template('admin/account_list.html', pagination=pagination)
 

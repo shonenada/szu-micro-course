@@ -9,7 +9,7 @@ from mooc.course.model import Subject, Category, Course
 
 def get_learn_records():
     app.jinja_env.globals['learn_records'] = \
-    LearnRecord.query.order_by(LearnRecord.id.desc()).limit(10).all()
+        LearnRecord.query.order_by(LearnRecord.id.desc()).limit(10).all()
 
 
 def get_last_lecture():
