@@ -15,7 +15,7 @@ account_app = Blueprint('account', __name__, template_folder='../templates')
 
 @csrf.exempt
 @account_app.route('/signin', methods=['GET', 'POST'])
-@rbac.allow(['everyone'], ['GET', 'POST'])
+@rbac.allow(['anonymous'], ['GET', 'POST'])
 def signin():
     if not current_user.is_anonymous():
         return redirect(url_for('master.index'))
@@ -43,7 +43,7 @@ def forgot_password():
 
 
 @account_app.route('/logout')
-@rbac.allow(['everyone'], ['GET'])
+@rbac.allow(['anonymous'], ['GET'])
 def signout():
     logout_user()
     flash(u'退出成功', 'notice')

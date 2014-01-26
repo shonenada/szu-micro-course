@@ -48,6 +48,7 @@ class Role(RoleMixin, db.Model):
 
     def __init__(self, name):
         RoleMixin.__init__(self)
+        self.name = name
 
     def add_parent(self, parent):
         self.parents.append(parent)

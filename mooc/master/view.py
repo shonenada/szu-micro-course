@@ -51,7 +51,7 @@ generate_all_controller(
 
 
 @master_app.route('/')
-@rbac.allow(['everyone'], ['GET'])
+@rbac.allow(['anonymous'], ['GET'])
 def index():
     subjects = Subject.query.filter(Subject._state != 'deleted').all()
     return render_template('index.html', subjects=subjects)
@@ -123,7 +123,7 @@ def master_account_new():
 
 
 @master_app.route('/tag/<tag>', methods=['GET'])
-@rbac.allow(['everyone'], ['GET'])
+@rbac.allow(['anonymous'], ['GET'])
 def tag(tag):
     tags = tag.split(' ')
     things = set()

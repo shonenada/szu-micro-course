@@ -7,7 +7,7 @@ resource_app = Blueprint('resource', __name__, template_folder='../templates')
 
 
 @resource_app.route('/resource')
-@rbac.allow(['everyone'], ['GET'])
+@rbac.allow(['anonymous'], ['GET'])
 def list():
     page_num = int(request.args.get('page', 1))
     resource_query = (Resource.query.filter(Resource.state != 'DELETED')

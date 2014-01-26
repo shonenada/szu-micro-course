@@ -13,21 +13,21 @@ course_app = Blueprint('course', __name__, template_folder='../templates')
 
 
 @course_app.route('/courses')
-@rbac.allow(['everyone'], ['GET'])
+@rbac.allow(['anonymous'], ['GET'])
 def courses():
     subjects = Subject.query.all()
     return render_template('course/courses.html', subjects=subjects)
 
 
 @course_app.route('/courses/subject/<sid>')
-@rbac.allow(['everyone'], ['GET'])
+@rbac.allow(['anonymous'], ['GET'])
 def subject(sid):
     this_subject = Subject.query.get(sid)
     return render_template('course/subject.html', this_subject=this_subject)
 
 
 @course_app.route('/courses/subject/<sid>/category/<cid>')
-@rbac.allow(['everyone'], ['GET'])
+@rbac.allow(['anonymous'], ['GET'])
 def category(sid, cid):
     this_category = Category.query.get(cid)
     if int(this_category.subject.id) != int(sid):
@@ -36,7 +36,7 @@ def category(sid, cid):
 
 
 @course_app.route('/course/<course_id>')
-@rbac.allow(['everyone'], ['GET'])
+@rbac.allow(['anonymous'], ['GET'])
 def course(course_id):
     this_course = Course.query.get(course_id)
     lectures = (Lecture.query.filter_by(course_id=course_id)
@@ -46,7 +46,7 @@ def course(course_id):
 
 
 @course_app.route('/lecture/<lecture_id>')
-@rbac.allow(['everyone'], ['GET'])
+@rbac.allow(['anonymous'], ['GET'])
 def lecture(lecture_id):
     lecture = Lecture.query.get(lecture_id)
     who_is_learning = (LearnRecord.query.filter_by(lecture_id=lecture_id)
@@ -58,7 +58,7 @@ def lecture(lecture_id):
 
 
 @course_app.route('/lecture/<lecture_id>/questions')
-@rbac.allow(['everyone'], ['GET'])
+@rbac.allow(['anonymous'], ['GET'])
 def lecture_quretions(lecture_id):
     _quizs = (Quiz.query.filter_by(lecture_id=lecture_id)
                   .filter(Quiz.time_at != 0).all())
@@ -67,7 +67,7 @@ def lecture_quretions(lecture_id):
 
 
 @course_app.route('/lecture/<lecture_id>/check', methods=['POST'])
-@rbac.allow(['everyone'], ['POST'])
+@rbac.allow(['anonymous'], ['POST'])
 @csrf.exempt
 def lecture_check(lecture_id):
     quiz_id = request.form.get('quiz_id', None)

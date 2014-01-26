@@ -14,13 +14,13 @@ qa_app = Blueprint('qa', __name__, template_folder='../templates')
 
 
 @qa_app.route('/question')
-@rbac.allow(['everyone'], ['GET'])
+@rbac.allow(['anonymous'], ['GET'])
 def question():
     return redirect(url_for('qa.lastest'))
 
 
 @qa_app.route('/question/lastest')
-@rbac.allow(['everyone'], ['GET'])
+@rbac.allow(['anonymous'], ['GET'])
 def lastest():
     page_num = int(request.args.get('page', 1))
     question_query = (Question.query.filter(Question._state != 'DELETED')
@@ -32,7 +32,7 @@ def lastest():
 
 
 @qa_app.route('/question/hotest')
-@rbac.allow(['everyone'], ['GET'])
+@rbac.allow(['anonymous'], ['GET'])
 def hotest():
     page_num = int(request.args.get('page', 1))
     question_query = (Question.query.filter(Question._state != 'DELETED')
@@ -44,7 +44,7 @@ def hotest():
 
 
 @qa_app.route('/question/noanswer')
-@rbac.allow(['everyone'], ['GET'])
+@rbac.allow(['anonymous'], ['GET'])
 def noanswer():
     page_num = int(request.args.get('page', 1))
     question_query = (Question.query.filter(Question._state != 'DELETED')
@@ -56,7 +56,7 @@ def noanswer():
 
 
 @qa_app.route('/question/<int:qid>')
-@rbac.allow(['everyone'], ['GET'])
+@rbac.allow(['anonymous'], ['GET'])
 def view_question(qid):
     question = Question.query.get(qid)
     question.read_count += 1
@@ -135,7 +135,7 @@ def ask():
 
 
 @qa_app.route('/qa/tag/<tag>')
-@rbac.allow(['everyone'], ['GET'])
+@rbac.allow(['anonymous'], ['GET'])
 def tag(tag):
     hotest_tags = QuestionTag.query.order_by(QuestionTag.count.desc()).all()
     tags = tag.split(' ')
