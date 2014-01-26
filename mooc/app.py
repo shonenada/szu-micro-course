@@ -1,4 +1,4 @@
-import sys
+import os
 
 from flask import Flask
 
@@ -24,8 +24,10 @@ def create_app(import_name=None, config=None):
 
     app.config.from_object('mooc.settings')
 
-    if config:
-        app.config.from_pyfile(config)
+    if isinstance(config, dict):
+        app.config.update(config)
+    elif config:
+        app.config.from_pyfile(os.path.abspath(config))
 
     if app.config.get('SENTRY_ON', False):
         from raven.contrib.flask import Sentry

@@ -101,11 +101,24 @@ class User(db.Model, UserMixin):
     up_down_records = db.relationship('UpDownRecord', backref='user',
                                       uselist=True, lazy='dynamic')
 
-    def __init__(self, username, raw_passwd, nickname, is_male=True):
-        self.username = username
-        self.change_password(raw_passwd)
-        self.nickname = nickname
-        self.is_male = is_male
+    def __init__(self, **kwargs):
+
+        if 'username' in kwargs:
+            username = kwargs.pop('username')
+            self.username = username.lower()
+
+        if 'passwd' in kwargs:
+            raw_passwd = kwargs.pop('passwd')
+            self.change_password(raw_passwd)
+
+        if 'email' in kwargs:
+            email = kwargs.pop('email')
+            self.email = email.lower()
+
+        if 'is_male' in kwargs:
+            is_male = kwargs.pop('is_male')
+            self.is_male = (is_male == True)
+
         self.created = datetime.utcnow()
         self.last_login = datetime.utcnow()
         self.state = 'unactivated'

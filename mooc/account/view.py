@@ -19,21 +19,27 @@ account_app = Blueprint('account', __name__, template_folder='../templates')
 def signin():
     if not current_user.is_anonymous():
         return redirect(url_for('master.index'))
+
     form = SignInForm()
+
     if form.validate_on_submit():
         username = request.form['username'].strip()
         raw_passwd = request.form['password'].strip()
         is_remember_me = request.form.get('remember_me', 'f') == 'y'
         user = User.query.authenticate(username, raw_passwd)
+
         if user:
             login_user(user, force=True, remember=is_remember_me)
             flash(u'登录成功, %s 欢迎' % user.username, 'notice')
             return redirect(url_for('master.index'))
+
         else:
             flash(u'帐号或密码错误', 'warn')
             return redirect(url_for('account.signin'))
+
     if form.errors:
         flash(message=form.errors, category='warn', form_errors=True)
+
     return render_template('account/sign-in.html', form=form)
 
 
@@ -62,12 +68,15 @@ def people(username):
 def setting():
     user = current_user
     form = SettingForm(request.form, user)
+
     if form.validate_on_submit():
         form.populate_obj(user)
         user.is_male = user.is_male == 'True'
         db.session.add(user)
         db.session.commit()
         flash(message=u'修改成功', category='notice')
+
     if form.errors:
         flash(message=form.errors, category='warn', form_errors=True)
+
     return render_template('account/setting.html', user=user, form=form)
