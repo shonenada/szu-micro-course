@@ -5,9 +5,10 @@ from sqlalchemy import func, select
 from sqlalchemy.ext.hybrid import hybrid_property
 
 from mooc.app import db
+from mooc.helpers import enumdef
+from mooc.master.model import ModelMixin
 from mooc.account.model import SzuAccount
 from mooc.qa.model import Question
-from mooc.utils import enumdef
 
 
 lecture_tags = db.Table(
@@ -23,7 +24,7 @@ course_tags = db.Table(
 )
 
 
-class Subject(db.Model):
+class Subject(db.Model, ModelMixin):
 
     __tablename__ = 'subject'
 
@@ -64,7 +65,7 @@ class Subject(db.Model):
             db.session.commit()
 
 
-class Category(db.Model):
+class Category(db.Model, ModelMixin):
 
     __tablename__ = 'category'
     CATEGORY_STATE_VALUES = ('normal', 'deleted')
@@ -98,7 +99,7 @@ class Category(db.Model):
             db.session.commit()
 
 
-class Course(db.Model):
+class Course(db.Model, ModelMixin):
     """Model of Course"""
 
     __tablename__ = 'course'
@@ -161,7 +162,7 @@ class Course(db.Model):
         return "<Course %s>" % self.name
 
 
-class Lecture(db.Model):
+class Lecture(db.Model, ModelMixin):
     """Model of Course"""
 
     __tablename__ = 'lecture'
@@ -252,7 +253,7 @@ class Lecture(db.Model):
         return "<Lecture %s>" % self.name
 
 
-class Quiz(db.Model):
+class Quiz(db.Model, ModelMixin):
 
     __tablename__ = 'quiz'
 
@@ -270,7 +271,7 @@ class Quiz(db.Model):
         self.question = question
 
 
-class QuizOption(db.Model):
+class QuizOption(db.Model, ModelMixin):
 
     __tablename__ = 'quiz_option'
 
@@ -284,7 +285,7 @@ class QuizOption(db.Model):
         self.is_answer = is_answer
 
 
-class LearnRecord(db.Model):
+class LearnRecord(db.Model, ModelMixin):
 
     __tablename__ = 'learn_record'
 

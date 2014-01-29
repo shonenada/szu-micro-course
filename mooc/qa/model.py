@@ -4,7 +4,8 @@ from sqlalchemy import func, select
 from sqlalchemy.ext.hybrid import hybrid_property
 
 from mooc.app import db
-from mooc.utils import enumdef
+from mooc.helpers import enumdef
+from mooc.master.model import ModelMixin
 
 
 question_tags = db.Table(
@@ -14,7 +15,7 @@ question_tags = db.Table(
 )
 
 
-class UpDownRecord(db.Model):
+class UpDownRecord(db.Model, ModelMixin):
 
     __tablename__ = 'up_down_record'
 
@@ -40,7 +41,7 @@ class UpDownRecord(db.Model):
             self.up_or_down = self.TYPE_UP
 
 
-class Answer(db.Model):
+class Answer(db.Model, ModelMixin):
 
     __tablename__ = 'answer'
 
@@ -72,11 +73,11 @@ class Answer(db.Model):
         self.up_count = 0
         self.down_count = 0
         self.created = datetime.utcnow()
-        edit_time = datetime.utcnow()
+        self.edit_time = datetime.utcnow()
         self.state = 'normal'
 
 
-class Question(db.Model):
+class Question(db.Model, ModelMixin):
 
     __tablename__ = 'question'
 
@@ -140,7 +141,7 @@ class Question(db.Model):
                         cls.read_count * cls .WEIGHT_OF_READCOUNT)
 
 
-class QuestionTag(db.Model):
+class QuestionTag(db.Model, ModelMixin):
 
     __tablename__ = 'question_tag'
 
