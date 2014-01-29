@@ -4,7 +4,7 @@ from flask import render_template, request, url_for, redirect
 from flask.ext.login import login_user, logout_user, current_user
 
 from mooc.app import rbac, csrf, db
-from mooc.utils import flash
+from mooc.helpers import flash
 from mooc.account.model import User
 from mooc.account.form import SignInForm, SettingForm
 from mooc.account.service import load_user
