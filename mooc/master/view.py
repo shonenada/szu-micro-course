@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, current_app
 from flask import request, redirect, url_for, jsonify
 
 from mooc.app import rbac, db
-from mooc.utils import flash
+from mooc.helpers import flash
 from mooc.master.model import Tag
 from mooc.account.model import User, SzuAccount, College
 from mooc.course.model import Subject, Category, Course, Lecture
@@ -11,7 +11,6 @@ from mooc.course.form import SubjectForm, CategoryForm, CourseForm, LectureForm
 from mooc.resource.form import ResourceForm
 from mooc.account.form import UserForm, SzuAccountForm, NewUserForm
 from mooc.master.utils import generate_all_controller
-from mooc.master.service import common_paginate, common_delete
 from mooc.account.service import (update_user_state,
                                   change_user_password,
                                   create_user)
@@ -67,10 +66,9 @@ def master_index():
 @rbac.allow(['super_admin'], ['GET'])
 def master_account_list():
     page_num = int(request.args.get('page', 1))
-    pagination = common_paginate(
-        model=User,
+    pagination = User.paginate(
         page=page_num,
-        per_page=current_app.config.get('ADMIN_PAGESIZE')
+        per_page=current_app.config.get('ADMIN_PAGESIZE'),
     )
     return render_template('admin/account_list.html', pagination=pagination)
 
@@ -96,7 +94,8 @@ def master_account_edit(uid):
 @master_app.route('/master/account/<int:uid>', methods=['DELETE'])
 @rbac.allow(['super_admin'], ['DELETE'])
 def master_account_delete(uid):
-    common_delete(User, uid)
+    user = User.query.get(uid)
+    user.delete()
     flash(message='Operated successfully!', category='notice')
     return jsonify(success=True)
 

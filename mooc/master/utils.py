@@ -1,9 +1,11 @@
 from flask import request, render_template, current_app, jsonify
 
 from mooc.app import rbac
-from mooc.utils import flash
-from mooc.master.service import (common_paginate, common_delete,
-                                 common_edit, common_create)
+from mooc.helpers import flash
+
+
+def create_object():
+    pass
 
 
 def generate_endpoints(module_name):
@@ -32,8 +34,7 @@ def generate_list_controller(blueprint, model, **kwargs):
     @rbac.allow(['super_admin'], ['GET'])
     def list_controller():
         page_num = int(request.args.get('page', 1))
-        pagination = common_paginate(
-            model=model,
+        pagination= model.paginate(
             page=page_num,
             per_page=current_app.config.get('ADMIN_PAGESIZE')
         )
@@ -61,7 +62,7 @@ def generate_create_controller(blueprint, model, form_model, **kwargs):
             if create_method:
                 create_method(form.data)
             else:
-                common_create(model, form.data)
+                create_object(model, form.data)
             flash(message='Operated successfully', category='notice')
             return jsonify(success=True)
         if form.errors:
@@ -91,7 +92,7 @@ def generate_edit_controller(blueprint, model, form_model, **kwargs):
         else:
             form = form_model(request.form, obj)
         if form.validate_on_submit():
-            common_edit(obj, form.data, **kwargs)
+            obj.edit(form.data, **kwargs)
             flash('Operated successfully!', 'notice')
             return jsonify(success=True)
         if form.errors:
@@ -115,7 +116,8 @@ def generate_delete_controller(blueprint, model, **kwargs):
     )
     @rbac.allow(['super_admin'], ['DELETE'])
     def delete_controller(mid):
-        common_delete(model, mid)
+        obj = model.query.get(mid)
+        obj.delete()
         flash(message='Operated successfully!', category='notice')
         return jsonify(success=True)
 

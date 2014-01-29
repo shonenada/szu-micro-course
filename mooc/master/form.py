@@ -3,13 +3,22 @@ from wtforms.widgets import TextInput
 
 
 class TagsField(Field):
+    """Add a custom Field class.
+
+    This field is designed for tags.
+    It will get tags' object according to data in *form_data*.
+
+    :param tag_model: The model of Tag.
+    :param label: Label of this field.
+    :param validators: Decide validators for this field.
+    :param sep: How to seperate tags. Blank by default.
+    """
     widget = TextInput()
 
-    def __init__(self, tag_model, label='', validators=None,
-                 sep=u' ', **kwargs):
+    def __init__(self, tag_model, label='', validators=None, **kwargs):
         super(TagsField, self).__init__(label, validators, **kwargs)
         self.tag_model = tag_model
-        self.sep = sep
+        self.sep = kwargs.pop('sep', u' ')
 
     def _value(self):
         if self.data:
@@ -25,6 +34,7 @@ class TagsField(Field):
                 if not tag.strip():
                     continue
                 q_tag = self.tag_model.query.filter_by(tag=tag).first()
+
                 if not q_tag:
                     q_tag = self.tag_model(tag)
                 self.data.append(q_tag)
