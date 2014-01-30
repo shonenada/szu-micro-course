@@ -1,11 +1,66 @@
-{%- extends 'base.html' %}
+<!doctype html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ web_title or site_title}}</title>
+    <meta name="keywords" content="{{ web_keyword or site_keyword }}" />
+    <meta name="description" content="{{ web_description or site_description }}" />
+    {%- block base_stylesheet %}
+    <link href="{{ url_for('static', filename='styles/style.css')}}" media="all" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='styles/flash-messages.css')}}" media="all" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='styles/dropdown.css')}}" media="all" rel="stylesheet" />
+    {%- endblock %}
+    {%- block base_script %}
+    <script src="{{ url_for('static', filename='components/jquery/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/plugins/cookies_for_ajax.js') }}" language="javascript"></script>
+    <script src="{{ url_for('static', filename='scripts/global.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/plugins/mini-dropdown.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/flash-message.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/nav.js') }}"></script>
+    {%- endblock %}
+    {%- block ie_fix %}
+    <!--[if lt IE9]>
+    <link href="{{ url_for('static', filename='styles/animate.css')}}" media="all" rel="stylesheet" />
+    <script src="{{ url_for('static', filename='scripts/ui/animate.js')}}"></script>
+    <![endif]-->
+    {%- endblock %}
+    {%- block custom_static %}
+    {%- endblock %}
+</head>
 
-{%- block htmlhead %}
-<!--[if lt IE9]>
-<link href="{{ url_for('static', filename='styles/animate.css')}}" media="all" rel="stylesheet" />
-<script src="{{ url_for('static', filename='scripts/ui/animate.js')}}"></script>
-<![endif]-->
-{%- block static_files %}{%- endblock %}
+<body>
+{%- include 'flash-message.html' %}
+{%- block header %}
+<header id="header" class='full-width'>
+    <div id="nav-container" class="wrapper">
+        <a href="{{ url_for('master.index') }}" id="logo">微课程</a>
+        <nav id="nav">
+            <ul class="dropdown-nav">
+                <li class="index-link"><a href="{{url_for('master.index')}}">首页</a></li>
+                <li><a href="{{ url_for('course.courses') }}">课程库</a></li>
+                <li><a href="{{ url_for('qa.question') }} ">问答系统</a></li>
+                <li><a href="{{ url_for('resource.list')}}">课程资源</a></li>
+                {%- if current_user.is_anonymous() %}
+                <li><a href="{{ url_for('account.signin') }}">登录</a></li>
+                {%- else %}
+                <li>
+                    <a href="{{ url_for('account.setting') }}" class="user_logged">{{ current_user.username }}</a>
+                    <ul class="dropdown">
+                        {%- if has_perm('GET', 'master.master_index') %}
+                        <li><a href="{{ url_for('master.master_index') }}">系统管理</a></li>
+                        {%- endif %}
+                        <li><a href="{{ url_for('account.people', username=current_user.username) }}">个人主页</a></li>
+                        <li><a href="{{ url_for('account.setting') }}">设置</a></li>
+                        <li><a href="{{ url_for('account.signout') }}">退出</a></li>
+                    </ul>
+                </li>
+                {%- endif %}
+            </ul>
+        </nav>
+    </div>
+    {%- block header_banner %}{%- endblock %}
+</header>
 {%- endblock %}
 
 {%- block main %}
@@ -21,3 +76,25 @@
     </div>
 </div>
 {%- endblock %}
+
+{%- block footer %}
+<footer id="footer">
+    <div id="footer-banner" class="banner full-width">
+        {%- block footer_banner %}{%- endblock %}
+    </div>
+    <div id="link">
+        <ul>
+            <li class="first"><a href="/about">关于我们</a></li>
+            <li><a href="/contact">意见反馈</a></li>
+            <li><a href="/privacy">隐私声明</a></li>
+            <li><a href="#">新浪微博</a></li>
+        </ul>
+    </div>
+    <div id="copyright">
+        版权所有 &copy; 深圳大学 2013
+    </div>
+</footer>
+{%- endblock %}
+</body>
+</html>
+<!-- Execute time: {{ request_time() }} -->

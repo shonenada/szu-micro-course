@@ -1,19 +1,12 @@
 {% extends 'layout.html' %}
 
-{% block static_files %}
-<link href="{{ url_for('static', filename='components/bootstrap/docs/assets/css/bootstrap.css')}}" media="all" rel="stylesheet" />
+{% block custom_static %}
+<link href="{{ url_for('static', filename='styles/plugins/bootstrap.min.css')}}" media="all" rel="stylesheet" />
+<link href="{{ url_for('static', filename='styles/fix.css')}}" media="all" rel="stylesheet" />
+<link href="{{ url_for('static', filename='styles/dropdown.css')}}" media="all" rel="stylesheet" />
 <script src="{{ url_for('static', filename='scripts/plugins/flexpaper_flash.js')}}"></script>
 <script src="{{ url_for('static', filename='scripts/lecture.js')}}"></script>
 <script src="{{ url_for('static', filename='scripts/player.js')}}"></script>
-<!-- Fix the style effected by bootstrap -->
-<style>
-.dropdown {
-    position: absolute;
-}
-body {
-    font-family: arial, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
-}
-</style>
 <script>
 $(function(){
     window.register_lecture_id({{ lecture.id }})
