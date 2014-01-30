@@ -68,22 +68,24 @@ def create_app(import_name=None, config=None):
     return app
 
 
-_jinja_filters = {
-    'friendly_time': friendly_time,
-    'learn_count': learn_count,
-    'enumerate': (lambda x: enumerate(x)),
-    'ellipsis': (lambda x, l, f='...': "%s%s" %
-                 (x[:l], f if len(x) > l else '')),
-    'friendly_resource_category': friendly_resource_category,
-}
-
-_jinja_global = {
-    'has_perm': rbac.has_permission,
-    'request_time': lambda: "%.5fs" % (time.time() - g.request_start_time),
-}
-
-
 def setup_jinja(app):
+    _jinja_filters = {
+        'friendly_time': friendly_time,
+        'learn_count': learn_count,
+        'enumerate': (lambda x: enumerate(x)),
+        'ellipsis': (lambda x, l, f='...': "%s%s" %
+                     (x[:l], f if len(x) > l else '')),
+        'friendly_resource_category': friendly_resource_category,
+    }
+
+    _jinja_global = {
+        'site_title': app.config.get('SITE_TITLE'),
+        'site_keyword': app.config.get('SITE_KEYWORD'),    
+        'site_description': app.config.get('SITE_DESCRIPTION'),
+        'has_perm': rbac.has_permission,
+        'request_time': lambda: "%.5fs" % (time.time() - g.request_start_time),
+    }
+
     def setup_filter(app):
         for _fname, _ffunc in _jinja_filters.iteritems():
             app.add_template_filter(_ffunc, _fname)
