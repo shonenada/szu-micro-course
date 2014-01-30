@@ -120,8 +120,8 @@ def setup_babel(app):
     from flask.ext.babel import Babel
 
     babel = Babel(app)
+    default = app.config.get('BABEL_DEFAULT_LOCALE', 'en')
     supported = app.config.get('BABEL_SUPPORTED_LOCALES', ['en', 'zh'])
-    default = app.config.get('BABEL_DEFAULT_LOCALE', 'zh')
 
     @babel.localeselector
     def get_locale():
