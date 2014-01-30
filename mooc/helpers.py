@@ -1,6 +1,7 @@
 #-*- coding: utf-8 -*-
 from datetime import datetime
 
+from speaklater import is_lazy_string
 from flask.ext.babel import lazy_gettext as _
 
 from flask import flash as f
@@ -71,3 +72,6 @@ def flash(message, category='message', form_errors=False):
 
     if isinstance(message, tuple):
         f(message=', '.join([v for v in message]), category=category)
+
+    if is_lazy_string(message):
+        f(message=unicode(message), category=category)
