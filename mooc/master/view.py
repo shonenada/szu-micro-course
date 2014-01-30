@@ -22,31 +22,36 @@ from mooc.resource.service import create_resource
 master_app = Blueprint('master', __name__, template_folder='../templates')
 
 
-generate_all_controller(
-    blueprint=master_app,
-    model=Subject,
-    form_model=SubjectForm,
-    create_method=create_subject)
-generate_all_controller(
-    blueprint=master_app,
-    model=Category,
-    form_model=CategoryForm,
-    create_method=create_category)
-generate_all_controller(
-    blueprint=master_app,
-    model=Course,
-    form_model=CourseForm,
-    create_method=create_course)
-generate_all_controller(
-    blueprint=master_app,
-    model=Lecture,
-    form_model=LectureForm,
-    create_method=create_lecture)
-generate_all_controller(
-    blueprint=master_app,
-    model=Resource,
-    form_model=ResourceForm,
-    create_method=create_resource)
+controllers_args = [
+    {'model': Subject,
+     'form_model': SubjectForm,
+     'create_method': create_subject,
+    },
+    {'model': Category,
+     'form_model': CourseForm,
+     'create_method':create_category,
+    },
+    {'model': Course,
+     'form_model': CourseForm,
+     'create_method':create_course,
+    },
+    {'model': Lecture,
+     'form_model': LectureForm,
+     'create_method':create_lecture,
+    },
+    {'model': Resource,
+     'form_model': ResourceForm,
+     'create_method':create_resource,
+    },
+]
+
+for args in controllers_args:
+    generate_all_controller(
+        blueprint=master_app,
+        model=args.get('model'),
+        form_model=args.get('form_model'),
+        create_method=args.get('create_method')
+    )
 
 
 @master_app.route('/')
@@ -66,10 +71,7 @@ def master_index():
 @rbac.allow(['super_admin'], ['GET'])
 def master_account_list():
     page_num = int(request.args.get('page', 1))
-    pagination = User.paginate(
-        page=page_num,
-        per_page=current_app.config.get('ADMIN_PAGESIZE'),
-    )
+    pagination = User.paginate(page=page_num)
     return render_template('admin/account_list.html', pagination=pagination)
 
 
@@ -79,16 +81,21 @@ def master_account_edit(uid):
     user = User.query.get(uid)
     user_form = UserForm(request.form, user)
     szu_account_form = SzuAccountForm(request.form, user.szu_account)
+
     if user_form.validate_on_submit():
         update_user_state(uid, user_form.data['state'])
         flash('Operated successfully!', 'notice')
         return jsonify(success=True)
+
     if user_form.errors:
         flash(message=user_form.errors, category='error', form_errors=True)
         return jsonify(success=False)
-    return render_template('admin/account_edit.html', uid=uid,
-                           user_form=user_form,
-                           szu_account_form=szu_account_form)
+
+    return render_template(
+        'admin/account_edit.html',
+        uid=uid, 
+        user_form=user_form,
+        szu_account_form=szu_account_form)
 
 
 @master_app.route('/master/account/<int:uid>', methods=['DELETE'])
@@ -132,7 +139,9 @@ def tag(tag):
             if hasattr(l_tag, 'lectures'):
                 [setattr(x, 'type', 'lecture') for x in l_tag.lectures]
                 things.update(l_tag.lectures)
+
             if hasattr(l_tag, 'courses'):
                 [setattr(x, 'type', 'course') for x in l_tag.courses]
                 things.update(l_tag.courses)
+
     return render_template('tag_view.html', things=things, tag=tag)

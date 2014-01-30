@@ -15,19 +15,24 @@ type_texts = SzuAccount.TYPE_TEXTS
 
 
 class SignInForm(Form):
+    """User sign in form"""
     username = StringField(
         u'用户名',
-        validators=[InputRequired(message=u'用户名不能为空')])
+        validators=[InputRequired(message=u'用户名不能为空')]
+    )
     password = PasswordField(
         u'密码',
-        validators=[InputRequired(message=u'密码不能为空')])
+        validators=[InputRequired(message=u'密码不能为空')]
+    )
     remember_me = BooleanField(u'记住我')
 
 
 class UserForm(Form):
     username = StringField(label=u'Username')
     is_male = SelectField(
-        label=u'Gender', choices=[('True', u'Male'), ('False', u'Female')])
+        label=u'Gender',
+        choices=[('True', u'Male'), ('False', u'Female')]
+        )
     name = StringField(label=u'Name')
     email = StringField(label=u'Email')
     phone = StringField(label=u'Phone')
@@ -37,7 +42,9 @@ class UserForm(Form):
     last_ip = StringField(label=u'Last-log ip')
     state = SelectField(
         label=u'State',
-        choices=[(state_values[i], state_texts[i]) for i in range(0, 4)],
+        choices=[
+            (state_values[i], state_texts[i]) for i in xrange(len(state_texts))
+        ],
         validators=[InputRequired(message="Please choose the state.")])
 
 
@@ -67,10 +74,16 @@ class NewUserForm(Form):
     college = QuerySelectField(query_factory=get_colleges, allow_blank=False)
     szu_account_type = SelectField(
         label=u'Type',
-        choices=[(type_values[i], type_texts[i]) for i in range(0, 4)])
+        choices=[
+            (type_values[i], type_texts[i]) for i in xrange(len(type_texts))
+        ]
+    )
     state = SelectField(
         label=u'State', default=state_values[3],
-        choices=[(state_values[i], state_texts[i]) for i in range(0, 4)])
+        choices=[
+            (state_values[i], state_texts[i]) for i in xrange(len(state_texts))
+        ]
+    )
 
 
 class SettingForm(Form):

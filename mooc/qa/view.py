@@ -79,10 +79,8 @@ def vote_answer():
         return jsonify(success=False, message=u'Error params')
 
     record = (UpDownRecord.query
-                          .filter(UpDownRecord.user_id ==
-                                  current_user.id)
-                          .filter(UpDownRecord.answer ==
-                                  answer).first())
+              .filter(UpDownRecord.user_id == current_user.id)
+              .filter(UpDownRecord.answer == answer).first())
 
     if record:
         return jsonify(success=False, message=u'You have voted!')

@@ -9,6 +9,7 @@ def create_object():
 
 
 def generate_endpoints(module_name):
+    """Generate four kinds of endpoints."""
     endpoints = {
         'list': 'master.master_%s_list' % module_name,
         'create': 'master.master_%s_new' % module_name,
@@ -24,6 +25,9 @@ def _get_endpoint(module_name, action):
 
 
 def generate_list_controller(blueprint, model, **kwargs):
+    """Generate a controller to list information,
+    in order to reduce duplication of codes.
+    """
     module_name = model.__name__.lower()
 
     @blueprint.route(
@@ -34,10 +38,7 @@ def generate_list_controller(blueprint, model, **kwargs):
     @rbac.allow(['super_admin'], ['GET'])
     def list_controller():
         page_num = int(request.args.get('page', 1))
-        pagination= model.paginate(
-            page=page_num,
-            per_page=current_app.config.get('ADMIN_PAGESIZE')
-        )
+        pagination = model.paginate(page=page_num)
         return render_template(
             'admin/%s_list.html' % module_name,
             pagination=pagination,
@@ -47,6 +48,12 @@ def generate_list_controller(blueprint, model, **kwargs):
 
 
 def generate_create_controller(blueprint, model, form_model, **kwargs):
+    """Generate a controller to list information,
+    in order to reduce duplication of codes.
+
+    :param form_model: Required, and specify model of form.
+    :param create_method: Specify create_method.
+    """
     module_name = model.__name__.lower()
 
     @blueprint.route(
@@ -58,15 +65,19 @@ def generate_create_controller(blueprint, model, form_model, **kwargs):
     def create_controller():
         form = form_model()
         create_method = kwargs.get('create_method')
+
         if form.validate_on_submit():
             if create_method:
                 create_method(form.data)
             else:
                 create_object(model, form.data)
+
             flash(message='Operated successfully', category='notice')
             return jsonify(success=True)
+
         if form.errors:
             return jsonify(success=False, messages=form.errors.values())
+
         return render_template(
             'admin/%s_new.html' % module_name,
             form=form,
@@ -76,6 +87,12 @@ def generate_create_controller(blueprint, model, form_model, **kwargs):
 
 
 def generate_edit_controller(blueprint, model, form_model, **kwargs):
+    """Generate a controller to list information,
+    in order to reduce duplication of codes.
+
+    :param form_model: Required, and specify model of form.
+    :param form_args: Specify form_args for form model.
+    """
     module_name = model.__name__.lower()
 
     @blueprint.route(
@@ -87,16 +104,20 @@ def generate_edit_controller(blueprint, model, form_model, **kwargs):
     def edit_controller(mid):
         obj = model.query.get(mid)
         form_args = kwargs.get('form_args', None)
+
         if form_args:
             form = form_model(request.form, obj, **form_args)
         else:
             form = form_model(request.form, obj)
+
         if form.validate_on_submit():
             obj.edit(form.data, **kwargs)
             flash('Operated successfully!', 'notice')
             return jsonify(success=True)
+
         if form.errors:
             return jsonify(success=False, messages=form.errors.values())
+
         return render_template(
             'admin/%s_edit.html' % module_name,
             mid=mid,
