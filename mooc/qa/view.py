@@ -1,6 +1,7 @@
 from sqlalchemy import func, select
 from flask import Blueprint, render_template, request
 from flask import jsonify, redirect, url_for
+from flask.ext.babel import lazy_gettext as _
 from flask.ext.sqlalchemy import Pagination
 from flask.ext.login import current_user
 
@@ -72,18 +73,18 @@ def vote_answer():
     aid = int(request.form.get('aid', None))
     action = request.form.get('action', None)
     if not (aid or action in VALID_ACTION):
-        return jsonify(success=False, message=u'Error Params')
+        return jsonify(success=False, message=_('Error params'))
 
     answer = Answer.query.get(aid)
     if not answer:
-        return jsonify(success=False, message=u'Error params')
+        return jsonify(success=False, message=_('Error params'))
 
     record = (UpDownRecord.query
               .filter(UpDownRecord.user_id == current_user.id)
               .filter(UpDownRecord.answer == answer).first())
 
     if record:
-        return jsonify(success=False, message=u'You have voted!')
+        return jsonify(success=False, message=_('You have voted!'))
 
     vote_type = (UpDownRecord.TYPE_DOWN
                  if action == 'down' else UpDownRecord.TYPE_UP)
@@ -93,7 +94,7 @@ def vote_answer():
     db.session.add(answer)
     db.session.add(vote_record)
     db.session.commit()
-    return jsonify(success=True, message=u'Success')
+    return jsonify(success=True, message=_('Success'))
 
 
 @qa_app.route('/question/<int:qid>/answer', methods=['POST'])
@@ -102,7 +103,7 @@ def answer(qid):
     question = Question.query.get(qid)
     answer_text = request.form.get('answer', None)
     if not answer_text:
-        return jsonify(success=False, message=u'Please answer the question')
+        return jsonify(success=False, message=_('Please answer the question'))
     answer = Answer(answer_text, question, current_user)
     db.session.add(answer)
     db.session.commit()

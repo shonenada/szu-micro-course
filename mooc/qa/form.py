@@ -1,13 +1,14 @@
 #-*-coding: utf-8 -*-
-from flask_wtf import Form
+from flask.ext.babel import lazy_gettext as _
+from flask.ext.wtf import Form
 from wtforms import StringField, BooleanField, TextAreaField
 from wtforms.validators import InputRequired
 
 
 class AskForm(Form):
     title = StringField(
-        u'标题', validators=[InputRequired(message=u'标题不能为空')])
+        _('Title'), validators=[InputRequired(message=_('Title is required'))])
     content = TextAreaField(
-        u'内容',
-        validators=[InputRequired(message=u'内容不能为空')])
-    tags = StringField(u'标签')
+        _('Content'),
+        validators=[InputRequired(message=_("Content is required"))])
+    tags = StringField(label=_('Tags'))

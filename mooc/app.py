@@ -1,7 +1,7 @@
 import os
 import time
 
-from flask import Flask, g, render_template, current_app
+from flask import Flask, g, render_template, current_app, request
 
 from mooc.extensions import gears, setup_compilers, setup_compressors
 from mooc.extensions import setup_gears_environment
@@ -56,8 +56,8 @@ def create_app(import_name=None, config=None):
     app.before_request(get_last_lecture)
 
     setup_error_pages(app)
-
     setup_jinja(app)
+    setup_babel(app)
 
     app.register_blueprint(master_app)
     app.register_blueprint(account_app)
@@ -114,3 +114,15 @@ def setup_error_pages(app):
     @app.errorhandler(405)
     def method_not_allow(error):
         return render_template('errors/405.html'), 405
+
+
+def setup_babel(app):
+    from flask.ext.babel import Babel
+
+    babel = Babel(app)
+    default = app.config.get('BABEL_DEFAULT_LOCALE', 'en')
+    supported = app.config.get('BABEL_SUPPORTED_LOCALES', ['en', 'zh'])
+
+    @babel.localeselector
+    def get_locale():
+        return request.accept_languages.best_match(supported, default)

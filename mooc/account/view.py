@@ -1,6 +1,7 @@
 #-*- coding: utf-8 -*-
 from flask import Blueprint
 from flask import render_template, request, url_for, redirect
+from flask.ext.babel import lazy_gettext as _
 from flask.ext.login import login_user, logout_user, current_user
 
 from mooc.app import rbac, csrf, db
@@ -30,11 +31,12 @@ def signin():
 
         if user:
             login_user(user, force=True, remember=is_remember_me)
-            flash(u'登录成功, %s 欢迎' % user.username, 'notice')
+            flash(_('Logged in successfully, Welcome %(username)s',
+                    username=user.username), 'notice')
             return redirect(url_for('master.index'))
 
         else:
-            flash(u'帐号或密码错误', 'warn')
+            flash(_('Wrong username or password'), 'warn')
             return redirect(url_for('account.signin'))
 
     if form.errors:
@@ -52,7 +54,7 @@ def forgot_password():
 @rbac.allow(['anonymous'], ['GET'])
 def signout():
     logout_user()
-    flash(u'退出成功', 'notice')
+    flash(_('Logged out successfully.'), 'notice')
     return redirect(url_for('master.index'))
 
 
@@ -67,14 +69,27 @@ def people(username):
 @rbac.allow(['local_user'], ['GET', 'POST'])
 def setting():
     user = current_user
-    form = SettingForm(request.form, user)
+    form = SettingForm(
+        formdata=None,
+        obj=None,
+        data={'name': user.name,
+              'nickname': user.nickname,
+              'is_male': user.is_male,
+              'college': user.szu_account.college,
+              'card_id': user.szu_account.card_id,
+              'stu_number': user.szu_account.stu_number,
+              'email': user.email,
+              'phone': user.phone,
+              'short_phone': user.szu_account.short_phone}
+    )
 
     if form.validate_on_submit():
         form.populate_obj(user)
         user.is_male = user.is_male == 'True'
-        db.session.add(user)
-        db.session.commit()
-        flash(message=u'修改成功', category='notice')
+        form.populate_obj(user.szu_account)
+        user.save()
+        user.szu_account.save()
+        flash(message=_('Modified successfully.'), category='notice')
 
     if form.errors:
         flash(message=form.errors, category='warn', form_errors=True)

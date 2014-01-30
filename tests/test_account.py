@@ -1,4 +1,5 @@
 # coding: utf-8
+
 from .suite import BaseSuite
 
 
@@ -13,7 +14,7 @@ class SigninUnitTests(BaseSuite):
         rv = self.client.post('/signin')
         data = rv.data
         self.assertIn('flash-message-box', data)
-        self.assertIn('用户名不能为空', data)
+        self.assertIn('This field is required', data)
 
     def test_success(self):
         rv = self.client.post('/signin', data={

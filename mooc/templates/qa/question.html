@@ -8,14 +8,14 @@
 <div id="left">
     <div id="question-description">
         <div id="question-info">
-            <div id="question-title">{{ question.title }} {% if question.lecture %}<span>来自<a href="{{ url_for('course.lecture', lecture_id=question.lecture.id )}}">《{{ question.lecture.name }}》</a>课程的问题</span>{% endif %}</div>
+            <div id="question-title">{{ question.title }} {% if question.lecture %}<span> {{ _('From') }}<a href="{{ url_for('course.lecture', lecture_id=question.lecture.id )}}">《{{ question.lecture.name }}》</a>{{ _("'s Questions") }}}</span>{% endif %}</div>
             <ul id="question-tags">
             {%- for tag in question.tags %}
                 <li><span><a href="{{ url_for('qa.tag', tag=tag.tag) }}">{{ tag.tag }}</a></span></li>
             {%- endfor %}
                 <li class="author">{{ question.author.nickname }}</li>
                 <li class="time">{{ question.created | friendly_time }}</li>
-                <li class="count">{{ question.read_count }}次浏览</li>
+                <li class="count">{{ question.read_count }} {{ _('view(s)') }}</li>
             </ul>
         </div>
         <div class="avatar"><img src="{{ question.author.avatar | default('/static/images/default_avatar.png') }}" /></div>
@@ -49,7 +49,7 @@
                     <span class="author">{{ a.author.nickname }}</span>
                     <span class="time">{{ a.created | friendly_time }}</span>
                     <div class="clear"></div>
-                    <span class="up_count"><a>{{ a.up_count }}</a>次赞同</span>
+                    <span class="up_count"><a>{{ a.up_count }}</a> {{ _('up(s)') }}</span>
                 </div>
                 <div class="clear"></div>
                 <p class="content">{{ a.content }}</p>
@@ -62,11 +62,11 @@
 
     <div id="re-answer">
         <form id="re-answer-form" action="{{ url_for('qa.answer', qid=question.id) }}">
-            <label>回答问题：</label>
+            <label>{{ _('Reply:') }}</label>
             <div>
                 <textarea name="answer"></textarea>
             </div>
-            <input type="submit" value="回答" id="submit" />
+            <input type="submit" value="{{ _('Reply') }}" id="submit" />
             <div class="clear"></div>
         </form>
     </div>

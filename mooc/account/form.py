@@ -4,6 +4,7 @@ from wtforms import (StringField, BooleanField, PasswordField,
                      SelectField, DateTimeField, TextAreaField)
 from wtforms.validators import InputRequired, Email
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
+from flask.ext.babel import lazy_gettext as _
 
 from mooc.account.model import User, SzuAccount, College
 
@@ -17,41 +18,44 @@ type_texts = SzuAccount.TYPE_TEXTS
 class SignInForm(Form):
     """User sign in form"""
     username = StringField(
-        u'用户名',
-        validators=[InputRequired(message=u'用户名不能为空')]
+        _('Username'), validators=[InputRequired()]
     )
     password = PasswordField(
-        u'密码',
-        validators=[InputRequired(message=u'密码不能为空')]
+        _('Password'), validators=[InputRequired()]
     )
-    remember_me = BooleanField(u'记住我')
+    remember_me = BooleanField(_('Remember Me'))
 
 
 class UserForm(Form):
-    username = StringField(label=u'Username')
+    class Meta:
+        model = User
+
+    username = StringField(label=_('Username'))
     is_male = SelectField(
-        label=u'Gender',
-        choices=[('True', u'Male'), ('False', u'Female')]
+        label=_('Gender'),
+        choices=[('True', _('Male')), ('False', _('Female'))]
         )
-    name = StringField(label=u'Name')
-    email = StringField(label=u'Email')
-    phone = StringField(label=u'Phone')
-    qq = StringField(label=u'QQ')
-    created = DateTimeField(label=u'Joined at')
-    last_login = DateTimeField(label=u'Last-log at')
-    last_ip = StringField(label=u'Last-log ip')
+    name = StringField(label=_('Real Name'))
+    email = StringField(label=_('Email'))
+    phone = StringField(label=_('Phone Number'))
+    qq = StringField(label=_('QQ'))
+    created = DateTimeField(label=_('Joined at'))
+    last_login = DateTimeField(label=_('Last-log at'))
+    last_ip = StringField(label=_('Last-log ip'))
     state = SelectField(
-        label=u'State',
+        label=_('State'),
         choices=[
             (state_values[i], state_texts[i]) for i in xrange(len(state_texts))
-        ],
-        validators=[InputRequired(message="Please choose the state.")])
+        ], validators=[InputRequired()])
 
 
 class SzuAccountForm(Form):
-    card_id = StringField(label=u'Card ID')
-    stu_number = StringField(label=u'Student Number')
-    short_phone = StringField(label=u'Short Phone')
+    class Meta:
+        model = SzuAccount
+
+    card_id = StringField(label=_('Card ID'))
+    stu_number = StringField(label=_('Student Number'))
+    short_phone = StringField(label=_('Short Phone Number'))
 
 
 class NewUserForm(Form):
@@ -59,21 +63,21 @@ class NewUserForm(Form):
     def get_colleges():
         return College.query.all()
 
-    username = StringField(label=u'Username', validators=[InputRequired()])
-    raw_passwd = PasswordField(label=u'Password', validators=[InputRequired()])
-    name = StringField(label=u'Name', validators=[InputRequired()])
-    nickname = StringField(label=u'Nickname', validators=[InputRequired()])
-    is_male = SelectField(label=u'Gender',
-                          choices=[('True', u'Male'), ('False', u'Female')])
-    email = StringField(label=u'Email', validators=[Email()])
-    phone = StringField(label=u'Phone')
-    short_phone = StringField(label=u'Short Phone')
-    qq = StringField(label=u'QQ')
-    card_id = StringField(label=u'Card ID')
-    stu_number = StringField(label=u'Student Number')
+    username = StringField(label=_('Username'), validators=[InputRequired()])
+    raw_passwd = PasswordField(label=_('Password'), validators=[InputRequired()])
+    name = StringField(label=_('Real Name'), validators=[InputRequired()])
+    nickname = StringField(label=_('Nickname'), validators=[InputRequired()])
+    is_male = SelectField(label=_('Gender'),
+                          choices=[('True', _('Male')), ('False', _('Female'))])
+    email = StringField(label=_('Email'), validators=[Email()])
+    phone = StringField(label=_('Phone Number'))
+    short_phone = StringField(label=_('Short Phone Number'))
+    qq = StringField(label=_('QQ'))
+    card_id = StringField(label=_('Card ID'))
+    stu_number = StringField(label=_('Student Number'))
     college = QuerySelectField(query_factory=get_colleges, allow_blank=False)
     szu_account_type = SelectField(
-        label=u'Type',
+        label=_('Type'),
         choices=[
             (type_values[i], type_texts[i]) for i in xrange(len(type_texts))
         ]
@@ -91,22 +95,22 @@ class SettingForm(Form):
     def get_colleges():
         return College.query.all()
 
-    name = StringField(label=u'姓名')
-    nickname = StringField(label=u'昵称')
+    name = StringField(label=_('Real Name'))
+    nickname = StringField(label=_('Nickname'))
     is_male = SelectField(
-        label=u'性别',
+        label=_('Gender'),
         choices=[
-            ('True', u'男'),
-            ('False', u'女')
+            ('True', _('Male')),
+            ('False', _('Female'))
         ]
     )
     college = QuerySelectField(
-        label=u'学院',
+        label=_('College'),
         query_factory=get_colleges,
         allow_blank=False
     )
-    card_id = StringField(label=u'校园卡号')
-    stu_number = StringField(label=u'学号')
-    email = StringField(label=u'邮箱')
-    phone = StringField(label=u'长号')
-    short_phone = StringField(label=u'短号')
+    card_id = StringField(label=_('Card ID'))
+    stu_number = StringField(label=_('Student Number'))
+    email = StringField(label=_('Email'))
+    phone = StringField(label=_('Phone Number'))
+    short_phone = StringField(label=_('Short Phone Number'))

@@ -1,4 +1,5 @@
-<!doctype html>
+<!DOCTYPE html>
+<html lang="zh">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -34,25 +35,25 @@
 {%- block header %}
 <header id="header" class='full-width'>
     <div id="nav-container" class="wrapper">
-        <a href="{{ url_for('master.index') }}" id="logo">微课程</a>
+        <a href="{{ url_for('master.index') }}" id="logo">{{ _('MicroLecture') }}</a>
         <nav id="nav">
             <ul class="dropdown-nav">
-                <li class="index-link"><a href="{{url_for('master.index')}}">首页</a></li>
-                <li><a href="{{ url_for('course.courses') }}">课程库</a></li>
-                <li><a href="{{ url_for('qa.question') }} ">问答系统</a></li>
-                <li><a href="{{ url_for('resource.list')}}">课程资源</a></li>
+                <li class="index-link"><a href="{{url_for('master.index')}}">{{ _('Home') }}</a></li>
+                <li><a href="{{ url_for('course.courses') }}">{{ _('Courses') }}</a></li>
+                <li><a href="{{ url_for('qa.question') }} ">{{ _('Discuss') }}</a></li>
+                <li><a href="{{ url_for('resource.list')}}">{{ _('Resources') }}</a></li>
                 {%- if current_user.is_anonymous() %}
-                <li><a href="{{ url_for('account.signin') }}">登录</a></li>
+                <li><a href="{{ url_for('account.signin') }}">{{ _('Sign In') }}</a></li>
                 {%- else %}
                 <li>
                     <a href="{{ url_for('account.setting') }}" class="user_logged">{{ current_user.username }}</a>
                     <ul class="dropdown">
                         {%- if has_perm('GET', 'master.master_index') %}
-                        <li><a href="{{ url_for('master.master_index') }}">系统管理</a></li>
+                        <li><a href="{{ url_for('master.master_index') }}">{{ _('Dashboard') }}</a></li>
                         {%- endif %}
-                        <li><a href="{{ url_for('account.people', username=current_user.username) }}">个人主页</a></li>
-                        <li><a href="{{ url_for('account.setting') }}">设置</a></li>
-                        <li><a href="{{ url_for('account.signout') }}">退出</a></li>
+                        <li><a href="{{ url_for('account.people', username=current_user.username) }}">{{ _('Personal Page') }}</a></li>
+                        <li><a href="{{ url_for('account.setting') }}">{{ _('User Settings') }}</a></li>
+                        <li><a href="{{ url_for('account.signout') }}">{{ _('Sign Out') }}</a></li>
                     </ul>
                 </li>
                 {%- endif %}
@@ -84,14 +85,13 @@
     </div>
     <div id="link">
         <ul>
-            <li class="first"><a href="/about">关于我们</a></li>
-            <li><a href="/contact">意见反馈</a></li>
-            <li><a href="/privacy">隐私声明</a></li>
-            <li><a href="#">新浪微博</a></li>
+            <li class="first"><a href="/about">{{ _('About Us') }}</a></li>
+            <li><a href="/contact">{{ _('Feedback') }}</a></li>
+            <li><a href="/privacy">{{ _('Privacy') }}</a></li>
         </ul>
     </div>
     <div id="copyright">
-        版权所有 &copy; 深圳大学 2013
+        {{ _('copyright') }} &copy; {{ _('Shenzhen University') }} 2013
     </div>
 </footer>
 {%- endblock %}

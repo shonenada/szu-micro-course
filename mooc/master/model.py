@@ -47,6 +47,11 @@ class ModelMixin(object):
 
         return pagination
 
+    def save(self):
+        """Proxy method of saving object to database"""
+        db.session.add(self)
+        db.session.commit()
+
     def edit(self, form_data, commit=True):
         """Edit object from `form_data`.
 

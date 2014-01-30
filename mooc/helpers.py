@@ -1,6 +1,9 @@
 #-*- coding: utf-8 -*-
 from datetime import datetime
 
+from speaklater import is_lazy_string
+from flask.ext.babel import lazy_gettext as _
+
 from flask import flash as f
 
 
@@ -16,26 +19,26 @@ def friendly_time(time):
         return ''
     if day_diff == 0:
         if second_diff < 10:
-            return u"刚刚"
+            return _('Just now')
         if second_diff < 60:
-            return str(second_diff) + u"秒前"
+            return _('%(secdiff)s seconds ago', secdiff=str(second_diff))
         if second_diff < 120:
-            return u"1分钟前"
+            return _('1 minute ago')
         if second_diff < 3600:
-            return str(second_diff / 60) + u"分钟前"
+            return _('%(secdiff)s minutes ago', secdiff=str(second_diff / 60))
         if second_diff < 7200:
-            return u"1小时前"
+            return _('1 hour ago')
         if second_diff < 86400:
-            return str(second_diff / 3600) + u"小时前"
+            return _('%(secdiff)s hours ago', secdiff=str(second_diff / 3600))
     if day_diff == 1:
-        return u"昨天"
+        return _('Yesterday')
     if day_diff < 7:
-        return str(day_diff) + u"天前"
+        return _('%(secdiff)s day(s) ago', secdiff=str(day_diff))
     if day_diff < 31:
-        return str(day_diff / 7) + u"周前"
+        return _('%(secdiff)s week(s) ago', secdiff=str(day_diff / 7))
     if day_diff < 365:
-        return str(day_diff / 30) + u"月前"
-    return str(day_diff / 365) + u"年前"
+        return _('%(secdiff)s month(s) ago', secdiff=str(day_diff / 30))
+    return _('%(secdiff)s year(s) ago', secdiff=str(day_diff / 365))
 
 
 def enumdef(attr_name, attr_values):
@@ -69,3 +72,6 @@ def flash(message, category='message', form_errors=False):
 
     if isinstance(message, tuple):
         f(message=', '.join([v for v in message]), category=category)
+
+    if is_lazy_string(message):
+        f(message=unicode(message), category=category)

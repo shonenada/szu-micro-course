@@ -2,7 +2,7 @@
             {% if tags %}
             <div class="info-wrapper">
                 <div id="question-tags" class="info-box">
-                    <div class="title">热门标签</div>
+                    <div class="title">{{ _('Hot Tags') }}</div>
                     <div class="content">
                         <div class="content-list">
                             <ul>
@@ -20,9 +20,7 @@
             {% if learn_records %}
             <div class="info-wrapper">
                 <div id="learn-act" class="info-box">
-                    <div class="title">
-                        学习动态
-                    </div>
+                    <div class="title">{{ _('Activity') }}</div>
                     <div class="content">
                         {% for record in learn_records %}
                         <div class="content-list">
@@ -33,7 +31,7 @@
                                 <div>
                                 <span class="tip-text username">{{ record.user.nickname }}</span>
                                 <span class="tip-text time">{{ record.created | friendly_time }}</span>
-                                <span class="tip-text">学习了</span>
+                                <span class="tip-text">{{ _('learnt') }}</span>
                                 </div>
                                 <span class="course-name">
                                     <a href="{{ url_for('course.lecture', lecture_id=record.lecture.id) }}">
@@ -51,9 +49,7 @@
             {% if last_lectures %}
             <div class="info-wrapper">
                 <div id="last-course" class="info-box">
-                    <div class="title">
-                        最新课程
-                    </div>
+                    <div class="title">{{ _('Recent Courses') }}</div>
                     <div class="content">
                         {% for lc in last_lectures %}
                         <div class="content-list">
@@ -62,10 +58,10 @@
                             </div>
                             <div class="tip">
                                 <div>
-                                <span class="tip-text username">{% if not lc.course.teacher %}管理员{% else %}
-                                {{ lc.course.teacher.szu_account.user.name or lc.course.teacher.szu_account.user.nickname or '管理员' }}{% endif %}</span>
+                                <span class="tip-text username">{% if not lc.course.teacher %}{{ _('Administrator') }}{% else %}
+                                {{ lc.course.teacher.szu_account.user.name or lc.course.teacher.szu_account.user.nickname or _('Administrator') }}{% endif %}</span>
                                 <span class="tip-text time">{{ lc.upload_time | friendly_time }}</span>
-                                <span class="tip-text">发布了</span>
+                                <span class="tip-text">{{ _('published') }}</span>
                                 </div>
                                 <span class="course-name">
                                     <a href="{{ url_for('course.lecture', lecture_id=lc.id) }}">
@@ -78,7 +74,7 @@
                     </div>
                 </div>
                 <div id="all-course-btn" class="wrapper-foot">
-                    <a href="{{ url_for('course.courses')}}">所有课程</a>
+                    <a href="{{ url_for('course.courses')}}">{{ _('More Courses') }}</a>
                 </div>
                 <div class="shadow"></div>
             </div>

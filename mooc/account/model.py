@@ -3,6 +3,7 @@ from hashlib import sha256
 from datetime import datetime
 
 from flask import url_for
+from flask.ext.babel import lazy_gettext as _
 from flask.ext.sqlalchemy import BaseQuery
 from flask.ext.rbac import RoleMixin, UserMixin
 
@@ -75,7 +76,8 @@ class User(db.Model, UserMixin, ModelMixin):
     __tablename__ = 'user'
     query_class = UserQuery
     USER_STATE_VALUES = ('normal', 'frozen', 'deleted', 'unactivated')
-    USER_STATE_TEXTS = ('Normal', 'Frozen', 'Deleted', 'Unactivated')
+    USER_STATE_TEXTS = (_('Normal'), _('Frozen'),
+                        _('Deleted'), _('Unactivated'))
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(30), nullable=True)
@@ -182,7 +184,8 @@ class SzuAccount(db.Model, ModelMixin):
     __tablename__ = 'szu_account'
 
     TYPE_VALUES = ('undergrade', 'graduate', 'teacher', 'other')
-    TYPE_TEXTS = ('Undergrade', 'Graduate', 'Teacher', 'Other')
+    TYPE_TEXTS = (_('Undergrade'), _('Graduate'),
+                  _('Teacher'), _('Other'))
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
