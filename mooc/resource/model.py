@@ -1,10 +1,11 @@
 from datetime import datetime
 
 from mooc.app import db
-from mooc.utils import enumdef
+from mooc.helpers import enumdef
+from mooc.master.model import ModelMixin
 
 
-class Resource(db.Model):
+class Resource(db.Model, ModelMixin):
 
     __tablename__ = 'resource'
 

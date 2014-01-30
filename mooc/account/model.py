@@ -4,11 +4,12 @@ from datetime import datetime
 
 from flask import url_for
 from flask.ext.sqlalchemy import BaseQuery
-from flask_rbac import RoleMixin, UserMixin
+from flask.ext.rbac import RoleMixin, UserMixin
 
 from mooc.app import db
-from mooc.utils import enumdef
+from mooc.helpers import enumdef
 from mooc.exception import UserStateException
+from mooc.master.model import ModelMixin
 
 
 class UserQuery(BaseQuery):
@@ -33,7 +34,7 @@ users_roles = db.Table(
 )
 
 
-class Role(RoleMixin, db.Model):
+class Role(RoleMixin, db.Model, ModelMixin):
 
     __tablename__ = 'role'
 
@@ -68,7 +69,7 @@ class Role(RoleMixin, db.Model):
         return Role.query.filter_by(name=name).first()
 
 
-class User(db.Model, UserMixin):
+class User(db.Model, UserMixin, ModelMixin):
     """Model of user."""
 
     __tablename__ = 'user'
@@ -102,6 +103,7 @@ class User(db.Model, UserMixin):
                                       uselist=True, lazy='dynamic')
 
     def __init__(self, **kwargs):
+        self.salt = uuid4().hex
 
         if 'username' in kwargs:
             username = kwargs.pop('username')
@@ -175,7 +177,7 @@ class User(db.Model, UserMixin):
             raise UserStateException("The state of user is mismatched!")
 
 
-class SzuAccount(db.Model):
+class SzuAccount(db.Model, ModelMixin):
 
     __tablename__ = 'szu_account'
 
@@ -217,7 +219,7 @@ class SzuAccount(db.Model):
             self.szu_account_type = 'other'
 
 
-class College(db.Model):
+class College(db.Model, ModelMixin):
     """Model of College"""
 
     __tablename__ = 'college'
@@ -240,7 +242,7 @@ class College(db.Model):
         return "<College %s, %d>" % (self.name, self.order)
 
 
-class Teacher(db.Model):
+class Teacher(db.Model, ModelMixin):
     """Model of Teacher"""
 
     __tablename__ = 'teacher'

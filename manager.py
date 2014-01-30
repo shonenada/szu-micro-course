@@ -19,21 +19,28 @@ manager.add_command("runserver", server)
 
 @manager.command
 def clean():
+    """Clean *.pyc and *.pyo files"""
     cln()
 
 
 @manager.command
 def check():
+    """PEP8 Check"""
     pep8()
 
 
-@manager.command
-def run(port=13800):
+@manager.option('-p', dest='port', help='Port to host', default=13800)
+def run(port):
+    """Run app at 0.0.0.0"""
     application.run(host='0.0.0.0', port=port, debug=True)
 
 
-@manager.command
-def createdb(config="development.conf"):
+@manager.option('-c', dest='config', help='Config file',
+                default='development.conf')
+def createdb(config):
+    """Create database using `config` as config files,
+    use `development.conf by default
+    """
     config_file = os.path.join(app_root, config)
     application.config.from_pyfile(config_file)
     with application.test_request_context():
@@ -49,8 +56,10 @@ def createdb(config="development.conf"):
     print 'Created Database!'
 
 
-@manager.command
-def initdb(config="development.conf"):
+@manager.option('-c', dest='config', help='Config file',
+                default='development.conf')
+def initdb(config):
+    """Initialize database, fill data with `fixture` module."""
     config_file = os.path.join(app_root, config)
     application.config.from_pyfile(config_file)
     with application.test_request_context():
@@ -60,14 +69,20 @@ def initdb(config="development.conf"):
     print "Initialized Database!"
 
 
-@manager.command
-def syncdb(config="development.conf"):
+@manager.option('-c', dest='config', help='Config file',
+                default='development.conf')
+def syncdb(config):
+    """Create and initialize database"""
     createdb(config)
     initdb(config)
 
 
-@manager.command
-def find(content, path='./', suffix='py'):
+@manager.option('-c', dest='content', help='Content to find', required=True)
+@manager.option('-p', dest='path', default='./', help='Where to find')
+@manager.option('-s', dest='suffix', default='py',
+                help='What kinds of file to find.')
+def find(content, path, suffix):
+    """Find content in project."""
     file_pattern = r"^[a-zA-Z0-9_]+\.(" + suffix + ")$"
     search(path, file_pattern, content)
 
