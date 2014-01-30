@@ -18,12 +18,10 @@ type_texts = SzuAccount.TYPE_TEXTS
 class SignInForm(Form):
     """User sign in form"""
     username = StringField(
-        _('Username'),
-        validators=[InputRequired(message=_('Username is required'))]
+        _('Username'), validators=[InputRequired()]
     )
     password = PasswordField(
-        _('Password'),
-        validators=[InputRequired(message=_('Password is required'))]
+        _('Password'), validators=[InputRequired()]
     )
     remember_me = BooleanField(_('Remember Me'))
 
@@ -48,8 +46,7 @@ class UserForm(Form):
         label=_('State'),
         choices=[
             (state_values[i], state_texts[i]) for i in xrange(len(state_texts))
-        ],
-        validators=[InputRequired(message=_("Please choose the state."))])
+        ], validators=[InputRequired()])
 
 
 class SzuAccountForm(Form):
