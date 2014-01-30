@@ -27,9 +27,6 @@ class BaseSuite(unittest.TestCase):
         with self.app.test_request_context():
             db.create_all()
 
-        self.prepare_role()
-        self.prepare_account()
-
         if hasattr(self, 'prehook'):
             self.prehook()
 

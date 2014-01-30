@@ -31,3 +31,7 @@ class SigninUnitTests(BaseSuite):
         }, follow_redirects=True)
         self.assertIn('flash-message-box', rv.data)
         self.assertIn('<body class="">', rv.data)
+
+    def prehook(self):
+        self.prepare_role()
+        self.prepare_account()
