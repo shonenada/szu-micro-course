@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MOOC 0.1.0\n"
 "Report-Msgid-Bugs-To: shonenada@gmail.com\n"
-"POT-Creation-Date: 2014-01-30 19:33+0800\n"
+"POT-Creation-Date: 2014-01-30 20:04+0800\n"
 "PO-Revision-Date: 2014-01-30 17:58+0800\n"
 "Last-Translator: Yaoda Liu <shonenada@gmail.com>\n"
 "Language-Team: zh <LL@li.org>\n"
@@ -17,146 +17,134 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-#: helpers.py:21
+#: helpers.py:22
 msgid "Just now"
 msgstr "刚刚"
 
-#: helpers.py:23
-#, fuzzy, python-format
+#: helpers.py:24
+#, python-format
 msgid "%(secdiff)s seconds ago"
 msgstr "%(secdiff)s 秒前"
 
-#: helpers.py:25
+#: helpers.py:26
 msgid "1 minute ago"
 msgstr "1 分钟前"
 
-#: helpers.py:27
-#, fuzzy, python-format
+#: helpers.py:28
+#, python-format
 msgid "%(secdiff)s minutes ago"
 msgstr "%(secdiff)s 分钟前"
 
-#: helpers.py:29
+#: helpers.py:30
 msgid "1 hour ago"
 msgstr "1 小时前"
 
-#: helpers.py:31
-#, fuzzy, python-format
+#: helpers.py:32
+#, python-format
 msgid "%(secdiff)s hours ago"
 msgstr "%(secdiff)s 小时前"
 
-#: helpers.py:33
+#: helpers.py:34
 msgid "Yesterday"
 msgstr "昨天"
 
-#: helpers.py:35
-#, fuzzy, python-format
+#: helpers.py:36
+#, python-format
 msgid "%(secdiff)s day(s) ago"
 msgstr "%(secdiff)s 天前"
 
-#: helpers.py:37
-#, fuzzy, python-format
+#: helpers.py:38
+#, python-format
 msgid "%(secdiff)s week(s) ago"
 msgstr "%(secdiff)s 个星期前"
 
-#: helpers.py:39
-#, fuzzy, python-format
+#: helpers.py:40
+#, python-format
 msgid "%(secdiff)s month(s) ago"
 msgstr "%(secdiff)s 个月前"
 
-#: helpers.py:40
-#, fuzzy, python-format
+#: helpers.py:41
+#, python-format
 msgid "%(secdiff)s year(s) ago"
 msgstr "%(secdiff)s 年前"
 
-#: account/form.py:21 account/form.py:35 account/form.py:69
+#: account/form.py:21 account/form.py:33 account/form.py:66
 msgid "Username"
 msgstr "用户名"
 
-#: account/form.py:22
-msgid "Username is required"
-msgstr "用户名不能为空"
-
-#: account/form.py:25 account/form.py:70
+#: account/form.py:24 account/form.py:67
 msgid "Password"
 msgstr "密码"
 
 #: account/form.py:26
-msgid "Password is required"
-msgstr "用户名不能为空"
-
-#: account/form.py:28
 msgid "Remember Me"
 msgstr "记住我"
 
-#: account/form.py:37 account/form.py:73 account/form.py:104
+#: account/form.py:35 account/form.py:70 account/form.py:101
 msgid "Gender"
 msgstr "性别"
 
-#: account/form.py:38 account/form.py:74 account/form.py:106
+#: account/form.py:36 account/form.py:71 account/form.py:103
 msgid "Male"
 msgstr "男"
 
-#: account/form.py:38 account/form.py:74 account/form.py:107
+#: account/form.py:36 account/form.py:71 account/form.py:104
 msgid "Female"
 msgstr "女"
 
-#: account/form.py:40 account/form.py:71 account/form.py:101
+#: account/form.py:38 account/form.py:68 account/form.py:98
 msgid "Real Name"
 msgstr "真实姓名"
 
-#: account/form.py:41 account/form.py:75 account/form.py:117
+#: account/form.py:39 account/form.py:72 account/form.py:114
 msgid "Email"
 msgstr "邮箱"
 
-#: account/form.py:42 account/form.py:76 account/form.py:118
+#: account/form.py:40 account/form.py:73 account/form.py:115
 msgid "Phone Number"
 msgstr "手机号码"
 
-#: account/form.py:43 account/form.py:78
+#: account/form.py:41 account/form.py:75
 msgid "QQ"
 msgstr "QQ 号码"
 
-#: account/form.py:44
+#: account/form.py:42
 msgid "Joined at"
 msgstr "加入于"
 
-#: account/form.py:45
+#: account/form.py:43
 msgid "Last-log at"
 msgstr "最后登录于"
 
-#: account/form.py:46
+#: account/form.py:44
 msgid "Last-log ip"
 msgstr "最后登录 IP"
 
-#: account/form.py:48
+#: account/form.py:46
 msgid "State"
 msgstr "状态"
 
-#: account/form.py:52 resource/form.py:28
-msgid "Please choose the state."
-msgstr "请选择用户状态"
-
-#: account/form.py:59 account/form.py:79 account/form.py:115
+#: account/form.py:56 account/form.py:76 account/form.py:112
 msgid "Card ID"
 msgstr "学生卡号"
 
-#: account/form.py:60 account/form.py:80 account/form.py:116
+#: account/form.py:57 account/form.py:77 account/form.py:113
 msgid "Student Number"
 msgstr "学号"
 
-#: account/form.py:61 account/form.py:77 account/form.py:119
+#: account/form.py:58 account/form.py:74 account/form.py:116
 msgid "Short Phone Number"
 msgstr "短号"
 
-#: account/form.py:72 account/form.py:102
+#: account/form.py:69 account/form.py:99
 msgid "Nickname"
 msgstr "昵称"
 
-#: account/form.py:83
+#: account/form.py:80
 msgid "Type"
 msgstr "用户类型"
 
-#: account/form.py:111 course/form.py:51
+#: account/form.py:108 course/form.py:51
 msgid "College"
 msgstr "学院"
 
@@ -193,9 +181,9 @@ msgid "Other"
 msgstr "其他"
 
 #: account/view.py:34
-#, fuzzy, python-format
+#, python-format
 msgid "Logged in successfully, Welcome %(username)s"
-msgstr "登录成功！ %(username) 欢迎~"
+msgstr "登录成功！ %(username)s 欢迎~"
 
 #: account/view.py:39
 msgid "Wrong username or password"
@@ -336,6 +324,10 @@ msgstr "URL"
 #: resource/form.py:22
 msgid "Please choose the category"
 msgstr "请选择类别"
+
+#: resource/form.py:28
+msgid "Please choose the state."
+msgstr "请选择用户状态"
 
 #: resource/service.py:18
 msgid "PPT"
