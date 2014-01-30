@@ -5,7 +5,7 @@
     <div id="tips">
         <ul>
             <li><a href="javascript:void(0)" id="none-answer" class="current">{{ tag }}</a></li>
-            <li class="ask"><a href="{{ url_for('qa.ask') }}" id="ask-btn">提问</a></li>
+            <li class="ask"><a href="{{ url_for('qa.ask') }}" id="ask-btn">{{ _('Ask') }}</a></li>
         </ul>
     </div>
 
@@ -14,10 +14,10 @@
         <li class="question-item">
             <div class="question-left-float question-stats">
                 <div class="question-left-float view-count">
-                    <p>{{ q.read_count }}</p>次浏览
+                    <p>{{ q.read_count }}</p> {{ _('view(s)') }}
                 </div>
                 <div class="question-left-float respond-count">
-                    <p>{{ q.answers | count }}</p>个回答
+                    <p>{{ q.answers | count }}</p> {{ _('answer(s)')}}
                 </div>
             </div>
             <div class="question-left-float question-content">
@@ -31,7 +31,7 @@
                         </ul>
                     </div>
                     <div class="question-author question-left-float">
-                        <span>{%- if q.anonymous %}匿名{%- else %}{{ q.author.nickname }}{%- endif %}</span>
+                        <span>{%- if q.anonymous %}{{ _('Anonymous') }}{%- else %}{{ q.author.nickname }}{%- endif %}</span>
                         <span>{{ q.created | friendly_time}}</span>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
 <div id="right">
     <div class="info-wrapper">
         <div id="question-tags" class="info-box">
-            <div class="title">热门标签</div>
+            <div class="title">{{ _('Hot Tags') }}</div>
             <div class="content">
                 <div class="content-list">
                     <ul>

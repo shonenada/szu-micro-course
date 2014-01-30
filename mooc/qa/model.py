@@ -2,6 +2,7 @@ from datetime import datetime
 
 from sqlalchemy import func, select
 from sqlalchemy.ext.hybrid import hybrid_property
+from flask.ext.babel import lazy_gettext as _
 
 from mooc.app import db
 from mooc.helpers import enumdef
@@ -46,7 +47,7 @@ class Answer(db.Model, ModelMixin):
     __tablename__ = 'answer'
 
     STATE_VALUE = ('normal', 'hot', 'deleted')
-    STATE_TEXT = ('Normal', 'Hot', 'Deleted')
+    STATE_TEXT = (_('Normal'), _('Hot'), _('Deleted'))
 
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text)
@@ -82,7 +83,7 @@ class Question(db.Model, ModelMixin):
     __tablename__ = 'question'
 
     STATE_VALUE = ('normal', 'hot', 'deleted')
-    STATE_TEXT = ('Normal', 'Hot', 'Deleted')
+    STATE_TEXT = (_('Normal'), _('Hot'), _('Deleted'))
 
     WEIGHT_OF_READCOUNT = 0.2
     WEIGHT_OF_UPCOUNT = 0.3

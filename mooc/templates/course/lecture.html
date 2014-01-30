@@ -83,7 +83,7 @@ $(function(){
     <p>{{ lecture.description }}</p>
     <div id="category_info">
         <ul>
-            <li><a href="{{ url_for('course.courses') }}">课程库</a></li>
+            <li><a href="{{ url_for('course.courses') }}">{{ _('Courses') }}</a></li>
             <li><a href="{{ url_for('course.subject', sid=lecture.course.category.subject.id) }}">{{ lecture.course.category.subject.name }}</a></li>
             <li><a href="{{ url_for('course.category', sid=lecture.course.category.subject.id, cid=lecture.course.category.id)}}">{{ lecture.course.category.name }}</a></li>
             <li><a href="{{ url_for('course.course', course_id=lecture.course.id) }}">{{ lecture.course.name }}</a></li>
@@ -99,11 +99,11 @@ $(function(){
 
         <div id="lecture-btns">
             <ul>
-                <li><a href="javascript:void(0);" id="btn-knowledge-point" class="lecture-btns current">知识点</a></li>
-                <li><a href="javascript:void(0);" id="btn-questions" class="lecture-btns">相关问题</a></li>
-                <li><a href="javascript:void(0);" id="btn-quiz" class="lecture-btns">课程测评</a></li>
-                <li><a href="javascript:void(0);" id="btn-video-resource" class="lecture-btns">课程资源</a></li>
-                <li class="ask"><a href="{{ url_for('qa.ask', lecture_id=lecture.id) }}" id="ask-btn" class="lecture-btns">提问</a></li>
+                <li><a href="javascript:void(0);" id="btn-knowledge-point" class="lecture-btns current">{{ _('Knowledge Points') }}</a></li>
+                <li><a href="javascript:void(0);" id="btn-questions" class="lecture-btns">{{ _('Relatived Questions') }}</a></li>
+                <li><a href="javascript:void(0);" id="btn-quiz" class="lecture-btns">{{ _('Quiz') }}</a></li>
+                <li><a href="javascript:void(0);" id="btn-video-resource" class="lecture-btns">{{ _('Resource of Course') }}</a></li>
+                <li class="ask"><a href="{{ url_for('qa.ask', lecture_id=lecture.id) }}" id="ask-btn" class="lecture-btns">{{ _('Ask') }}</a></li>
             </ul>
         </div>
 
@@ -136,22 +136,22 @@ $(function(){
             <table class="resource-table">
             <thead>
             <tr>
-                <td>资源</td>
-                <td>类别</td>
-                <td>下载</td>
+                <td>{{ _('Resource') }}</td>
+                <td>{{ _('Category') }}</td>
+                <td>{{ _('Download') }}</td>
             </tr>
             </thead>
             <tbody>
             <tr>
-                <td>视频下载</td>
-                <td>视频</td>
-                <td><a href="{{ lecture.video_url }}">下载</a></td>
+                <td>{{ _('Download Video') }}</td>
+                <td>{{ _('Video') }}</td>
+                <td><a href="{{ lecture.video_url }}">{{ _('Download') }}</a></td>
             </tr>
             {% for r in lecture.resources %}
             <tr>
                 <td>{{ r.name }}</td>
                 <td>{{ r.category|friendly_resource_category }}</td>
-                <td>{% if r.category in ('ppt', 'doc', 'pdf') %}<a href="#online-view-{{ r.id }}" id="online-view-{{ r.id }}" data="{{ r.id }}" class="online-view">在线浏览</a>{% endif %} <a href="{{ lecture.video_url }}">下载</a></td>
+                <td>{% if r.category in ('ppt', 'doc', 'pdf') %}<a href="#online-view-{{ r.id }}" id="online-view-{{ r.id }}" data="{{ r.id }}" class="online-view">{{ _('Preview Online') }}</a>{% endif %} <a href="{{ lecture.video_url }}">{{ _('Download') }}</a></td>
             </tr>
             {% endfor %}
             </tbody>
@@ -164,7 +164,7 @@ $(function(){
 
     <div id="lecture-info-right">
         <div id="lecture-who-learning">
-            <h2>谁在学习此课程</h2>
+            <h2>{{ _('Who's learning?') }}</h2>
             <div id="leanring">
                 {% for l in learning %}
                 <div class="content-list">
@@ -175,7 +175,7 @@ $(function(){
                         <div>
                         <span class="tip-text username">{{ l.user.nickname }}</span>
                         <span class="tip-text time">{{ l.created | friendly_time }}</span>
-                        <span class="tip-text">学习了</span>
+                        <span class="tip-text">{{ _('learnt') }}</span>
                         </div>
                         <span class="course-name">{{ l.lecture.name }}</span>
                     </div>

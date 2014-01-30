@@ -4,7 +4,7 @@
 <div id="left">
     <div id="tips">
         <ul>
-            <li><a href="{{ url_for('resource.list') }}" class="current">课程资源</a></li>
+            <li><a href="{{ url_for('resource.list') }}" class="current"></a></li>
         </ul>
     </div>
 
@@ -21,12 +21,12 @@
                         {{ item.name }}
                     </div>
                     <div class="course-description">
-                        在线浏览 <a href="{{ item.resource_url }}">下载</a>
+                        {{ _('Preview Online') }} <a href="{{ item.resource_url }}">{{ _('Download') }}</a>
                     </div>
                 </div>
                 <div class="course-record">
-                    <div class="course-num">课程：<span><a href="{{ url_for('course.lecture', lecture_id=item.lecture.id ) }}">{{ item.lecture.name }}</a></span></div>
-                    <div class="learned-num"><span>{{ item.view_count }}</span> 次浏览</div>
+                    <div class="course-num">{{ _('Lecture') }}：<span><a href="{{ url_for('course.lecture', lecture_id=item.lecture.id ) }}">{{ item.lecture.name }}</a></span></div>
+                    <div class="learned-num"><span>{{ item.view_count }}</span> {{ _('view(s)') }}</div>
                 </div>
                 <div class="shadow"></div>
             </div>
@@ -44,7 +44,7 @@
 <div id="right">
     <div class="info-wrapper">
         <div id="question-tags" class="info-box">
-            <div class="title">热门资源</div>
+            <div class="title">{{ _('Hot Resources') }}</div>
             <div class="content">
                 <div class="content-list">
                     <ul>

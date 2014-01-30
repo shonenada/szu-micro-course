@@ -3,7 +3,7 @@
 <div id="left">
     <div id="category_list" class="category_list">
         <ul>
-            <li><a href="{{ url_for('course.courses') }}">课程库</a></li>
+            <li><a href="{{ url_for('course.courses') }}">{{ _('Courses') }}</a></li>
             <li><a href="{{ url_for('course.subject', sid=this_category.subject.id) }}">{{ this_category.subject.name }}</a></li>
             <li><a href="{{ url_for('course.category', sid=this_category.subject.id, cid=this_category.id)}}">{{ this_category.name }}</a></li>
         </ul>

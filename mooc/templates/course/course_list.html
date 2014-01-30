@@ -4,7 +4,7 @@
 <div id="left">
     <div id="category_list" class="category_list">
         <ul>
-            <li><a href="{{ url_for('course.courses')}}">课程库</a></li>
+            <li><a href="{{ url_for('course.courses')}}">{{ _('Courses') }}</a></li>
             <li><a href="{{url_for('course.subject', sid=this_course.category.subject.id)}}">{{ this_course.category.subject.name }}</a></li>
             <li><a href="{{ url_for('course.category', sid=this_course.category.subject.id, cid=this_course.category.id)}}">{{ this_course.category.name }}</a></li>
             <li><a>{{ this_course.name }}</a></li>
@@ -27,15 +27,15 @@
                         </div>
                     </div>
                     <div class="course-record">
-                        <div class="course-num"><span>{{ this_course.lectures|count }}</span> 个课程</div>
-                        <div class="learned-num"><span>{{ this_course|learn_count }}</span> 个同学学习</div>
+                        <div class="course-num"><span>{{ this_course.lectures|count }}</span> {{ _('courses totally') }}</div>
+                        <div class="learned-num"><span>{{ this_course|learn_count }}</span> {{ _('student(s) learned') }}</div>
                     </div>
                     <div class="shadow"></div>
                 </div>
             </div>
         </div>
 
-        <div>视频列表</div>
+        <div>{{ _('Video List') }}</div>
 
         <div id="lecture-list">
             {% for idx, lecture in lectures|enumerate %}

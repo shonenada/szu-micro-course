@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh">
 <head>
     <meta charset="utf-8">
     <title>{% block title %}深大微课程 - MicroLecture{% endblock %}</title>
@@ -58,7 +58,7 @@
     <div class="row-fluid">
         <div class="dialog">
             <div class="block">
-                <p class="block-heading">用户登录</p>
+                <p class="block-heading">{{ _('Sign In') }}</p>
                 <div class="block-body">
                     <form id="loginForm" action="/signin" method="post">
                         {{ form.csrf_token }}
@@ -72,7 +72,7 @@
                     </form>
                 </div>
             </div>
-            <p><a href="{{ url_for('account.forgot_password') }}">忘记密码?</a></p>
+            <p><a href="{{ url_for('account.forgot_password') }}"{{ _('Forget Password') }}</a></p>
         </div>
     </div>
 </body>

@@ -1,4 +1,6 @@
 #-*-coding: utf-8 -*-
+from flask.ext.babel import lazy_gettext as _
+
 from mooc.resource.model import Resource
 
 
@@ -13,12 +15,12 @@ def create_resource(data):
 
 
 def friendly_resource_category(category):
-    RESOURCE_CATEGORY = {'ppt': u'演示文稿',
-                         'doc': u'文档',
-                         'pdf': u'PDF',
-                         'video': u'视频',
-                         'other': u'其他'}
+    RESOURCE_CATEGORY = {'ppt': _('PPT'),
+                         'doc': _('Docuement'),
+                         'pdf': _('PDF'),
+                         'video': _('Video'),
+                         'other': _('Other')}
     if category in RESOURCE_CATEGORY.keys():
         return RESOURCE_CATEGORY[category]
     else:
-        return u'其他'
+        return _('Other')

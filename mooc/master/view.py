@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, current_app
 from flask import request, redirect, url_for, jsonify
+from flask.ext.babel import lazy_gettext as _
 
 from mooc.app import rbac, db
 from mooc.helpers import flash
@@ -84,7 +85,7 @@ def master_account_edit(uid):
 
     if user_form.validate_on_submit():
         update_user_state(uid, user_form.data['state'])
-        flash('Operated successfully!', 'notice')
+        flash(_('Operated successfully'), 'notice')
         return jsonify(success=True)
 
     if user_form.errors:
@@ -103,7 +104,7 @@ def master_account_edit(uid):
 def master_account_delete(uid):
     user = User.query.get(uid)
     user.delete()
-    flash(message='Operated successfully!', category='notice')
+    flash(message=_('Operated successfully'), category='notice')
     return jsonify(success=True)
 
 
@@ -112,7 +113,7 @@ def master_account_delete(uid):
 def master_account_password(uid):
     raw_passwd = request.form['password']
     change_user_password(uid, raw_passwd)
-    flash(message='Operated successfully', category='notice')
+    flash(message=_('Operated successfully'), category='notice')
     return jsonify(success=True)
 
 
@@ -123,7 +124,7 @@ def master_account_new():
     if new_user_form.validate_on_submit():
         data = new_user_form.data
         create_user(data)
-        flash(message='Operated successfully', category='notice')
+        flash(message=_('Operated successfully'), category='notice')
         return jsonify(success=True)
     return render_template('admin/account_new.html', form=new_user_form)
 
