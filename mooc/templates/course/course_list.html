@@ -4,7 +4,7 @@
 <div id="left">
     <div id="category_list" class="category_list">
         <ul>
-            <li><a href="{{ url_for('course.courses')}}">{{ _('Courses') }}</a></li>
+            <li><a href="{{ url_for('course.library')}}">{{ _('Courses') }}</a></li>
             <li><a href="{{url_for('course.subject', sid=this_course.category.subject.id)}}">{{ this_course.category.subject.name }}</a></li>
             <li><a href="{{ url_for('course.category', sid=this_course.category.subject.id, cid=this_course.category.id)}}">{{ this_course.category.name }}</a></li>
             <li><a>{{ this_course.name }}</a></li>

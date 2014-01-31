@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MOOC 0.1.0\n"
 "Report-Msgid-Bugs-To: shonenada@gmail.com\n"
-"POT-Creation-Date: 2014-01-30 20:04+0800\n"
+"POT-Creation-Date: 2014-01-31 20:06+0800\n"
 "PO-Revision-Date: 2014-01-30 17:58+0800\n"
 "Last-Translator: Yaoda Liu <shonenada@gmail.com>\n"
 "Language-Team: zh <LL@li.org>\n"
@@ -217,7 +217,7 @@ msgstr "课程名"
 msgid "Logo"
 msgstr "Logo"
 
-#: course/form.py:54 resource/form.py:19
+#: course/form.py:54 resource/form.py:19 templates/course/lecture.html:140
 msgid "Category"
 msgstr "分类"
 
@@ -229,7 +229,7 @@ msgstr "标签"
 msgid "Lecture Name"
 msgstr "短课名"
 
-#: course/form.py:70
+#: course/form.py:70 templates/course/lecture.html:102
 msgid "Knowledge Points"
 msgstr "知识点"
 
@@ -341,7 +341,7 @@ msgstr "文档"
 msgid "PDF"
 msgstr "PDF"
 
-#: resource/service.py:21
+#: resource/service.py:21 templates/course/lecture.html:147
 msgid "Video"
 msgstr "视频"
 
@@ -354,9 +354,10 @@ msgid "Home"
 msgstr "首页"
 
 #: templates/layout.html:42 templates/course/category.html:6
-#: templates/course/course_list.html:7 templates/course/subject.html:6
+#: templates/course/course_list.html:7 templates/course/lecture.html:86
+#: templates/course/subject.html:6
 msgid "Courses"
-msgstr "课程"
+msgstr "课程库"
 
 #: templates/layout.html:43
 msgid "Discuss"
@@ -415,7 +416,7 @@ msgstr "热门标签"
 msgid "Activity"
 msgstr "最新动态"
 
-#: templates/right.html:34
+#: templates/right.html:34 templates/course/lecture.html:178
 msgid "learnt"
 msgstr "学习了"
 
@@ -463,14 +464,48 @@ msgstr "学生学习了"
 msgid "Video List"
 msgstr "视频列表"
 
+#: templates/course/lecture.html:103
+msgid "Relatived Questions"
+msgstr "相关提问"
+
+#: templates/course/lecture.html:104
+msgid "Quiz"
+msgstr "课程评测"
+
+#: templates/course/lecture.html:105
+msgid "Resource of Course"
+msgstr "短课顺序"
+
+#: templates/course/lecture.html:106 templates/qa/ask.html:9
+#: templates/qa/ask.html:15 templates/qa/question_list.html:10
+#: templates/qa/tag_view.html:8
+msgid "Ask"
+msgstr "提问"
+
+#: templates/course/lecture.html:139
+msgid "Resource"
+msgstr "资源"
+
+#: templates/course/lecture.html:141 templates/course/lecture.html:148
+#: templates/course/lecture.html:154 templates/resource/list.html:24
+msgid "Download"
+msgstr "下载"
+
+#: templates/course/lecture.html:146
+msgid "Download Video"
+msgstr "下载视频"
+
+#: templates/course/lecture.html:154 templates/resource/list.html:24
+msgid "Preview Online"
+msgstr "在线浏览"
+
+#: templates/course/lecture.html:167
+msgid "Who's learning?"
+msgstr "谁也在学？"
+
 #: templates/course/lecture_box.html:16
 msgid "Minute(s)"
 msgstr "分钟"
-
-#: templates/qa/ask.html:9 templates/qa/ask.html:15
-#: templates/qa/question_list.html:10 templates/qa/tag_view.html:8
-msgid "Ask"
-msgstr "提问"
 
 #: templates/qa/ask.html:27
 msgid "Rule of asking"
@@ -516,14 +551,6 @@ msgstr "个回答"
 #: templates/qa/question_list.html:37 templates/qa/tag_view.html:34
 msgid "Anonymous"
 msgstr "匿名"
-
-#: templates/resource/list.html:24
-msgid "Preview Online"
-msgstr "在线浏览"
-
-#: templates/resource/list.html:24
-msgid "Download"
-msgstr "下载"
 
 #: templates/resource/list.html:28
 msgid "Lecture"

@@ -12,11 +12,11 @@ from mooc.course.service import quiz_to_json
 course_app = Blueprint('course', __name__, template_folder='../templates')
 
 
-@course_app.route('/courses')
+@course_app.route('/library')
 @rbac.allow(['anonymous'], ['GET'])
-def courses():
+def library():
     subjects = Subject.query.all()
-    return render_template('course/courses.html', subjects=subjects)
+    return render_template('course/library.html', subjects=subjects)
 
 
 @course_app.route('/courses/subject/<sid>')

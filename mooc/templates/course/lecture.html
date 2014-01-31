@@ -83,7 +83,7 @@ $(function(){
     <p>{{ lecture.description }}</p>
     <div id="category_info">
         <ul>
-            <li><a href="{{ url_for('course.courses') }}">{{ _('Courses') }}</a></li>
+            <li><a href="{{ url_for('course.library') }}">{{ _('Courses') }}</a></li>
             <li><a href="{{ url_for('course.subject', sid=lecture.course.category.subject.id) }}">{{ lecture.course.category.subject.name }}</a></li>
             <li><a href="{{ url_for('course.category', sid=lecture.course.category.subject.id, cid=lecture.course.category.id)}}">{{ lecture.course.category.name }}</a></li>
             <li><a href="{{ url_for('course.course', course_id=lecture.course.id) }}">{{ lecture.course.name }}</a></li>
@@ -164,7 +164,7 @@ $(function(){
 
     <div id="lecture-info-right">
         <div id="lecture-who-learning">
-            <h2>{{ _('Who's learning?') }}</h2>
+            <h2>{{ _("Who's learning?") }}</h2>
             <div id="leanring">
                 {% for l in learning %}
                 <div class="content-list">

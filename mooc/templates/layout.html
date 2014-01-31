@@ -39,7 +39,7 @@
         <nav id="nav">
             <ul class="dropdown-nav">
                 <li class="index-link"><a href="{{url_for('master.index')}}">{{ _('Home') }}</a></li>
-                <li><a href="{{ url_for('course.courses') }}">{{ _('Courses') }}</a></li>
+                <li><a href="{{ url_for('course.library') }}">{{ _('Courses') }}</a></li>
                 <li><a href="{{ url_for('qa.question') }} ">{{ _('Discuss') }}</a></li>
                 <li><a href="{{ url_for('resource.list')}}">{{ _('Resources') }}</a></li>
                 {%- if current_user.is_anonymous() %}
