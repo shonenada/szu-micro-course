@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MOOC 0.1.0\n"
 "Report-Msgid-Bugs-To: shonenada@gmail.com\n"
-"POT-Creation-Date: 2014-01-31 22:44+0800\n"
+"POT-Creation-Date: 2014-01-31 23:55+0800\n"
 "PO-Revision-Date: 2014-01-30 17:58+0800\n"
 "Last-Translator: Yaoda Liu <shonenada@gmail.com>\n"
 "Language-Team: zh <LL@li.org>\n"
@@ -69,115 +69,138 @@ msgid "%(secdiff)s year(s) ago"
 msgstr "%(secdiff)s 年前"
 
 #: account/form.py:18
+msgid "Username is existed"
+msgstr "用户名已存在"
+
+#: account/form.py:19
+msgid "Nickname is existed"
+msgstr "昵称已存在"
+
+#: account/form.py:20
+msgid "Student Number is existed"
+msgstr "学号已存在"
+
+#: account/form.py:21
 msgid "This field must be 11 digitals"
 msgstr "该字段必须为 11 个数字"
 
-#: account/form.py:19
+#: account/form.py:22
 msgid "This field must be 10 digitals"
 msgstr "该字段必须为 10 个数字"
 
-#: account/form.py:20
+#: account/form.py:23
 msgid "This field must be 4~6 digitals"
 msgstr "该字段必须为 4~6 个数字"
 
-#: account/form.py:26 account/form.py:49 account/form.py:144
+#: account/form.py:29 account/form.py:53 account/form.py:126
+#: account/form.py:222
 msgid "Username"
 msgstr "用户名"
 
-#: account/form.py:27 account/form.py:50 account/form.py:145
-#: account/form.py:312 account/form.py:320 account/form.py:328
+#: account/form.py:30 account/form.py:54 account/form.py:127
+#: account/form.py:223 account/form.py:390 account/form.py:398
+#: account/form.py:406
 msgid "6~30 characters"
 msgstr "6~30 个字符"
 
-#: account/form.py:34 account/form.py:152
+#: account/form.py:37 account/form.py:61 account/form.py:230
 msgid "Password"
 msgstr "密码"
 
-#: account/form.py:35 account/form.py:153
+#: account/form.py:38 account/form.py:62 account/form.py:231
 msgid "6~20 characters"
 msgstr "6~20 个字符"
 
-#: account/form.py:41
+#: account/form.py:44
 msgid "Remember Me"
 msgstr "记住我"
 
-#: account/form.py:57 account/form.py:172 account/form.py:253
-msgid "Gender"
-msgstr "性别"
-
-#: account/form.py:59 account/form.py:174 account/form.py:255
-msgid "Male"
-msgstr "男"
-
-#: account/form.py:60 account/form.py:175 account/form.py:256
-msgid "Female"
-msgstr "女"
-
-#: account/form.py:67 account/form.py:160 account/form.py:247
+#: account/form.py:69 account/form.py:144 account/form.py:238
+#: account/form.py:325
 msgid "Real Name"
 msgstr "真实姓名"
 
-#: account/form.py:73 account/form.py:179 account/form.py:275
-msgid "Email"
-msgstr "邮箱"
+#: account/form.py:70
+msgid "Your real name"
+msgstr "请输入您的真实姓名"
 
-#: account/form.py:79 account/form.py:185 account/form.py:281
-msgid "Phone Number"
-msgstr "手机号码"
+#: account/form.py:77 account/form.py:134 account/form.py:250
+#: account/form.py:331
+msgid "Gender"
+msgstr "性别"
 
-#: account/form.py:84 account/form.py:195
-msgid "QQ"
-msgstr "QQ 号码"
+#: account/form.py:79 account/form.py:136 account/form.py:252
+#: account/form.py:333
+msgid "Male"
+msgstr "男"
 
-#: account/form.py:89
-msgid "Joined at"
-msgstr "加入于"
+#: account/form.py:80 account/form.py:137 account/form.py:253
+#: account/form.py:334
+msgid "Female"
+msgstr "女"
 
-#: account/form.py:92
-msgid "Last-log at"
-msgstr "最后登录于"
-
-#: account/form.py:95
-msgid "Last-log ip"
-msgstr "最后登录 IP"
-
-#: account/form.py:98
-msgid "State"
-msgstr "状态"
-
-#: account/form.py:117 account/form.py:198 account/form.py:265
-msgid "Card ID"
-msgstr "学生卡号"
-
-#: account/form.py:120 account/form.py:203 account/form.py:270
+#: account/form.py:87 account/form.py:197 account/form.py:281
+#: account/form.py:348
 msgid "Student Number"
 msgstr "学号"
 
-#: account/form.py:123 account/form.py:190 account/form.py:286
-msgid "Short Phone Number"
-msgstr "短号"
-
-#: account/form.py:166 account/form.py:250
-msgid "Nickname"
-msgstr "昵称"
-
-#: account/form.py:212
-msgid "Type"
-msgstr "用户类型"
-
-#: account/form.py:260 course/form.py:51
+#: account/form.py:90 account/form.py:338 course/form.py:51
 msgid "College"
 msgstr "学院"
 
-#: account/form.py:311
+#: account/form.py:95 account/form.py:244 account/form.py:328
+msgid "Nickname"
+msgstr "昵称"
+
+#: account/form.py:150 account/form.py:257 account/form.py:353
+msgid "Email"
+msgstr "邮箱"
+
+#: account/form.py:156 account/form.py:263 account/form.py:359
+msgid "Phone Number"
+msgstr "手机号码"
+
+#: account/form.py:161 account/form.py:273
+msgid "QQ"
+msgstr "QQ 号码"
+
+#: account/form.py:166
+msgid "Joined at"
+msgstr "加入于"
+
+#: account/form.py:169
+msgid "Last-log at"
+msgstr "最后登录于"
+
+#: account/form.py:172
+msgid "Last-log ip"
+msgstr "最后登录 IP"
+
+#: account/form.py:175
+msgid "State"
+msgstr "状态"
+
+#: account/form.py:194 account/form.py:276 account/form.py:343
+msgid "Card ID"
+msgstr "学生卡号"
+
+#: account/form.py:200 account/form.py:268 account/form.py:364
+msgid "Short Phone Number"
+msgstr "短号"
+
+#: account/form.py:290
+msgid "Type"
+msgstr "用户类型"
+
+#: account/form.py:389
 msgid "Old Password"
 msgstr "旧密码"
 
-#: account/form.py:319
+#: account/form.py:397
 msgid "New Password"
 msgstr "新密码"
 
-#: account/form.py:327
+#: account/form.py:405
 msgid "Confirm Password"
 msgstr "确认密码"
 
@@ -197,19 +220,19 @@ msgstr "已删除"
 msgid "Unactivated"
 msgstr "未激活"
 
-#: account/model.py:187
+#: account/model.py:190
 msgid "Undergrade"
 msgstr "本科生"
 
-#: account/model.py:187
+#: account/model.py:190
 msgid "Graduate"
 msgstr "研究生"
 
-#: account/model.py:188 course/form.py:48 course/form.py:84
+#: account/model.py:191 course/form.py:48 course/form.py:84
 msgid "Teacher"
 msgstr "教师"
 
-#: account/model.py:188 resource/service.py:22 resource/service.py:26
+#: account/model.py:191 resource/service.py:22 resource/service.py:26
 msgid "Other"
 msgstr "其他"
 
@@ -222,15 +245,19 @@ msgstr "登录成功！ %(username)s 欢迎~"
 msgid "Wrong username or password"
 msgstr "帐号或密码错误"
 
-#: account/view.py:57
+#: account/view.py:77
+msgid "Sign up successfully"
+msgstr "注册成功"
+
+#: account/view.py:95
 msgid "Logged out successfully."
 msgstr "退出成功"
 
-#: account/view.py:88 account/view.py:112
+#: account/view.py:126 account/view.py:150
 msgid "Modified successfully."
 msgstr "修改成功"
 
-#: account/view.py:106
+#: account/view.py:144
 msgid "Wrong old password"
 msgstr "密码错误"
 
@@ -404,7 +431,8 @@ msgstr "问答系统"
 msgid "Resources"
 msgstr "资源"
 
-#: templates/layout.html:46 templates/account/sign-in.html:61
+#: templates/layout.html:46 templates/account/signin.html:61
+#: templates/account/signup.html:84
 msgid "Sign In"
 msgstr "登录"
 
@@ -485,9 +513,17 @@ msgstr "修改密码"
 msgid "Update"
 msgstr "更新"
 
-#: templates/account/sign-in.html:75
+#: templates/account/signin.html:75
+msgid "No Account?"
+msgstr "没有帐号？"
+
+#: templates/account/signin.html:76
 msgid "Forget Password"
 msgstr "忘记密码"
+
+#: templates/account/signup.html:61 templates/account/signup.html:79
+msgid "Sign Up"
+msgstr "注册"
 
 #: templates/course/course_box.html:16 templates/course/course_list.html:30
 msgid "courses totally"
