@@ -55,6 +55,7 @@ def enumdef(attr_name, attr_values):
 def flash(message, category='message', form_errors=False):
     def form_errors_parse(form_errors_message):
         for v in form_errors_message.values():
+            v = [unicode(v) for v in v]
             yield ", ".join(v)
 
     if isinstance(message, (str, unicode)):
