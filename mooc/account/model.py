@@ -81,7 +81,7 @@ class User(db.Model, UserMixin, ModelMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(30), nullable=True)
-    hashed_password = db.Column(db.String(128))
+    hashed_password = db.Column(db.String(40))
     nickname = db.Column(db.String(16), unique=True)
     name = db.Column(db.String(20))
     is_male = db.Column(db.Boolean, default=True)
