@@ -15,6 +15,9 @@ state_texts = User.USER_STATE_TEXTS
 type_values = SzuAccount.TYPE_VALUES
 type_texts = SzuAccount.TYPE_TEXTS
 
+USER_EXISTED = _('Username is existed')
+NICKNAME_EXISTED = _('Nickname is existed')
+STU_NUMBER_EXISTED = _('Student Number is existed')
 MUST_BE_11_DIGITAL = _('This field must be 11 digitals')
 MUST_BE_10_DIGITAL = _('This field must be 10 digitals')
 MUST_BE_4_6_DIGITAL = _('This field must be 4~6 digitals')
@@ -27,7 +30,7 @@ class SignInForm(Form):
         description=_('6~30 characters'),
         validators=[
             InputRequired(),
-            Length(min=6, max=30)
+            Length(min=6, max=30),
         ]
     )
     password = PasswordField(
@@ -39,6 +42,80 @@ class SignInForm(Form):
         ]
     )
     remember_me = BooleanField(_('Remember Me'))
+
+
+class SignUpForm(Form):
+
+    def get_colleges():
+        return College.query.all()
+
+    username = StringField(
+        label=_('Username'),
+        description=_('6~30 characters'),
+        validators=[
+            InputRequired(),
+            Length(min=6, max=30),
+        ]
+    )
+    password = PasswordField(
+        label=_('Password'),
+        description=_('6~20 characters'),
+        validators=[
+            InputRequired(),
+            Length(min=6, max=20),
+        ]
+    )
+    name = StringField(
+        label=_('Real Name'),
+        description=_('Your real name'),
+        validators=[
+            InputRequired(),
+            Length(max=20),
+        ]
+    )
+    is_male = SelectField(
+        label=_('Gender'),
+        choices=[
+            ('True', _('Male')),
+            ('False', _('Female'))
+        ],
+        validators=[
+            InputRequired(),
+        ]
+    )
+    stu_number = IntegerField(
+        label=_('Student Number'),
+    )
+    college = QuerySelectField(
+        label=_('College'),
+        query_factory=get_colleges,
+        allow_blank=False
+    )
+    nickname = StringField(
+        label=_('Nickname'),
+        validators=[
+            InputRequired(),
+        ]
+    )
+    
+
+    def validate_username(form, field):
+        find_user = User.query.filter(User.username==field.data)
+        if find_user.count() > 0:
+            raise ValidationError(USER_EXISTED)
+
+    def validate_nickname(form, field):
+        find_user = User.query.filter(User.nickname==field.data)
+        if find_user.count() > 0:
+            raise ValidationError(USER_EXISTED)
+
+    def validate_stu_number(form, field):
+        if len(str(field.data)) != 10:
+            raise ValidationError(MUST_BE_10_DIGITAL)
+
+        find_szu_account = SzuAccount.query.filter_by(stu_number=field.data)
+        if find_szu_account.count() > 0:
+            raise ValidationError(STU_NUMBER_EXISTED)
 
 
 class UserForm(Form):
@@ -134,6 +211,7 @@ class SzuAccountForm(Form):
     def validate_short_phone(form, field):
         if len(str(field.data)) in range(4, 6):
             raise ValidationError(MUST_BE_4_6_DIGITAL)
+
 
 class NewUserForm(Form):
 

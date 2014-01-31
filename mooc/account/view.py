@@ -6,8 +6,8 @@ from flask.ext.login import login_user, logout_user, current_user
 
 from mooc.app import rbac, csrf, db
 from mooc.helpers import flash
-from mooc.account.model import User
-from mooc.account.form import SignInForm, SettingForm, PasswordForm
+from mooc.account.model import User, SzuAccount, Role
+from mooc.account.form import SignInForm, SettingForm, PasswordForm, SignUpForm
 from mooc.account.service import load_user
 
 
@@ -32,7 +32,7 @@ def signin():
         if user:
             login_user(user, force=True, remember=is_remember_me)
             flash(_('Logged in successfully, Welcome %(username)s',
-                    username=user.username), 'notice')
+                    username=user.nickname or user.username), 'notice')
             return redirect(url_for('master.index'))
 
         else:
@@ -42,7 +42,45 @@ def signin():
     if form.errors:
         flash(message=form.errors, category='warn', form_errors=True)
 
-    return render_template('account/sign-in.html', form=form)
+    return render_template('account/signin.html', form=form)
+
+
+@csrf.exempt
+@account_app.route('/signup', methods=['GET', 'POST'])
+@rbac.allow(['anonymous'], methods=['GET', 'POST'])
+def signup():
+    if not current_user.is_anonymous():
+        return redirect(url_for('master.index'))
+    
+    form = SignUpForm(request.form)
+
+    if form.validate_on_submit():
+        username = form.data['username']
+        stu_number = form.data['stu_number']
+        nickname = form.data['nickname']
+
+        local_user = Role.query.filter_by(name='local_user').first()
+        print local_user
+
+        user = User(
+            username=username,
+            passwd=form.data['password'],
+            is_male=(form.data['is_male']=='True'),
+            name=form.data['name'],
+            nickname=nickname,
+        )
+        user.roles.append(local_user)
+        szu_account = SzuAccount(stu_number=stu_number)
+        user.szu_account = szu_account
+        szu_account.save()
+        user.save()
+        flash(message=_('Sign up successfully'), category='notice')
+        return redirect(url_for('account.signin'))
+
+    if form.errors:
+        flash(message=form.errors, category='warn', form_errors=True)
+
+    return render_template('account/signup.html', form=form)
 
 
 @account_app.route('/forgot')

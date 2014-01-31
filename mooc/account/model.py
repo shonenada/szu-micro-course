@@ -105,6 +105,7 @@ class User(db.Model, UserMixin, ModelMixin):
                                       uselist=True, lazy='dynamic')
 
     def __init__(self, **kwargs):
+
         self.salt = uuid4().hex
 
         if 'username' in kwargs:
@@ -122,6 +123,8 @@ class User(db.Model, UserMixin, ModelMixin):
         if 'is_male' in kwargs:
             is_male = kwargs.pop('is_male')
             self.is_male = (is_male == True)
+
+        db.Model.__init__(self, **kwargs)
 
         self.created = datetime.utcnow()
         self.last_login = datetime.utcnow()
@@ -205,12 +208,12 @@ class SzuAccount(db.Model, ModelMixin):
         "Teacher", uselist=False,
         backref=db.backref('szu_account', uselist=False))
 
-    def __init__(self, user, card_id, stu_number, college, szu_account_type):
-        self.user = user
-        self.card_id = card_id
-        self.stu_number = stu_number
-        self.college = college
-        self.set_account_type(szu_account_type)
+    def __init__(self, **kwargs):
+        if 'szu_account_type' in kwargs:
+            szu_account_type = kwargs.pop('szu_account_type')
+            self.set_account_type(szu_account_type)
+
+        db.Model.__init__(self, **kwargs)
 
     def __repr__(self):
         return "<SzuAccount %s>" % (self.stu_number)

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}深大微课程 - MicroLecture{% endblock %}</title>
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="深圳大学,墨客,MOOC,mooc,深圳大学墨客,microlecture" />
+    <meta name="description" content="深圳大学墨客，提供免费的教学视频。" />
+    <link href="{{ url_for('static', filename='components/bootstrap/docs/assets/css/bootstrap.css')}}" media="all" rel="stylesheet" type="text/css" />
+    <link href="{{ url_for('static', filename='styles/admin-theme.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{ url_for('static', filename='components/font-awesome/css/font-awesome.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{ url_for('static', filename='styles/flash-messages.css')}}" media="all" rel="stylesheet" type="text/css" />
+    <script src="{{ url_for('static', filename='components/jquery/jquery.min.js') }}" language="javascript"></script>
+    <script src="{{ url_for('static', filename='scripts/flash-message.js') }}" language="javascript"></script>
+
+    <!-- Demo page code -->
+
+    <style type="text/css">
+        #line-chart {
+            height:300px;
+            width:800px;
+            margin: 0px auto;
+            margin-top: 1em;
+        }
+        .brand { font-family: georgia, serif; }
+        .brand .first {
+            color: #ccc;
+            font-style: italic;
+        }
+        .brand .second {
+            color: #fff;
+            font-weight: bold;
+        }
+    </style>
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+</head>
+
+<!--[if lt IE 7 ]> <body class="ie ie6"> <![endif]-->
+<!--[if IE 7 ]> <body class="ie ie7 "> <![endif]-->
+<!--[if IE 8 ]> <body class="ie ie8 "> <![endif]-->
+<!--[if IE 9 ]> <body class="ie ie9 "> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> 
+<body class=""> 
+    <!--<![endif]-->
+{% include 'flash-message.html' %}
+    <div class="navbar">
+        <div class="navbar-inner">
+                <a class="brand" href="{{ url_for('master.index') }}"><span class="first">SZU</span> <span class="second">MicroLecture</span></a>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="dialog">
+            <div class="block">
+                <p class="block-heading">{{ _('Sign Up') }}</p>
+                <div class="block-body">
+                    <form id="signUpForm" action="/signup" method="post">
+                        {{ form.csrf_token }}
+                        {{ form.username.label }}
+                        {{ form.username(class='span12') }}
+                        {{ form.password.label }}
+                        {{ form.password(class='span12') }}
+                        {{ form.is_male.label }}
+                        {{ form.is_male(class='span12') }}
+                        {{ form.name.label }}
+                        {{ form.name(class='span12') }}
+                        {{ form.college.label }}
+                        {{ form.college() }}
+                        {{ form.stu_number.label }}
+                        {{ form.stu_number(class='span12') }}
+                        {{ form.nickname.label }}
+                        {{ form.nickname(class='span12') }}
+                        <button class="btn btn-primary pull-right">{{ _('Sign Up') }}</button>
+                        <div class="clearfix"></div>
+                    </form>
+                </div>
+            </div>
+            <p><a href="{{ url_for('account.signin') }}">{{ _('Sign In') }}</a></p>
+               
+        </div>
+    </div>
+</body>
+</html>
