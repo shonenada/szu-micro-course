@@ -547,7 +547,7 @@ msgstr "课程评测"
 
 #: templates/course/lecture.html:105
 msgid "Resource of Course"
-msgstr "短课顺序"
+msgstr "短课资源"
 
 #: templates/course/lecture.html:106 templates/qa/ask.html:9
 #: templates/qa/ask.html:15 templates/qa/question_list.html:10
