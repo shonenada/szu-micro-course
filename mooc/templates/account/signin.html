@@ -60,11 +60,11 @@
             <div class="block">
                 <p class="block-heading">{{ _('Sign In') }}</p>
                 <div class="block-body">
-                    <form id="loginForm" action="/signin" method="post">
+                    <form id="signInForm" action="/signin" method="post">
                         {{ form.csrf_token }}
-                        <label>{{ form.username.label }}</label>
+                        {{ form.username.label }}
                         {{ form.username(class='span12') }}
-                        <label>{{ form.password.label }}</label>
+                        {{ form.password.label }}
                         {{ form.password(class='span12') }}
                         <button class="btn btn-primary pull-right">Sign In</button>
                         <label class="remember-me">{{ form.remember_me }} {{ form.remember_me.label.text }}</label>
@@ -72,7 +72,8 @@
                     </form>
                 </div>
             </div>
-            <p><a href="{{ url_for('account.forgot_password') }}"{{ _('Forget Password') }}</a></p>
+            <p class="pull-right"><a href="{{ url_for('account.signup') }}">{{ _('No Account?') }}</a></p>
+            <p><a href="{{ url_for('account.forgot_password') }}">{{ _('Forget Password') }}</a></p>
         </div>
     </div>
 </body>
