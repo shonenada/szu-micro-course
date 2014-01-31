@@ -283,6 +283,7 @@ class NewUserForm(Form):
         ],
     )
     college = QuerySelectField(
+        label=_('College'),
         query_factory=get_colleges,
         allow_blank=False
     )

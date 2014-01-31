@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MOOC 0.1.0\n"
 "Report-Msgid-Bugs-To: shonenada@gmail.com\n"
-"POT-Creation-Date: 2014-01-31 23:55+0800\n"
+"POT-Creation-Date: 2014-01-31 23:59+0800\n"
 "PO-Revision-Date: 2014-01-30 17:58+0800\n"
 "Last-Translator: Yaoda Liu <shonenada@gmail.com>\n"
 "Language-Team: zh <LL@li.org>\n"
@@ -98,8 +98,8 @@ msgid "Username"
 msgstr "用户名"
 
 #: account/form.py:30 account/form.py:54 account/form.py:127
-#: account/form.py:223 account/form.py:390 account/form.py:398
-#: account/form.py:406
+#: account/form.py:223 account/form.py:391 account/form.py:399
+#: account/form.py:407
 msgid "6~30 characters"
 msgstr "6~30 个字符"
 
@@ -116,7 +116,7 @@ msgid "Remember Me"
 msgstr "记住我"
 
 #: account/form.py:69 account/form.py:144 account/form.py:238
-#: account/form.py:325
+#: account/form.py:326
 msgid "Real Name"
 msgstr "真实姓名"
 
@@ -125,38 +125,38 @@ msgid "Your real name"
 msgstr "请输入您的真实姓名"
 
 #: account/form.py:77 account/form.py:134 account/form.py:250
-#: account/form.py:331
+#: account/form.py:332
 msgid "Gender"
 msgstr "性别"
 
 #: account/form.py:79 account/form.py:136 account/form.py:252
-#: account/form.py:333
+#: account/form.py:334
 msgid "Male"
 msgstr "男"
 
 #: account/form.py:80 account/form.py:137 account/form.py:253
-#: account/form.py:334
+#: account/form.py:335
 msgid "Female"
 msgstr "女"
 
 #: account/form.py:87 account/form.py:197 account/form.py:281
-#: account/form.py:348
+#: account/form.py:349
 msgid "Student Number"
 msgstr "学号"
 
-#: account/form.py:90 account/form.py:338 course/form.py:51
+#: account/form.py:90 account/form.py:286 account/form.py:339 course/form.py:51
 msgid "College"
 msgstr "学院"
 
-#: account/form.py:95 account/form.py:244 account/form.py:328
+#: account/form.py:95 account/form.py:244 account/form.py:329
 msgid "Nickname"
 msgstr "昵称"
 
-#: account/form.py:150 account/form.py:257 account/form.py:353
+#: account/form.py:150 account/form.py:257 account/form.py:354
 msgid "Email"
 msgstr "邮箱"
 
-#: account/form.py:156 account/form.py:263 account/form.py:359
+#: account/form.py:156 account/form.py:263 account/form.py:360
 msgid "Phone Number"
 msgstr "手机号码"
 
@@ -180,27 +180,27 @@ msgstr "最后登录 IP"
 msgid "State"
 msgstr "状态"
 
-#: account/form.py:194 account/form.py:276 account/form.py:343
+#: account/form.py:194 account/form.py:276 account/form.py:344
 msgid "Card ID"
 msgstr "学生卡号"
 
-#: account/form.py:200 account/form.py:268 account/form.py:364
+#: account/form.py:200 account/form.py:268 account/form.py:365
 msgid "Short Phone Number"
 msgstr "短号"
 
-#: account/form.py:290
+#: account/form.py:291
 msgid "Type"
 msgstr "用户类型"
 
-#: account/form.py:389
+#: account/form.py:390
 msgid "Old Password"
 msgstr "旧密码"
 
-#: account/form.py:397
+#: account/form.py:398
 msgid "New Password"
 msgstr "新密码"
 
-#: account/form.py:405
+#: account/form.py:406
 msgid "Confirm Password"
 msgstr "确认密码"
 
