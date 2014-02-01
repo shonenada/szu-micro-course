@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MOOC 0.1.0\n"
 "Report-Msgid-Bugs-To: shonenada@gmail.com\n"
-"POT-Creation-Date: 2014-01-31 23:59+0800\n"
+"POT-Creation-Date: 2014-02-01 01:08+0800\n"
 "PO-Revision-Date: 2014-01-30 17:58+0800\n"
 "Last-Translator: Yaoda Liu <shonenada@gmail.com>\n"
 "Language-Team: zh <LL@li.org>\n"
@@ -547,7 +547,7 @@ msgstr "课程评测"
 
 #: templates/course/lecture.html:105
 msgid "Resource of Course"
-msgstr "短课资源"
+msgstr "课程资源"
 
 #: templates/course/lecture.html:106 templates/qa/ask.html:9
 #: templates/qa/ask.html:15 templates/qa/question_list.html:10
