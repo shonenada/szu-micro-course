@@ -462,7 +462,7 @@ msgstr "意见反馈"
 
 #: templates/layout.html:90
 msgid "Privacy"
-msgstr "隐私声明"
+msgstr "隐私政策"
 
 #: templates/layout.html:94
 msgid "copyright"
