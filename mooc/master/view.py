@@ -1,13 +1,15 @@
 from flask import Blueprint, render_template, current_app
 from flask import request, redirect, url_for, jsonify
+from flask.ext.login import current_user
 from flask.ext.babel import lazy_gettext as _
 
-from mooc.app import rbac, db
+from mooc.app import rbac, db, csrf
 from mooc.helpers import flash
-from mooc.master.model import Tag
+from mooc.master.model import Tag, Feedback
 from mooc.account.model import User, SzuAccount, College
 from mooc.course.model import Subject, Category, Course, Lecture
 from mooc.resource.model import Resource
+from mooc.master.form import FeedbackForm
 from mooc.course.form import SubjectForm, CategoryForm, CourseForm, LectureForm
 from mooc.resource.form import ResourceForm
 from mooc.account.form import UserForm, SzuAccountForm, NewUserForm
@@ -72,6 +74,28 @@ def about():
 @rbac.allow(['anonymous'], ['GET'])
 def privacy():
     return render_template('privacy.html')
+
+
+@csrf.exempt
+@master_app.route('/feedback', methods=['GET', 'POST'])
+@rbac.allow(['anonymous'], ['GET', 'POST'])
+def feedback():
+    form = FeedbackForm(request.form)
+    if form.validate_on_submit():
+        feedback = Feedback(title=form.data['title'],
+                            feedback=form.data['feedback'])
+        
+        if not current_user.is_anonymous():
+            feedback.user = current_user
+
+        feedback.save()
+        flash(message=_('Submited successfully'), category='notice')
+        return redirect(url_for('master.index'))
+
+    if form.errors:
+        flash(message=form.errors, category='warn', form_errors=True)
+
+    return render_template('feedback.html', form=form)
 
 
 @master_app.route('/master')
