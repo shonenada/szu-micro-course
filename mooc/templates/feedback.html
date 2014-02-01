@@ -1,0 +1,20 @@
+{%- extends 'layout.html' %}
+
+{%- block left %}
+<div id="left">
+    <span id="ask-label">{{ _('Feedback') }}</span>
+    <div id="ask">
+        <form id="ask-form" action="{{ url_for('master.feedback') }}" method="POST">
+            {{ form.csrf_token }}
+            <li>{{ form.title(placeholder=form.title.label.text) }}</li>
+            <li>{{ form.feedback(cols="35", rows="20", placeholder=form.feedback.label.text) }}</li>
+            <span class="submit-btn"><input type="submit" value="{{ _('Submit') }}" /></span>
+        </form>
+        <div class="clear"></div>
+    </div>
+    <div class="shadow"></div>
+</div>
+{%- endblock %}
+
+{%- block right %}
+{%- endblock %}

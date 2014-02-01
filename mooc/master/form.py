@@ -1,5 +1,9 @@
+from flask.ext.babel import lazy_gettext as _
+from flask_wtf import Form
+from wtforms import StringField, TextAreaField
 from wtforms.fields import Field
 from wtforms.widgets import TextInput
+from wtforms.validators import InputRequired, Length
 
 
 class TagsField(Field):
@@ -51,3 +55,19 @@ class TagsField(Field):
             if item.lower() not in d:
                 d[item.lower()] = True
                 yield item
+
+
+class FeedbackForm(Form):
+    title = StringField(
+        label=_('Title'),
+        validators=[
+            InputRequired(),
+            Length(max=20),
+        ],
+    )
+    feedback = TextAreaField(
+        label=_('Feedback'),
+        validators=[
+            InputRequired(),
+        ]
+    )

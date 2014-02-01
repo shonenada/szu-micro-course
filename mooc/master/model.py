@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy import select, func
 
@@ -112,3 +114,14 @@ class Tag(db.Model):
         """Return count of cls.id"""
         return (select([func.count(Tag.id)]).
                 where(cls.id == Tag.id).label('count'))
+
+
+class Feedback(db.Model, ModelMixin):
+
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(30))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship('User', backref='feedbacks', uselist=False)
+    ip = db.Column(db.String(40))
+    created = db.Column(db.DateTime, default=datetime.utcnow())
+    feedback = db.Column(db.Text)

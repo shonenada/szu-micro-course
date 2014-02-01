@@ -85,9 +85,9 @@
     </div>
     <div id="link">
         <ul>
-            <li class="first"><a href="/about">{{ _('About Us') }}</a></li>
-            <li><a href="/contact">{{ _('Feedback') }}</a></li>
-            <li><a href="/privacy">{{ _('Privacy') }}</a></li>
+            <li class="first"><a href="{{ url_for('master.about') }}">{{ _('About Us') }}</a></li>
+            <li><a href="{{ url_for('master.feedback') }}">{{ _('Feedback') }}</a></li>
+            <li><a href="{{ url_for('master.privacy') }}">{{ _('Privacy') }}</a></li>
         </ul>
     </div>
     <div id="copyright">
