@@ -60,7 +60,6 @@ def signup():
         nickname = form.data['nickname']
 
         local_user = Role.query.filter_by(name='local_user').first()
-        print local_user
 
         user = User(
             username=username,

@@ -37,15 +37,18 @@ def run(port):
 
 @manager.option('-c', dest='config', help='Config file',
                 default='development.conf')
-def createdb(config):
+@manager.option('-d', dest='destory', help='Destory database', default=False)
+def createdb(config, destory):
     """Create database using `config` as config files,
     use `development.conf by default
     """
     config_file = os.path.join(app_root, config)
     application.config.from_pyfile(config_file)
     with application.test_request_context():
+        if destory:
+            db.drop_all()
         # import all Models here
-        from mooc.master.model import Tag
+        from mooc.master.model import Tag, Feedback
         from mooc.account.model import (User, SzuAccount, College, Teacher,
                                         Role, roles_parents, users_roles)
         from mooc.course.model import (Subject, Category, Course, Lecture,
@@ -71,9 +74,10 @@ def initdb(config):
 
 @manager.option('-c', dest='config', help='Config file',
                 default='development.conf')
-def syncdb(config):
+@manager.option('-d', dest='destory', help='Destory database', default=True)
+def syncdb(config, destory):
     """Create and initialize database"""
-    createdb(config)
+    createdb(config, destory)
     initdb(config)
 
 

@@ -31,8 +31,8 @@ def _init_college():
 
 def _init_user():
     global shonenada, key
-    shonenada = User('shonenada', '000000', 'shonenada', True)
-    key = User('key', '123456', 'key', True)
+    shonenada = User(username='shonenada', passwd='000000', nickname='shonenada', is_male=True)
+    key = User(username='key', passwd='123456', nickname='key', is_male=True)
     shonenada.active()
     key.active()
     shonenada.roles.append(roles[4])
@@ -43,8 +43,20 @@ def _init_user():
 
 def _init_szu_account():
     global shonenada_account, key_account
-    shonenada_account = SzuAccount(shonenada, '112020', '2011150000', csse, 'undergrade')
-    key_account = SzuAccount(key, '113030', '2011150999', csse, 'teacher')
+    shonenada_account = SzuAccount(
+        user=shonenada,
+        card_id='112020',
+        stu_number='2011150000',
+        college=csse,
+        szu_account_type='undergrade'
+    )
+    key_account = SzuAccount(
+        user=key,
+        card_id='113030',
+        stu_number='2011150999',
+        college=csse,
+        szu_account_type='teacher'
+    )
     db.session.add(shonenada_account)
     db.session.add(key_account)
 
