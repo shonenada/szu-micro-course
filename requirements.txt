@@ -2,7 +2,7 @@ Flask==0.10.1
 Flask-Babel==0.9
 Flask-Gears==0.2
 Flask-Login==0.2.7
-Flask-RBAC==0.1.0
+Flask-RBAC==0.2.0
 Flask-SQLAlchemy==1.0
 Flask-Script==0.6.2
 Flask-SeaSurf==0.1.22

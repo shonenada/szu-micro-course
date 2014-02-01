@@ -1,4 +1,4 @@
-# Chinese translations for MOOC.
+# ::Chinese translations for MOOC.
 # Copyright (C) 2014 CSSE
 # This file is distributed under the same license as the MOOC project.
 # Yaoda Liu <shonenada@gmail.com>, 2014.
@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MOOC 0.1.0\n"
 "Report-Msgid-Bugs-To: shonenada@gmail.com\n"
-"POT-Creation-Date: 2014-02-01 01:08+0800\n"
+"POT-Creation-Date: 2014-02-01 16:00+0800\n"
 "PO-Revision-Date: 2014-01-30 17:58+0800\n"
 "Last-Translator: Yaoda Liu <shonenada@gmail.com>\n"
 "Language-Team: zh <LL@li.org>\n"
@@ -245,19 +245,19 @@ msgstr "登录成功！ %(username)s 欢迎~"
 msgid "Wrong username or password"
 msgstr "帐号或密码错误"
 
-#: account/view.py:77
+#: account/view.py:76
 msgid "Sign up successfully"
 msgstr "注册成功"
 
-#: account/view.py:95
+#: account/view.py:94
 msgid "Logged out successfully."
 msgstr "退出成功"
 
-#: account/view.py:126 account/view.py:150
+#: account/view.py:125 account/view.py:149
 msgid "Modified successfully."
 msgstr "修改成功"
 
-#: account/view.py:144
+#: account/view.py:143
 msgid "Wrong old password"
 msgstr "密码错误"
 
@@ -337,13 +337,21 @@ msgstr "短课顺序"
 msgid "Course"
 msgstr "课程"
 
-#: master/view.py:88 master/view.py:107 master/view.py:116 master/view.py:127
-msgid "Operated successfully"
-msgstr "操作成功"
-
-#: qa/form.py:10
+#: master/form.py:62 qa/form.py:10
 msgid "Title"
 msgstr "标题"
+
+#: master/form.py:69 templates/feedback.html:5 templates/layout.html:89
+msgid "Feedback"
+msgstr "意见反馈"
+
+#: master/view.py:92
+msgid "Submited successfully"
+msgstr "提交成功"
+
+#: master/view.py:124 master/view.py:143 master/view.py:152 master/view.py:163
+msgid "Operated successfully"
+msgstr "操作成功"
 
 #: qa/form.py:10
 msgid "Title is required"
@@ -409,6 +417,14 @@ msgstr "PDF"
 msgid "Video"
 msgstr "视频"
 
+#: templates/about.html:4 templates/layout.html:88
+msgid "About Us"
+msgstr "关于我们"
+
+#: templates/feedback.html:11
+msgid "Submit"
+msgstr "提交"
+
 #: templates/layout.html:38
 msgid "MicroLecture"
 msgstr "短课"
@@ -432,7 +448,7 @@ msgid "Resources"
 msgstr "资源"
 
 #: templates/layout.html:46 templates/account/signin.html:61
-#: templates/account/signup.html:84
+#: templates/account/signin.html:69 templates/account/signup.html:84
 msgid "Sign In"
 msgstr "登录"
 
@@ -452,15 +468,7 @@ msgstr "用户设置"
 msgid "Sign Out"
 msgstr "退出"
 
-#: templates/layout.html:88
-msgid "About Us"
-msgstr "关于我们"
-
-#: templates/layout.html:89
-msgid "Feedback"
-msgstr "意见反馈"
-
-#: templates/layout.html:90
+#: templates/layout.html:90 templates/privacy.html:4
 msgid "Privacy"
 msgstr "隐私政策"
 
@@ -545,7 +553,7 @@ msgstr "相关提问"
 msgid "Quiz"
 msgstr "课程评测"
 
-#: templates/course/lecture.html:105
+#: templates/course/lecture.html:105 templates/resource/list.html:7
 msgid "Resource of Course"
 msgstr "课程资源"
 
