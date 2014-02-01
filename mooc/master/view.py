@@ -62,6 +62,18 @@ def index():
     return render_template('index.html', subjects=subjects)
 
 
+@master_app.route('/about')
+@rbac.allow(['anonymous'], ['GET'])
+def about():
+    return render_template('about.html')
+
+
+@master_app.route('/privacy')
+@rbac.allow(['anonymous'], ['GET'])
+def privacy():
+    return render_template('privacy.html')
+
+
 @master_app.route('/master')
 @rbac.allow(['super_admin'], ['GET'])
 def master_index():
