@@ -2,7 +2,7 @@
 from flask_wtf import Form
 from wtforms import (StringField, BooleanField, PasswordField,
                      SelectField, DateTimeField, IntegerField)
-from wtforms.validators import InputRequired, Email, Length, NumberRange, EqualTo
+from wtforms.validators import InputRequired, Email, Length, Regexp, EqualTo
 from wtforms.validators import ValidationError
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from flask.ext.babel import lazy_gettext as _
@@ -15,12 +15,22 @@ state_texts = User.USER_STATE_TEXTS
 type_values = SzuAccount.TYPE_VALUES
 type_texts = SzuAccount.TYPE_TEXTS
 
+STU_NUMER_RE = '^\d{10}$'
+STU_NUMER_ME = _('Student Number must be length of 10 digital')
+EMAIL_RE = '(?:^[a-zA-Z0-9+_\-\.]+@[0-9a-zA-Z][.-0-9a-zA-Z]*.[a-zA-Z]+$)|(?:^$)'
+EMAIL_ME = _('Invalid Email.')
+PHONE_RE = '(?:^\d{11}$)|(?:^$)'
+PHONE_ME = _('Phone must be length of 11 digital')
+SPHONE_RE = '(?:^\d{3,6}$)|(?:^$)'
+SPHONE_ME = _('Short Phone must be length from 3 to 6 digital')
+QQ_RE = '(?:^\d{6,12}$)|(?:^$)'
+QQ_ME = _('QQ must be length from 6 to 12 digital')
+CARD_ID_RE = '(?:^\d{5,6}$)|(?:^$)'
+CARD_ID_ME = _('Card ID must be length of 5 or 6 digital')
+
 USER_EXISTED = _('Username is existed')
 NICKNAME_EXISTED = _('Nickname is existed')
 STU_NUMBER_EXISTED = _('Student Number is existed')
-MUST_BE_11_DIGITAL = _('This field must be 11 digitals')
-MUST_BE_10_DIGITAL = _('This field must be 10 digitals')
-MUST_BE_4_6_DIGITAL = _('This field must be 4~6 digitals')
 
 
 class SignInForm(Form):
@@ -83,8 +93,11 @@ class SignUpForm(Form):
             InputRequired(),
         ]
     )
-    stu_number = IntegerField(
+    stu_number = StringField(
         label=_('Student Number'),
+        validators=[
+            Length(min=11, max=11),
+        ],
     )
     college = QuerySelectField(
         label=_('College'),
@@ -95,6 +108,7 @@ class SignUpForm(Form):
         label=_('Nickname'),
         validators=[
             InputRequired(),
+            Length(max=20),
         ]
     )
 
@@ -109,9 +123,6 @@ class SignUpForm(Form):
             raise ValidationError(USER_EXISTED)
 
     def validate_stu_number(form, field):
-        if len(str(field.data)) != 10:
-            raise ValidationError(MUST_BE_10_DIGITAL)
-
         find_szu_account = SzuAccount.query.filter_by(stu_number=field.data)
         if find_szu_account.count() > 0:
             raise ValidationError(STU_NUMBER_EXISTED)
@@ -133,6 +144,9 @@ class ManageUserForm(Form):
     created = DateTimeField(label=_('Joined at'))
     last_login = DateTimeField(label=_('Last-log at'))
     last_ip = StringField(label=_('Last-log ip'))
+    card_id = StringField(label=_('Card ID'))
+    stu_number = StringField(label=_('Student Number'))
+    short_phone = StringField(label=_('Short Phone Number'))
     state = SelectField(
         label=_('State'),
         choices=[
@@ -142,12 +156,9 @@ class ManageUserForm(Form):
             InputRequired(),
         ]
     )
-    card_id = StringField(label=_('Card ID'))
-    stu_number = StringField(label=_('Student Number'))
-    short_phone = StringField(label=_('Short Phone Number'))
 
 
-class NewUserForm(Form):
+class CreateUserForm(Form):
 
     def get_colleges():
         return College.query.all()
@@ -172,12 +183,14 @@ class NewUserForm(Form):
         label=_('Real Name'),
         validators=[
             InputRequired(),
+            Length(max=20),
         ]
     )
     nickname = StringField(
         label=_('Nickname'),
         validators=[
             InputRequired(),
+            Length(max=20),
         ]
     )
     is_male = SelectField(
@@ -190,30 +203,37 @@ class NewUserForm(Form):
     email = StringField(
         label=_('Email'),
         validators=[
-            Email(),
+            Regexp(regex=EMAIL_RE, message=EMAIL_ME),
         ],
     )
-    phone = IntegerField(
+    phone = StringField(
         label=_('Phone Number'),
         validators=[
+            Regexp(regex=PHONE_RE, message=PHONE_ME),
         ],
     )
-    short_phone = IntegerField(
+    short_phone = StringField(
         label=_('Short Phone Number'),
         validators=[
+            Regexp(regex=SPHONE_RE, message=SPHONE_ME),
         ],
     )
-    qq = IntegerField(
+    qq = StringField(
         label=_('QQ'),
+        validators=[
+            Regexp(regex=QQ_RE, message=QQ_ME),
+        ],
     )
-    card_id = IntegerField(
+    card_id = StringField(
         label=_('Card ID'),
         validators=[
+            Regexp(regex=CARD_ID_RE, message=CARD_ID_ME),
         ],
     )
-    stu_number = IntegerField(
+    stu_number = StringField(
         label=_('Student Number'),
         validators=[
+            Regexp(regex=STU_NUMER_RE, message=STU_NUMER_ME),
         ],
     )
     college = QuerySelectField(
@@ -233,22 +253,6 @@ class NewUserForm(Form):
             (state_values[i], state_texts[i]) for i in xrange(len(state_texts))
         ]
     )
-
-    def validate_phone(form, field):
-        if len(str(field.data)) != 11:
-            raise ValidationError(MUST_BE_11_DIGITAL)
-
-    def validate_card_id(form, field):
-        if len(str(field.data)) in range(4, 6):
-            raise ValidationError(MUST_BE_4_6_DIGITAL)
-
-    def validate_stu_number(form, field):
-        if len(str(field.data)) != 10:
-            raise ValidationError(MUST_BE_10_DIGITAL)
-
-    def validate_short_phone(form, field):
-        if len(str(field.data)) in range(4, 6):
-            raise ValidationError(MUST_BE_4_6_DIGITAL)
 
 
 class SettingForm(Form):
@@ -274,48 +278,36 @@ class SettingForm(Form):
         query_factory=get_colleges,
         allow_blank=False
     )
-    card_id = IntegerField(
+    card_id = StringField(
         label=_('Card ID'),
         validators=[
+            Regexp(regex=CARD_ID_RE, message=CARD_ID_ME),
         ],
     )
-    stu_number = IntegerField(
+    stu_number = StringField(
         label=_('Student Number'),
         validators=[
+            Regexp(regex=STU_NUMER_RE, message=STU_NUMER_ME),
         ],
     )
     email = StringField(
         label=_('Email'),
         validators=[
-            Email(),
+            Regexp(regex=EMAIL_RE, message=EMAIL_ME)
         ],
     )
-    phone = IntegerField(
+    phone = StringField(
         label=_('Phone Number'),
         validators=[
+            Regexp(regex=PHONE_RE, message=PHONE_ME),
         ],
     )
-    short_phone = IntegerField(
+    short_phone = StringField(
         label=_('Short Phone Number'),
         validators=[
+            Regexp(regex=SPHONE_RE, message=SPHONE_ME),
         ],
     )
-
-    def validate_phone(form, field):
-        if len(str(field.data)) != 11:
-            raise ValidationError(MUST_BE_11_DIGITAL)
-
-    def validate_card_id(form, field):
-        if len(str(field.data)) in range(4, 6):
-            raise ValidationError(MUST_BE_4_6_DIGITAL)
-
-    def validate_stu_number(form, field):
-        if len(str(field.data)) != 10:
-            raise ValidationError(MUST_BE_10_DIGITAL)
-
-    def validate_short_phone(form, field):
-        if len(str(field.data)) in range(4, 6):
-            raise ValidationError(MUST_BE_4_6_DIGITAL)
 
 
 class PasswordForm(Form):
