@@ -12,7 +12,7 @@ from mooc.resource.model import Resource
 from mooc.master.form import FeedbackForm
 from mooc.course.form import SubjectForm, CategoryForm, CourseForm, LectureForm
 from mooc.resource.form import ResourceForm
-from mooc.account.form import ManageUserForm, NewUserForm
+from mooc.account.form import ManageUserForm, CreateUserForm
 from mooc.master.utils import generate_all_controller
 from mooc.account.service import (update_user_state,
                                   change_user_password,
