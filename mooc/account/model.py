@@ -224,6 +224,14 @@ class SzuAccount(db.Model, ModelMixin):
         else:
             self.szu_account_type = 'other'
 
+    @staticmethod
+    def get_type(type_name):
+        if type_name in SzuAccount.TYPE_VALUES:
+            return SzuAccount.TYPE_TEXTS[
+                SzuAccount.TYPE_VALUES.index(type_name)]
+        else:
+            return None
+
 
 class College(db.Model, ModelMixin):
     """Model of College"""
