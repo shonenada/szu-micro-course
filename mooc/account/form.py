@@ -97,7 +97,6 @@ class SignUpForm(Form):
             InputRequired(),
         ]
     )
-    
 
     def validate_username(form, field):
         find_user = User.query.filter(User.username==field.data)
@@ -118,99 +117,34 @@ class SignUpForm(Form):
             raise ValidationError(STU_NUMBER_EXISTED)
 
 
-class UserForm(Form):
-    class Meta:
-        model = User
-
-    username = StringField(
-        label=_('Username'),
-        description=_('6~30 characters'),
-        validators=[
-            InputRequired(),
-            Length(min=6, max=20),
-        ]
-    )
+class ManageUserForm(Form):
+    username = StringField(label=_('Username'))
     is_male = SelectField(
         label=_('Gender'),
         choices=[
             ('True', _('Male')),
             ('False', _('Female'))
         ],
-        validators=[
-            InputRequired(),
-        ]
     )
-    name = StringField(
-        label=_('Real Name'),
-        validators=[
-            Length(max=20),
-        ]
-    )
-    email = StringField(
-        label=_('Email'),
-        validators=[
-            Email(),
-        ]
-    )
-    phone = IntegerField(
-        label=_('Phone Number'),
-        validators=[
-        ]
-    )
-    qq = IntegerField(
-        label=_('QQ'),
-        validators=[
-        ]
-    )
-    created = DateTimeField(
-        label=_('Joined at'),
-    )
-    last_login = DateTimeField(
-        label=_('Last-log at'),
-    )
-    last_ip = StringField(
-        label=_('Last-log ip'),
-    )
+    name = StringField(label=_('Real Name'))
+    email = StringField(label=_('Email'))
+    phone = StringField(label=_('Phone Number'))
+    qq = StringField(label=_('QQ'))
+    created = DateTimeField(label=_('Joined at'))
+    last_login = DateTimeField(label=_('Last-log at'))
+    last_ip = StringField(label=_('Last-log ip'))
     state = SelectField(
         label=_('State'),
         choices=[
             (state_values[i], state_texts[i]) for i in xrange(len(state_texts))
         ],
         validators=[
-            InputRequired()
+            InputRequired(),
         ]
     )
-
-    def validate_phone(form, field):
-        if len(str(field.data)) != 11:
-            raise ValidationError(MUST_BE_11_DIGITAL)
-
-
-class SzuAccountForm(Form):
-    class Meta:
-        model = SzuAccount
-
-    card_id = IntegerField(
-        label=_('Card ID'),
-    )
-    stu_number = IntegerField(
-        label=_('Student Number'),
-    )
-    short_phone = IntegerField(
-        label=_('Short Phone Number'),
-    )
-
-    def validate_card_id(form, field):
-        if len(str(field.data)) in range(4, 6):
-            raise ValidationError(MUST_BE_4_6_DIGITAL)
-
-    def validate_stu_number(form, field):
-        if len(str(field.data)) != 10:
-            raise ValidationError(MUST_BE_10_DIGITAL)
-
-    def validate_short_phone(form, field):
-        if len(str(field.data)) in range(4, 6):
-            raise ValidationError(MUST_BE_4_6_DIGITAL)
+    card_id = StringField(label=_('Card ID'))
+    stu_number = StringField(label=_('Student Number'))
+    short_phone = StringField(label=_('Short Phone Number'))
 
 
 class NewUserForm(Form):

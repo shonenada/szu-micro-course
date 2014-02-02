@@ -4,6 +4,7 @@ from wtforms import StringField, TextAreaField
 from wtforms.fields import Field
 from wtforms.widgets import TextInput
 from wtforms.validators import InputRequired, Length
+from wtforms.validators import ValidationError
 
 
 class TagsField(Field):

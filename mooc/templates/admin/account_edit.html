@@ -19,11 +19,12 @@
                     {{ user_form.csrf_token }}
                     {{ user_form.username.label }} {{ user_form.username(readonly=True, class='input-xlarge')}}
                     {{ user_form.name.label }} {{ user_form.name(readonly=True, class='input-xlarge') }}
-                    {{ szu_account_form.stu_number.label }} {{ szu_account_form.stu_number(readonly=True, class='input-xlarge') }}
-                    {{ szu_account_form.card_id.label }} {{ szu_account_form.card_id(readonly=True, class='input-xlarge') }}
+                    {{ user_form.stu_number.label }} {{ user_form.stu_number(readonly=True, class='input-xlarge') }}
+                    {{ user_form.card_id.label }} {{ user_form.card_id(readonly=True, class='input-xlarge') }}
                     {{ user_form.is_male.label }} {{ user_form.is_male(readonly=True, class='input-xlarge') }}
                     {{ user_form.email.label }} {{ user_form.email(readonly=True, class='input-xlarge') }}
                     {{ user_form.phone.label }} {{ user_form.phone(readonly=True, class='input-xlarge') }}
+                    {{ user_form.short_phone.label }} {{ user_form.short_phone(readonly=True, class='input-xlarge') }}
                     {{ user_form.qq.label }} {{ user_form.qq(readonly=True, class='input-xlarge') }}
                     {{ user_form.created.label }} {{ user_form.created(readonly=True, class='input-xlarge') }}
                     {{ user_form.last_login.label }} {{ user_form.last_login(readonly=True, class='input-xlarge') }}
