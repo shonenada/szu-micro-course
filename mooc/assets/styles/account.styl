@@ -3,7 +3,7 @@
   #wrapper
 
     .item-list
-      padding 10px
+      padding 20px
       background #fff
       bottom-border-radius 5
 
@@ -23,3 +23,53 @@
         color #515c73
         border-radius 5px
         border solid 2px #b7c4ce
+  
+  #left
+
+    ul.disc-style, ul.disc-style > li
+      margin-left 10px
+      list-style disc
+
+    .content-box
+      padding 10px
+      background #fff
+      top-border-radius 5
+      bottom-border-radius 5
+
+      .avatar-box
+        margin 0 20px 0 10px
+        width 80px
+        float left
+
+      .avatar
+        width 70px
+        height 70px
+        transition 0.25s
+        border 4px #fff solid
+        top-border-radius 40px
+        bottom-border-radius 40px
+        box-shadow-func 1px 1px 1px #000
+
+      .profile
+        float left
+        font-size 14px
+
+        li
+          float left
+
+          &:before
+            margin 0 5px 0 5px
+            content '|'
+
+          &:first-child:before
+            margin 0
+            content ''
+
+        p
+          line-height 1.6em
+
+        p.username
+          line-height 1.5em
+          font-size 20px
+          color #000
+          font-weight bold

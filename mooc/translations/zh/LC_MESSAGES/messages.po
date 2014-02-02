@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MOOC 0.1.0\n"
 "Report-Msgid-Bugs-To: shonenada@gmail.com\n"
-"POT-Creation-Date: 2014-02-01 16:00+0800\n"
+"POT-Creation-Date: 2014-02-02 16:04+0800\n"
 "PO-Revision-Date: 2014-01-30 17:58+0800\n"
 "Last-Translator: Yaoda Liu <shonenada@gmail.com>\n"
 "Language-Team: zh <LL@li.org>\n"
@@ -17,53 +17,58 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-#: helpers.py:22
+#: helpers.py:15
+#, python-format
+msgid "%%Y-%%m-%%d"
+msgstr "%%Y-%%m-%%d"
+
+#: helpers.py:30
 msgid "Just now"
 msgstr "刚刚"
 
-#: helpers.py:24
+#: helpers.py:32
 #, python-format
 msgid "%(secdiff)s seconds ago"
 msgstr "%(secdiff)s 秒前"
 
-#: helpers.py:26
+#: helpers.py:34
 msgid "1 minute ago"
 msgstr "1 分钟前"
 
-#: helpers.py:28
+#: helpers.py:36
 #, python-format
 msgid "%(secdiff)s minutes ago"
 msgstr "%(secdiff)s 分钟前"
 
-#: helpers.py:30
+#: helpers.py:38
 msgid "1 hour ago"
 msgstr "1 小时前"
 
-#: helpers.py:32
+#: helpers.py:40
 #, python-format
 msgid "%(secdiff)s hours ago"
 msgstr "%(secdiff)s 小时前"
 
-#: helpers.py:34
+#: helpers.py:42
 msgid "Yesterday"
 msgstr "昨天"
 
-#: helpers.py:36
+#: helpers.py:44
 #, python-format
 msgid "%(secdiff)s day(s) ago"
 msgstr "%(secdiff)s 天前"
 
-#: helpers.py:38
+#: helpers.py:46
 #, python-format
 msgid "%(secdiff)s week(s) ago"
 msgstr "%(secdiff)s 个星期前"
 
-#: helpers.py:40
+#: helpers.py:48
 #, python-format
 msgid "%(secdiff)s month(s) ago"
 msgstr "%(secdiff)s 个月前"
 
-#: helpers.py:41
+#: helpers.py:49
 #, python-format
 msgid "%(secdiff)s year(s) ago"
 msgstr "%(secdiff)s 年前"
@@ -253,11 +258,11 @@ msgstr "注册成功"
 msgid "Logged out successfully."
 msgstr "退出成功"
 
-#: account/view.py:125 account/view.py:149
+#: account/view.py:132 account/view.py:156
 msgid "Modified successfully."
 msgstr "修改成功"
 
-#: account/view.py:143
+#: account/view.py:150
 msgid "Wrong old password"
 msgstr "密码错误"
 
@@ -521,6 +526,24 @@ msgstr "修改密码"
 msgid "Update"
 msgstr "更新"
 
+#: templates/account/people.html:27
+msgid "Joined on"
+msgstr "加入于"
+
+#: templates/account/people.html:43
+msgid "Learnt Records"
+msgstr "学习记录"
+
+#: templates/account/people.html:44 templates/course/lecture.html:106
+#: templates/qa/ask.html:9 templates/qa/ask.html:15
+#: templates/qa/question_list.html:10 templates/qa/tag_view.html:8
+msgid "Ask"
+msgstr "提问"
+
+#: templates/account/people.html:45
+msgid "Answer"
+msgstr "回答"
+
 #: templates/account/signin.html:75
 msgid "No Account?"
 msgstr "没有帐号？"
@@ -556,12 +579,6 @@ msgstr "课程评测"
 #: templates/course/lecture.html:105 templates/resource/list.html:7
 msgid "Resource of Course"
 msgstr "课程资源"
-
-#: templates/course/lecture.html:106 templates/qa/ask.html:9
-#: templates/qa/ask.html:15 templates/qa/question_list.html:10
-#: templates/qa/tag_view.html:8
-msgid "Ask"
-msgstr "提问"
 
 #: templates/course/lecture.html:139
 msgid "Resource"

@@ -1,11 +1,11 @@
 #-*- coding: utf-8 -*-
-from flask import Blueprint
+from flask import Blueprint, abort
 from flask import render_template, request, url_for, redirect
 from flask.ext.babel import lazy_gettext as _
 from flask.ext.login import login_user, logout_user, current_user
 
 from mooc.app import rbac, csrf, db
-from mooc.helpers import flash
+from mooc.helpers import flash, get_avatar_url
 from mooc.account.model import User, SzuAccount, Role
 from mooc.account.form import SignInForm, SettingForm, PasswordForm, SignUpForm
 from mooc.account.service import load_user
@@ -96,9 +96,16 @@ def signout():
 
 
 @account_app.route('/people/<username>')
-@rbac.allow(['local_user'], ['GET'])
+@rbac.allow(['anonymous'], ['GET'])
 def people(username):
-    pass
+    user = User.query.filter_by(username=username).first()
+    if not user:
+        abort(404)
+    else:
+        avatar = get_avatar_url(user.email)
+        get_type = SzuAccount.get_type
+        return render_template('account/people.html',
+                               user=user, avatar=avatar, get_type=get_type)
 
 
 @csrf.exempt

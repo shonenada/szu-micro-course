@@ -14,7 +14,7 @@ from mooc.account.view import account_app
 from mooc.course.view import course_app
 from mooc.resource.view import resource_app
 from mooc.qa.view import qa_app
-from mooc.helpers import friendly_time
+from mooc.helpers import friendly_time, format_datetime
 from mooc.course.service import (get_learn_records, get_last_lecture,
                                  learn_count)
 from mooc.resource.service import friendly_resource_category
@@ -70,6 +70,7 @@ def create_app(import_name=None, config=None):
 
 def setup_jinja(app):
     _jinja_filters = {
+        'date': format_datetime,
         'friendly_time': friendly_time,
         'learn_count': learn_count,
         'enumerate': (lambda x: enumerate(x)),

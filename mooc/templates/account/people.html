@@ -1,0 +1,79 @@
+{%- extends 'layout.html' %}
+
+{%- block custom_static %}
+<script>
+$(function() {
+    $('.borad').hide();
+    $('#learn-records').show();
+    $('.tip-btns').click(function() {
+        target = $(this).attr('for');
+        $('.borad').hide();
+        $('#' + target).show();
+        $('.tip-btns').removeClass('current');
+        $(this).addClass('current');
+    });
+});
+</script>
+{%- endblock %}
+
+{%- block left %}
+<div id="left">
+    <div class="content-box">
+        <div class="avatar-box">
+            <img src="{{ avatar }}" alt="{{ user.username }}" class="avatar">
+        </div>
+        <div class="profile">
+            <p class="username">{{ user.nickname or user.username }}</p>
+            <p>{{ _('Joined on') }} {{ user.created | date }}</p>
+            <p>
+                <ul>
+                    {%- if user.szu_account.college.name %}
+                    <li>{{ user.szu_account.college.name }}</li>
+                    {%- endif %}
+                    <li>{{ get_type(user.szu_account.szu_account_type) }}</li>
+                </ul>
+            </p>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="shadow"></div>
+    <div style="height: 20px"></div>
+        <div id="tips">
+        <ul>
+            <li><a href="#" for="learn-records" class="current tip-btns">{{ _('Learnt Records') }}</a></li>
+            <li><a href="#" for="asks" class="tip-btns">{{ _('Ask') }}</a></li>
+            <li><a href="#" for="answer" class="tip-btns">{{ _('Answer') }}</a></li>
+        </ul>
+    </div>
+
+    <div class="item-list">
+        <div id="learn-records" class="borad">
+            <ul class="disc-style">
+            {%- for record in user.learn_records %}
+                <li><a href="{{ url_for('course.lecture', lecture_id=record.lecture.id) }}">{{ record.lecture.name }}</a> - {{ record.created | date }}</li>
+            {%- endfor %}
+            </ul>
+        </div>
+        <div id="asks" class="borad">
+            <ul class="disc-style">
+            {%- for ques in user.questions %}
+                <li><a href="{{ url_for('qa.view_question', qid=ques.id) }}">{{ ques.title }}</a> - {{ ques.created | date }}</li>
+            {%- endfor %}
+            </ul>
+        </div>
+        <div id="answer" class="borad">
+            <ul class="disc-style">
+            {%- for answer in user.answers %}
+                <li><a href="{{ url_for('qa.view_question', qid=answer.question.id) }}#answer-{{ answer.id }}">{{ answer.question.title }}</a> - {{ answer.created | date }}</li>
+            {%- endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="shadow"></div>
+</div>
+{%- endblock %}
+
+{%- block right %}
+<div id="right">
+</div>
+{%- endblock %}
