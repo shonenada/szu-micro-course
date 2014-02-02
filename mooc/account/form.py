@@ -16,17 +16,17 @@ type_values = SzuAccount.TYPE_VALUES
 type_texts = SzuAccount.TYPE_TEXTS
 
 STU_NUMER_RE = '^\d{10}$'
-STU_NUMER_ME = _('Student Number must be length of 10 digital')
+STU_NUMER_ME = _('Student Number must be length of 10 digitals')
 EMAIL_RE = '(?:^[a-zA-Z0-9+_\-\.]+@[0-9a-zA-Z][.-0-9a-zA-Z]*.[a-zA-Z]+$)|(?:^$)'
 EMAIL_ME = _('Invalid Email.')
 PHONE_RE = '(?:^\d{11}$)|(?:^$)'
-PHONE_ME = _('Phone must be length of 11 digital')
+PHONE_ME = _('Phone must be length of 11 digitals')
 SPHONE_RE = '(?:^\d{3,6}$)|(?:^$)'
-SPHONE_ME = _('Short Phone must be length from 3 to 6 digital')
+SPHONE_ME = _('Short Phone must be length from 3 to 6 digitals')
 QQ_RE = '(?:^\d{6,12}$)|(?:^$)'
-QQ_ME = _('QQ must be length from 6 to 12 digital')
+QQ_ME = _('QQ must be length from 6 to 12 digitals')
 CARD_ID_RE = '(?:^\d{5,6}$)|(?:^$)'
-CARD_ID_ME = _('Card ID must be length of 5 or 6 digital')
+CARD_ID_ME = _('Card ID must be length of 5 or 6 digitals')
 
 USER_EXISTED = _('Username is existed')
 NICKNAME_EXISTED = _('Nickname is existed')

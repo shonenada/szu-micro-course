@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MOOC 0.1.0\n"
 "Report-Msgid-Bugs-To: shonenada@gmail.com\n"
-"POT-Creation-Date: 2014-02-02 16:04+0800\n"
+"POT-Creation-Date: 2014-02-03 00:55+0800\n"
 "PO-Revision-Date: 2014-01-30 17:58+0800\n"
 "Last-Translator: Yaoda Liu <shonenada@gmail.com>\n"
 "Language-Team: zh <LL@li.org>\n"
@@ -73,139 +73,151 @@ msgstr "%(secdiff)s 个月前"
 msgid "%(secdiff)s year(s) ago"
 msgstr "%(secdiff)s 年前"
 
-#: account/form.py:18
+#: account/form.py:19
+msgid "Student Number must be length of 10 digitals"
+msgstr "学号必须为 10 个数字"
+
+#: account/form.py:21
+msgid "Invalid Email."
+msgstr "非法的邮箱地址"
+
+#: account/form.py:23
+msgid "Phone must be length of 11 digitals"
+msgstr "手机号码必须为 11 个数字"
+
+#: account/form.py:25
+msgid "Short Phone must be length from 3 to 6 digitals"
+msgstr "短号必须是 3~6 位数字"
+
+#: account/form.py:27
+msgid "QQ must be length from 6 to 12 digitals"
+msgstr "QQ 必须是 6~12 位数字"
+
+#: account/form.py:29
+msgid "Card ID must be length of 5 or 6 digitals"
+msgstr "校园卡号必须为 5 或 6 位数字"
+
+#: account/form.py:31
 msgid "Username is existed"
 msgstr "用户名已存在"
 
-#: account/form.py:19
+#: account/form.py:32
 msgid "Nickname is existed"
 msgstr "昵称已存在"
 
-#: account/form.py:20
+#: account/form.py:33
 msgid "Student Number is existed"
 msgstr "学号已存在"
 
-#: account/form.py:21
-msgid "This field must be 11 digitals"
-msgstr "该字段必须为 11 个数字"
-
-#: account/form.py:22
-msgid "This field must be 10 digitals"
-msgstr "该字段必须为 10 个数字"
-
-#: account/form.py:23
-msgid "This field must be 4~6 digitals"
-msgstr "该字段必须为 4~6 个数字"
-
-#: account/form.py:29 account/form.py:53 account/form.py:126
-#: account/form.py:222
+#: account/form.py:39 account/form.py:63 account/form.py:132
+#: account/form.py:167
 msgid "Username"
 msgstr "用户名"
 
-#: account/form.py:30 account/form.py:54 account/form.py:127
-#: account/form.py:223 account/form.py:391 account/form.py:399
-#: account/form.py:407
+#: account/form.py:40 account/form.py:64 account/form.py:168
+#: account/form.py:317 account/form.py:325 account/form.py:333
 msgid "6~30 characters"
 msgstr "6~30 个字符"
 
-#: account/form.py:37 account/form.py:61 account/form.py:230
+#: account/form.py:47 account/form.py:71 account/form.py:175
 msgid "Password"
 msgstr "密码"
 
-#: account/form.py:38 account/form.py:62 account/form.py:231
+#: account/form.py:48 account/form.py:72 account/form.py:176
 msgid "6~20 characters"
 msgstr "6~20 个字符"
 
-#: account/form.py:44
+#: account/form.py:54
 msgid "Remember Me"
 msgstr "记住我"
 
-#: account/form.py:69 account/form.py:144 account/form.py:238
-#: account/form.py:326
+#: account/form.py:79 account/form.py:140 account/form.py:183
+#: account/form.py:264
 msgid "Real Name"
 msgstr "真实姓名"
 
-#: account/form.py:70
+#: account/form.py:80
 msgid "Your real name"
 msgstr "请输入您的真实姓名"
 
-#: account/form.py:77 account/form.py:134 account/form.py:250
-#: account/form.py:332
+#: account/form.py:87 account/form.py:134 account/form.py:197
+#: account/form.py:270
 msgid "Gender"
 msgstr "性别"
 
-#: account/form.py:79 account/form.py:136 account/form.py:252
-#: account/form.py:334
+#: account/form.py:89 account/form.py:136 account/form.py:199
+#: account/form.py:272
 msgid "Male"
 msgstr "男"
 
-#: account/form.py:80 account/form.py:137 account/form.py:253
-#: account/form.py:335
+#: account/form.py:90 account/form.py:137 account/form.py:200
+#: account/form.py:273
 msgid "Female"
 msgstr "女"
 
-#: account/form.py:87 account/form.py:197 account/form.py:281
-#: account/form.py:349
+#: account/form.py:97 account/form.py:148 account/form.py:234
+#: account/form.py:288
 msgid "Student Number"
 msgstr "学号"
 
-#: account/form.py:90 account/form.py:286 account/form.py:339 course/form.py:51
+#: account/form.py:103 account/form.py:240 account/form.py:277
+#: course/form.py:51
 msgid "College"
 msgstr "学院"
 
-#: account/form.py:95 account/form.py:244 account/form.py:329
+#: account/form.py:108 account/form.py:190 account/form.py:267
 msgid "Nickname"
 msgstr "昵称"
 
-#: account/form.py:150 account/form.py:257 account/form.py:354
+#: account/form.py:141 account/form.py:204 account/form.py:294
 msgid "Email"
 msgstr "邮箱"
 
-#: account/form.py:156 account/form.py:263 account/form.py:360
+#: account/form.py:142 account/form.py:210 account/form.py:300
 msgid "Phone Number"
 msgstr "手机号码"
 
-#: account/form.py:161 account/form.py:273
+#: account/form.py:143 account/form.py:222
 msgid "QQ"
 msgstr "QQ 号码"
 
-#: account/form.py:166
+#: account/form.py:144
 msgid "Joined at"
 msgstr "加入于"
 
-#: account/form.py:169
+#: account/form.py:145
 msgid "Last-log at"
 msgstr "最后登录于"
 
-#: account/form.py:172
+#: account/form.py:146
 msgid "Last-log ip"
 msgstr "最后登录 IP"
 
-#: account/form.py:175
-msgid "State"
-msgstr "状态"
-
-#: account/form.py:194 account/form.py:276 account/form.py:344
+#: account/form.py:147 account/form.py:228 account/form.py:282
 msgid "Card ID"
 msgstr "学生卡号"
 
-#: account/form.py:200 account/form.py:268 account/form.py:365
+#: account/form.py:149 account/form.py:216 account/form.py:306
 msgid "Short Phone Number"
 msgstr "短号"
 
-#: account/form.py:291
+#: account/form.py:151
+msgid "State"
+msgstr "状态"
+
+#: account/form.py:245
 msgid "Type"
 msgstr "用户类型"
 
-#: account/form.py:390
+#: account/form.py:316
 msgid "Old Password"
 msgstr "旧密码"
 
-#: account/form.py:398
+#: account/form.py:324
 msgid "New Password"
 msgstr "新密码"
 
-#: account/form.py:406
+#: account/form.py:332
 msgid "Confirm Password"
 msgstr "确认密码"
 
@@ -342,11 +354,11 @@ msgstr "短课顺序"
 msgid "Course"
 msgstr "课程"
 
-#: master/form.py:62 qa/form.py:10
+#: master/form.py:63 qa/form.py:10
 msgid "Title"
 msgstr "标题"
 
-#: master/form.py:69 templates/feedback.html:5 templates/layout.html:89
+#: master/form.py:70 templates/feedback.html:5 templates/layout.html:89
 msgid "Feedback"
 msgstr "意见反馈"
 
@@ -354,7 +366,7 @@ msgstr "意见反馈"
 msgid "Submited successfully"
 msgstr "提交成功"
 
-#: master/view.py:124 master/view.py:143 master/view.py:152 master/view.py:163
+#: master/view.py:128 master/view.py:146 master/view.py:155 master/view.py:166
 msgid "Operated successfully"
 msgstr "操作成功"
 
@@ -657,4 +669,7 @@ msgstr "短课名"
 #: templates/resource/list.html:47
 msgid "Hot Resources"
 msgstr "热门资源"
+
+#~ msgid "This field must be 4~6 digitals"
+#~ msgstr "该字段必须为 4~6 个数字"
 
