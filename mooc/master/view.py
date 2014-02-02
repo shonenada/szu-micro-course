@@ -12,7 +12,7 @@ from mooc.resource.model import Resource
 from mooc.master.form import FeedbackForm
 from mooc.course.form import SubjectForm, CategoryForm, CourseForm, LectureForm
 from mooc.resource.form import ResourceForm
-from mooc.account.form import UserForm, SzuAccountForm, NewUserForm
+from mooc.account.form import ManageUserForm, NewUserForm
 from mooc.master.utils import generate_all_controller
 from mooc.account.service import (update_user_state,
                                   change_user_password,
@@ -116,8 +116,12 @@ def master_account_list():
 @rbac.allow(['super_admin'], ['GET', 'PUT'])
 def master_account_edit(uid):
     user = User.query.get(uid)
-    user_form = UserForm(request.form, user)
-    szu_account_form = SzuAccountForm(request.form, user.szu_account)
+    data = {
+        'card_id': user.szu_account.card_id,
+        'stu_number': user.szu_account.stu_number,
+        'short_phone': user.szu_account.short_phone,
+    }
+    user_form = ManageUserForm(request.form, user, **data)
 
     if user_form.validate_on_submit():
         update_user_state(uid, user_form.data['state'])
@@ -131,8 +135,7 @@ def master_account_edit(uid):
     return render_template(
         'admin/account_edit.html',
         uid=uid, 
-        user_form=user_form,
-        szu_account_form=szu_account_form)
+        user_form=user_form)
 
 
 @master_app.route('/master/account/<int:uid>', methods=['DELETE'])
