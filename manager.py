@@ -6,7 +6,7 @@ from develop_tools.clean import clean as cln
 from develop_tools.pep8 import pep8
 from develop_tools.search import search
 from mooc.app import create_app
-from mooc.app import db
+from mooc.extensions import db
 
 
 app_root = os.path.dirname(os.path.realpath(__name__))
@@ -48,13 +48,13 @@ def createdb(config, destory):
         if destory:
             db.drop_all()
         # import all Models here
-        from mooc.master.model import Tag, Feedback
-        from mooc.account.model import (User, SzuAccount, College, Teacher,
+        from mooc.models.master import Tag, Feedback
+        from mooc.models.account import (User, SzuAccount, College, Teacher,
                                         Role, roles_parents, users_roles)
-        from mooc.course.model import (Subject, Category, Course, Lecture,
+        from mooc.models.course import (Subject, Category, Course, Lecture,
                                        LearnRecord, lecture_tags, course_tags)
-        from mooc.discuss.model import UpDownRecord, Answer, Question
-        from mooc.resource.model import Resource
+        from mooc.models.discuss import UpDownRecord, Answer, Question
+        from mooc.models.resource import Resource
         db.create_all()
     print 'Created Database!'
 

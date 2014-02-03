@@ -2,7 +2,6 @@
 import hashlib, urllib
 
 from speaklater import is_lazy_string
-from flask.ext.babel import lazy_gettext as _, gettext
 
 from flask import flash as f
 

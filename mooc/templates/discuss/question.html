@@ -8,7 +8,7 @@
 <div id="left">
     <div id="question-description">
         <div id="question-info">
-            <div id="question-title">{{ question.title }} {% if question.lecture %}<span> {{ _('From') }}<a href="{{ url_for('course.lecture', lecture_id=question.lecture.id )}}">《{{ question.lecture.name }}》</a>{{ _("'s Questions") }}}</span>{% endif %}</div>
+            <div id="question-title">{{ question.title }} {% if question.lecture %}<span> {{ _('From') }}<a href="{{ url_for('course.lecture', lecture_id=question.lecture.id )}}">《{{ question.lecture.name }}》</a>{{ _("'s Questions") }}</span>{% endif %}</div>
             <ul id="question-tags">
             {%- for tag in question.tags %}
                 <li><span><a href="{{ url_for('discuss.tag', tag=tag.tag) }}">{{ tag.tag }}</a></span></li>
