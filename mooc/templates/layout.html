@@ -48,8 +48,8 @@
                 <li>
                     <a href="{{ url_for('account.setting') }}" class="user_logged">{{ current_user.username }}</a>
                     <ul class="dropdown">
-                        {%- if has_perm('GET', 'master.master_index') %}
-                        <li><a href="{{ url_for('master.master_index') }}">{{ _('Dashboard') }}</a></li>
+                        {%- if has_perm('GET', 'admin.index') %}
+                        <li><a href="{{ url_for('admin.index') }}">{{ _('Dashboard') }}</a></li>
                         {%- endif %}
                         <li><a href="{{ url_for('account.people', username=current_user.username) }}">{{ _('Personal Page') }}</a></li>
                         <li><a href="{{ url_for('account.setting') }}">{{ _('User Settings') }}</a></li>

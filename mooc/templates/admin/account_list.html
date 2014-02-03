@@ -1,15 +1,15 @@
-{%- extends 'admin/master.html' %}
+{%- extends 'admin/layout.html' %}
 {%- import 'utils.jinja' as utils %}
 
 {%- block breadcrumb %}
-<li><a href="{{ url_for('master.master_account_list') }}">{{ _('Account Manage') }}</a><span class="divider">/</span><li>
+<li><a href="{{ url_for('admin.account_list') }}">{{ _('Account Manage') }}</a><span class="divider">/</span><li>
 <li class="active">List</li>
 {%- endblock %}
 
 {%- block content %}
 <div class="row-fluid">
     <div class="btn-toolbar">
-        <a class="btn btn-primary" href="{{ url_for('master.master_account_new') }}"><span class="icon-plus"></span> {{ _('Create User') }}</a>
+        <a class="btn btn-primary" href="{{ url_for('admin.account_new') }}"><span class="icon-plus"></span> {{ _('Create User') }}</a>
     </div>
     <div class="well">
         <table class="table">
@@ -34,7 +34,7 @@
                     <td>{{ user.nickname }}</td>
                     <td>{{ user.state }}</td>
                     <td>
-                        <a href="{{ url_for('master.master_account_edit', uid=user.id) }}"><span class="icon-pencil"></span></a>
+                        <a href="{{ url_for('admin.account_edit', uid=user.id) }}"><span class="icon-pencil"></span></a>
                          | 
                         <a href="#delete-modal" role="button" data="{{ user.id }}" class="delete-btns" data-toggle="modal"><span class="icon-remove"></span></a>
                     </td>
@@ -44,7 +44,7 @@
         </table>
     </div>
 </div>
-{{ utils.render_pagination(pagination, 'master.master_account_list')|safe }}
+{{ utils.render_pagination(pagination, 'admin.account_list')|safe }}
 
 <div class="modal small hide fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="delete-modal-label" aria-hidden="true">
     <div class="modal-header">
@@ -69,16 +69,16 @@ $(function(){
     })
     $("#confirm-delete-btn").click(function(){
         $.ajax({
-            url: "{{ url_for('master.master_account_delete', uid=9999) }}".replace('9999', window.delete_id),
+            url: "{{ url_for('admin.account_delete', uid=9999) }}".replace('9999', window.delete_id),
             type: 'delete',
             dataType: 'json',
             data: {'_crsf_token': getCookie('_crsf_token') },
             success: function(response) {
                 if(response.success){
-                    location.href = "{{ url_for('master.master_account_list') }}";
+                    location.href = "{{ url_for('admin.account_list') }}";
                 }
                 else{
-                    location.href = "{{ url_for('master.master_account_list') }}";
+                    location.href = "{{ url_for('admin.account_list') }}";
                 }
             },
             error: function() {
