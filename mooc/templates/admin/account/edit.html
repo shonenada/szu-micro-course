@@ -1,0 +1,134 @@
+{%- extends 'admin/layout.html' %}
+{%- import 'utils.jinja' as utils %}
+
+{%- block breadcrumb %}
+<li><a href="{{ url_for('admin.account_list') }}">{{ _('Account Manage') }}</a><span class="divider">/</span><li>
+<li class="active">{{ _('Show') }}</li>
+{%- endblock %}
+
+{%- block content %}
+<div class="row-fluid">
+    <div class="well">
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#profile" data-toggle="tab">{{ _('Profile') }}</a></li>
+          <li><a href="#password" data-toggle="tab">{{ _('Password') }}</a></li>
+        </ul>
+        <div id="tab-content" class="tab-content">
+            <div class="tab-pane active in" id="profile">
+                <form id="profile-form">
+                    {{ user_form.csrf_token }}
+                    {{ user_form.username.label }} {{ user_form.username(readonly=True, class='input-xlarge')}}
+                    {{ user_form.name.label }} {{ user_form.name(readonly=True, class='input-xlarge') }}
+                    {{ user_form.stu_number.label }} {{ user_form.stu_number(readonly=True, class='input-xlarge') }}
+                    {{ user_form.card_id.label }} {{ user_form.card_id(readonly=True, class='input-xlarge') }}
+                    {{ user_form.is_male.label }} {{ user_form.is_male(readonly=True, class='input-xlarge') }}
+                    {{ user_form.email.label }} {{ user_form.email(readonly=True, class='input-xlarge') }}
+                    {{ user_form.phone.label }} {{ user_form.phone(readonly=True, class='input-xlarge') }}
+                    {{ user_form.short_phone.label }} {{ user_form.short_phone(readonly=True, class='input-xlarge') }}
+                    {{ user_form.qq.label }} {{ user_form.qq(readonly=True, class='input-xlarge') }}
+                    {{ user_form.created.label }} {{ user_form.created(readonly=True, class='input-xlarge') }}
+                    {{ user_form.last_login.label }} {{ user_form.last_login(readonly=True, class='input-xlarge') }}
+                    {{ user_form.last_ip.label }} {{ user_form.last_ip(readonly=True, class='input-xlarge') }}
+                    {{ user_form.state.label }} {{ user_form.state(class='input-xlarge') }}
+                </form>
+                <div class="btn-toolbar">
+                    <button class="btn btn-primary" id="save-btn"><span class="icon-save"></span> Save</button>
+                    <a class="btn btn-danger delete-btns" href="#delete-modal" data-toggle="modal"><span class="icon-trash"></span> {{ _('Delete') }}</a>
+                    <a class="btn delete-btns" href="{{ url_for('admin.account_list') }}" data-toggle="modal"> {{ _('Cancel') }}</a>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="password">
+                <form id="password-form">
+                    <label>{{ _('New Password') }}</label>
+                    <input name="password" type="password" class="input-xlarge">
+                    <div>
+                        <button id="change-password-btn" class="btn btn-primary">{{ _('Update') }}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+<div class="modal small hide fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="delete-modal-label" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="delete-modal-label">{{ _('Delete Confirmation') }}</h3>
+    </div>
+    <div class="modal-body">
+        <p class="error-text"><i class="icon-warning-sign modal-icon"></i>{{ _('Are you sure you want to delete the user?') }}</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">{{ _('Cancel') }}</button>
+        <button id="confirm-delete-btn" class="btn btn-danger" data-dismiss="modal">{{ _('Delete') }}</button>
+    </div>
+</div>
+{%- endblock %}
+
+{%- block scripts %}
+<script>
+$(function(){
+    $("#confirm-delete-btn").click(function(){
+        $.ajax({
+            url: "{{ url_for('admin.account_delete', uid=uid) }}",
+            type: 'delete',
+            dataType: 'json',
+            data: {'_crsf_token': getCookie('_crsf_token') },
+            success: function(response) {
+                if(response.success){
+                    location.href = "{{ url_for('admin.account_list') }}";
+                }
+                else{
+                    location.href = "{{ url_for('admin.account_list') }}";
+                }
+            }
+        });
+    });
+
+    $('#profile-form').submit(function(){
+        $.ajax({
+            url: "{{ url_for('admin.account_edit', uid=uid) }}",
+            type: 'put',
+            dataType: 'json',
+            data: $(this).serialize(),
+            success: function(response) {
+                if(response.success){
+                    location.href = "{{ url_for('admin.account_edit', uid=uid) }}";
+                }
+                else{
+                    location.href = "{{ url_for('admin.account_edit', uid=uid) }}";
+                }
+            }
+        });
+        return false;
+    });
+
+    $('#password-form').submit(function(){
+        $.ajax({
+            url: "{{ url_for('admin.account_password', uid=uid) }}",
+            type: 'put',
+            dataType: 'json',
+            data: $(this).serialize(),
+            success: function(response) {
+                if(response.success){
+                    location.href = "{{ url_for('admin.account_edit', uid=uid) }}";
+                }
+                else{
+                    location.href = "{{ url_for('admin.account_edit', uid=uid) }}";
+                }
+            }
+        });
+        return false;
+    });
+
+    $("#save-btn").click(function(){
+        $('#profile-form').submit();
+    })
+
+    $("#change-password-btn").click(function() {
+        $("#password-form").submit();
+    });
+
+});
+</script>
+{%- endblock %}

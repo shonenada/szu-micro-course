@@ -10,7 +10,7 @@ from mooc.models.course import Subject, Category, Course, Lecture
 from mooc.models.resource import Resource
 from mooc.forms.course import SubjectForm, CategoryForm, CourseForm, LectureForm
 from mooc.forms.resource import ResourceForm
-from mooc.forms.account import ManageUserForm, CreateUserForm
+from mooc.forms.account import ManageUserForm
 from mooc.services.account import (update_user_state,
                                     change_user_password,
                                     create_user)
@@ -27,7 +27,7 @@ controllers_args = [
      'create_method': create_subject,
     },
     {'model': Category,
-     'form_model': CourseForm,
+     'form_model': CategoryForm,
      'create_method':create_category,
     },
     {'model': Course,
@@ -61,7 +61,7 @@ def index():
 
 @admin_app.route('/account')
 @rbac.allow(['super_admin'], ['GET'])
-def account_list():
+def list_account():
     page_num = int(request.args.get('page', 1))
     pagination = User.paginate(page=page_num)
     return render_template('admin/account/list.html', pagination=pagination)
@@ -69,7 +69,7 @@ def account_list():
 
 @admin_app.route('/account/<int:uid>/edit', methods=['GET', 'PUT'])
 @rbac.allow(['super_admin'], ['GET', 'PUT'])
-def account_edit(uid):
+def edit_account(uid):
     user = User.query.get(uid)
     data = {
         'card_id': user.szu_account.card_id,
@@ -95,7 +95,7 @@ def account_edit(uid):
 
 @admin_app.route('/account/<int:uid>', methods=['DELETE'])
 @rbac.allow(['super_admin'], ['DELETE'])
-def account_delete(uid):
+def delete_account(uid):
     user = User.query.get(uid)
     user.delete()
     flash(message=_('Operated successfully'), category='notice')
@@ -113,7 +113,7 @@ def account_password(uid):
 
 @admin_app.route('/account/new_user', methods=['GET', 'POST'])
 @rbac.allow(['super_admin'], ['GET', 'POST'])
-def account_new():
+def create_account():
     new_user_form = NewUserForm(request.form)
     if new_user_form.validate_on_submit():
         data = new_user_form.data

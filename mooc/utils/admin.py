@@ -11,10 +11,10 @@ def create_object():
 def generate_endpoints(module_name):
     """Generate four kinds of endpoints."""
     endpoints = {
-        'list': 'admin.%s_list' % module_name,
-        'create': 'admin.%s_new' % module_name,
-        'edit': 'admin.%s_edit' % module_name,
-        'delete': 'admin.%s_delete' % module_name,
+        'list': 'admin.list_%s' % module_name,
+        'create': 'admin.create_%s' % module_name,
+        'edit': 'admin.edit_%s' % module_name,
+        'delete': 'admin.delete_%s' % module_name,
     }
     return endpoints
 
@@ -31,7 +31,7 @@ def generate_list_controller(blueprint, model, **kwargs):
     module_name = model.__name__.lower()
 
     @blueprint.route(
-        rule='/admin/%s' % module_name,
+        rule='/%s' % module_name,
         methods=['GET'],
         endpoint=_get_endpoint(module_name, 'list')
     )
@@ -40,7 +40,7 @@ def generate_list_controller(blueprint, model, **kwargs):
         page_num = int(request.args.get('page', 1))
         pagination = model.paginate(page=page_num)
         return render_template(
-            'admin/%s_list.html' % module_name,
+            'admin/%s/list.html' % module_name,
             pagination=pagination,
             model_name=model.__name__,
             endpoints=generate_endpoints(module_name)
@@ -57,7 +57,7 @@ def generate_create_controller(blueprint, model, form_model, **kwargs):
     module_name = model.__name__.lower()
 
     @blueprint.route(
-        rule='/admin/%s/new' % module_name,
+        rule='/%s/new' % module_name,
         methods=['GET', 'POST'],
         endpoint=_get_endpoint(module_name, 'create')
     )
@@ -79,7 +79,7 @@ def generate_create_controller(blueprint, model, form_model, **kwargs):
             return jsonify(success=False, messages=form.errors.values())
 
         return render_template(
-            'admin/%s_new.html' % module_name,
+            'admin/%s/create.html' % module_name,
             form=form,
             model_name=model.__name__,
             endpoints=generate_endpoints(module_name)
@@ -96,7 +96,7 @@ def generate_edit_controller(blueprint, model, form_model, **kwargs):
     module_name = model.__name__.lower()
 
     @blueprint.route(
-        rule='/admin/%s/<int:mid>/edit' % module_name,
+        rule='/%s/<int:mid>/edit' % module_name,
         methods=['GET', 'PUT'],
         endpoint=_get_endpoint(module_name, 'edit')
     )
@@ -111,7 +111,7 @@ def generate_edit_controller(blueprint, model, form_model, **kwargs):
             form = form_model(request.form, obj)
 
         if form.validate_on_submit():
-            obj.edit(form.data, **kwargs)
+            obj.edit(form.data)
             flash('Operated successfully!', 'notice')
             return jsonify(success=True)
 
@@ -119,7 +119,7 @@ def generate_edit_controller(blueprint, model, form_model, **kwargs):
             return jsonify(success=False, messages=form.errors.values())
 
         return render_template(
-            'admin/%s_edit.html' % module_name,
+            'admin/%s/edit.html' % module_name,
             mid=mid,
             form=form,
             model_name=model.__name__,
@@ -131,7 +131,7 @@ def generate_delete_controller(blueprint, model, **kwargs):
     module_name = model.__name__.lower()
 
     @blueprint.route(
-        rule='/admin/%s/<int:mid>' % module_name,
+        rule='/%s/<int:mid>' % module_name,
         methods=['DELETE'],
         endpoint=_get_endpoint(module_name, 'delete')
     )

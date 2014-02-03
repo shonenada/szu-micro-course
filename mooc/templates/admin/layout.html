@@ -87,15 +87,15 @@
         </ul>
         <a href="#accounts-menu" class="nav-header" data-toggle="collapse"><i class="icon-briefcase"></i>{{ _('Account Manage') }}</a>
         <ul id="accounts-menu" class="nav nav-list collapse in">
-            <li><a href="{{ url_for('admin.account_list') }}">{{ _('Users Manage') }}</a></li>
+            <li><a href="{{ url_for('admin.list_account') }}">{{ _('Users Manage') }}</a></li>
         </ul>
         <a href="#course-menu" class="nav-header" data-toggle="collapse"><i class="icon-legal"></i>{{ _('Course Manage') }}</a>
         <ul id="course-menu" class="nav nav-list collapse in">
-            <li><a href="{{ url_for('admin.subject_list') }}">{{ _('Subjects Manage') }}</a></li>
-            <li><a href="{{ url_for('admin.category_list') }}">{{ _('Categories Manage') }}</a></li>
-            <li><a href="{{ url_for('admin.course_list') }}">{{ _('Courses Manage') }}</a></li>
-            <li><a href="{{ url_for('admin.lecture_list') }}">{{ _('Lectures Manage') }}</a></li>
-            <li><a href="{{ url_for('admin.resource_list') }}">{{ _('Resource Manage') }}</a></li>
+            <li><a href="{{ url_for('admin.list_subject') }}">{{ _('Subjects Manage') }}</a></li>
+            <li><a href="{{ url_for('admin.list_category') }}">{{ _('Categories Manage') }}</a></li>
+            <li><a href="{{ url_for('admin.list_course') }}">{{ _('Courses Manage') }}</a></li>
+            <li><a href="{{ url_for('admin.list_lecture') }}">{{ _('Lectures Manage') }}</a></li>
+            <li><a href="{{ url_for('admin.list_resource') }}">{{ _('Resource Manage') }}</a></li>
         </ul>
     </div>
 
