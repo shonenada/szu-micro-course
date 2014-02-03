@@ -11,7 +11,7 @@ from mooc.qa.model import Question, Answer, QuestionTag, UpDownRecord
 from mooc.qa.form import AskForm
 
 
-qa_app = Blueprint('qa', __name__, template_folder='../templates')
+qa_app = Blueprint('qa', __name__, url_prefix='/discuss')
 
 
 @qa_app.route('/question')
@@ -133,7 +133,7 @@ def ask():
         return jsonify(success=False, message=form.errors.values())
 
 
-@qa_app.route('/qa/tag/<tag>')
+@qa_app.route('/tag/<tag>')
 @rbac.allow(['anonymous'], ['GET'])
 def tag(tag):
     hotest_tags = QuestionTag.query.order_by(QuestionTag.count.desc()).all()

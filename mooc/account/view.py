@@ -11,7 +11,7 @@ from mooc.account.form import SignInForm, SettingForm, PasswordForm, SignUpForm
 from mooc.account.service import load_user
 
 
-account_app = Blueprint('account', __name__, template_folder='../templates')
+account_app = Blueprint('account', __name__, url_prefix='/account')
 
 
 @csrf.exempt
@@ -95,7 +95,7 @@ def signout():
     return redirect(url_for('master.index'))
 
 
-@account_app.route('/people/<username>')
+@account_app.route('/<username>')
 @rbac.allow(['anonymous'], ['GET'])
 def people(username):
     user = User.query.filter_by(username=username).first()
@@ -109,7 +109,7 @@ def people(username):
 
 
 @csrf.exempt
-@account_app.route('/account/setting', methods=['GET', 'POST'])
+@account_app.route('/setting', methods=['GET', 'POST'])
 @rbac.allow(['local_user'], ['GET', 'POST'])
 def setting():
     user = current_user
@@ -139,7 +139,7 @@ def setting():
 
 
 @csrf.exempt
-@account_app.route('/account/password', methods=['GET', 'POST'])
+@account_app.route('/password', methods=['GET', 'POST'])
 @rbac.allow(['local_user'], ['GET', 'POST'])
 def change_password():
     form = PasswordForm(formdata=request.form)
@@ -160,5 +160,3 @@ def change_password():
         flash(message=form.errors, category='warn', form_errors=True)
 
     return render_template('account/change_password.html', form=form)
-
-
