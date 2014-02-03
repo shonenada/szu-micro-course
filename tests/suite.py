@@ -1,8 +1,9 @@
 import os
 import unittest
 
-from mooc.app import create_app, db
-from mooc.account.model import Role, User
+from mooc.app import create_app
+from mooc.extensions import db
+from mooc.models.account import Role, User
 
 
 class BaseSuite(unittest.TestCase):

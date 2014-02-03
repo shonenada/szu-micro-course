@@ -1,9 +1,9 @@
 # coding: utf-8
 import uuid
 
-from mooc.app import db
-from mooc.master.model import ModelMixin
-from mooc.account.model import Role, User
+from mooc.extensions import db
+from mooc.models.master import ModelMixin
+from mooc.models.account import Role, User
 from .suite import BaseSuite
 
 
