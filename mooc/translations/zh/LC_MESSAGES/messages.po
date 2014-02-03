@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MOOC 0.1.0\n"
 "Report-Msgid-Bugs-To: shonenada@gmail.com\n"
-"POT-Creation-Date: 2014-02-03 15:17+0800\n"
+"POT-Creation-Date: 2014-02-03 20:42+0800\n"
 "PO-Revision-Date: 2014-01-30 17:58+0800\n"
 "Last-Translator: Yaoda Liu <shonenada@gmail.com>\n"
 "Language-Team: zh <LL@li.org>\n"
@@ -225,7 +225,8 @@ msgstr "新密码"
 msgid "Confirm Password"
 msgstr "确认密码"
 
-#: account/model.py:79 course/form.py:15 qa/model.py:50 qa/model.py:86
+#: account/model.py:79 course/form.py:15 discuss/model.py:50
+#: discuss/model.py:86
 msgid "Normal"
 msgstr "正常"
 
@@ -233,7 +234,8 @@ msgstr "正常"
 msgid "Frozen"
 msgstr "冻结"
 
-#: account/model.py:80 course/form.py:15 qa/model.py:50 qa/model.py:86
+#: account/model.py:80 course/form.py:15 discuss/model.py:50
+#: discuss/model.py:86
 msgid "Deleted"
 msgstr "已删除"
 
@@ -283,6 +285,10 @@ msgstr "修改成功"
 msgid "Wrong old password"
 msgstr "密码错误"
 
+#: admin/view.py:83 admin/view.py:101 admin/view.py:110 admin/view.py:121
+msgid "Operated successfully"
+msgstr "操作成功"
+
 #: course/form.py:20
 msgid "Subject Name"
 msgstr "主类名"
@@ -310,7 +316,8 @@ msgstr "Logo"
 msgid "Category"
 msgstr "分类"
 
-#: course/form.py:56 course/form.py:86 qa/form.py:14 templates/tag_view.html:15
+#: course/form.py:56 course/form.py:86 discuss/form.py:14
+#: templates/tag_view.html:15
 msgid "Tags"
 msgstr "标签"
 
@@ -362,53 +369,50 @@ msgstr "短课顺序"
 msgid "Course"
 msgstr "课程"
 
-#: master/form.py:63 qa/form.py:10
+#: discuss/form.py:10 master/form.py:63
 msgid "Title"
 msgstr "标题"
+
+#: discuss/form.py:10
+msgid "Title is required"
+msgstr "标题不能为空"
+
+#: discuss/form.py:12
+msgid "Content"
+msgstr "内容"
+
+#: discuss/form.py:13
+msgid "Content is required"
+msgstr "内容不能为空"
+
+#: discuss/model.py:50 discuss/model.py:86
+#: templates/discuss/question_list.html:8
+msgid "Hot"
+msgstr "热门"
+
+#: discuss/view.py:76 discuss/view.py:80
+msgid "Error params"
+msgstr "错误参数"
+
+#: discuss/view.py:87
+msgid "You have voted!"
+msgstr "你已投过票啦~"
+
+#: discuss/view.py:97
+msgid "Success"
+msgstr "成功"
+
+#: discuss/view.py:106
+msgid "Please answer the question"
+msgstr "请先回答问题"
 
 #: master/form.py:70 templates/feedback.html:5 templates/layout.html:89
 msgid "Feedback"
 msgstr "意见反馈"
 
-#: master/view.py:92
+#: master/view.py:49
 msgid "Submited successfully"
 msgstr "提交成功"
-
-#: master/view.py:128 master/view.py:146 master/view.py:155 master/view.py:166
-msgid "Operated successfully"
-msgstr "操作成功"
-
-#: qa/form.py:10
-msgid "Title is required"
-msgstr "标题不能为空"
-
-#: qa/form.py:12
-msgid "Content"
-msgstr "内容"
-
-#: qa/form.py:13
-msgid "Content is required"
-msgstr "内容不能为空"
-
-#: qa/model.py:50 qa/model.py:86 templates/qa/question_list.html:8
-msgid "Hot"
-msgstr "热门"
-
-#: qa/view.py:76 qa/view.py:80
-msgid "Error params"
-msgstr "错误参数"
-
-#: qa/view.py:87
-msgid "You have voted!"
-msgstr "你已投过票啦~"
-
-#: qa/view.py:97
-msgid "Success"
-msgstr "成功"
-
-#: qa/view.py:106
-msgid "Please answer the question"
-msgstr "请先回答问题"
 
 #: resource/form.py:16
 msgid "Resource Name"
@@ -454,7 +458,7 @@ msgstr "提交"
 msgid "MicroLecture"
 msgstr "短课"
 
-#: templates/layout.html:41 templates/admin/master.html:108
+#: templates/layout.html:41 templates/admin/layout.html:108
 msgid "Home"
 msgstr "首页"
 
@@ -466,7 +470,7 @@ msgstr "课程库"
 
 #: templates/layout.html:43
 msgid "Discuss"
-msgstr "问答系统"
+msgstr "讨论区"
 
 #: templates/layout.html:44
 msgid "Resources"
@@ -477,9 +481,9 @@ msgstr "资源"
 msgid "Sign In"
 msgstr "登录"
 
-#: templates/layout.html:52 templates/admin/master.html:84
-#: templates/admin/master.html:86 templates/admin/master.html:104
-#: templates/admin/master.html:110
+#: templates/layout.html:52 templates/admin/layout.html:84
+#: templates/admin/layout.html:86 templates/admin/layout.html:104
+#: templates/admin/layout.html:110
 msgid "Dashboard"
 msgstr "控制面板"
 
@@ -491,7 +495,7 @@ msgstr "个人主页"
 msgid "User Settings"
 msgstr "用户设置"
 
-#: templates/layout.html:56 templates/admin/master.html:75
+#: templates/layout.html:56 templates/admin/layout.html:75
 msgid "Sign Out"
 msgstr "退出"
 
@@ -507,8 +511,8 @@ msgstr "版权所有"
 msgid "Shenzhen University"
 msgstr "深圳大学"
 
-#: templates/right.html:5 templates/qa/question_list.html:54
-#: templates/qa/tag_view.html:50
+#: templates/right.html:5 templates/discuss/question_list.html:54
+#: templates/discuss/tag_view.html:50
 msgid "Hot Tags"
 msgstr "热门标签"
 
@@ -558,8 +562,8 @@ msgid "Learnt Records"
 msgstr "学习记录"
 
 #: templates/account/people.html:44 templates/course/lecture.html:106
-#: templates/qa/ask.html:9 templates/qa/ask.html:15
-#: templates/qa/question_list.html:10 templates/qa/tag_view.html:8
+#: templates/discuss/ask.html:9 templates/discuss/ask.html:15
+#: templates/discuss/question_list.html:10 templates/discuss/tag_view.html:8
 msgid "Ask"
 msgstr "提问"
 
@@ -580,7 +584,7 @@ msgid "Sign Up"
 msgstr "注册"
 
 #: templates/admin/account_edit.html:5 templates/admin/account_list.html:5
-#: templates/admin/account_new.html:5 templates/admin/master.html:88
+#: templates/admin/account_new.html:5 templates/admin/layout.html:88
 msgid "Account Manage"
 msgstr "帐号管理"
 
@@ -636,41 +640,41 @@ msgstr "主类名"
 msgid "Course's Name"
 msgstr "课程名"
 
-#: templates/admin/lecture_list.html:4
-msgid "Lecture's Name"
-msgstr "短课名"
-
-#: templates/admin/master.html:73
+#: templates/admin/layout.html:73
 msgid "Homepage"
 msgstr "主页"
 
-#: templates/admin/master.html:90
+#: templates/admin/layout.html:90
 msgid "Users Manage"
 msgstr "用户管理"
 
-#: templates/admin/master.html:92
+#: templates/admin/layout.html:92
 msgid "Course Manage"
 msgstr "课程管理"
 
-#: templates/admin/master.html:94
+#: templates/admin/layout.html:94
 msgid "Subjects Manage"
 msgstr "主类管理"
 
-#: templates/admin/master.html:95
+#: templates/admin/layout.html:95
 msgid "Categories Manage"
 msgstr "分类管理"
 
-#: templates/admin/master.html:96
+#: templates/admin/layout.html:96
 msgid "Courses Manage"
 msgstr "课程管理"
 
-#: templates/admin/master.html:97
+#: templates/admin/layout.html:97
 msgid "Lectures Manage"
 msgstr "短课管理"
 
-#: templates/admin/master.html:98
+#: templates/admin/layout.html:98
 msgid "Resource Manage"
 msgstr "资源管理"
+
+#: templates/admin/lecture_list.html:4
+msgid "Lecture's Name"
+msgstr "短课名"
 
 #: templates/admin/resource_list.html:4
 msgid "Resource's Name"
@@ -729,48 +733,48 @@ msgstr "谁也在学？"
 msgid "Minute(s)"
 msgstr "分钟"
 
-#: templates/qa/ask.html:27
+#: templates/discuss/ask.html:27
 msgid "Rule of asking"
 msgstr "提问准则"
 
-#: templates/qa/question.html:11
+#: templates/discuss/question.html:11
 msgid "From"
 msgstr "来自"
 
-#: templates/qa/question.html:11
+#: templates/discuss/question.html:11
 msgid "'s Questions"
 msgstr "课程的问题"
 
-#: templates/qa/question.html:18 templates/qa/question_list.html:20
-#: templates/qa/tag_view.html:17 templates/resource/list.html:29
+#: templates/discuss/question.html:18 templates/discuss/question_list.html:20
+#: templates/discuss/tag_view.html:17 templates/resource/list.html:29
 msgid "view(s)"
 msgstr "次浏览"
 
-#: templates/qa/question.html:52
+#: templates/discuss/question.html:52
 msgid "up(s)"
 msgstr "次点赞"
 
-#: templates/qa/question.html:65
+#: templates/discuss/question.html:65
 msgid "Reply:"
 msgstr "回复："
 
-#: templates/qa/question.html:69
+#: templates/discuss/question.html:69
 msgid "Reply"
 msgstr "回复"
 
-#: templates/qa/question_list.html:7
+#: templates/discuss/question_list.html:7
 msgid "Lastest"
 msgstr "最新"
 
-#: templates/qa/question_list.html:9
+#: templates/discuss/question_list.html:9
 msgid "No-Answered"
 msgstr "无回答"
 
-#: templates/qa/question_list.html:23 templates/qa/tag_view.html:20
+#: templates/discuss/question_list.html:23 templates/discuss/tag_view.html:20
 msgid "answer(s)"
 msgstr "个回答"
 
-#: templates/qa/question_list.html:37 templates/qa/tag_view.html:34
+#: templates/discuss/question_list.html:37 templates/discuss/tag_view.html:34
 msgid "Anonymous"
 msgstr "匿名"
 
