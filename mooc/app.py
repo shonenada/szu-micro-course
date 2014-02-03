@@ -11,6 +11,7 @@ from mooc.extensions import rbac, setup_rbac
 from mooc.extensions import csrf
 from mooc.master.view import master_app
 from mooc.account.view import account_app
+from mooc.admin.view import admin_app
 from mooc.course.view import course_app
 from mooc.resource.view import resource_app
 from mooc.qa.view import qa_app
@@ -61,6 +62,7 @@ def create_app(import_name=None, config=None):
 
     app.register_blueprint(master_app)
     app.register_blueprint(account_app)
+    app.register_blueprint(admin_app)
     app.register_blueprint(course_app)
     app.register_blueprint(resource_app)
     app.register_blueprint(qa_app)

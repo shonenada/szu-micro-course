@@ -1,8 +1,8 @@
-{%- extends 'admin/master.html' %}
+{%- extends 'admin/layout.html' %}
 {%- import 'utils.jinja' as utils %}
 
 {%- block breadcrumb %}
-<li><a href="{{ url_for('master.master_account_list') }}">{{ _('Account Manage') }}</a><span class="divider">/</span><li>
+<li><a href="{{ url_for('admin.account_list') }}">{{ _('Account Manage') }}</a><span class="divider">/</span><li>
 <li class="active">{{ _('Create User') }}</li>
 {%- endblock %}
 
@@ -31,7 +31,7 @@
             </div>
             <div class="btn-toolbar">
                 <button class="btn btn-primary" id="save-btn"><i class="icon-save"></i> {{ _('Save') }}</button>
-                <a href="{{ url_for('master.master_account_list') }}" data-toggle="modal" class="btn">{{ _('Cancel') }}</a>
+                <a href="{{ url_for('admin.account_list') }}" data-toggle="modal" class="btn">{{ _('Cancel') }}</a>
             </div>
         </div>
     </div>
@@ -43,16 +43,16 @@
 $(function(){
     $('#profile-form').submit(function(){
         $.ajax({
-            url: "{{ url_for('master.master_account_new') }}",
+            url: "{{ url_for('admin.account_new') }}",
             type: 'post',
             dataType: 'json',
             data: $(this).serialize(),
             success: function(response) {
                 if(response.success){
-                    location.href = "{{ url_for('master.master_account_list') }}";
+                    location.href = "{{ url_for('admin.account_list') }}";
                 }
                 else{
-                    location.href = "{{ url_for('master.master_account_list') }}";
+                    location.href = "{{ url_for('admin.account_list') }}";
                 }
             }
         });

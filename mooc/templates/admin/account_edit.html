@@ -1,8 +1,8 @@
-{%- extends 'admin/master.html' %}
+{%- extends 'admin/layout.html' %}
 {%- import 'utils.jinja' as utils %}
 
 {%- block breadcrumb %}
-<li><a href="{{ url_for('master.master_account_list') }}">{{ _('Account Manage') }}</a><span class="divider">/</span><li>
+<li><a href="{{ url_for('admin.account_list') }}">{{ _('Account Manage') }}</a><span class="divider">/</span><li>
 <li class="active">{{ _('Show') }}</li>
 {%- endblock %}
 
@@ -34,7 +34,7 @@
                 <div class="btn-toolbar">
                     <button class="btn btn-primary" id="save-btn"><span class="icon-save"></span> Save</button>
                     <a class="btn btn-danger delete-btns" href="#delete-modal" data-toggle="modal"><span class="icon-trash"></span> {{ _('Delete') }}</a>
-                    <a class="btn delete-btns" href="{{ url_for('master.master_account_list') }}" data-toggle="modal"> {{ _('Cancel') }}</a>
+                    <a class="btn delete-btns" href="{{ url_for('admin.account_list') }}" data-toggle="modal"> {{ _('Cancel') }}</a>
                 </div>
             </div>
 
@@ -70,16 +70,16 @@
 $(function(){
     $("#confirm-delete-btn").click(function(){
         $.ajax({
-            url: "{{ url_for('master.master_account_delete', uid=uid) }}",
+            url: "{{ url_for('admin.account_delete', uid=uid) }}",
             type: 'delete',
             dataType: 'json',
             data: {'_crsf_token': getCookie('_crsf_token') },
             success: function(response) {
                 if(response.success){
-                    location.href = "{{ url_for('master.master_account_list') }}";
+                    location.href = "{{ url_for('admin.account_list') }}";
                 }
                 else{
-                    location.href = "{{ url_for('master.master_account_list') }}";
+                    location.href = "{{ url_for('admin.account_list') }}";
                 }
             }
         });
@@ -87,16 +87,16 @@ $(function(){
 
     $('#profile-form').submit(function(){
         $.ajax({
-            url: "{{ url_for('master.master_account_edit', uid=uid) }}",
+            url: "{{ url_for('admin.account_edit', uid=uid) }}",
             type: 'put',
             dataType: 'json',
             data: $(this).serialize(),
             success: function(response) {
                 if(response.success){
-                    location.href = "{{ url_for('master.master_account_edit', uid=uid) }}";
+                    location.href = "{{ url_for('admin.account_edit', uid=uid) }}";
                 }
                 else{
-                    location.href = "{{ url_for('master.master_account_edit', uid=uid) }}";
+                    location.href = "{{ url_for('admin.account_edit', uid=uid) }}";
                 }
             }
         });
@@ -105,16 +105,16 @@ $(function(){
 
     $('#password-form').submit(function(){
         $.ajax({
-            url: "{{ url_for('master.master_account_password', uid=uid) }}",
+            url: "{{ url_for('admin.account_password', uid=uid) }}",
             type: 'put',
             dataType: 'json',
             data: $(this).serialize(),
             success: function(response) {
                 if(response.success){
-                    location.href = "{{ url_for('master.master_account_edit', uid=uid) }}";
+                    location.href = "{{ url_for('admin.account_edit', uid=uid) }}";
                 }
                 else{
-                    location.href = "{{ url_for('master.master_account_edit', uid=uid) }}";
+                    location.href = "{{ url_for('admin.account_edit', uid=uid) }}";
                 }
             }
         });
