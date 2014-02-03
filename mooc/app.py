@@ -14,7 +14,7 @@ from mooc.account.view import account_app
 from mooc.admin.view import admin_app
 from mooc.course.view import course_app
 from mooc.resource.view import resource_app
-from mooc.qa.view import qa_app
+from mooc.discuss.view import discuss_app
 from mooc.helpers import friendly_time, format_datetime
 from mooc.course.service import (get_learn_records, get_last_lecture,
                                  learn_count)
@@ -65,7 +65,7 @@ def create_app(import_name=None, config=None):
     app.register_blueprint(admin_app)
     app.register_blueprint(course_app)
     app.register_blueprint(resource_app)
-    app.register_blueprint(qa_app)
+    app.register_blueprint(discuss_app)
 
     return app
 

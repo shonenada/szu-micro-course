@@ -103,7 +103,7 @@ $(function(){
                 <li><a href="javascript:void(0);" id="btn-questions" class="lecture-btns">{{ _('Relatived Questions') }}</a></li>
                 <li><a href="javascript:void(0);" id="btn-quiz" class="lecture-btns">{{ _('Quiz') }}</a></li>
                 <li><a href="javascript:void(0);" id="btn-video-resource" class="lecture-btns">{{ _('Resource of Course') }}</a></li>
-                <li class="ask"><a href="{{ url_for('qa.ask', lecture_id=lecture.id) }}" id="ask-btn" class="lecture-btns">{{ _('Ask') }}</a></li>
+                <li class="ask"><a href="{{ url_for('discuss.ask', lecture_id=lecture.id) }}" id="ask-btn" class="lecture-btns">{{ _('Ask') }}</a></li>
             </ul>
         </div>
 
@@ -114,7 +114,7 @@ $(function(){
             <div id="lecture-questions" class="lecture-bar lecture-hidden">
                 <ul>
                     {% for index, q in lecture.questions|enumerate %}
-                    <li><a target="_blank" href="{{ url_for('qa.view_question', qid=q.id) }}">{{ index+1 }}、{{ q.title }}</a></li>
+                    <li><a target="_blank" href="{{ url_for('discuss.view_question', qid=q.id) }}">{{ index+1 }}、{{ q.title }}</a></li>
                     {% endfor %}
                 </ul>
             </div>
