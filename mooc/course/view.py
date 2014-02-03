@@ -9,7 +9,7 @@ from mooc.resource.model import Resource
 from mooc.course.service import quiz_to_json
 
 
-course_app = Blueprint('course', __name__, template_folder='../templates')
+course_app = Blueprint('course', __name__, url_prefix='/course')
 
 
 @course_app.route('/library')
@@ -19,14 +19,14 @@ def library():
     return render_template('course/library.html', subjects=subjects)
 
 
-@course_app.route('/courses/subject/<sid>')
+@course_app.route('/subject/<sid>')
 @rbac.allow(['anonymous'], ['GET'])
 def subject(sid):
     this_subject = Subject.query.get(sid)
     return render_template('course/subject.html', this_subject=this_subject)
 
 
-@course_app.route('/courses/subject/<sid>/category/<cid>')
+@course_app.route('/subject/<sid>/category/<cid>')
 @rbac.allow(['anonymous'], ['GET'])
 def category(sid, cid):
     this_category = Category.query.get(cid)
@@ -35,7 +35,7 @@ def category(sid, cid):
     return render_template('course/category.html', this_category=this_category)
 
 
-@course_app.route('/course/<course_id>')
+@course_app.route('/<course_id>')
 @rbac.allow(['anonymous'], ['GET'])
 def course(course_id):
     this_course = Course.query.get(course_id)

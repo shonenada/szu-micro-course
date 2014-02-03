@@ -11,7 +11,7 @@ from mooc.resource.model import Resource
 from mooc.master.form import FeedbackForm
 
 
-master_app = Blueprint('master', __name__, template_folder='../templates')
+master_app = Blueprint('master', __name__)
 
 
 @master_app.route('/')

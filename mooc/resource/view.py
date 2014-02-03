@@ -3,10 +3,10 @@ from flask import Blueprint, render_template, request
 from mooc.app import db, rbac
 from mooc.resource.model import Resource
 
-resource_app = Blueprint('resource', __name__, template_folder='../templates')
+resource_app = Blueprint('resource', __name__, url_prefix='/resource')
 
 
-@resource_app.route('/resource')
+@resource_app.route('')
 @rbac.allow(['anonymous'], ['GET'])
 def list():
     page_num = int(request.args.get('page', 1))
