@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MOOC 0.1.0\n"
 "Report-Msgid-Bugs-To: shonenada@gmail.com\n"
-"POT-Creation-Date: 2014-02-03 00:55+0800\n"
+"POT-Creation-Date: 2014-02-03 15:17+0800\n"
 "PO-Revision-Date: 2014-01-30 17:58+0800\n"
 "Last-Translator: Yaoda Liu <shonenada@gmail.com>\n"
 "Language-Team: zh <LL@li.org>\n"
@@ -110,7 +110,7 @@ msgid "Student Number is existed"
 msgstr "学号已存在"
 
 #: account/form.py:39 account/form.py:63 account/form.py:132
-#: account/form.py:167
+#: account/form.py:167 templates/admin/account_list.html:18
 msgid "Username"
 msgstr "用户名"
 
@@ -120,6 +120,7 @@ msgid "6~30 characters"
 msgstr "6~30 个字符"
 
 #: account/form.py:47 account/form.py:71 account/form.py:175
+#: templates/admin/account_edit.html:14
 msgid "Password"
 msgstr "密码"
 
@@ -132,7 +133,7 @@ msgid "Remember Me"
 msgstr "记住我"
 
 #: account/form.py:79 account/form.py:140 account/form.py:183
-#: account/form.py:264
+#: account/form.py:264 templates/admin/account_list.html:19
 msgid "Real Name"
 msgstr "真实姓名"
 
@@ -141,7 +142,7 @@ msgid "Your real name"
 msgstr "请输入您的真实姓名"
 
 #: account/form.py:87 account/form.py:134 account/form.py:197
-#: account/form.py:270
+#: account/form.py:270 templates/admin/account_list.html:20
 msgid "Gender"
 msgstr "性别"
 
@@ -156,16 +157,18 @@ msgid "Female"
 msgstr "女"
 
 #: account/form.py:97 account/form.py:148 account/form.py:234
-#: account/form.py:288
+#: account/form.py:288 templates/admin/account_list.html:21
 msgid "Student Number"
 msgstr "学号"
 
 #: account/form.py:103 account/form.py:240 account/form.py:277
-#: course/form.py:51
+#: course/form.py:51 templates/admin/course_list.html:7
+#: templates/admin/lecture_list.html:8
 msgid "College"
 msgstr "学院"
 
 #: account/form.py:108 account/form.py:190 account/form.py:267
+#: templates/admin/account_list.html:22
 msgid "Nickname"
 msgstr "昵称"
 
@@ -201,7 +204,8 @@ msgstr "学生卡号"
 msgid "Short Phone Number"
 msgstr "短号"
 
-#: account/form.py:151
+#: account/form.py:151 templates/admin/account_list.html:23
+#: templates/admin/resource_list.html:6
 msgid "State"
 msgstr "状态"
 
@@ -213,7 +217,7 @@ msgstr "用户类型"
 msgid "Old Password"
 msgstr "旧密码"
 
-#: account/form.py:324
+#: account/form.py:324 templates/admin/account_edit.html:43
 msgid "New Password"
 msgstr "新密码"
 
@@ -246,6 +250,7 @@ msgid "Graduate"
 msgstr "研究生"
 
 #: account/model.py:191 course/form.py:48 course/form.py:84
+#: templates/admin/course_list.html:6 templates/admin/lecture_list.html:6
 msgid "Teacher"
 msgstr "教师"
 
@@ -283,6 +288,8 @@ msgid "Subject Name"
 msgstr "主类名"
 
 #: course/form.py:21 course/form.py:45 course/form.py:68
+#: templates/admin/course_list.html:5 templates/admin/lecture_list.html:5
+#: templates/admin/subject_list.html:5
 msgid "Description"
 msgstr "描述"
 
@@ -298,7 +305,8 @@ msgstr "课程名"
 msgid "Logo"
 msgstr "Logo"
 
-#: course/form.py:54 resource/form.py:19 templates/course/lecture.html:140
+#: course/form.py:54 resource/form.py:19 templates/admin/course_list.html:8
+#: templates/course/lecture.html:140
 msgid "Category"
 msgstr "分类"
 
@@ -350,7 +358,7 @@ msgstr "Logo 地址"
 msgid "Order of lecture"
 msgstr "短课顺序"
 
-#: course/form.py:81
+#: course/form.py:81 templates/admin/lecture_list.html:7
 msgid "Course"
 msgstr "课程"
 
@@ -446,7 +454,7 @@ msgstr "提交"
 msgid "MicroLecture"
 msgstr "短课"
 
-#: templates/layout.html:41
+#: templates/layout.html:41 templates/admin/master.html:108
 msgid "Home"
 msgstr "首页"
 
@@ -469,7 +477,9 @@ msgstr "资源"
 msgid "Sign In"
 msgstr "登录"
 
-#: templates/layout.html:52
+#: templates/layout.html:52 templates/admin/master.html:84
+#: templates/admin/master.html:86 templates/admin/master.html:104
+#: templates/admin/master.html:110
 msgid "Dashboard"
 msgstr "控制面板"
 
@@ -481,7 +491,7 @@ msgstr "个人主页"
 msgid "User Settings"
 msgstr "用户设置"
 
-#: templates/layout.html:56
+#: templates/layout.html:56 templates/admin/master.html:75
 msgid "Sign Out"
 msgstr "退出"
 
@@ -535,6 +545,7 @@ msgid "Change Password"
 msgstr "修改密码"
 
 #: templates/account/change_password.html:29 templates/account/setting.html:53
+#: templates/admin/account_edit.html:46
 msgid "Update"
 msgstr "更新"
 
@@ -567,6 +578,107 @@ msgstr "忘记密码"
 #: templates/account/signup.html:61 templates/account/signup.html:79
 msgid "Sign Up"
 msgstr "注册"
+
+#: templates/admin/account_edit.html:5 templates/admin/account_list.html:5
+#: templates/admin/account_new.html:5 templates/admin/master.html:88
+msgid "Account Manage"
+msgstr "帐号管理"
+
+#: templates/admin/account_edit.html:6
+msgid "Show"
+msgstr "显示"
+
+#: templates/admin/account_edit.html:13
+msgid "Profile"
+msgstr "个人资料"
+
+#: templates/admin/account_edit.html:36 templates/admin/account_edit.html:63
+#: templates/admin/account_list.html:59 templates/admin/base_list.html:42
+msgid "Delete"
+msgstr "删除"
+
+#: templates/admin/account_edit.html:37 templates/admin/account_edit.html:62
+#: templates/admin/account_list.html:58 templates/admin/account_new.html:34
+#: templates/admin/base_list.html:41 templates/admin/base_new.html:22
+msgid "Cancel"
+msgstr "取消"
+
+#: templates/admin/account_edit.html:56 templates/admin/account_list.html:52
+#: templates/admin/base_list.html:35
+msgid "Delete Confirmation"
+msgstr "删除确认"
+
+#: templates/admin/account_edit.html:59 templates/admin/account_list.html:55
+msgid "Are you sure you want to delete the user?"
+msgstr "您确认要删除该用户吗？"
+
+#: templates/admin/account_list.html:12 templates/admin/account_new.html:6
+msgid "Create User"
+msgstr "创建用户"
+
+#: templates/admin/account_new.html:33 templates/admin/base_new.html:21
+msgid "Save"
+msgstr "保存"
+
+#: templates/admin/base_list.html:38
+msgid "Are you sure you want to delete the record?"
+msgstr "您确认要删除该记录吗？"
+
+#: templates/admin/category_list.html:4
+msgid "Category's Name"
+msgstr "分类名"
+
+#: templates/admin/category_list.html:5 templates/admin/subject_list.html:4
+msgid "Subject's Name"
+msgstr "主类名"
+
+#: templates/admin/course_list.html:4
+msgid "Course's Name"
+msgstr "课程名"
+
+#: templates/admin/lecture_list.html:4
+msgid "Lecture's Name"
+msgstr "短课名"
+
+#: templates/admin/master.html:73
+msgid "Homepage"
+msgstr "主页"
+
+#: templates/admin/master.html:90
+msgid "Users Manage"
+msgstr "用户管理"
+
+#: templates/admin/master.html:92
+msgid "Course Manage"
+msgstr "课程管理"
+
+#: templates/admin/master.html:94
+msgid "Subjects Manage"
+msgstr "主类管理"
+
+#: templates/admin/master.html:95
+msgid "Categories Manage"
+msgstr "分类管理"
+
+#: templates/admin/master.html:96
+msgid "Courses Manage"
+msgstr "课程管理"
+
+#: templates/admin/master.html:97
+msgid "Lectures Manage"
+msgstr "短课管理"
+
+#: templates/admin/master.html:98
+msgid "Resource Manage"
+msgstr "资源管理"
+
+#: templates/admin/resource_list.html:4
+msgid "Resource's Name"
+msgstr "资源名"
+
+#: templates/admin/resource_list.html:5
+msgid "Resource's URL"
+msgstr "资源 URL"
 
 #: templates/course/course_box.html:16 templates/course/course_list.html:30
 msgid "courses totally"
@@ -672,4 +784,7 @@ msgstr "热门资源"
 
 #~ msgid "This field must be 4~6 digitals"
 #~ msgstr "该字段必须为 4~6 个数字"
+
+#~ msgid "Name"
+#~ msgstr "用户名"
 

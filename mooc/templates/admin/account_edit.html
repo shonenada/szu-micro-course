@@ -2,16 +2,16 @@
 {%- import 'utils.jinja' as utils %}
 
 {%- block breadcrumb %}
-<li><a href="{{ url_for('master.master_account_list') }}">Account Manage</a><span class="divider">/</span><li>
-<li class="active">Show</li>
+<li><a href="{{ url_for('master.master_account_list') }}">{{ _('Account Manage') }}</a><span class="divider">/</span><li>
+<li class="active">{{ _('Show') }}</li>
 {%- endblock %}
 
 {%- block content %}
 <div class="row-fluid">
     <div class="well">
         <ul class="nav nav-tabs">
-          <li class="active"><a href="#profile" data-toggle="tab">Profile</a></li>
-          <li><a href="#password" data-toggle="tab">Password</a></li>
+          <li class="active"><a href="#profile" data-toggle="tab">{{ _('Profile') }}</a></li>
+          <li><a href="#password" data-toggle="tab">{{ _('Password') }}</a></li>
         </ul>
         <div id="tab-content" class="tab-content">
             <div class="tab-pane active in" id="profile">
@@ -33,17 +33,17 @@
                 </form>
                 <div class="btn-toolbar">
                     <button class="btn btn-primary" id="save-btn"><span class="icon-save"></span> Save</button>
-                    <a class="btn btn-danger delete-btns" href="#delete-modal" data-toggle="modal"><span class="icon-trash"></span> Delete</a>
-                    <a class="btn delete-btns" href="{{ url_for('master.master_account_list') }}" data-toggle="modal"> Cancel</a>
+                    <a class="btn btn-danger delete-btns" href="#delete-modal" data-toggle="modal"><span class="icon-trash"></span> {{ _('Delete') }}</a>
+                    <a class="btn delete-btns" href="{{ url_for('master.master_account_list') }}" data-toggle="modal"> {{ _('Cancel') }}</a>
                 </div>
             </div>
 
             <div class="tab-pane fade" id="password">
                 <form id="password-form">
-                    <label>New Password</label>
+                    <label>{{ _('New Password') }}</label>
                     <input name="password" type="password" class="input-xlarge">
                     <div>
-                        <button id="change-password-btn" class="btn btn-primary">Update</button>
+                        <button id="change-password-btn" class="btn btn-primary">{{ _('Update') }}</button>
                     </div>
                 </form>
             </div>
@@ -53,14 +53,14 @@
 <div class="modal small hide fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="delete-modal-label" aria-hidden="true">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="delete-modal-label">Delete Confirmation</h3>
+        <h3 id="delete-modal-label">{{ _('Delete Confirmation') }}</h3>
     </div>
     <div class="modal-body">
-        <p class="error-text"><i class="icon-warning-sign modal-icon"></i>Are you sure you want to delete the user?</p>
+        <p class="error-text"><i class="icon-warning-sign modal-icon"></i>{{ _('Are you sure you want to delete the user?') }}</p>
     </div>
     <div class="modal-footer">
-        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-        <button id="confirm-delete-btn" class="btn btn-danger" data-dismiss="modal">Delete</button>
+        <button class="btn" data-dismiss="modal" aria-hidden="true">{{ _('Cancel') }}</button>
+        <button id="confirm-delete-btn" class="btn btn-danger" data-dismiss="modal">{{ _('Delete') }}</button>
     </div>
 </div>
 {%- endblock %}
