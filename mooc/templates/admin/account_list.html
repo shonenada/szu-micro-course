@@ -2,25 +2,25 @@
 {%- import 'utils.jinja' as utils %}
 
 {%- block breadcrumb %}
-<li><a href="{{ url_for('master.master_account_list') }}">Account Manage</a><span class="divider">/</span><li>
+<li><a href="{{ url_for('master.master_account_list') }}">{{ _('Account Manage') }}</a><span class="divider">/</span><li>
 <li class="active">List</li>
 {%- endblock %}
 
 {%- block content %}
 <div class="row-fluid">
     <div class="btn-toolbar">
-        <a class="btn btn-primary" href="{{ url_for('master.master_account_new') }}"><span class="icon-plus"></span> New User</a>
+        <a class="btn btn-primary" href="{{ url_for('master.master_account_new') }}"><span class="icon-plus"></span> {{ _('Create User') }}</a>
     </div>
     <div class="well">
         <table class="table">
             <thead>
                 <tr>
-                    <th>Username</th>
-                    <th>Name</th>
-                    <th>Gender</th>
-                    <th>Stu Num</th>
-                    <th>Nickname</th>
-                    <th>State</th>
+                    <th>{{ _('Username') }}</th>
+                    <th>{{ _('Real Name') }}</th>
+                    <th>{{ _('Gender') }}</th>
+                    <th>{{ _('Student Number') }}</th>
+                    <th>{{ _('Nickname') }}</th>
+                    <th>{{ _('State') }}</th>
                     <th></th>
                 </tr>
             </thead>
@@ -49,14 +49,14 @@
 <div class="modal small hide fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="delete-modal-label" aria-hidden="true">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="delete-modal-label">Delete Confirmation</h3>
+        <h3 id="delete-modal-label">{{ _('Delete Confirmation') }}</h3>
     </div>
     <div class="modal-body">
-        <p class="error-text"><i class="icon-warning-sign modal-icon"></i>Are you sure you want to delete the user?</p>
+        <p class="error-text"><i class="icon-warning-sign modal-icon"></i>{{ _('Are you sure you want to delete the user?') }}</p>
     </div>
     <div class="modal-footer">
-        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-        <button class="btn btn-danger" id="confirm-delete-btn" data-dismiss="modal">Delete</button>
+        <button class="btn" data-dismiss="modal" aria-hidden="true">{{ _('Cancel') }}</button>
+        <button id="confirm-delete-btn" class="btn btn-danger" data-dismiss="modal">{{ _('Delete') }}</button>
     </div>
 </div>
 {%- endblock %}
