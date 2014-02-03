@@ -1,13 +1,13 @@
 #-*- coding: utf-8 -*-
 from datetime import datetime
 
-from mooc.app import db
-from mooc.master.model import Tag
-from mooc.account.model import User, SzuAccount, College, Teacher, Role
-from mooc.course.model import Subject, Category, Course, Lecture, LearnRecord
-from mooc.course.model import Quiz, QuizOption
-from mooc.resource.model import Resource
-from mooc.discuss.model import Question, Answer, QuestionTag
+from mooc.extensions import db
+from mooc.models.master import Tag
+from mooc.models.account import User, SzuAccount, College, Teacher, Role
+from mooc.models.course import Subject, Category, Course, Lecture, LearnRecord
+from mooc.models.course import Quiz, QuizOption
+from mooc.models.resource import Resource
+from mooc.models.discuss import Question, Answer, QuestionTag
 
 
 def _init_role():

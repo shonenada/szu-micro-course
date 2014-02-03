@@ -9,7 +9,7 @@ $ ->
 
     window.check_answer = (lecture_id, quiz_id, answer_id, answer) ->
         $.ajax {
-                url: '/lecture/' + lecture_id + '/check',
+                url: '/course/lecture/' + lecture_id + '/check',
                 dataType: 'json',
                 data: {'quiz_id': quiz_id, 'answer_id': answer_id},
                 type: 'POST',

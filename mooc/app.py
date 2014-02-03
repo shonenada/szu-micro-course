@@ -3,25 +3,22 @@ import time
 
 from flask import Flask, g, render_template, current_app, request
 
-from mooc.extensions import gears, setup_compilers, setup_compressors
-from mooc.extensions import setup_gears_environment
-from mooc.extensions import db
-from mooc.extensions import login_manager
-from mooc.extensions import rbac, setup_rbac
-from mooc.extensions import csrf
-from mooc.master.view import master_app
-from mooc.account.view import account_app
-from mooc.admin.view import admin_app
-from mooc.course.view import course_app
-from mooc.resource.view import resource_app
-from mooc.discuss.view import discuss_app
-from mooc.helpers import friendly_time, format_datetime
-from mooc.course.service import (get_learn_records, get_last_lecture,
-                                 learn_count)
-from mooc.resource.service import friendly_resource_category
-
-
-__all__ = ['create_app', 'rbac', 'db', 'csrf', 'login_manager']
+from mooc.extensions import setup_babel
+from mooc.extensions import setup_gears
+from mooc.extensions import setup_database
+from mooc.extensions import setup_login_manager
+from mooc.extensions import setup_rbac, rbac
+from mooc.extensions import setup_csrf
+from mooc.views.master import master_app
+from mooc.views.account import account_app
+from mooc.views.admin import admin_app
+from mooc.views.course import course_app
+from mooc.views.resource import resource_app
+from mooc.views.discuss import discuss_app
+from mooc.utils._time import setup_request_timer, friendly_time, format_datetime
+from mooc.services.course import (get_learn_records, get_last_lecture,
+                                  learn_count)
+from mooc.services.resource import friendly_resource_category
 
 
 def create_app(import_name=None, config=None):
@@ -38,19 +35,12 @@ def create_app(import_name=None, config=None):
         from raven.contrib.flask import Sentry
         sentry = Sentry(app)
 
-    gears.init_app(app)
-    setup_gears_environment(app)
-    setup_compressors(app)
-    setup_compilers(app)
-
-    db.init_app(app)
-
-    login_manager.init_app(app)
-
-    rbac.init_app(app)
+    setup_gears(app)
+    setup_database(app)
+    setup_login_manager(app)
     setup_rbac(app)
-
-    csrf.init_app(app)
+    setup_csrf(app)
+    setup_babel(app)
 
     app.before_request(setup_request_timer)
     app.before_request(get_learn_records)
@@ -58,7 +48,6 @@ def create_app(import_name=None, config=None):
 
     setup_error_pages(app)
     setup_jinja(app)
-    setup_babel(app)
 
     app.register_blueprint(master_app)
     app.register_blueprint(account_app)
@@ -101,10 +90,6 @@ def setup_jinja(app):
     setup_global(app)
 
 
-def setup_request_timer():
-    g.request_start_time = time.time()
-
-
 def setup_error_pages(app):
     @app.errorhandler(403)
     def page_not_found(error):
@@ -117,15 +102,3 @@ def setup_error_pages(app):
     @app.errorhandler(405)
     def method_not_allow(error):
         return render_template('errors/405.html'), 405
-
-
-def setup_babel(app):
-    from flask.ext.babel import Babel
-
-    babel = Babel(app)
-    default = app.config.get('BABEL_DEFAULT_LOCALE', 'en')
-    supported = app.config.get('BABEL_SUPPORTED_LOCALES', ['en', 'zh'])
-
-    @babel.localeselector
-    def get_locale():
-        return request.accept_languages.best_match(supported, default)

@@ -2,7 +2,7 @@ $ ->
 
     vote = (aid, action) ->
         $.ajax {
-            url: '/question/vote'
+            url: '/discuss/question/vote'
             dataType: 'json'
             data: {'aid': aid, 'action': action}
             type: 'POST'
