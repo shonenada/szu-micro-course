@@ -8,7 +8,7 @@ from mooc.app import db
 from mooc.helpers import enumdef
 from mooc.master.model import ModelMixin
 from mooc.account.model import SzuAccount
-from mooc.qa.model import Question
+from mooc.discuss.model import Question
 
 
 lecture_tags = db.Table(

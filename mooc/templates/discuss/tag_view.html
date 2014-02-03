@@ -4,32 +4,29 @@
 <div id="left">
     <div id="tips">
         <ul>
-            <li><a href="{{ url_for('qa.lastest') }}" id="lastest"{%- if type == 'lastest' %} class="current"{%- endif %}>{{ _('Lastest') }}</a></li>
-            <li><a href="{{ url_for('qa.hotest') }}" id="hotest"{%- if type == 'hotest' %} class="current"{%- endif %}>{{ _('Hot') }}</a></li>
-            <li><a href="{{ url_for('qa.noanswer') }}" id="none-answer"{%- if type == 'noanswer' %} class="current"{%- endif %}>{{ _('No-Answered') }}</a></li>
-            <li class="ask"><a href="{{ url_for('qa.ask') }}" id="ask-btn">{{ _('Ask') }}</a></li>
+            <li><a href="javascript:void(0)" id="none-answer" class="current">{{ tag }}</a></li>
+            <li class="ask"><a href="{{ url_for('discuss.ask') }}" id="ask-btn">{{ _('Ask') }}</a></li>
         </ul>
     </div>
 
     <ul id="question-list">
-        {%- if question_pagination.total > 0 %}
-        {%- for q in question_pagination.items %}
+        {%- for q in questions %}
         <li class="question-item">
             <div class="question-left-float question-stats">
                 <div class="question-left-float view-count">
                     <p>{{ q.read_count }}</p> {{ _('view(s)') }}
                 </div>
                 <div class="question-left-float respond-count">
-                    <p>{{ q.answers | count }}</p> {{ _('answer(s)') }}
+                    <p>{{ q.answers | count }}</p> {{ _('answer(s)')}}
                 </div>
             </div>
             <div class="question-left-float question-content">
-                <div class="question-title"><a href="{{ url_for('qa.view_question', qid=q.id) }}">{{ q.title }}</a></div>
+                <div class="question-title"><a href="{{ url_for('discuss.view_question', qid=q.id) }}">{{ q.title }}</a></div>
                 <div>
                     <div class="question-tags question-left-float">
                         <ul>
                             {%- for t in q.tags %}
-                            <li><a href="{{ url_for('qa.tag', tag=t.tag) }}">{{ t.tag }}</a></li>
+                            <li><a href="{{ url_for('discuss.tag', tag=t.tag) }}">{{ t.tag }}</a></li>
                             {%- endfor %}
                         </ul>
                     </div>
@@ -41,7 +38,6 @@
             </div>
         </li>
         {%- endfor %}
-        {%- endif %}
     </ul>
     <div class="shadow"></div>
 </div>
@@ -56,7 +52,7 @@
                 <div class="content-list">
                     <ul>
                         {%- for t in hotest_tags %}
-                        <li><span><a href="{{ url_for('qa.tag', tag=t.tag) }}">{{ t.tag }}</a></span></li>
+                        <li><span><a href="{{ url_for('discuss.tag', tag=t.tag) }}">{{ t.tag }}</a></span></li>
                         {%- endfor %}
                     </ul>
                 </div>

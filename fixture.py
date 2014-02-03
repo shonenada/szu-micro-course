@@ -7,7 +7,7 @@ from mooc.account.model import User, SzuAccount, College, Teacher, Role
 from mooc.course.model import Subject, Category, Course, Lecture, LearnRecord
 from mooc.course.model import Quiz, QuizOption
 from mooc.resource.model import Resource
-from mooc.qa.model import Question, Answer, QuestionTag
+from mooc.discuss.model import Question, Answer, QuestionTag
 
 
 def _init_role():

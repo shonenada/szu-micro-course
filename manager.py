@@ -53,7 +53,7 @@ def createdb(config, destory):
                                         Role, roles_parents, users_roles)
         from mooc.course.model import (Subject, Category, Course, Lecture,
                                        LearnRecord, lecture_tags, course_tags)
-        from mooc.qa.model import UpDownRecord, Answer, Question
+        from mooc.discuss.model import UpDownRecord, Answer, Question
         from mooc.resource.model import Resource
         db.create_all()
     print 'Created Database!'

@@ -57,14 +57,14 @@ $(function() {
         <div id="asks" class="borad">
             <ul class="disc-style">
             {%- for ques in user.questions %}
-                <li><a href="{{ url_for('qa.view_question', qid=ques.id) }}">{{ ques.title }}</a> - {{ ques.created | date }}</li>
+                <li><a href="{{ url_for('discuss.view_question', qid=ques.id) }}">{{ ques.title }}</a> - {{ ques.created | date }}</li>
             {%- endfor %}
             </ul>
         </div>
         <div id="answer" class="borad">
             <ul class="disc-style">
             {%- for answer in user.answers %}
-                <li><a href="{{ url_for('qa.view_question', qid=answer.question.id) }}#answer-{{ answer.id }}">{{ answer.question.title }}</a> - {{ answer.created | date }}</li>
+                <li><a href="{{ url_for('discuss.view_question', qid=answer.question.id) }}#answer-{{ answer.id }}">{{ answer.question.title }}</a> - {{ answer.created | date }}</li>
             {%- endfor %}
             </ul>
         </div>

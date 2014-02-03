@@ -7,20 +7,20 @@ from flask.ext.login import current_user
 
 from mooc.app import db, rbac
 from mooc.course.model import Lecture
-from mooc.qa.model import Question, Answer, QuestionTag, UpDownRecord
-from mooc.qa.form import AskForm
+from mooc.discuss.model import Question, Answer, QuestionTag, UpDownRecord
+from mooc.discuss.form import AskForm
 
 
-qa_app = Blueprint('qa', __name__, url_prefix='/discuss')
+discuss_app = Blueprint('discuss', __name__, url_prefix='/discuss')
 
 
-@qa_app.route('/question')
+@discuss_app.route('/question')
 @rbac.allow(['anonymous'], ['GET'])
 def question():
-    return redirect(url_for('qa.lastest'))
+    return redirect(url_for('discuss.lastest'))
 
 
-@qa_app.route('/question/lastest')
+@discuss_app.route('/question/lastest')
 @rbac.allow(['anonymous'], ['GET'])
 def lastest():
     page_num = int(request.args.get('page', 1))
@@ -28,11 +28,11 @@ def lastest():
                               .order_by(Question.created.desc()))
     questions = question_query.paginate(page_num, per_page=20)
     hotest_tags = QuestionTag.query.order_by(QuestionTag.count.desc()).all()
-    return render_template('qa/question_list.html', hotest_tags=hotest_tags,
+    return render_template('discuss/question_list.html', hotest_tags=hotest_tags,
                            question_pagination=questions, type='lastest')
 
 
-@qa_app.route('/question/hotest')
+@discuss_app.route('/question/hotest')
 @rbac.allow(['anonymous'], ['GET'])
 def hotest():
     page_num = int(request.args.get('page', 1))
@@ -40,11 +40,11 @@ def hotest():
                               .order_by(Question.hotest.desc()))
     questions = question_query.paginate(page_num, per_page=20)
     hotest_tags = QuestionTag.query.order_by(QuestionTag.count.desc()).all()
-    return render_template('qa/question_list.html', hotest_tags=hotest_tags,
+    return render_template('discuss/question_list.html', hotest_tags=hotest_tags,
                            question_pagination=questions, type='hotest')
 
 
-@qa_app.route('/question/noanswer')
+@discuss_app.route('/question/noanswer')
 @rbac.allow(['anonymous'], ['GET'])
 def noanswer():
     page_num = int(request.args.get('page', 1))
@@ -52,21 +52,21 @@ def noanswer():
                               .filter(Question.answer_count == 0))
     questions = question_query.paginate(page_num, per_page=20)
     hotest_tags = QuestionTag.query.order_by(QuestionTag.count.desc()).all()
-    return render_template('qa/question_list.html', hotest_tags=hotest_tags,
+    return render_template('discuss/question_list.html', hotest_tags=hotest_tags,
                            question_pagination=questions, type='noanswer')
 
 
-@qa_app.route('/question/<int:qid>')
+@discuss_app.route('/question/<int:qid>')
 @rbac.allow(['anonymous'], ['GET'])
 def view_question(qid):
     question = Question.query.get(qid)
     question.read_count += 1
     db.session.add(question)
     db.session.commit()
-    return render_template('qa/question.html', question=question)
+    return render_template('discuss/question.html', question=question)
 
 
-@qa_app.route('/question/vote', methods=['POST'])
+@discuss_app.route('/question/vote', methods=['POST'])
 @rbac.allow(['local_user'], ['POST'])
 def vote_answer():
     VALID_ACTION = ('up', 'down')
@@ -97,7 +97,7 @@ def vote_answer():
     return jsonify(success=True, message=_('Success'))
 
 
-@qa_app.route('/question/<int:qid>/answer', methods=['POST'])
+@discuss_app.route('/question/<int:qid>/answer', methods=['POST'])
 @rbac.allow(['local_user'], ['POST'])
 def answer(qid):
     question = Question.query.get(qid)
@@ -110,12 +110,12 @@ def answer(qid):
     return jsonify(success=True)
 
 
-@qa_app.route('/question/ask', methods=['GET', 'POST'])
+@discuss_app.route('/question/ask', methods=['GET', 'POST'])
 @rbac.allow(['local_user'], ['GET', 'POST'])
 def ask():
     form = AskForm()
     if request.method == 'GET':
-        return render_template('qa/ask.html', form=form)
+        return render_template('discuss/ask.html', form=form)
 
     if form.validate_on_submit():
         title = form.data.get('title')
@@ -133,7 +133,7 @@ def ask():
         return jsonify(success=False, message=form.errors.values())
 
 
-@qa_app.route('/tag/<tag>')
+@discuss_app.route('/tag/<tag>')
 @rbac.allow(['anonymous'], ['GET'])
 def tag(tag):
     hotest_tags = QuestionTag.query.order_by(QuestionTag.count.desc()).all()
@@ -143,5 +143,5 @@ def tag(tag):
         this_tags = QuestionTag.query.filter_by(tag=t).all()
         for l_tag in this_tags:
             questions.update(l_tag.questions)
-    return render_template('qa/tag_view.html', hotest_tags=hotest_tags,
+    return render_template('discuss/tag_view.html', hotest_tags=hotest_tags,
                            questions=questions, tag=tag)

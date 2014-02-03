@@ -11,7 +11,7 @@
             <div id="question-title">{{ question.title }} {% if question.lecture %}<span> {{ _('From') }}<a href="{{ url_for('course.lecture', lecture_id=question.lecture.id )}}">《{{ question.lecture.name }}》</a>{{ _("'s Questions") }}}</span>{% endif %}</div>
             <ul id="question-tags">
             {%- for tag in question.tags %}
-                <li><span><a href="{{ url_for('qa.tag', tag=tag.tag) }}">{{ tag.tag }}</a></span></li>
+                <li><span><a href="{{ url_for('discuss.tag', tag=tag.tag) }}">{{ tag.tag }}</a></span></li>
             {%- endfor %}
                 <li class="author">{{ question.author.nickname }}</li>
                 <li class="time">{{ question.created | friendly_time }}</li>
@@ -61,7 +61,7 @@
     </div>
 
     <div id="re-answer">
-        <form id="re-answer-form" action="{{ url_for('qa.answer', qid=question.id) }}">
+        <form id="re-answer-form" action="{{ url_for('discuss.answer', qid=question.id) }}">
             <label>{{ _('Reply:') }}</label>
             <div>
                 <textarea name="answer"></textarea>
