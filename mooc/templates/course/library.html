@@ -4,7 +4,7 @@
 <div id="category_list" class="category_list wrapper">
     <ul>
         {%- for s in subjects %}
-        <li><a href="/courses/subject/{{s.id}}">{{ s.name }}</a></li>
+        <li><a href="{{ url_for('course.subject', sid=s.id) }}">{{ s.name }}</a></li>
         {%- endfor %}
     </ul>
 </div>

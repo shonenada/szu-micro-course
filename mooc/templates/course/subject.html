@@ -3,7 +3,7 @@
 <div id="left">
     <div id="category_list" class="category_list">
         <ul>
-            <li><a href="/courses">{{ _('Courses') }}</a></li>
+            <li><a href="{{ url_for('course.library') }}">{{ _('Courses') }}</a></li>
             <li><a>{{ this_subject.name }}</a></li>
         </ul>
     </div>
