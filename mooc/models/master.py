@@ -35,8 +35,8 @@ class ModelMixin(object):
         """
         query = self.query
 
-        if hasattr(self, '_state') and not with_deleted:
-            query = query.filter(self._state != 'deleted')
+        if hasattr(self, 'state') and not with_deleted:
+            query = query.filter(self.state != 'deleted')
 
         for filte in filters:
             query = query.filter(filte)
@@ -76,8 +76,8 @@ class ModelMixin(object):
 
         :param commit: Commit to database immediately
         """
-        if hasattr(self, '_state'):
-            self._state = 'deleted'
+        if hasattr(self, 'state'):
+            self.state = 'deleted'
         else:
             db.session.delete(self)
 
@@ -118,6 +118,8 @@ class Tag(db.Model):
 
 class Feedback(db.Model, ModelMixin):
 
+    STATE = ('normal', 'deleted')
+
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(30))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
@@ -125,3 +127,4 @@ class Feedback(db.Model, ModelMixin):
     ip = db.Column(db.String(40))
     created = db.Column(db.DateTime, default=datetime.utcnow())
     feedback = db.Column(db.Text)
+    state = db.Column(db.Enum(name='feedback_state', *STATE), default='normal')

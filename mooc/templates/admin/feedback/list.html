@@ -1,0 +1,81 @@
+{%- extends 'admin/layout.html' %}
+{%- import 'utils.jinja' as utils %}
+
+{%- block breadcrumb %}
+<li><a href="{{ url_for('admin.list_feedback') }}">{{ _('Feedback Manage') }}</a><span class="divider">/</span><li>
+<li class="active">List</li>
+{%- endblock %}
+
+{%- block content %}
+<div class="row-fluid">
+    <div class="well">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>{{ _('Title') }}</th>
+                    <th>{{ _('User') }}</th>
+                    <th>{{ _('Date') }}</th>
+                    <th>{{ _('Feedback') }}</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {%- for item in pagination.items %}
+                <tr>
+                    <td>{{ item.title }}</td>
+                    <td>{%- if item.user %}{{ item.user.name or item.user.nickname or item.user.username }}{%- else %}{{ _('Anonymous') }}{%- endif %}
+                    <td>{{ item.created | date }}</td>
+                    <td>{{ item.feedback }}</td>
+                    <td>
+                        <a href="#delete-modal" role="button" data="{{ item.id }}" class="delete-btns" data-toggle="modal"><span class="icon-remove"></span></a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{{ utils.render_pagination(pagination, 'admin.list_feedback')|safe }}
+
+<div class="modal small hide fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="delete-modal-label" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="delete-modal-label">{{ _('Delete Confirmation') }}</h3>
+    </div>
+    <div class="modal-body">
+        <p class="error-text"><i class="icon-warning-sign modal-icon"></i>{{ _('Are you sure you want to delete the record?') }}</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">{{ _('Cancel') }}</button>
+        <button class="btn btn-danger" id="confirm-delete-btn" data-dismiss="modal">{{ _('Delete') }}</button>
+    </div>
+</div>
+{%- endblock %}
+
+{%- block scripts %}
+<script>
+$(function(){
+    $(".delete-btns").on('click', function(e){
+        window.delete_id = $(this).attr('data');
+    })
+    $("#confirm-delete-btn").click(function(){
+        $.ajax({
+            url: "{{ url_for('admin.delete_feedback', mid=9999) }}".replace('9999', window.delete_id),
+            type: 'delete',
+            dataType: 'json',
+            data: {'_crsf_token': getCookie('_crsf_token') },
+            success: function(response) {
+                if(response.success){
+                    location.href = "{{ url_for('admin.list_feedback') }}";
+                }
+                else{
+                    location.href = "{{ url_for('admin.list_feedback') }}";
+                }
+            },
+            error: function() {
+                $S.error('程序发生错误，请联系管理员！');
+            }
+        });
+    });
+});</script>
+{%- endblock %}
