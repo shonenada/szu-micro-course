@@ -289,4 +289,3 @@ class LearnRecord(db.Model, ModelMixin):
 
     def delete(self):
         pass # Cannot delete.
-    
