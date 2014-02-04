@@ -24,7 +24,7 @@ class SubjectForm(Form):
 class CategoryForm(Form):
 
     def get_subject():
-        return Subject.query.filter(Subject._state != 'deleted').all()
+        return Subject.query.filter(Subject.state != 'deleted').all()
 
     name = StringField(label=_('Category Name'), validators=[InputRequired()])
     subject = QuerySelectField(query_factory=get_subject, allow_blank=False)
@@ -39,7 +39,7 @@ class CourseForm(Form):
         return Teacher.query.all()
 
     def categories():
-        return Category.query.filter(Category._state != 'deleted').all()
+        return Category.query.filter(Category.state != 'deleted').all()
 
     name = StringField(label=_('Course Name'), validators=[InputRequired()])
     description = TextAreaField(label=_('Description'))

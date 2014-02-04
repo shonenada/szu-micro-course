@@ -17,7 +17,7 @@ master_app = Blueprint('master', __name__)
 @master_app.route('/')
 @rbac.allow(['anonymous'], ['GET'])
 def index():
-    subjects = Subject.query.filter(Subject._state != 'deleted').all()
+    subjects = Subject.query.filter(Subject.state != 'deleted').all()
     return render_template('index.html', subjects=subjects)
 
 

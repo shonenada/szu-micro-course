@@ -13,8 +13,8 @@ class ModelMixin(object):
     def paginate(self, page, per_page=20, error_out=True,
                  filters=[], with_deleted=False):
         """A proxy method to return `per_page` items from page `page`.
-        If there is `_state` attribute in class and `with_deleted` is `False`
-        it will filter out which was `_state != 'deleted'`.
+        If there is `state` attribute in class and `with_deleted` is `False`
+        it will filter out which was `state != 'deleted'`.
         If items were not found it will abort with 404.
 
         Example::
@@ -31,7 +31,7 @@ class ModelMixin(object):
         :param per_page: Sepcify how many items in a page.
         :param error_out: If `False`, disable abort with 404.
         :param filters: A list that the query wile filter.
-        :param with_deleted: If True, it will not filter `_state != 'deleted'`
+        :param with_deleted: If True, it will not filter `state != 'deleted'`
         """
         query = self.query
 
@@ -127,4 +127,4 @@ class Feedback(db.Model, ModelMixin):
     ip = db.Column(db.String(40))
     created = db.Column(db.DateTime, default=datetime.utcnow())
     feedback = db.Column(db.Text)
-    state = db.Column(db.Enum(name='feedback_state', *STATE), default='normal')
+    state = db.Column(db.Enum(*STATE), default='normal')

@@ -24,7 +24,7 @@ def question():
 @rbac.allow(['anonymous'], ['GET'])
 def lastest():
     page_num = int(request.args.get('page', 1))
-    question_query = (Question.query.filter(Question._state != 'DELETED')
+    question_query = (Question.query.filter(Question.state != 'DELETED')
                               .order_by(Question.created.desc()))
     questions = question_query.paginate(page_num, per_page=20)
     hotest_tags = QuestionTag.query.order_by(QuestionTag.count.desc()).all()
@@ -36,7 +36,7 @@ def lastest():
 @rbac.allow(['anonymous'], ['GET'])
 def hotest():
     page_num = int(request.args.get('page', 1))
-    question_query = (Question.query.filter(Question._state != 'DELETED')
+    question_query = (Question.query.filter(Question.state != 'DELETED')
                               .order_by(Question.hotest.desc()))
     questions = question_query.paginate(page_num, per_page=20)
     hotest_tags = QuestionTag.query.order_by(QuestionTag.count.desc()).all()
@@ -48,7 +48,7 @@ def hotest():
 @rbac.allow(['anonymous'], ['GET'])
 def noanswer():
     page_num = int(request.args.get('page', 1))
-    question_query = (Question.query.filter(Question._state != 'DELETED')
+    question_query = (Question.query.filter(Question.state != 'DELETED')
                               .filter(Question.answer_count == 0))
     questions = question_query.paginate(page_num, per_page=20)
     hotest_tags = QuestionTag.query.order_by(QuestionTag.count.desc()).all()

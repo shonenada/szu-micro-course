@@ -34,9 +34,7 @@ class Subject(db.Model, ModelMixin):
     name = db.Column(db.String(20))
     description = db.Column(db.Text)
     categories = db.relationship('Category', backref='subject')
-    _state = db.Column('state', db.Enum(name='course_state',
-                                        *SUBJECT_STATE_VALUES))
-    state = enumdef('_state', SUBJECT_STATE_VALUES)
+    state = db.Column(db.Enum(*SUBJECT_STATE_VALUES))
 
     def __init__(self, name, description):
         self.name = name
@@ -74,9 +72,7 @@ class Category(db.Model, ModelMixin):
     name = db.Column(db.String(20))
     subject_id = db.Column(db.Integer, db.ForeignKey('subject.id'))
     courses = db.relationship('Course', backref='category')
-    _state = db.Column('state', db.Enum(name='course_state',
-                                        *CATEGORY_STATE_VALUES))
-    state = enumdef('_state', CATEGORY_STATE_VALUES)
+    state = db.Column(db.Enum(*CATEGORY_STATE_VALUES))
 
     def __init__(self, name, subject):
         self.name = name
@@ -109,9 +105,7 @@ class Course(db.Model, ModelMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30))
     description = db.Column(db.Text)
-    _state = db.Column('state', db.Enum(name='course_state',
-                                        *COURSE_STATE_VALUES))
-    state = enumdef('_state', COURSE_STATE_VALUES)
+    state = db.Column(db.Enum(*COURSE_STATE_VALUES))
     logo_url = db.Column(db.String(50))
     created = db.Column(db.DateTime, default=datetime.utcnow())
     teacher_id = db.Column(db.Integer, db.ForeignKey('teacher.id'))
@@ -128,7 +122,7 @@ class Course(db.Model, ModelMixin):
         self.teacher = teacher
         self.category = category
         self.created = datetime.utcnow()
-        self._state = 'updating'
+        self.state = 'updating'
         self.logo_url = url_for('static',
                                 filename='images/default_course_logo.png')
 
@@ -183,9 +177,7 @@ class Lecture(db.Model, ModelMixin):
     video_url = db.Column(db.String(150))
     video_length = db.Column(db.Integer)
     logo_url = db.Column(db.String(100))
-    _state = db.Column('state', db.Enum(name='lecture_state',
-                                        *LECTURE_STATE_VALUES))
-    state = enumdef('_state', LECTURE_STATE_VALUES)
+    state = db.Column(db.Enum(*LECTURE_STATE_VALUES))
     watch_count = db.Column(db.Integer, default=0)
     order = db.Column(db.Integer, default=1)
     play_count = db.Column(db.Integer, default=0)
@@ -295,11 +287,6 @@ class LearnRecord(db.Model, ModelMixin):
     lecture_id = db.Column(db.Integer, db.ForeignKey('lecture.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
-    def __init__(self, lecture, user):
-        self.lecture = lecture
-        self.user = user
-        self.star_count = 0
-        self.created = datetime.utcnow()
-
     def delete(self):
-        pass
+        pass # Cannot delete.
+    

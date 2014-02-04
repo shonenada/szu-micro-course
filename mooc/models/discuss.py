@@ -62,8 +62,7 @@ class Answer(db.Model, ModelMixin):
     parent_id = db.Column(db.Integer)
     up_down_record_id = db.Column(db.Integer,
                                   db.ForeignKey('up_down_record.id'))
-    _state = db.Column('state', db.Enum(name='answer_state', *STATE_VALUE))
-    state = enumdef('_state', STATE_VALUE)
+    state = db.Column(db.Enum(*STATE_VALUE))
 
     def __init__(self, content, question, author, parent=None):
         self.content = content
@@ -100,8 +99,7 @@ class Question(db.Model, ModelMixin):
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     anonymous = db.Column(db.Boolean, default=False)
     answers = db.relationship('Answer', backref='question', uselist=True)
-    _state = db.Column('state', db.Enum(name='question_state', *STATE_VALUE))
-    state = enumdef('_state', STATE_VALUE)
+    state = db.Column(db.Enum(*STATE_VALUE))
     tags = db.relationship('QuestionTag', secondary=question_tags,
                            backref=db.backref('questions'))
 
