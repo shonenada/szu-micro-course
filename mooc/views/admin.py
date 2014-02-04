@@ -5,12 +5,13 @@ from flask.ext.babel import lazy_gettext as _
 from mooc.extensions import rbac
 from mooc.utils.helpers import flash
 from mooc.utils.admin import generate_all_controller
+from mooc.models.master import Feedback
 from mooc.models.account import User, SzuAccount, College
 from mooc.models.course import Subject, Category, Course, Lecture
 from mooc.models.resource import Resource
 from mooc.forms.course import SubjectForm, CategoryForm, CourseForm, LectureForm
 from mooc.forms.resource import ResourceForm
-from mooc.forms.account import ManageUserForm
+from mooc.forms.account import ManageUserForm, CreateUserForm
 from mooc.services.account import (update_user_state,
                                     change_user_password,
                                     create_user)
@@ -111,13 +112,31 @@ def account_password(uid):
     return jsonify(success=True)
 
 
-@admin_app.route('/account/new_user', methods=['GET', 'POST'])
+@admin_app.route('/account/create_user', methods=['GET', 'POST'])
 @rbac.allow(['super_admin'], ['GET', 'POST'])
 def create_account():
-    new_user_form = NewUserForm(request.form)
+    new_user_form = CreateUserForm(request.form)
     if new_user_form.validate_on_submit():
         data = new_user_form.data
         create_user(data)
         flash(message=_('Operated successfully'), category='notice')
         return jsonify(success=True)
-    return render_template('admin/account/new.html', form=new_user_form)
+    return render_template('admin/account/create.html', form=new_user_form)
+
+
+@admin_app.route('/feedback', methods=['GET'])
+@rbac.allow(['super_admin'], ['GET'])
+def list_feedback():
+    page = int(request.args.get('page', 1))
+    pagination = Feedback.paginate(page=page)
+    return render_template('admin/feedback/list.html',
+                           pagination=pagination)
+
+
+@admin_app.route('/feedback/<mid>/delete', methods=['DELETE'])
+@rbac.allow(['super_admin'], ['DELETE'])
+def delete_feedback(mid):
+    feedback = Feedback.query.get_or_404(mid)
+    feedback.delete()
+    flash(message=_('Operated successfully'), category='notice')
+    return jsonify(success=True)

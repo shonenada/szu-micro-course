@@ -93,8 +93,7 @@ class User(db.Model, UserMixin, ModelMixin):
     last_login = db.Column(db.DateTime, default=datetime.utcnow())
     last_ip = db.Column(db.String(40))
     salt = db.Column(db.String(32), nullable=False)
-    _state = db.Column('state', db.Enum(name='user_state', *USER_STATE_VALUES))
-    state = enumdef('_state', USER_STATE_VALUES)
+    state = db.Column(db.Enum(*USER_STATE_VALUES))
     learn_records = db.relationship('LearnRecord', backref='user',
                                     uselist=True)
     questions = db.relationship('Question', backref='author',
@@ -158,28 +157,13 @@ class User(db.Model, UserMixin, ModelMixin):
         return (self.state == 'normal')
 
     def active(self):
-        self._transform_state(from_state='unactivated', to_state='normal')
-
-    def freeze(self):
-        self._transform_state(from_state='normal', to_state='frozen')
-
-    def unfrozen(self):
-        self._transform_state(from_state='frozen', to_state='normal')
-
-    def delete(self):
-        self._transform_state(from_state='normal', to_state='deleted')
+        self.state = 'normal'
 
     @staticmethod
     def _hash_password(salt, password):
         hashed = sha256()
         hashed.update("<%s|%s>" % (salt, password))
         return hashed.hexdigest()
-
-    def _transform_state(self, from_state, to_state):
-        if self.state == from_state:
-            self.state = to_state
-        else:
-            raise UserStateException("The state of user is mismatched!")
 
 
 class SzuAccount(db.Model, ModelMixin):
@@ -195,9 +179,7 @@ class SzuAccount(db.Model, ModelMixin):
     card_id = db.Column(db.String(6), unique=True)
     stu_number = db.Column(db.String(10), unique=True)
     short_phone = db.Column(db.String(6), unique=True)
-    szu_account_type = enumdef('_szu_account_type', TYPE_VALUES)
-    _szu_account_type = db.Column(
-        'szu_account_tpye', db.Enum(name='szu_account_type', *TYPE_VALUES))
+    szu_account_type = db.Column(db.Enum(*TYPE_VALUES))
     user = db.relationship(
         'User', uselist=False,
         backref=db.backref('szu_account', uselist=False))
