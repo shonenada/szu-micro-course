@@ -56,14 +56,15 @@ def lecture(lecture_id):
                                   .limit(10).all())
     quizs = (Quiz.query.filter_by(lecture_id=lecture_id)
                  .order_by(Quiz.order.desc()).order_by(Quiz.id.desc()))
-    record = (LearnRecord.query.filter_by(user=current_user)
+    if not current_user.is_anonymous():
+        record = (LearnRecord.query.filter_by(user=current_user)
                              .filter_by(lecture_id=lecture_id).first())
-    if record:
-        record.created = datetime.utcnow()
-        record.save()
-    else:
-        new_record = LearnRecord(user=current_user, lecture=lecture)
-        new_record.save()
+        if record:
+            record.created = datetime.utcnow()
+            record.save()
+        else:
+            new_record = LearnRecord(user=current_user, lecture=lecture)
+            new_record.save()
     return render_template('course/lecture.html', quizs=quizs,
                            lecture=lecture, learning=who_is_learning)
 
