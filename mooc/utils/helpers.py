@@ -3,7 +3,7 @@ import hashlib, urllib
 
 from speaklater import is_lazy_string
 
-from flask import flash as f
+from flask import flash as f, jsonify as jify
 
 
 def get_avatar_url(email, size=70):
@@ -50,3 +50,21 @@ def flash(message, category='message', form_errors=False):
 
     if is_lazy_string(message):
         f(message=unicode(message), category=category)
+
+
+def jsonify(**kwargs):
+
+    def _itercheck(_dict):
+        for k in _dict:
+            if is_lazy_string(_dict[k]):
+                _dict[k] = unicode(_dict[k])
+            if isinstance(_dict[k], dict):
+                _itercheck(_dict[k])
+            if isinstance(_dict[k], (tuple, list)):
+                for i, x in enumerate(_dict[k]):
+                    if is_lazy_string(x):
+                        _dict[k][i] = unicode(x)
+
+    _itercheck(kwargs)
+
+    return jify(**kwargs)
