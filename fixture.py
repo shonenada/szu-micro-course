@@ -132,7 +132,9 @@ def _init_resource():
 
 def _init_learn_record():
     for lecture in lectures:
-        learn_record = LearnRecord(lecture, shonenada)
+        learn_record = LearnRecord()
+        learn_record.lecture = lecture
+        learn_record.user = shonenada
         db.session.add(learn_record)
 
 
