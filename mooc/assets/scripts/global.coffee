@@ -68,8 +68,10 @@ $ ->
                         if (res.errors)
                             for key of res.messages
                                 container = $('<div class="message-tip-box" id="message-' + key + '"></div>');
-                                $('#' + key).after(container);
-                                container.append('<span style="font-size:12px; color:#ff0000">' + res.messages[key] + '</div>');
+                                $('#' + key).before(container);
+                                $('#' + key).on 'focus', ->
+                                    $('#message-' + $(this).attr('id')).fadeOut()
+                                container.append('<span>' + res.messages[key] + '</div>');
                         else
                             $T.flash_message(res.messages.join(''), 'warn')
                     return ;
