@@ -115,17 +115,17 @@ class SignUpForm(Form):
     def validate_username(form, field):
         find_user = User.query.filter(User.username==field.data)
         if find_user.count() > 0:
-            raise ValidationError(USER_EXISTED)
+            raise ValidationError(unicode(USER_EXISTED))
 
     def validate_nickname(form, field):
         find_user = User.query.filter(User.nickname==field.data)
         if find_user.count() > 0:
-            raise ValidationError(USER_EXISTED)
+            raise ValidationError(unicode(USER_EXISTED))
 
     def validate_stu_number(form, field):
         find_szu_account = SzuAccount.query.filter_by(stu_number=field.data)
         if find_szu_account.count() > 0:
-            raise ValidationError(STU_NUMBER_EXISTED)
+            raise ValidationError(unicode(STU_NUMBER_EXISTED))
 
 
 class ManageUserForm(Form):
@@ -262,9 +262,15 @@ class SettingForm(Form):
 
     name = StringField(
         label=_('Real Name'),
+        validators=[
+            InputRequired(),
+        ]
     )
     nickname = StringField(
         label=_('Nickname'),
+        validators=[
+            InputRequired(),
+        ]
     )
     is_male = SelectField(
         label=_('Gender'),

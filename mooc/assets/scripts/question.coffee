@@ -59,30 +59,3 @@ $ ->
                 }
             }
         return false;
-
-    $("#ask-form").submit ->
-        $.ajax {
-            url: $(this).attr('action')
-            dataType: 'json'
-            data: $(this).serialize()
-            type: 'POST'
-            success: (res) ->
-                if (res.success)
-                    window.flash_message('您的提问已提交')
-                    setTimeout ->
-                        document.location = document.referrer;
-                    , 1000
-                    return ;
-                else
-                    window.flash_message(res.message.join(', '), 'error')
-                    return ;
-                return ;
-            statusCode: {
-                405: ->
-                    window.flash_message('您未登录，无法进行操作', 'error')
-                    return ;
-                }
-            }
-        return false;
-
-    return ;

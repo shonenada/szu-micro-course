@@ -1,7 +1,7 @@
 from sqlalchemy import func, select
 from flask import Blueprint, render_template, request
 from flask import jsonify, redirect, url_for
-from flask.ext.babel import lazy_gettext as _
+from flask.ext.babel import lazy_gettext as _, gettext
 from flask.ext.sqlalchemy import Pagination
 from flask.ext.login import current_user
 
@@ -121,16 +121,25 @@ def ask():
         title = form.data.get('title')
         content = form.data.get('content')
         tags = form.data.get('tags')
+
         new_question = Question(title, content, None, current_user)
+
         lecture_id = request.args.get('lecture_id', None)
+
         if lecture_id:
             lecture = Lecture.query.get(lecture_id)
             new_question.lecture = lecture
+
         db.session.add(new_question)
         db.session.commit()
-        return jsonify(success=True)
+
+        return jsonify(
+            success=True,
+            messages=[gettext('Submited successfully')],
+            next=url_for('discuss.view_question', qid=new_question.id),
+        )
     else:
-        return jsonify(success=False, message=form.errors.values())
+        return jsonify(success=False, errors=True, messages=form.errors)
 
 
 @discuss_app.route('/tag/<tag>')

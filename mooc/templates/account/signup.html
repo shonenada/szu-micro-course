@@ -12,7 +12,7 @@
     <link href="{{ url_for('static', filename='components/font-awesome/css/font-awesome.css')}}" rel="stylesheet" type="text/css">
     <link href="{{ url_for('static', filename='styles/flash-messages.css')}}" media="all" rel="stylesheet" type="text/css" />
     <script src="{{ url_for('static', filename='components/jquery/jquery.min.js') }}" language="javascript"></script>
-    <script src="{{ url_for('static', filename='scripts/flash-message.js') }}" language="javascript"></script>
+    <script src="{{ url_for('static', filename='scripts/global.js') }}" language="javascript"></script>
 
     <!-- Demo page code -->
 
@@ -85,5 +85,10 @@
                
         </div>
     </div>
+    <script>
+        $(function(){
+            $T.ajax_form($('#signUpForm'));
+        });
+    </script>
 </body>
 </html>

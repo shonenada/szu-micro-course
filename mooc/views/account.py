@@ -1,11 +1,11 @@
 #-*- coding: utf-8 -*-
 from flask import Blueprint, abort
 from flask import render_template, request, url_for, redirect
-from flask.ext.babel import lazy_gettext as _
+from flask.ext.babel import lazy_gettext as _, gettext
 from flask.ext.login import login_user, logout_user, current_user
 
 from mooc.extensions import rbac, csrf, db
-from mooc.utils.helpers import flash, get_avatar_url
+from mooc.utils.helpers import flash, get_avatar_url, jsonify
 from mooc.models.account import User, SzuAccount, Role
 from mooc.forms.account import SignInForm, SettingForm, PasswordForm, SignUpForm
 
@@ -30,16 +30,22 @@ def signin():
 
         if user:
             login_user(user, force=True, remember=is_remember_me)
-            flash(_('Logged in successfully, Welcome %(username)s',
-                    username=user.nickname or user.username), 'notice')
-            return redirect(url_for('master.index'))
+            return jsonify(
+                success=True,
+                messages=[
+                    gettext('Logged in successfully, Welcome %(username)s',
+                    username=user.nickname or user.username)
+                ]
+            )
 
         else:
-            flash(_('Wrong username or password'), 'warn')
-            return redirect(url_for('account.signin'))
+            return jsonify(
+                success=False,
+                messages=[gettext('Wrong username or password')]
+            )
 
     if form.errors:
-        flash(message=form.errors, category='warn', form_errors=True)
+        return jsonify(success=False, errors=True, messages=form.errors)
 
     return render_template('account/signin.html', form=form)
 
@@ -50,7 +56,7 @@ def signin():
 def signup():
     if not current_user.is_anonymous():
         return redirect(url_for('master.index'))
-    
+
     form = SignUpForm(request.form)
 
     if form.validate_on_submit():
@@ -68,15 +74,22 @@ def signup():
             nickname=nickname,
         )
         user.roles.append(local_user)
+
         szu_account = SzuAccount(stu_number=stu_number)
         user.szu_account = szu_account
+
         szu_account.save()
         user.save()
-        flash(message=_('Sign up successfully'), category='notice')
-        return redirect(url_for('account.signin'))
+
+        return jsonify(
+                success=True,
+                messages=[
+                    gettext('Sign up successfully')
+                ]
+            )
 
     if form.errors:
-        flash(message=form.errors, category='warn', form_errors=True)
+        return jsonify(success=False, errors=True, messages=form.errors)
 
     return render_template('account/signup.html', form=form)
 
@@ -128,11 +141,17 @@ def setting():
         user.is_male = user.is_male == 'True'
         user.save()
         user.szu_account.save()
-        flash(message=_('Modified successfully.'), category='notice')
-        return redirect(url_for('account.setting'))
+
+        return jsonify(
+                success=True,
+                messages=[
+                    gettext('Modified successfully.')
+                ],
+                next=url_for('account.setting')
+            )
 
     if form.errors:
-        flash(message=form.errors, category='warn', form_errors=True)
+        return jsonify(success=False, errors=True, messages=form.errors)
 
     return render_template('account/setting.html', user=user, form=form)
 
@@ -146,16 +165,26 @@ def change_password():
     if form.validate_on_submit():
         user = current_user
         if not user.check_password(form.data.get('old_password')):
-            flash(message=_('Wrong old password'), category='error')
-            return redirect(url_for('account.change_password'))
+
+            return jsonify(
+                    success=False,
+                    messages=[
+                        gettext('Wrong old password')
+                    ]
+                )
 
         user.change_password(form.data.get('new_password'))
         user.save()
 
-        flash(message=_('Modified successfully.'), category='notice')
-        return redirect(url_for('account.change_password'))
+        return jsonify(
+                success=True,
+                messages=[
+                    gettext('Modified successfully.')
+                ],
+                next=url_for('account.change_password')
+            )
 
     if form.errors:
-        flash(message=form.errors, category='warn', form_errors=True)
+        return jsonify(success=False, errors=True, messages=form.errors)
 
     return render_template('account/change_password.html', form=form)

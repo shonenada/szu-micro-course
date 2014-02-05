@@ -61,3 +61,11 @@
 <div id="right">
 </div>
 {%- endblock %}
+
+{%- block endscript %}
+<script type="text/javascript">
+    $(function(){
+        $T.ajax_form($('#settingForm'));
+    });
+</script>
+{%- endblock %}

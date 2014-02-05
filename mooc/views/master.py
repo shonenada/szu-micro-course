@@ -1,7 +1,7 @@
-from flask import Blueprint, render_template, current_app
+from flask import Blueprint, render_template, current_app, jsonify
 from flask import request, redirect, url_for
 from flask.ext.login import current_user
-from flask.ext.babel import lazy_gettext as _
+from flask.ext.babel import lazy_gettext as _, gettext
 
 from mooc.extensions import rbac, db, csrf
 from mooc.utils.helpers import flash
@@ -46,11 +46,15 @@ def feedback():
             feedback.user = current_user
 
         feedback.save()
-        flash(message=_('Submited successfully'), category='notice')
-        return redirect(url_for('master.index'))
+
+        return jsonify(
+            success=True,
+            messages=[gettext('Submited successfully')],
+            next=url_for('master.index'),
+        )
 
     if form.errors:
-        flash(message=form.errors, category='warn', form_errors=True)
+        return jsonify(success=False, errors=True, messages=form.errors)
 
     return render_template('feedback.html', form=form)
 

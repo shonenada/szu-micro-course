@@ -40,7 +40,7 @@ $(function(){
                     location.href = "{{ url_for(endpoints['list']) }}";
                 }
                 else{
-                    window.flash_message(response.messages.join(', '), 'error');
+                    $T.flash_message(response.messages.join(', '), 'error');
                 }
             }
         });

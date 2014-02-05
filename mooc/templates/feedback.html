@@ -4,7 +4,7 @@
 <div id="left">
     <span id="ask-label">{{ _('Feedback') }}</span>
     <div id="ask">
-        <form id="ask-form" action="{{ url_for('master.feedback') }}" method="POST">
+        <form id="askForm" action="{{ url_for('master.feedback') }}" method="POST">
             {{ form.csrf_token }}
             <li>{{ form.title(placeholder=form.title.label.text) }}</li>
             <li>{{ form.feedback(cols="35", rows="20", placeholder=form.feedback.label.text) }}</li>
@@ -17,4 +17,12 @@
 {%- endblock %}
 
 {%- block right %}
+{%- endblock %}
+
+{%- block endscript %}
+<script type="text/javascript">
+    $(function(){
+        $T.ajax_form($('#askForm'));
+    });
+</script>
 {%- endblock %}

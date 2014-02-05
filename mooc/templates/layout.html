@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ web_title or site_title}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="keywords" content="{{ web_keyword or site_keyword }}" />
     <meta name="description" content="{{ web_description or site_description }}" />
     {%- block base_stylesheet %}
@@ -15,9 +15,8 @@
     {%- block base_script %}
     <script src="{{ url_for('static', filename='components/jquery/jquery.min.js') }}"></script>
     <script src="{{ url_for('static', filename='scripts/plugins/cookies_for_ajax.js') }}" language="javascript"></script>
-    <script src="{{ url_for('static', filename='scripts/global.js') }}"></script>
     <script src="{{ url_for('static', filename='scripts/plugins/mini-dropdown.js') }}"></script>
-    <script src="{{ url_for('static', filename='scripts/flash-message.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/global.js') }}"></script>
     <script src="{{ url_for('static', filename='scripts/nav.js') }}"></script>
     {%- endblock %}
     {%- block ie_fix %}
@@ -94,6 +93,9 @@
         {{ _('copyright') }} &copy; {{ _('Shenzhen University') }} 2013
     </div>
 </footer>
+{%- endblock %}
+
+{%- block endscript %}
 {%- endblock %}
 </body>
 </html>

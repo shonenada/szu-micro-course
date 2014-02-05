@@ -7,8 +7,15 @@ from wtforms.validators import InputRequired
 
 class AskForm(Form):
     title = StringField(
-        _('Title'), validators=[InputRequired(message=_('Title is required'))])
+        label=_('Title'),
+        validators=[
+            InputRequired(),
+        ]
+    )
     content = TextAreaField(
-        _('Content'),
-        validators=[InputRequired(message=_("Content is required"))])
+        label=_('Content'),
+        validators=[
+            InputRequired(),
+        ]
+    )
     tags = StringField(label=_('Tags'))
