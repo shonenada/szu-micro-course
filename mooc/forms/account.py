@@ -96,7 +96,7 @@ class SignUpForm(Form):
     stu_number = StringField(
         label=_('Student Number'),
         validators=[
-            Length(min=11, max=11),
+            Length(min=10, max=10),
         ],
     )
     college = QuerySelectField(

@@ -60,7 +60,7 @@
             <div class="block">
                 <p class="block-heading">{{ _('Sign In') }}</p>
                 <div class="block-body">
-                    <form id="signInForm" action="/signin" method="post">
+                    <form id="signInForm" action="{{ url_for('account.signin') }}" method="post">
                         {{ form.csrf_token }}
                         {{ form.username.label }}
                         {{ form.username(class='span12') }}
