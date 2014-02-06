@@ -3,11 +3,12 @@ from datetime import datetime
 
 from flask import Blueprint, render_template, abort, json, request, jsonify
 from flask.ext.login import current_user
+from flask.ext.babel import gettext
 
 from mooc.extensions import rbac, csrf
 from mooc.models.master import Tag
 from mooc.models.course import Subject, Category, Course, Lecture, LearnRecord
-from mooc.models.course import Quiz, QuizOption
+from mooc.models.course import Quiz, QuizOption, Comment
 from mooc.models.resource import Resource
 from mooc.services.course import quiz_to_json
 
@@ -89,3 +90,27 @@ def lecture_check(lecture_id):
         if option.is_answer and int(option.quiz_id) == int(quiz_id):
             return jsonify(success=True)
     return jsonify(success=False)
+
+
+@course_app.route('/lecture/comment', methods=['POST'])
+@rbac.allow(['local_user'], ['POST'])
+def lecture_comment():
+    lecture_id = request.form.get('lecture_id')
+    lecture = Lecture.query.get_or_404(lecture_id)
+
+    comment_content = request.form.get('comment')
+    print comment_content
+    comment = Comment(
+        user=current_user,
+        lecture=lecture,
+        comment=comment_content
+    )
+    comment.save()
+    return jsonify(
+        success=True,
+        messages=[
+            gettext('Submitted successfully.')
+        ],
+        stay=True,
+        callback='test',
+    )

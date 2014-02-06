@@ -14,7 +14,7 @@ $ ->
 
     get_json_data = () ->
         $.ajax {
-                url: '/lecture/' + window.lecture_id + '/questions',
+                url: '/course/lecture/' + window.lecture_id + '/questions',
                 dataType: 'json',
                 success: (items) ->
                     data = items
@@ -43,7 +43,7 @@ $ ->
     $("#continue-btn").click ->
         obj = document.getElementById('player')
         $.ajax {
-                url: '/lecture/' + window.lecture_id + '/check',
+                url: '/course/lecture/' + window.lecture_id + '/check',
                 dataType: 'json',
                 data: $('#question-form').serialize(),
                 type: 'POST',

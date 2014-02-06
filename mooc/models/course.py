@@ -289,3 +289,37 @@ class LearnRecord(db.Model, ModelMixin):
 
     def delete(self):
         pass # Cannot delete.
+
+
+class Note(db.Model, ModelMixin):
+
+    STATE_VALUES = ('normal', 'deleted')
+
+    __tablename__ = 'note'
+
+    id = db.Column(db.Integer, primary_key=True)
+    note = db.Column(db.Text)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship('User', backref='notes', uselist=False)
+    lecture_id = db.Column(db.Integer, db.ForeignKey('lecture.id'))
+    lecture = db.relationship('Lecture', backref='notes', uselist=False)    
+    created = db.Column(db.DateTime, default=datetime.utcnow())
+    star_count = db.Column(db.Integer, default=0)
+    state = db.Column(db.Enum(*STATE_VALUES), default='normal')
+
+
+class Comment(db.Model, ModelMixin):
+
+    STATE_VALUES = ('normal', 'delete')
+
+    __tablename__ = 'comment'
+
+    id = db.Column(db.Integer, primary_key=True)
+    comment = db.Column(db.String(400))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship('User', backref='comments', uselist=False)
+    lecture_id = db.Column(db.Integer, db.ForeignKey('lecture.id'))
+    lecture = db.relationship('Lecture', backref='comments', uselist=False)
+    star_count = db.Column(db.Integer, default=0)
+    created = db.Column(db.DateTime, default=datetime.utcnow())
+    state = db.Column(db.Enum(*STATE_VALUES), default='normal')

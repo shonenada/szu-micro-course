@@ -60,10 +60,12 @@ $ ->
                             setTimeout ->
                                 document.location = res.next
                             , 2000
-                        else
+                        else if (!res.stay)
                             setTimeout ->
                                 document.location = document.referrer;
                             , 2000
+                        if (res.callback)
+                            eval(res.callback + '()')
                     else
                         if (res.errors)
                             for key of res.messages
