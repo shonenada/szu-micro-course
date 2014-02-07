@@ -1,0 +1,195 @@
+// ------------------------
+//  Base style of Mooc-SZU
+// ------------------------
+
+body
+  background body-background
+
+body, a
+  color font-color
+  font-family font-stack
+  text-decoration none
+
+#main
+  width 100%
+  overflow hidden
+  background main-background
+
+  #main-content
+    padding-top 30px
+    padding-bottom 20px
+    overflow hidden
+
+  #left
+    width 69%
+    float left
+
+  #right
+    width 30%
+    float right
+
+
+// ---------------------------
+//  Styles of Header division
+// ---------------------------
+
+#header
+  #nav-container
+    height 66px
+    padding 10px
+    position relative
+
+    #logo
+      width 299px
+      height 66px
+      margin-top 10px
+      text-indent -9999em
+      display inline-block
+      background url(LOGO_URL) no-repeat
+
+    #nav
+      float right
+      margin-top 10px
+      line-height 66px
+
+      .index-link
+        display none
+
+      a
+        color #6b7488
+        font-size 15px
+        font-weight bold
+
+      a.nav_current
+        color #ff5400
+
+      a.user_logged
+        color #DF0000
+
+      ul li
+        float left
+        padding 0 20px 0 20px
+
+  .banner
+    width 100%
+    height 280px
+    background #fff url(HEADER_BACKGROUND_URL) repeat-x
+    background-size auto 364px
+
+    #banner-text
+      color #fff
+      font-size 36px
+      line-height 280px
+      font-family helvetica
+
+// ---------------------------
+//  Styles of Footer division
+// ---------------------------
+
+#footer
+  padding 0px 0 10px 0
+  background #fff
+  zoom 1
+
+  .banner
+    height 0px
+    background #55afd5
+
+  #link
+    margin 40px 0 20px 0
+    text-align center
+
+    li
+      font-size 12px
+      display inline-block
+      margin-right 5px
+
+    li.first:before
+      content ''
+
+      a
+        color #333333
+
+      &:before
+        content '| '
+        margin-right 5px
+
+  #copyright
+    margin 20px 0 20px 0
+    width 100%
+    font-size 12px
+    text-align center
+
+// ---------------------------
+//  Styles of Form division
+// ---------------------------
+
+.message-tip-box
+  position relative
+
+  & span
+    top 0px
+    right 0px
+    background #363636
+    border-radius 2px
+    padding 5px
+    color #fff
+    background #363636
+    background #363636
+    position absolute
+
+// ---------------------------
+//  Styles for components
+// ---------------------------
+
+.full-width
+  width 100%
+
+.wrapper
+  width 88%
+  display block
+  margin 0 auto
+
+.shadow
+  bottom-border-radius 3
+  background #cad6df
+  margin 0 auto
+  width 99%
+  height 5px
+
+.full-line
+  height 1px
+  width 100%
+  background #cad6df
+  margin 15px 0 15px 0
+
+.clear
+  clear both
+  
+.category_list
+  top-border-radius 5
+  bottom-border-radius 5
+  background #ccd9e2
+  margin-top 40px
+  font-size 14px
+  font-weight bold
+  overflow hidden
+
+  ul li
+    float left
+
+    &:first-child
+      a
+        padding-left 20px
+
+    a
+      height 40px
+      display block
+      color #7b8896
+      line-height 40px
+      transition 0.25s
+      text-align center
+      padding 0 10px 0 10px
+
+      &:hover
+        background #fff
