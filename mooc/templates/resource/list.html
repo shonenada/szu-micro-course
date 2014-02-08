@@ -2,57 +2,58 @@
 
 {%- block left %}
 <div id="left">
-    <div id="tips">
-        <ul>
-            <li><a href="{{ url_for('resource.list') }}" class="current">{{ _('Resource of Course') }}</a></li>
-        </ul>
-    </div>
 
-    <ul id="question-list">
-        {%- if pagination.total > 0 %}
-        {%- for item in pagination.items %}
-        <div class="course-container">
-            <div class="course-box">
-                <div class="course-info">
-                    <div class="icon small-icon">
-                    <img src="{{ url_for('static', filename='images/icon/%s.png' % item.category or 'file') }}" />
-                    </div>
-                    <div class="course-title">
-                        {{ item.name }}
-                    </div>
-                    <div class="course-description">
-                        <!-- {{ _('Preview Online') }}  --><a href="{{ item.resource_url }}">{{ _('Download') }}</a>
-                    </div>
-                </div>
-                <div class="course-record">
-                    <div class="course-num">{{ _('Lecture') }}：<span><a href="{{ url_for('course.lecture', lecture_id=item.lecture.id ) }}">{{ item.lecture.name }}</a></span></div>
-                    <div class="learned-num"><span>{{ item.view_count }}</span> {{ _('view(s)') }}</div>
-                </div>
-                <div class="shadow"></div>
-            </div>
+    <div class="tips-box">
+        <div class="tips">
+            <ul>
+                <li><a href="{{ url_for('resource.list') }}" class="current">{{ _('Resource of Course') }}</a></li>
+            </ul>
         </div>
-
-        {%- endfor %}
-        <div style="clear:both;"></div>
-        {%- endif %}
-    </ul>
+        <div class="content">
+            <ul>
+                {%- if pagination.total > 0 %}
+                {%- for item in pagination.items %}
+                <div class="course-container">
+                    <div class="course-box">
+                        <div class="course-info">
+                            <div class="icon small-icon">
+                            <img src="{{ url_for('static', filename='images/icon/%s.png' % item.category or 'file') }}" />
+                            </div>
+                            <div class="course-title">
+                                {{ item.name }}
+                            </div>
+                            <div class="course-description">
+                                <!-- {{ _('Preview Online') }}  --><a href="{{ item.resource_url }}">{{ _('Download') }}</a>
+                            </div>
+                        </div>
+                        <div class="course-record">
+                            <div class="course-num">{{ _('Lecture') }}：<span><a href="{{ url_for('course.lecture', lecture_id=item.lecture.id ) }}">{{ item.lecture.name }}</a></span></div>
+                            <div class="learned-num"><span>{{ item.view_count }}</span> {{ _('view(s)') }}</div>
+                        </div>
+                        <div class="shadow"></div>
+                    </div>
+                </div>
+                {%- endfor %}
+                <div style="clear:both;"></div>
+                {%- endif %}
+            </ul>
+        </div>
+    </div>
     <div class="shadow"></div>
 </div>
 {%- endblock %}
 
 {%- block right %}
 <div id="right">
-    <div class="info-wrapper">
-        <div id="question-tags" class="info-box">
+    <div class="info-box">
+        <div class="info-wrapper">
             <div class="title">{{ _('Hot Resources') }}</div>
             <div class="content">
-                <div class="content-list">
-                    <ul>
-                        {%- for h in hot_resources %}
-                        <li><span><a href="#">{{ h.name }}</a></span></li>
-                        {%- endfor %}
-                    </ul>
-                </div>
+                <ul>
+                    {%- for h in hot_resources %}
+                    <li class="tag-item"><span><a href="#">{{ h.name }}</a></span></li>
+                    {%- endfor %}
+                </ul>
             </div>
         </div>
         <div class="shadow"></div>

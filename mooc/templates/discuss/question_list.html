@@ -2,61 +2,65 @@
 
 {%- block left %}
 <div id="left">
-    <div id="tips">
-        <ul>
-            <li><a href="{{ url_for('discuss.lastest') }}" id="lastest"{%- if type == 'lastest' %} class="current"{%- endif %}>{{ _('Lastest') }}</a></li>
-            <li><a href="{{ url_for('discuss.hotest') }}" id="hotest"{%- if type == 'hotest' %} class="current"{%- endif %}>{{ _('Hot') }}</a></li>
-            <li><a href="{{ url_for('discuss.noanswer') }}" id="none-answer"{%- if type == 'noanswer' %} class="current"{%- endif %}>{{ _('No-Answered') }}</a></li>
-            <li class="ask"><a href="{{ url_for('discuss.ask') }}" id="ask-btn">{{ _('Ask') }}</a></li>
-        </ul>
-    </div>
+    <div class="tips-box">
+        <div class="tips">
+            <ul>
+                <li><a href="{{ url_for('discuss.lastest') }}" id="lastest"{%- if type == 'lastest' %} class="current"{%- endif %}>{{ _('Lastest') }}</a></li>
+                <li><a href="{{ url_for('discuss.hotest') }}" id="hotest"{%- if type == 'hotest' %} class="current"{%- endif %}>{{ _('Hot') }}</a></li>
+                <li><a href="{{ url_for('discuss.noanswer') }}" id="none-answer"{%- if type == 'noanswer' %} class="current"{%- endif %}>{{ _('No-Answered') }}</a></li>
+                <li class="right"><a href="{{ url_for('discuss.ask') }}" id="ask-btn">{{ _('Ask') }}</a></li>
+            </ul>
+        </div>
 
-    <ul id="question-list">
-        {%- if question_pagination.total > 0 %}
-        {%- for q in question_pagination.items %}
-        <li class="question-item">
-            <div class="question-left-float question-stats">
-                <div class="question-left-float view-count">
-                    <p>{{ q.read_count }}</p> {{ _('view(s)') }}
-                </div>
-                <div class="question-left-float respond-count">
-                    <p>{{ q.answers | count }}</p> {{ _('answer(s)') }}
-                </div>
-            </div>
-            <div class="question-left-float question-content">
-                <div class="question-title"><a href="{{ url_for('discuss.view_question', qid=q.id) }}">{{ q.title }}</a></div>
-                <div>
-                    <div class="question-tags question-left-float">
-                        <ul>
-                            {%- for t in q.tags %}
-                            <li><a href="{{ url_for('discuss.tag', tag=t.tag) }}">{{ t.tag }}</a></li>
-                            {%- endfor %}
-                        </ul>
+        <div class="list content">
+            <ul id="question-list">
+                {%- if question_pagination.total > 0 %}
+                {%- for q in question_pagination.items %}
+                <li class="item question-item">
+                    <div class="question-left-float question-stats">
+                        <div class="question-left-float view-count">
+                            <p>{{ q.read_count }}</p> {{ _('view(s)') }}
+                        </div>
+                        <div class="question-left-float respond-count">
+                            <p>{{ q.answers | count }}</p> {{ _('answer(s)') }}
+                        </div>
                     </div>
-                    <div class="question-author question-left-float">
-                        <span>{%- if q.anonymous %}{{ _('Anonymous') }}{%- else %}{{ q.author.nickname }}{%- endif %}</span>
-                        <span>{{ q.created | friendly_time}}</span>
+                    <div class="question-left-float question-content">
+                        <div class="question-title"><a href="{{ url_for('discuss.view_question', qid=q.id) }}">{{ q.title }}</a></div>
+                        <div>
+                            <div class="question-tags question-left-float">
+                                <ul>
+                                    {%- for t in q.tags %}
+                                    <li><a href="{{ url_for('discuss.tag', tag=t.tag) }}">{{ t.tag }}</a></li>
+                                    {%- endfor %}
+                                </ul>
+                            </div>
+                            <div class="question-author question-left-float">
+                                <span>{%- if q.anonymous %}{{ _('Anonymous') }}{%- else %}{{ q.author.nickname }}{%- endif %}</span>
+                                <span>{{ q.created | friendly_time}}</span>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </li>
-        {%- endfor %}
-        {%- endif %}
-    </ul>
+                </li>
+                {%- endfor %}
+                {%- endif %}
+            </ul>
+        </div>
+    </div>
     <div class="shadow"></div>
 </div>
 {%- endblock %}
 
 {%- block right %}
 <div id="right">
-    <div class="info-wrapper">
-        <div id="question-tags" class="info-box">
+    <div class="info-box">
+        <div class="info-wrapper">
             <div class="title">{{ _('Hot Tags') }}</div>
             <div class="content">
-                <div class="content-list">
+                <div class="list">
                     <ul>
                         {%- for t in hotest_tags %}
-                        <li><span><a href="{{ url_for('discuss.tag', tag=t.tag) }}">{{ t.tag }}</a></span></li>
+                        <li class="tag-item"><span><a href="{{ url_for('discuss.tag', tag=t.tag) }}">{{ t.tag }}</a></span></li>
                         {%- endfor %}
                     </ul>
                 </div>

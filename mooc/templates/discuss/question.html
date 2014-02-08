@@ -6,7 +6,7 @@
 
 {%- block left %}
 <div id="left">
-    <div id="question-description">
+    <div id="question-description" class="two-rows-box">
         <div id="question-info">
             <div id="question-title">{{ question.title }} {% if question.lecture %}<span> {{ _('From') }}<a href="{{ url_for('course.lecture', lecture_id=question.lecture.id )}}">《{{ question.lecture.name }}》</a>{{ _("'s Questions") }}</span>{% endif %}</div>
             <ul id="question-tags">
@@ -21,7 +21,7 @@
         <div class="avatar"><img src="{{ question.author.avatar | default('/static/images/default_avatar.png') }}" /></div>
         <div class="clear"></div>
         <div class="full-line"></div>
-        <div id="question-content">
+        <div id="question-content" class="bottom-row">
         {{ question.content }}
         </div>
     </div>
