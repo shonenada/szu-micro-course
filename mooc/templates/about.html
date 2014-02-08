@@ -1,11 +1,19 @@
 {%- extends 'layout.html' %}
 
 {%- block left %}
-    <span id="about-title" class="box-title">{{ _('About Us') }}</span>
-    <div id="about" class="full-box">
-        <p>关于我们</p>
+<div id="left">
+    <div class="tips-box">
+        <div class="tips">
+            <ul>
+                <li><a href="javascript:void(0);" class="current">{{ _('About Us') }}</a></li>
+            </ul>
+        </div>
+        <div class="list content">
+            <p>关于我们</p>
+        </div>
     </div>
     <div class="shadow"></div>
+</div>
 {%- endblock %}
 
 {%- block right %}
