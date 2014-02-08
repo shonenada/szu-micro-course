@@ -8,17 +8,17 @@ $ ->
             type: 'POST'
             success: (res) ->
                 if (res.success)
-                    window.flash_message(res.message)
+                    $T.flash_message(res.message)
                     count = parseInt $("#answer-" + aid + " .up_count a").html()
                     $("#answer-" + aid + " .up_count a").html(count + 1)
                     return ;
                 else
-                    window.flash_message(res.message, 'error')
+                    $T.flash_message(res.message, 'error')
                     return ;
                 return ;
             statusCode: {
                 405: ->
-                    window.flash_message('您未登录，无法进行操作', 'error')
+                    $T.flash_message('您未登录，无法进行操作', 'error')
                     return ;
                 }
             }
@@ -42,19 +42,19 @@ $ ->
             type: 'POST'
             success: (res) ->
                 if (res.success)
-                    window.flash_message('提交成功')
+                    $T.flash_message('提交成功')
                     setTimeout ->
                         document.location = document.referrer;
                         return ;
                     , 2000
                     return ;
                 else
-                    window.flash_message(res.message, 'error')
+                    $T.flash_message(res.message, 'error')
                     return ;
                 return ;
             statusCode: {
                 405: ->
-                    window.flash_message('您未登录，无法进行操作', 'error')
+                    $T.flash_message('您未登录，无法进行操作', 'error')
                     return ;
                 }
             }

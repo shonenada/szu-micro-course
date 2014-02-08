@@ -73,28 +73,28 @@ def vote_answer():
     aid = int(request.form.get('aid', None))
     action = request.form.get('action', None)
     if not (aid or action in VALID_ACTION):
-        return jsonify(success=False, message=_('Error params'))
+        return jsonify(success=False, message=gettext('Error params'))
 
     answer = Answer.query.get(aid)
     if not answer:
-        return jsonify(success=False, message=_('Error params'))
+        return jsonify(success=False, message=gettext('Error params'))
 
     record = (UpDownRecord.query
               .filter(UpDownRecord.user_id == current_user.id)
               .filter(UpDownRecord.answer == answer).first())
 
     if record:
-        return jsonify(success=False, message=_('You have voted!'))
+        return jsonify(success=False, message=gettext('You have voted!'))
 
     vote_type = (UpDownRecord.TYPE_DOWN
                  if action == 'down' else UpDownRecord.TYPE_UP)
     vote_record = UpDownRecord(current_user, vote_type)
     vote_record.answer = answer
-    answer.up_count += (1 if action == 'down' else -1)
+    answer.up_count += (1 if action == 'up' else -1)
     db.session.add(answer)
     db.session.add(vote_record)
     db.session.commit()
-    return jsonify(success=True, message=_('Success'))
+    return jsonify(success=True, message=gettext('Success'))
 
 
 @discuss_app.route('/question/<int:qid>/answer', methods=['POST'])
