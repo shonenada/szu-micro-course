@@ -18,7 +18,7 @@ $(function() {
 
 {%- block left %}
 <div id="left">
-    <div class="content-box">
+    <div class="single-box profile-container">
         <div class="avatar-box">
             <img src="{{ avatar }}" alt="{{ user.username }}" class="avatar">
         </div>
@@ -26,7 +26,7 @@ $(function() {
             <p class="username">{{ user.nickname or user.username }}</p>
             <p>{{ _('Joined on') }} {{ user.created | date }}</p>
             <p>
-                <ul>
+                <ul class="user-info">
                     {%- if user.szu_account.college.name %}
                     <li>{{ user.szu_account.college.name }}</li>
                     {%- endif %}
@@ -38,44 +38,46 @@ $(function() {
     </div>
     <div class="shadow"></div>
     <div style="height: 20px"></div>
-        <div id="tips">
-        <ul>
-            <li><a href="#" for="learn-records" class="current tip-btns">{{ _('Learnt Records') }}</a></li>
-            <li><a href="#" for="asks" class="tip-btns">{{ _('Ask') }}</a></li>
-            <li><a href="#" for="answer" class="tip-btns">{{ _('Answer') }}</a></li>
-        </ul>
-    </div>
+    <div class="tips-box">
+        <div class="tips">
+            <ul>
+                <li><a href="javascript:void(0);" for="learn-records" class="current tip-btns">{{ _('Learnt Records') }}</a></li>
+                <li><a href="javascript:void(0);javascript:void(0);" for="asks" class="tip-btns">{{ _('Ask') }}</a></li>
+                <li><a href="javascript:void(0);" for="answer" class="tip-btns">{{ _('Answer') }}</a></li>
+            </ul>
+        </div>
 
-    <div class="item-list">
-        <div id="learn-records" class="borad">
-            <ul class="disc-style">
-            {%- if not user.learn_records %}
-            {{ _('He/She has not leanrt any course') }}
-            {%- endif %}
-            {%- for record in user.learn_records %}
-                <li><a href="{{ url_for('course.lecture', lecture_id=record.lecture.id) }}">{{ record.lecture.name }}</a> - {{ record.created | date }}</li>
-            {%- endfor %}
-            </ul>
-        </div>
-        <div id="asks" class="borad">
-            <ul class="disc-style">
-            {%- if user.questions.count() == 0 %}
-            {{ _('He/She has not asked any questions') }}
-            {%- endif %}
-            {%- for ques in user.questions %}
-                <li><a href="{{ url_for('discuss.view_question', qid=ques.id) }}">{{ ques.title }}</a> - {{ ques.created | date }}</li>
-            {%- endfor %}
-            </ul>
-        </div>
-        <div id="answer" class="borad">
-            <ul class="disc-style">
-            {%- if user.answers.count() == 0 %}
-            {{ _('He/She has not answered any questions') }}
-            {%- endif %}
-            {%- for answer in user.answers %}
-                <li><a href="{{ url_for('discuss.view_question', qid=answer.question.id) }}#answer-{{ answer.id }}">{{ answer.question.title }}</a> - {{ answer.created | date }}</li>
-            {%- endfor %}
-            </ul>
+        <div class="content">
+            <div id="learn-records" class="borad">
+                <ul class="disc-style">
+                {%- if not user.learn_records %}
+                {{ _('He/She has not leanrt any course') }}
+                {%- endif %}
+                {%- for record in user.learn_records %}
+                    <li><a href="{{ url_for('course.lecture', lecture_id=record.lecture.id) }}">{{ record.lecture.name }}</a> - {{ record.created | date }}</li>
+                {%- endfor %}
+                </ul>
+            </div>
+            <div id="asks" class="borad">
+                <ul class="disc-style">
+                {%- if user.questions.count() == 0 %}
+                {{ _('He/She has not asked any questions') }}
+                {%- endif %}
+                {%- for ques in user.questions %}
+                    <li><a href="{{ url_for('discuss.view_question', qid=ques.id) }}">{{ ques.title }}</a> - {{ ques.created | date }}</li>
+                {%- endfor %}
+                </ul>
+            </div>
+            <div id="answer" class="borad">
+                <ul class="disc-style">
+                {%- if user.answers.count() == 0 %}
+                {{ _('He/She has not answered any questions') }}
+                {%- endif %}
+                {%- for answer in user.answers %}
+                    <li><a href="{{ url_for('discuss.view_question', qid=answer.question.id) }}#answer-{{ answer.id }}">{{ answer.question.title }}</a> - {{ answer.created | date }}</li>
+                {%- endfor %}
+                </ul>
+            </div>
         </div>
     </div>
     <div class="shadow"></div>

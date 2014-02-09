@@ -1,13 +1,13 @@
         <div id="right">
-            {% if tags %}
-            <div class="info-wrapper">
-                <div id="question-tags" class="info-box">
+            {%- if tags %}
+            <div class="info-box">
+                <div id="question-tags" class="info-wrapper">
                     <div class="title">{{ _('Hot Tags') }}</div>
                     <div class="content">
                         <div class="content-list">
                             <ul>
                                 {%- for t in tags %}
-                                <li><span><a href="{{ url_for('master.tag', tag=t.tag) }}">{{ t.tag }}</a></span></li>
+                                <li class="tag-item"><span><a href="{{ url_for('master.tag', tag=t.tag) }}">{{ t.tag }}</a></span></li>
                                 {%- endfor %}
                             </ul>
                         </div>
@@ -15,15 +15,15 @@
                 </div>
                 <div class="shadow"></div>
             </div>
-            {% endif %}
+            {%- endif %}
 
-            {% if learn_records %}
-            <div class="info-wrapper">
-                <div id="learn-act" class="info-box">
+            {%- if learn_records %}
+            <div class="info-box">
+                <div class="info-wrapper bottom">
                     <div class="title">{{ _('Activity') }}</div>
                     <div class="content">
-                        {% for record in learn_records %}
-                        <div class="content-list">
+                        {%- for record in learn_records %}
+                        <div class="list">
                             <div class="icon">
                                 <img src="{{ record.user.avatar }}">
                             </div>
@@ -40,19 +40,20 @@
                                 </span>
                             </div>
                         </div>
-                        {% endfor %}
+                        {%- endfor %}
                     </div>
                 </div>
                 <div class="shadow"></div>
             </div>
-            {% endif %}
-            {% if last_lectures %}
-            <div class="info-wrapper">
-                <div id="last-course" class="info-box">
+            {%- endif %}
+
+            {%- if last_lectures %}
+            <div class="info-box">
+                <div id="last-course" class="info-wrapper">
                     <div class="title">{{ _('Recent Courses') }}</div>
                     <div class="content">
-                        {% for lc in last_lectures %}
-                        <div class="content-list">
+                        {%- for lc in last_lectures %}
+                        <div class="list">
                             <div class="icon">
                                 <img src="{{ lc.course.logo_url or url_for('static', filename='images/default_course_logo.png') }}">
                             </div>
@@ -70,14 +71,13 @@
                                 </span>
                             </div>
                         </div>
-                        {% endfor %}
+                        {%- endfor %}
                     </div>
                 </div>
-                <div id="all-course-btn" class="wrapper-foot">
+                <div class="foot bottom">
                     <a href="{{ url_for('course.library')}}">{{ _('More Courses') }}</a>
                 </div>
                 <div class="shadow"></div>
             </div>
-            {% endif %}
-
+            {%- endif %}
         </div>
