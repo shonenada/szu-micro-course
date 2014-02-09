@@ -10,7 +10,10 @@ $ ->
                 if (res.success)
                     $T.flash_message(res.message)
                     count = parseInt $("#answer-" + aid + " .up_count a").html()
-                    $("#answer-" + aid + " .up_count a").html(count + 1)
+                    if (action == 'up')
+                        $("#answer-" + aid + " .up_count a").html(count + 1)
+                    else if (action == 'down')
+                        $("#answer-" + aid + " .up_count a").html(count - 1)
                     return ;
                 else
                     $T.flash_message(res.message, 'error')

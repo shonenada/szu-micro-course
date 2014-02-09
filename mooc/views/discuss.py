@@ -60,10 +60,11 @@ def noanswer():
 @rbac.allow(['anonymous'], ['GET'])
 def view_question(qid):
     question = Question.query.get(qid)
+    answers = Answer.query.filter(Answer.question==question).order_by(Answer.like_count.desc()).all()
     question.read_count += 1
     db.session.add(question)
     db.session.commit()
-    return render_template('discuss/question.html', question=question)
+    return render_template('discuss/question.html', question=question, answers=answers)
 
 
 @discuss_app.route('/question/vote', methods=['POST'])
@@ -90,7 +91,10 @@ def vote_answer():
                  if action == 'down' else UpDownRecord.TYPE_UP)
     vote_record = UpDownRecord(current_user, vote_type)
     vote_record.answer = answer
-    answer.up_count += (1 if action == 'up' else -1)
+    if action == 'up':
+        answer.up_count += 1
+    elif action == 'down':
+        answer.down_count += 1
     db.session.add(answer)
     db.session.add(vote_record)
     db.session.commit()

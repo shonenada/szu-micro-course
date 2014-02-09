@@ -76,6 +76,10 @@ class Answer(db.Model, ModelMixin):
         self.edit_time = datetime.utcnow()
         self.state = 'normal'
 
+    @hybrid_property
+    def like_count(self):
+        return self.up_count - self.down_count
+
 
 class Question(db.Model, ModelMixin):
 

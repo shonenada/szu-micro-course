@@ -31,7 +31,7 @@
 
     <div id="question-answer">
         <ul id="answers-list">
-            {%- for a in question.answers %}
+            {%- for a in answers %}
             {%- if not a.parent %}
             <div style="margin: 20px 0 20px 0;"></div>
             <li id="answer-{{ a.id }}">
@@ -49,7 +49,7 @@
                     <span class="author">{{ a.author.nickname }}</span>
                     <span class="time">{{ a.created | friendly_time }}</span>
                     <div class="clear"></div>
-                    <span class="up_count"><a>{{ a.up_count }}</a> {{ _('up(s)') }}</span>
+                    <span class="up_count"><a>{{ a.up_count - a.down_count }}</a> {{ _('up(s)') }}</span>
                 </div>
                 <div class="clear"></div>
                 <p class="content">{{ a.content }}</p>
