@@ -1,11 +1,18 @@
 {%- extends 'layout.html' %}
 
 {%- block left %}
-    <span id="about-title">{{ _('Privacy') }}</span>
-    <div id="about">
+<div class="tips-box">
+    <div class="tips">
+        <ul>
+            <li><a href="javascript:void(0)" class="current">{{ _('Privacy') }}</a></li>
+        </ul>
+    </div>
+
+    <div class="content">
         <p>隐私政策</p>
     </div>
-    <div class="shadow"></div>
+</div>
+<div class="shadow"></div>
 {%- endblock %}
 
 {%- block right %}
