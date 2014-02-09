@@ -23,12 +23,12 @@
                                 {{ item.name }}
                             </div>
                             <div class="course-description">
-                                <!-- {{ _('Preview Online') }}  --><a href="{{ item.resource_url }}">{{ _('Download') }}</a>
+                                <!-- {{ _('Preview Online') }}  --><a href="{{ url_for('resource.download', rid=item.id) }}">{{ _('Download') }}</a>
                             </div>
                         </div>
                         <div class="course-record">
                             <div class="course-num">{{ _('Lecture') }}：<span><a href="{{ url_for('course.lecture', lecture_id=item.lecture.id ) }}">{{ item.lecture.name }}</a></span></div>
-                            <div class="learned-num"><span>{{ item.view_count }}</span> {{ _('view(s)') }}</div>
+                            <div class="learned-num"><span>{{ item.download_count }}</span> {{ _('download(s)') }}</div>
                         </div>
                         <div class="shadow"></div>
                     </div>
