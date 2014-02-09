@@ -1,7 +1,7 @@
 {%- extends 'layout.html' %}
 
 {%- block main_head %}
-<div id="category_list" class="category_list wrapper">
+<div class="inline-list wrapper">
     <ul>
         {%- for s in subjects %}
         <li><a href="{{ url_for('course.subject', sid=s.id) }}">{{ s.name }}</a></li>

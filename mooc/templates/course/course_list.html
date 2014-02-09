@@ -2,7 +2,7 @@
 
 {% block left %}
 <div id="left">
-    <div id="category_list" class="category_list">
+    <div id="category-list" class="inline-list">
         <ul>
             <li><a href="{{ url_for('course.library')}}">{{ _('Courses') }}</a></li>
             <li><a href="{{url_for('course.subject', sid=this_course.category.subject.id)}}">{{ this_course.category.subject.name }}</a></li>
