@@ -165,7 +165,20 @@ $(function(){
             <div id="lecture-comment" class="lecture-bar lecture-hidden">
                 <div id="lecture-comment-content">
                 {%- for comment in lecture.comments %}
-                    {{ comment.comment }}
+                    <div class="detail-box underline-dashed">
+                        <div class="avatar avatar-small">
+                            <img src="{{ comment.user.avatar }}" title="{{ comment.user.nickname }}" />
+                        </div>
+                        <div class="detail">
+                            <p class="user-info">
+                                <a href="{{ url_for('account.people', username=comment.user.username) }}">{{ comment.user.nickname or comment.user.name or comment.user.username }}</a>
+                            </p>
+                            <div class="detail-content">
+                                <p>{{ comment.comment }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
                 {%- endfor %}
                 </div>
                 <div id="lecture-comment-submit">
