@@ -2,15 +2,20 @@
 
 {%- block left %}
 <div id="left">
-    <span id="ask-label">{{ _('Feedback') }}</span>
-    <div id="ask">
-        <form id="askForm" action="{{ url_for('master.feedback') }}" method="POST">
-            {{ form.csrf_token }}
-            <li>{{ form.title(placeholder=form.title.label.text) }}</li>
-            <li>{{ form.feedback(cols="35", rows="20", placeholder=form.feedback.label.text) }}</li>
-            <span class="submit-btn"><input type="submit" value="{{ _('Submit') }}" /></span>
-        </form>
-        <div class="clear"></div>
+    <div class="tips-box">
+        <div class="tips">
+            <ul>
+                <li><a href="javascript:void(0)" class="current">{{ _('Feedback') }}</a></li>
+            </ul>
+        </div>
+        <div class="content submit-form-container">
+            <form id="feedbackForm" action="{{ url_for('master.feedback') }}" method="POST" class="submit-form">
+                {{ form.csrf_token }}
+                {{ form.title(placeholder=form.title.label.text) }}
+                {{ form.feedback(cols="35", rows="20", placeholder=form.feedback.label.text) }}
+                <input type="submit" value="{{ _('Submit') }}" />
+            </form>
+        </div>
     </div>
     <div class="shadow"></div>
 </div>
@@ -22,7 +27,7 @@
 {%- block endscript %}
 <script type="text/javascript">
     $(function(){
-        $T.ajax_form($('#askForm'));
+        $T.ajax_form($('#feedbackForm'));
     });
 </script>
 {%- endblock %}
