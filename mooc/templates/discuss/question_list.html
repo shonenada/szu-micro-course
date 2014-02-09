@@ -60,7 +60,7 @@
                 <div class="list">
                     <ul>
                         {%- for t in hotest_tags %}
-                        <li class="tag-item"><span><a href="{{ url_for('discuss.tag', tag=t.tag) }}">{{ t.tag }}</a></span></li>
+                        <li class="tag-item"><a href="{{ url_for('discuss.tag', tag=t.tag) }}">{{ t.tag }}</a></li>
                         {%- endfor %}
                     </ul>
                 </div>

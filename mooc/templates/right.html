@@ -7,7 +7,7 @@
                         <div class="content-list">
                             <ul>
                                 {%- for t in tags %}
-                                <li class="tag-item"><span><a href="{{ url_for('master.tag', tag=t.tag) }}">{{ t.tag }}</a></span></li>
+                                <li class="tag-item"><a href="{{ url_for('master.tag', tag=t.tag) }}">{{ t.tag }}</a></li>
                                 {%- endfor %}
                             </ul>
                         </div>
