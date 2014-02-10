@@ -1,5 +1,6 @@
+import urllib
 from uuid import uuid4
-from hashlib import sha256
+from hashlib import sha256, md5
 from datetime import datetime
 
 from flask import url_for
@@ -128,7 +129,6 @@ class User(db.Model, UserMixin, ModelMixin):
         self.created = datetime.utcnow()
         self.last_login = datetime.utcnow()
         self.state = 'unactivated'
-        self.avatar = url_for('static', filename='images/default_avatar.png')
 
     def __unicode__(self):
         return self.nickname
@@ -159,11 +159,23 @@ class User(db.Model, UserMixin, ModelMixin):
     def active(self):
         self.state = 'normal'
 
+    def avatar_url(self, size=70):
+        if self.avatar:
+            return self.avatar
+
+        if not self.email:
+            self.email = 'None'
+        URL_PATTERN = "http://www.gravatar.com/avatar/%s?%s"
+        gravatar_url = URL_PATTERN % (md5(self.email.lower()).hexdigest(),
+                                      urllib.urlencode({'s': str(size)}))
+        return gravatar_url
+
     @staticmethod
     def _hash_password(salt, password):
         hashed = sha256()
         hashed.update("<%s|%s>" % (salt, password))
         return hashed.hexdigest()
+
 
 
 class SzuAccount(db.Model, ModelMixin):

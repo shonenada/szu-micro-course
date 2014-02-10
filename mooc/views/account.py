@@ -5,7 +5,7 @@ from flask.ext.babel import lazy_gettext as _, gettext
 from flask.ext.login import login_user, logout_user, current_user
 
 from mooc.extensions import rbac, csrf, db
-from mooc.utils.helpers import flash, get_avatar_url, jsonify
+from mooc.utils.helpers import flash, jsonify
 from mooc.models.account import User, SzuAccount, Role
 from mooc.forms.account import SignInForm, SettingForm, PasswordForm, SignUpForm
 
@@ -114,7 +114,7 @@ def people(username):
     if not user:
         abort(404)
     else:
-        avatar = get_avatar_url(user.email)
+        avatar = user.avatar_url()
         get_type = SzuAccount.get_type
         return render_template('account/people.html',
                                user=user, avatar=avatar, get_type=get_type)
