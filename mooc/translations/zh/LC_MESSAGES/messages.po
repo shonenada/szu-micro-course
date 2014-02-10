@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MOOC 0.1.0\n"
 "Report-Msgid-Bugs-To: shonenada@gmail.com\n"
-"POT-Creation-Date: 2014-02-10 18:16+0800\n"
+"POT-Creation-Date: 2014-02-10 21:04+0800\n"
 "PO-Revision-Date: 2014-01-30 17:58+0800\n"
 "Last-Translator: Yaoda Liu <shonenada@gmail.com>\n"
 "Language-Team: zh <LL@li.org>\n"
@@ -170,12 +170,12 @@ msgid "Confirm Password"
 msgstr "确认密码"
 
 #: forms/course.py:15 models/account.py:80 models/discuss.py:50
-#: models/discuss.py:89
+#: models/discuss.py:85
 msgid "Normal"
 msgstr "正常"
 
 #: forms/course.py:15 models/account.py:81 models/discuss.py:50
-#: models/discuss.py:89
+#: models/discuss.py:85
 msgid "Deleted"
 msgstr "已删除"
 
@@ -207,7 +207,7 @@ msgid "Teacher"
 msgstr "教师"
 
 #: forms/course.py:54 forms/resource.py:19 templates/admin/course/list.html:8
-#: templates/course/lecture.html:164
+#: templates/course/lecture.html:169
 msgid "Category"
 msgstr "分类"
 
@@ -220,7 +220,7 @@ msgstr "标签"
 msgid "Lecture Name"
 msgstr "短课名"
 
-#: forms/course.py:70 templates/course/lecture.html:122
+#: forms/course.py:70 templates/course/lecture.html:127
 msgid "Knowledge Points"
 msgstr "知识点"
 
@@ -241,12 +241,12 @@ msgid "Record Time"
 msgstr "录制时间"
 
 #: forms/course.py:75
-msgid "Record Address"
+msgid "Record Location"
 msgstr "录制地点"
 
 #: forms/course.py:76
 msgid "Video URL"
-msgstr "视频地址"
+msgstr "视频 URL"
 
 #: forms/course.py:77
 msgid "Video Length (seconds)"
@@ -321,7 +321,7 @@ msgstr "研究生"
 msgid "Other"
 msgstr "其他"
 
-#: models/discuss.py:50 models/discuss.py:89
+#: models/discuss.py:50 models/discuss.py:85
 #: templates/discuss/question_list.html:9
 msgid "Hot"
 msgstr "热门"
@@ -338,7 +338,7 @@ msgstr "文档"
 msgid "PDF"
 msgstr "PDF"
 
-#: services/resource.py:21 templates/course/lecture.html:171
+#: services/resource.py:21 templates/course/lecture.html:176
 msgid "Video"
 msgstr "视频"
 
@@ -346,7 +346,7 @@ msgstr "视频"
 msgid "About Us"
 msgstr "关于我们"
 
-#: templates/feedback.html:16 templates/course/lecture.html:192
+#: templates/feedback.html:16 templates/course/lecture.html:197
 msgid "Submit"
 msgstr "提交"
 
@@ -359,7 +359,7 @@ msgid "Home"
 msgstr "首页"
 
 #: templates/layout.html:41 templates/course/category.html:6
-#: templates/course/course_list.html:7 templates/course/lecture.html:106
+#: templates/course/course_list.html:7 templates/course/lecture.html:111
 #: templates/course/subject.html:6
 msgid "Courses"
 msgstr "课程库"
@@ -416,7 +416,7 @@ msgstr "热门标签"
 msgid "Activity"
 msgstr "最新动态"
 
-#: templates/right.html:34 templates/course/lecture.html:234
+#: templates/right.html:34 templates/course/lecture.html:239
 msgid "learnt"
 msgstr "学习了"
 
@@ -457,7 +457,7 @@ msgstr "加入于"
 msgid "Learnt Records"
 msgstr "学习记录"
 
-#: templates/account/people.html:45 templates/course/lecture.html:127
+#: templates/account/people.html:45 templates/course/lecture.html:132
 #: templates/discuss/ask.html:12 templates/discuss/ask.html:20
 #: templates/discuss/question_list.html:11 templates/discuss/tag_view.html:9
 msgid "Ask"
@@ -623,44 +623,44 @@ msgstr "学生学习了"
 msgid "Video List"
 msgstr "视频列表"
 
-#: templates/course/lecture.html:123
+#: templates/course/lecture.html:128
 msgid "Relatived Dicusses"
 msgstr "相关讨论"
 
-#: templates/course/lecture.html:124
+#: templates/course/lecture.html:129
 msgid "Quiz"
 msgstr "课程评测"
 
-#: templates/course/lecture.html:125 templates/resource/list.html:9
+#: templates/course/lecture.html:130 templates/resource/list.html:9
 msgid "Resource of Course"
 msgstr "课程资源"
 
-#: templates/course/lecture.html:126
+#: templates/course/lecture.html:131
 msgid "Comments of Course"
 msgstr "课程评论"
 
-#: templates/course/lecture.html:163
+#: templates/course/lecture.html:168
 msgid "Resource"
 msgstr "资源"
 
-#: templates/course/lecture.html:165 templates/course/lecture.html:172
-#: templates/course/lecture.html:178 templates/resource/list.html:26
+#: templates/course/lecture.html:170 templates/course/lecture.html:177
+#: templates/course/lecture.html:183 templates/resource/list.html:26
 msgid "Download"
 msgstr "下载"
 
-#: templates/course/lecture.html:170
+#: templates/course/lecture.html:175
 msgid "Download Video"
 msgstr "下载视频"
 
-#: templates/course/lecture.html:178 templates/resource/list.html:26
+#: templates/course/lecture.html:183 templates/resource/list.html:26
 msgid "Preview Online"
 msgstr "在线浏览"
 
-#: templates/course/lecture.html:187
+#: templates/course/lecture.html:192
 msgid "Post Comment"
 msgstr "发表评论"
 
-#: templates/course/lecture.html:223
+#: templates/course/lecture.html:228
 msgid "Who's learning?"
 msgstr "谁也在学？"
 
@@ -794,11 +794,11 @@ msgstr "注册成功"
 msgid "Logged out successfully."
 msgstr "退出成功"
 
-#: views/account.py:148 views/account.py:182
+#: views/account.py:149 views/account.py:183
 msgid "Modified successfully."
 msgstr "修改成功"
 
-#: views/account.py:172
+#: views/account.py:173
 msgid "Wrong old password"
 msgstr "密码错误"
 
@@ -807,27 +807,27 @@ msgstr "密码错误"
 msgid "Operated successfully"
 msgstr "操作成功"
 
-#: views/course.py:117
+#: views/course.py:116
 msgid "Submitted successfully."
 msgstr "提交成功"
 
-#: views/discuss.py:77 views/discuss.py:81
+#: views/discuss.py:95 views/discuss.py:99
 msgid "Error params"
 msgstr "错误参数"
 
-#: views/discuss.py:88
+#: views/discuss.py:106
 msgid "You have voted!"
 msgstr "你已投过票啦~"
 
-#: views/discuss.py:101
+#: views/discuss.py:120
 msgid "Success"
 msgstr "成功"
 
-#: views/discuss.py:110
+#: views/discuss.py:129
 msgid "Please answer the question"
 msgstr "请先回答问题"
 
-#: views/discuss.py:142 views/master.py:52
+#: views/discuss.py:166 views/master.py:51
 msgid "Submited successfully"
 msgstr "提交成功"
 
