@@ -79,11 +79,6 @@ $ ->
                                 container.append('<span>' + res.messages[key] + '</div>');
                         else
                             $T.flash_message(res.messages.join(''), 'warn')
-                    $(':input', form)
-                     .not(':button, :submit, :reset, :hidden')
-                     .val('')
-                     .removeAttr('checked')
-                     .removeAttr('selected');
                     return ;
                 statusCode: {
                     404: ->
