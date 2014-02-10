@@ -107,7 +107,8 @@ def lecture_comment():
         comment = Comment(
             user=current_user,
             lecture=lecture,
-            comment=comment_content
+            comment=comment_content,
+            created=datetime.utcnow(),
         )
         comment.save()
         return jsonify(

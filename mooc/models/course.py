@@ -319,7 +319,8 @@ class Comment(db.Model, ModelMixin):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship('User', backref='comments', uselist=False)
     lecture_id = db.Column(db.Integer, db.ForeignKey('lecture.id'))
-    lecture = db.relationship('Lecture', backref=db.backref('comments', order_by=lambda: Comment.id.desc()), uselist=False)
+    lecture = db.relationship('Lecture', backref=db.backref('comments',
+        order_by=lambda: Comment.id.desc()), uselist=False)
     star_count = db.Column(db.Integer, default=0)
     created = db.Column(db.DateTime, default=datetime.utcnow())
     state = db.Column(db.Enum(*STATE_VALUES), default='normal')

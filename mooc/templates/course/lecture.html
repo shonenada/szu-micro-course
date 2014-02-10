@@ -193,7 +193,7 @@ $(function(){
                     </form>
                 </div>
                 <div id="lecture-comment-content">
-                {%- for comment in lecture.comments %}
+                {%- for comment in lecture.comments[:10] %}
                     <div class="detail-box underline-dashed">
                         <div class="avatar avatar-small">
                             <img src="{{ comment.user.avatar }}" title="{{ comment.user.nickname or comment.user.name or comment.user.username  }}" />
