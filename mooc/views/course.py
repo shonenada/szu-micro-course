@@ -1,16 +1,18 @@
 #-*- coding: utf-8 -*-
 from datetime import datetime
 
-from flask import Blueprint, render_template, abort, json, request, jsonify
+from flask import Blueprint, render_template, abort, json, request
 from flask.ext.login import current_user
 from flask.ext.babel import gettext
 
 from mooc.extensions import rbac, csrf
+from mooc.utils.helpers import jsonify
 from mooc.models.master import Tag
 from mooc.models.course import Subject, Category, Course, Lecture, LearnRecord
 from mooc.models.course import Quiz, QuizOption, Comment
 from mooc.models.resource import Resource
 from mooc.services.course import quiz_to_json
+from mooc.forms.course import LectureCommentForm
 
 
 course_app = Blueprint('course', __name__, url_prefix='/course')
@@ -52,6 +54,7 @@ def course(course_id):
 @course_app.route('/lecture/<lecture_id>')
 @rbac.allow(['anonymous'], ['GET'])
 def lecture(lecture_id):
+    form = LectureCommentForm()
     lecture = Lecture.query.get(lecture_id)
     who_is_learning = (LearnRecord.query.filter_by(lecture_id=lecture_id)
                                   .limit(10).all())
@@ -66,7 +69,7 @@ def lecture(lecture_id):
         else:
             new_record = LearnRecord(user=current_user, lecture=lecture)
             new_record.save()
-    return render_template('course/lecture.html', quizs=quizs,
+    return render_template('course/lecture.html', quizs=quizs, form=form,
                            lecture=lecture, learning=who_is_learning)
 
 
@@ -95,22 +98,26 @@ def lecture_check(lecture_id):
 @course_app.route('/lecture/comment', methods=['POST'])
 @rbac.allow(['local_user'], ['POST'])
 def lecture_comment():
-    lecture_id = request.form.get('lecture_id')
-    lecture = Lecture.query.get_or_404(lecture_id)
+    form = LectureCommentForm()
 
-    comment_content = request.form.get('comment')
-    print comment_content
-    comment = Comment(
-        user=current_user,
-        lecture=lecture,
-        comment=comment_content
-    )
-    comment.save()
-    return jsonify(
-        success=True,
-        messages=[
-            gettext('Submitted successfully.')
-        ],
-        stay=True,
-        callback='test',
-    )
+    if form.validate_on_submit():
+        lecture_id = form.data.get('lecture_id')
+        lecture = Lecture.query.get_or_404(lecture_id)
+        comment_content = form.data.get('comment')
+        comment = Comment(
+            user=current_user,
+            lecture=lecture,
+            comment=comment_content
+        )
+        comment.save()
+        return jsonify(
+            success=True,
+            messages=[
+                gettext('Submitted successfully.')
+            ],
+            stay=True,
+            callback='refresh_comment',
+        )
+
+    if form.errors:
+        return jsonify(success=False, errors=True, messages=form.errors)

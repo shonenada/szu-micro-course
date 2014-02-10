@@ -1,6 +1,6 @@
 from flask_wtf import Form
 from flask.ext.babel import lazy_gettext as _
-from wtforms.validators import InputRequired
+from wtforms.validators import InputRequired, Length
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from wtforms import (StringField, IntegerField, DateField,
                      TextField, TextAreaField, SelectField)
@@ -84,3 +84,20 @@ class LectureForm(Form):
         label=_('Teacher'),
         query_factory=teachers, allow_blank=True)
     tags = TagsField(label=_('Tags'), tag_model=Tag)
+
+
+class LectureCommentForm(Form):
+
+    lecture_id = IntegerField(
+        label=_('Lecture\' id'),
+        validators=[
+            InputRequired(),
+        ],
+    )
+    comment = TextAreaField(
+        label=_('Comment'),
+        validators=[
+            InputRequired(),
+            Length(max=300),
+        ],
+    )
