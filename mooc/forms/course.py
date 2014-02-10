@@ -72,7 +72,7 @@ class LectureForm(Form):
     term = StringField(label=_('Term'))
     chapter = StringField(label=_('Chapter'))
     record_time = DateField(label=_('Record Time'))
-    record_address = StringField(label=_('Record Address'))
+    record_location = StringField(label=_('Record Location'))
     video_url = StringField(label=_('Video URL'))
     video_length = IntegerField(label=_('Video Length (seconds)'))
     logo_url = StringField(label=_('Logo URL'))

@@ -18,7 +18,7 @@
                 <li class="count">{{ question.read_count }} {{ _('view(s)') }}</li>
             </ul>
         </div>
-        <div class="avatar"><img src="{{ question.author.avatar | default('/static/images/default_avatar.png') }}" /></div>
+        <div class="avatar"><img src="{{ question.author.get_avatar() }}" /></div>
         <div class="clear"></div>
         <div class="full-line"></div>
         <div id="question-content" class="bottom-row">
@@ -44,7 +44,7 @@
                         <span class="vote-btn"></span>
                      </a>
                 </span>
-                <span class="avatar"><img src="{{ question.author.avatar }}" /></span>
+                <span class="avatar"><img src="{{ question.author.get_avatar() }}" /></span>
                 <div class="answer-info">
                     <span class="author">{{ a.author.nickname }}</span>
                     <span class="time">{{ a.created | friendly_time }}</span>

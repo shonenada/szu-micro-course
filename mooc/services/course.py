@@ -39,47 +39,40 @@ def quiz_to_json(quizs):
 
 
 def create_subject(data):
-    subject = Subject(data['name'], data['description'])
-    db.session.add(subject)
-    db.session.commit()
+    subject = Subject(name=data['name'], description=data['description']).save()
 
 
 def create_category(data):
-    category = Category(data['name'], data['subject'])
-    db.session.add(category)
-    db.session.commit()
+    category = Category(name=data['name'], subject=data['subject']).save()
 
 
 def create_course(data):
     course = Course(
-        data['name'],
-        data['description'],
-        data['teacher'],
-        data['category']
-    )
-    course.college = data['college']
-    course.logo_url = data['logo_url']
-    course.tags = data['tags']
-    db.session.add(course)
-    db.session.commit()
+        name=data['name'],
+        description=data['description'],
+        teacher=data['teacher'],
+        category=data['category'],
+        college = data['college'],
+        logo_url = data['logo_url'],
+        tags = data['tags'],
+    ).save()
 
 
 def create_lecture(data):
     lecture = Lecture(
-        data['name'],
-        data['description'],
-        data['teacher'],
-        data['course'],
-        data['order'],
-    )
-    lecture.prepare_knowledge = data['prepare_knowledge']
-    lecture.knowledge_point = data['knowledge_point']
-    lecture.chapter = data['chapter']
-    lecture.term = data['term']
-    lecture.record_time = data['record_time']
-    lecture.record_address = data['record_address']
-    lecture.video_url = data['video_url']
-    lecture.video_length = data['video_length']
-    lecture.tags = data['tags']
-    db.session.add(lecture)
-    db.session.commit()
+        name=data['name'],
+        description=data['description'],
+        teacher=data['teacher'],
+        course=data['course'],
+        order=data['order'],
+        prepare_knowledge=data['prepare_knowledge'],
+        knowledge_point=data['knowledge_point'],
+        chapter=data['chapter'],
+        term=data['term'],
+        record_time=data['record_time'],
+        record_location=data['record_address'],
+        video_url=data['video_url'],
+        video_length=data['video_length'],
+        tags=data['tags'],
+
+    ).save()

@@ -47,7 +47,7 @@ $ ->
                 if (res.success)
                     $T.flash_message('提交成功')
                     setTimeout ->
-                        document.location = document.referrer;
+                        document.location = document.location;
                         return ;
                     , 2000
                     return ;
