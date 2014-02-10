@@ -64,12 +64,8 @@ class Answer(db.Model, ModelMixin):
                                   db.ForeignKey('up_down_record.id'))
     state = db.Column(db.Enum(*STATE_VALUE))
 
-    def __init__(self, content, question, author, parent=None):
-        self.content = content
-        self.question = question
-        self.lecture = question.lecture
-        self.author = author
-        self.parent = parent
+    def __init__(self, **kwargs):
+        db.Model.__init__(self, **kwargs)
         self.up_count = 0
         self.down_count = 0
         self.created = datetime.utcnow()
@@ -107,11 +103,8 @@ class Question(db.Model, ModelMixin):
     tags = db.relationship('QuestionTag', secondary=question_tags,
                            backref=db.backref('questions'))
 
-    def __init__(self, title, content, lecture, author):
-        self.title = title
-        self.content = content
-        self.lecture = lecture
-        self.author = author
+    def __init__(self, **kwargs):
+        db.Model.__init__(self, **kwargs)
         self.up_count = 0
         self.read_count = 0
         self.created = datetime.utcnow()
@@ -150,9 +143,6 @@ class QuestionTag(db.Model, ModelMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     tag = db.Column(db.String(20))
-
-    def __init__(self, tag):
-        self.tag = tag
 
     @hybrid_property
     def count(self):

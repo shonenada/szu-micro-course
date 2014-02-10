@@ -10,9 +10,10 @@ resource_app = Blueprint('resource', __name__, url_prefix='/resource')
 @rbac.allow(['anonymous'], ['GET'])
 def list():
     page_num = int(request.args.get('page', 1))
-    resource_query = (Resource.query.filter(Resource.state != 'DELETED')
-                              .order_by(Resource.created.desc()))
-    resources = resource_query.paginate(page_num, per_page=20)
+    resources = Resource.paginate(
+        page=page_num,
+        order_by=Resource.created.desc()
+    )
     hot_resources = Resource.query.order_by(Resource.view_count
                                                     .desc()).limit(30).all()
     return render_template('resource/list.html',

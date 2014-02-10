@@ -5,7 +5,7 @@ from flask.ext.babel import lazy_gettext as _, gettext
 from flask.ext.sqlalchemy import Pagination
 from flask.ext.login import current_user
 
-from mooc.extensions import db, rbac
+from mooc.extensions import rbac, db
 from mooc.models.course import Lecture
 from mooc.models.discuss import Question, Answer, QuestionTag, UpDownRecord
 from mooc.forms.discuss import AskForm
@@ -28,8 +28,12 @@ def lastest():
                               .order_by(Question.created.desc()))
     questions = question_query.paginate(page_num, per_page=20)
     hotest_tags = QuestionTag.query.order_by(QuestionTag.count.desc()).all()
-    return render_template('discuss/question_list.html', hotest_tags=hotest_tags,
-                           question_pagination=questions, type='lastest')
+    return render_template(
+        'discuss/question_list.html',
+        hotest_tags=hotest_tags,
+        question_pagination=questions,
+        type='lastest'
+    )
 
 
 @discuss_app.route('/question/hotest')
@@ -40,8 +44,12 @@ def hotest():
                               .order_by(Question.hotest.desc()))
     questions = question_query.paginate(page_num, per_page=20)
     hotest_tags = QuestionTag.query.order_by(QuestionTag.count.desc()).all()
-    return render_template('discuss/question_list.html', hotest_tags=hotest_tags,
-                           question_pagination=questions, type='hotest')
+    return render_template(
+        'discuss/question_list.html',
+        hotest_tags=hotest_tags,
+        question_pagination=questions,
+        type='hotest'
+    )
 
 
 @discuss_app.route('/question/noanswer')
@@ -52,19 +60,29 @@ def noanswer():
                               .filter(Question.answer_count == 0))
     questions = question_query.paginate(page_num, per_page=20)
     hotest_tags = QuestionTag.query.order_by(QuestionTag.count.desc()).all()
-    return render_template('discuss/question_list.html', hotest_tags=hotest_tags,
-                           question_pagination=questions, type='noanswer')
+    return render_template(
+        'discuss/question_list.html',
+        hotest_tags=hotest_tags,
+        question_pagination=questions,
+        type='noanswer'
+    )
 
 
 @discuss_app.route('/question/<int:qid>')
 @rbac.allow(['anonymous'], ['GET'])
 def view_question(qid):
     question = Question.query.get(qid)
-    answers = Answer.query.filter(Answer.question==question).order_by(Answer.like_count.desc()).all()
+    answers = (Answer.query.filter(Answer.question==question)
+                           .order_by(Answer.like_count.desc())
+                           .order_by(Answer.created.desc())
+                           .all())
     question.read_count += 1
-    db.session.add(question)
-    db.session.commit()
-    return render_template('discuss/question.html', question=question, answers=answers)
+    question.save()
+    return render_template(
+        'discuss/question.html',
+        question=question,
+        answers=answers
+    )
 
 
 @discuss_app.route('/question/vote', methods=['POST'])
@@ -95,8 +113,9 @@ def vote_answer():
         answer.up_count += 1
     elif action == 'down':
         answer.down_count += 1
-    db.session.add(answer)
-    db.session.add(vote_record)
+
+    answer.save(commit=False)
+    vote_record.save(commit=False)
     db.session.commit()
     return jsonify(success=True, message=gettext('Success'))
 
@@ -108,7 +127,10 @@ def answer(qid):
     answer_text = request.form.get('answer', None)
     if not answer_text:
         return jsonify(success=False, message=_('Please answer the question'))
-    answer = Answer(answer_text, question, current_user)
+    answer = Answer(
+        content=answer_text,
+        question=question,
+        author=current_user)
     db.session.add(answer)
     db.session.commit()
     return jsonify(success=True)
@@ -125,24 +147,27 @@ def ask():
         title = form.data.get('title')
         content = form.data.get('content')
         tags = form.data.get('tags')
-
-        new_question = Question(title, content, None, current_user)
-
+        new_question = Question(
+            title=title,
+            content=content,
+            lecture=None,
+            author=current_user
+        )
         lecture_id = request.args.get('lecture_id', None)
 
         if lecture_id:
             lecture = Lecture.query.get(lecture_id)
             new_question.lecture = lecture
 
-        db.session.add(new_question)
-        db.session.commit()
+        new_question.save()
 
         return jsonify(
             success=True,
             messages=[gettext('Submited successfully')],
             next=url_for('discuss.view_question', qid=new_question.id),
         )
-    else:
+    
+    if form.errors:
         return jsonify(success=False, errors=True, messages=form.errors)
 
 

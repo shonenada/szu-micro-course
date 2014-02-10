@@ -159,7 +159,7 @@ class User(db.Model, UserMixin, ModelMixin):
     def active(self):
         self.state = 'normal'
 
-    def avatar_url(self, size=70):
+    def get_avatar(self, size=70):
         if self.avatar:
             return self.avatar
 
@@ -239,9 +239,13 @@ class College(db.Model, ModelMixin):
     courses = db.relationship('Course', backref='college',
                               lazy='dynamic', uselist=True)
 
-    def __init__(self, name, order=None):
-        self.name = name
-        self.order = order if order else 9999
+    def __init__(self, **kwargs):
+        if 'order' in kwargs:
+            self.order = kwargs.pop('order')
+        else:
+            order = 9999
+
+        db.Model.__init__(self, **kwargs)
 
     def __str__(self):
         return ("%s" % self.name)
@@ -264,10 +268,8 @@ class Teacher(db.Model, ModelMixin):
                               backref=db.backref('teacher', uselist=False))
     szu_account_id = db.Column(db.Integer, db.ForeignKey('szu_account.id'))
 
-    def __init__(self, title, description, szu_account):
-        self.title = title
-        self.description = description
-        self.szu_account = szu_account
+    def __init__(self, **kwargs):
+        db.Model.__init__(self, **kwargs)
 
     def __str__(self):
         return ("%s" % self.szu_account.user.name
