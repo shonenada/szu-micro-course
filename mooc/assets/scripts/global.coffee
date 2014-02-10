@@ -65,10 +65,13 @@ $ ->
                                 document.location = document.referrer;
                             , 2000
                         if (res.callback)
-                            eval(res.callback + '()')
+                            eval(res.callback + '(res, form.serializeObject())')
                     else
                         if (res.errors)
                             for key of res.messages
+                                if (key == 'csrf_token')
+                                    $T.flash_message(res.messages[key])
+                                    continue
                                 container = $('<div class="message-tip-box" id="message-' + key + '"></div>');
                                 $('#' + key).before(container);
                                 $('#' + key).on 'focus', ->
@@ -76,6 +79,11 @@ $ ->
                                 container.append('<span>' + res.messages[key] + '</div>');
                         else
                             $T.flash_message(res.messages.join(''), 'warn')
+                    $(':input', form)
+                     .not(':button, :submit, :reset, :hidden')
+                     .val('')
+                     .removeAttr('checked')
+                     .removeAttr('selected');
                     return ;
                 statusCode: {
                     404: ->
