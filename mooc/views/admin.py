@@ -6,7 +6,7 @@ from mooc.extensions import rbac
 from mooc.utils.helpers import flash
 from mooc.utils.admin import generate_all_controller
 from mooc.models.master import Feedback
-from mooc.models.account import User, SzuAccount, College
+from mooc.models.account import User
 from mooc.models.course import Subject, Category, Course, Lecture
 from mooc.models.resource import Resource
 from mooc.forms.course import SubjectForm, CategoryForm, CourseForm, LectureForm

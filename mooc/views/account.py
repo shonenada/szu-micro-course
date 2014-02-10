@@ -114,10 +114,11 @@ def people(username):
     if not user:
         abort(404)
     else:
-        avatar = user.avatar_url()
         get_type = SzuAccount.get_type
-        return render_template('account/people.html',
-                               user=user, avatar=avatar, get_type=get_type)
+        return render_template(
+            'account/people.html',
+            user=user,
+            get_type=get_type)
 
 
 @csrf.exempt

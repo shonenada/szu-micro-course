@@ -10,7 +10,7 @@ class ModelMixin(object):
     """Custom model of MOOC"""
 
     @classmethod
-    def paginate(self, page, per_page=20, error_out=True,
+    def paginate(self, page, per_page=20, error_out=True, order_by=None,
                  filters=[], with_deleted=False):
         """A proxy method to return `per_page` items from page `page`.
         If there is `state` attribute in class and `with_deleted` is `False`
@@ -41,6 +41,9 @@ class ModelMixin(object):
         for filte in filters:
             query = query.filter(filte)
 
+        if order_by:
+            query = query.order_by(order_by)
+
         pagination = query.paginate(
             page=page,
             per_page=per_page,
@@ -49,10 +52,11 @@ class ModelMixin(object):
 
         return pagination
 
-    def save(self):
+    def save(self, commit=True):
         """Proxy method of saving object to database"""
         db.session.add(self)
-        db.session.commit()
+        if commit:
+            db.session.commit()
 
     def edit(self, form_data, commit=True):
         """Edit object from `form_data`.
@@ -69,7 +73,6 @@ class ModelMixin(object):
 
         if commit:
             db.session.commit()
-
 
     def delete(self, commit=True):
         """Delete object from database.
@@ -95,9 +98,6 @@ class Tag(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     tag = db.Column(db.String(20))
-
-    def __init__(self, tag):
-        self.tag = tag
 
     def __str__(self):
         return self.tag

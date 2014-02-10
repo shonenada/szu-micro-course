@@ -10,7 +10,6 @@ from mooc.utils.helpers import jsonify
 from mooc.models.master import Tag
 from mooc.models.course import Subject, Category, Course, Lecture, LearnRecord
 from mooc.models.course import Quiz, QuizOption, Comment
-from mooc.models.resource import Resource
 from mooc.services.course import quiz_to_json
 from mooc.forms.course import LectureCommentForm
 
@@ -75,7 +74,7 @@ def lecture(lecture_id):
 
 @course_app.route('/lecture/<lecture_id>/questions')
 @rbac.allow(['anonymous'], ['GET'])
-def lecture_quretions(lecture_id):
+def lecture_quetions(lecture_id):
     _quizs = (Quiz.query.filter_by(lecture_id=lecture_id)
                   .filter(Quiz.time_at != 0).all())
     quizs = quiz_to_json(_quizs)
@@ -90,7 +89,7 @@ def lecture_check(lecture_id):
     answer_id = request.form.get('answer_id', None)
     if answer_id:
         option = QuizOption.query.get(answer_id)
-        if option.is_answer and int(option.quiz_id) == int(quiz_id):
+        if option.is_answer and (int(option.quiz_id) == int(quiz_id)):
             return jsonify(success=True)
     return jsonify(success=False)
 

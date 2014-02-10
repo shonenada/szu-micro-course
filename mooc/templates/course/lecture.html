@@ -22,7 +22,7 @@ $(function(){
         content = $('<div class="detail-content"></div>');
 
         box.append(avatar_box).append(detial_container);
-        avatar_box.append($('<img src="{{ current_user.avatar_url(size=50) }}" title="{{ current_user.nickname or current_user.name or current_user.username }}" />'));
+        avatar_box.append($('<img src="{{ current_user.get_avatar(size=50) }}" title="{{ current_user.nickname or current_user.name or current_user.username }}" />'));
         detial_container.append(user_info).append(content);
         user_info.append($('<a href="{{ url_for('account.people', username=current_user.username) }}">{{ current_user.nickname or current_user.name or current_user.username }}</a>'));
         content.append($('<p></p>').append(data.comment));
@@ -201,7 +201,7 @@ $(function(){
                 {%- for comment in lecture.comments[:10] %}
                     <div class="detail-box underline-dashed">
                         <div class="avatar avatar-small">
-                            <img src="{{ comment.user.avatar_url(size=50) }}" title="{{ comment.user.nickname or comment.user.name or comment.user.username  }}" />
+                            <img src="{{ comment.user.get_avatar(size=50) }}" title="{{ comment.user.nickname or comment.user.name or comment.user.username  }}" />
                         </div>
                         <div class="detail">
                             <p class="user-info">
@@ -230,7 +230,7 @@ $(function(){
                 {% for l in learning %}
                 <div class="content-list">
                     <div class="icon">
-                        <img src="{{ l.user.avatar_url() }}">
+                        <img src="{{ l.user.get_avatar() }}">
                     </div>
                     <div class="tip">
                         <div>

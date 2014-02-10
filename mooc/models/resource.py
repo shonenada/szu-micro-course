@@ -25,8 +25,8 @@ class Resource(db.Model, ModelMixin):
     lecture = db.relationship('Lecture', backref='resources', uselist=False)
     state = db.Column(db.Enum(*RESOURCE_STATE))
 
-    def __init__(self, name):
-        self.name = name
+    def __init__(self, **kwargs):
+        db.Model.__init__(self, **kwargs)
         self.created = datetime.utcnow()
         self.view_count = 0
         self.download_count = 0

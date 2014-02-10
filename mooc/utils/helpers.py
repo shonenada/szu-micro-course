@@ -1,18 +1,7 @@
 #-*- coding: utf-8 -*-
-import hashlib, urllib
-
 from speaklater import is_lazy_string
 
 from flask import flash as f, jsonify as jify
-
-
-def get_avatar_url(email, size=70):
-    if not email:
-        email = 'None'
-    URL_PATTERN = "http://www.gravatar.com/avatar/%s?%s"
-    gravatar_url = URL_PATTERN % (hashlib.md5(email.lower()).hexdigest(),
-                                  urllib.urlencode({'s': str(size)}))
-    return gravatar_url
 
 
 def enumdef(attr_name, attr_values):

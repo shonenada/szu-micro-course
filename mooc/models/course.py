@@ -36,9 +36,8 @@ class Subject(db.Model, ModelMixin):
     categories = db.relationship('Category', backref='subject')
     state = db.Column(db.Enum(*SUBJECT_STATE_VALUES))
 
-    def __init__(self, name, description):
-        self.name = name
-        self.description = description
+    def __init__(self, **kwargs):
+        db.Model.__init__(self, **kwargs)
         self.state = 'normal'
 
     def __str__(self):
@@ -74,9 +73,8 @@ class Category(db.Model, ModelMixin):
     courses = db.relationship('Course', backref='category')
     state = db.Column(db.Enum(*CATEGORY_STATE_VALUES))
 
-    def __init__(self, name, subject):
-        self.name = name
-        self.subject = subject
+    def __init__(self, **kwargs):
+        db.Model.__init__(self, **kwargs)
         self.state = 'normal'
 
     def __str__(self):
@@ -116,11 +114,8 @@ class Course(db.Model, ModelMixin):
     tags = db.relationship('Tag', secondary=course_tags,
                            backref=db.backref('courses'))
 
-    def __init__(self, name, description, teacher, category):
-        self.name = name
-        self.description = description
-        self.teacher = teacher
-        self.category = category
+    def __init__(self, **kwargs):
+        db.Model.__init__(self, **kwargs)
         self.created = datetime.utcnow()
         self.state = 'updating'
         self.logo_url = url_for('static',
@@ -172,7 +167,7 @@ class Lecture(db.Model, ModelMixin):
     term = db.Column(db.String(512))
     chapter = db.Column(db.String(512))
     record_time = db.Column(db.DateTime)
-    record_address = db.Column(db.String(256))
+    record_location = db.Column(db.String(256))
     upload_time = db.Column(db.DateTime)
     video_url = db.Column(db.String(150))
     video_length = db.Column(db.Integer)
@@ -193,18 +188,23 @@ class Lecture(db.Model, ModelMixin):
     tags = db.relationship('Tag', secondary=lecture_tags,
                            backref=db.backref('lectures'))
 
-    def __init__(self, name, description, teacher, course, order=None,
-                 published=False):
-        self.name = name
-        self.description = description
-        self.teacher = teacher
-        self.course = course
-        self.published = published
+    def __init__(self, **kwargs):
+        if 'order' in kwargs:
+            self.order = kwargs.pop('order', None)
+        else:
+            self.order = 9999
+
+        if 'published' in kwargs:
+            self.published = kwargs.pop('published')
+        else:
+            self.published = False
+
+        db.Model.__init__(self, **kwargs)
+
         self.video_url = ''
         self.read_count = 0
         self.play_count = 0
         self.video_length = 0
-        self.order = order if order else 9999
         self.created = datetime.utcnow()
         self.upload_time = datetime.utcnow()
         self.state = 'published'
@@ -259,9 +259,6 @@ class Quiz(db.Model, ModelMixin):
         backref=db.backref('quizs', uselist=True), uselist=False)
     options = db.relationship('QuizOption', backref='quiz', uselist=True)
 
-    def __init__(self, question):
-        self.question = question
-
 
 class QuizOption(db.Model, ModelMixin):
 
@@ -271,10 +268,6 @@ class QuizOption(db.Model, ModelMixin):
     quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'))
     content = db.Column(db.String(100))
     is_answer = db.Column(db.Boolean(), default=False)
-
-    def __init__(self, content, is_answer=False):
-        self.content = content
-        self.is_answer = is_answer
 
 
 class LearnRecord(db.Model, ModelMixin):

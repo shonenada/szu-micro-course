@@ -7,7 +7,6 @@ from mooc.extensions import rbac, db, csrf
 from mooc.utils.helpers import flash
 from mooc.models.master import Tag, Feedback
 from mooc.models.course import Subject
-from mooc.models.resource import Resource
 from mooc.forms.master import FeedbackForm
 
 
