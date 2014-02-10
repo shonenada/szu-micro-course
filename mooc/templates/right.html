@@ -25,7 +25,7 @@
                         {%- for record in learn_records %}
                         <div class="list">
                             <div class="icon">
-                                <img src="{{ record.user.avatar }}">
+                                <img src="{{ record.user.avatar_url(size=40) }}" />
                             </div>
                             <div class="tip">
                                 <div>

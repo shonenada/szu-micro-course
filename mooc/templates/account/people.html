@@ -20,7 +20,7 @@ $(function() {
 <div id="left">
     <div class="single-box profile-container">
         <div class="avatar-box">
-            <img src="{{ avatar }}" alt="{{ user.username }}" class="avatar">
+            <img src="{{ user.avatar_url() }}" alt="{{ user.username }}" class="avatar">
         </div>
         <div class="profile">
             <p class="username">{{ user.nickname or user.username }}</p>
