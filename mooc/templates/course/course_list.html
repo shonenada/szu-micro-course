@@ -1,0 +1,48 @@
+{% extends 'layout.html' %}
+
+{% block left %}
+<div id="left">
+    <div id="category-list" class="inline-list">
+        <ul>
+            <li><a href="{{ url_for('course.library')}}">{{ _('Courses') }}</a></li>
+            <li><a href="{{url_for('course.subject', sid=this_course.category.subject.id)}}">{{ this_course.category.subject.name }}</a></li>
+            <li><a href="{{ url_for('course.category', sid=this_course.category.subject.id, cid=this_course.category.id)}}">{{ this_course.category.name }}</a></li>
+            <li><a>{{ this_course.name }}</a></li>
+        </ul>
+    </div>
+
+    <div class="container">
+        <div id="category-intro">
+            <div class="course-container">
+                <div class="course-box">
+                    <div class="course-info">
+                        <div class="icon small-icon">
+                            <img src="{{ this_course.logo_url or url_for('static', filename='images/default_course_logo.png') }}" />
+                        </div>
+                        <div class="course-title">
+                            {{ this_course.name }}
+                        </div>
+                        <div class="course-description">
+                            <p>{{ this_course.description }}</p>
+                        </div>
+                    </div>
+                    <div class="course-record">
+                        <div class="course-num"><span>{{ this_course.lectures|count }}</span> {{ _('courses totally') }}</div>
+                        <div class="learned-num"><span>{{ this_course|learn_count }}</span> {{ _('student(s) learned') }}</div>
+                    </div>
+                    <div class="shadow"></div>
+                </div>
+            </div>
+        </div>
+
+        <div>{{ _('Video List') }}</div>
+
+        <div id="lecture-list">
+            {% for idx, lecture in lectures|enumerate %}
+            <a href="{{ url_for('course.lecture', lecture_id=lecture.id) }}" class="lecture_box_wrapper">{% include 'course/lecture_box.html' %}</a>
+            {% endfor %}
+        </div>
+    </div>
+
+</div>
+{% endblock %}

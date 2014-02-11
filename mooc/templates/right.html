@@ -1,0 +1,83 @@
+        <div id="right">
+            {%- if tags %}
+            <div class="info-box">
+                <div id="question-tags" class="info-wrapper">
+                    <div class="title">{{ _('Hot Tags') }}</div>
+                    <div class="content">
+                        <div class="content-list">
+                            <ul>
+                                {%- for t in tags %}
+                                <li class="tag-item"><a href="{{ url_for('master.tag', tag=t.tag) }}">{{ t.tag }}</a></li>
+                                {%- endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="shadow"></div>
+            </div>
+            {%- endif %}
+
+            {%- if learn_records %}
+            <div class="info-box">
+                <div class="info-wrapper bottom">
+                    <div class="title">{{ _('Activity') }}</div>
+                    <div class="content">
+                        {%- for record in learn_records %}
+                        <div class="list">
+                            <div class="icon">
+                                <img src="{{ record.user.get_avatar(size=40) }}" />
+                            </div>
+                            <div class="tip">
+                                <div>
+                                <span class="tip-text username">{{ record.user.nickname }}</span>
+                                <span class="tip-text time">{{ record.created | friendly_time }}</span>
+                                <span class="tip-text">{{ _('learnt') }}</span>
+                                </div>
+                                <span class="course-name">
+                                    <a href="{{ url_for('course.lecture', lecture_id=record.lecture.id) }}">
+                                    {{ record.lecture.name }}
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
+                        {%- endfor %}
+                    </div>
+                </div>
+                <div class="shadow"></div>
+            </div>
+            {%- endif %}
+
+            {%- if last_lectures %}
+            <div class="info-box">
+                <div id="last-course" class="info-wrapper">
+                    <div class="title">{{ _('Recent Courses') }}</div>
+                    <div class="content">
+                        {%- for lc in last_lectures %}
+                        <div class="list">
+                            <div class="icon">
+                                <img src="{{ lc.course.logo_url or url_for('static', filename='images/default_course_logo.png') }}">
+                            </div>
+                            <div class="tip">
+                                <div>
+                                <span class="tip-text username">{% if not lc.course.teacher %}{{ _('Administrator') }}{% else %}
+                                {{ lc.course.teacher.szu_account.user.name or lc.course.teacher.szu_account.user.nickname or _('Administrator') }}{% endif %}</span>
+                                <span class="tip-text time">{{ lc.upload_time | friendly_time }}</span>
+                                <span class="tip-text">{{ _('published') }}</span>
+                                </div>
+                                <span class="course-name">
+                                    <a href="{{ url_for('course.lecture', lecture_id=lc.id) }}">
+                                        {{ lc.name }}
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
+                        {%- endfor %}
+                    </div>
+                </div>
+                <div class="foot bottom">
+                    <a href="{{ url_for('course.library')}}">{{ _('More Courses') }}</a>
+                </div>
+                <div class="shadow"></div>
+            </div>
+            {%- endif %}
+        </div>

@@ -1,0 +1,21 @@
+<div class="course-container">
+    <div class="course-box">
+        <div class="course-info">
+            <div class="icon">
+                <img src="{{ course.logo_url or url_for('static', filename='images/default_course_logo.png') }}" />
+            </div>
+            <div class="course-title">
+                {{ course.name }}
+            </div>
+            <div class="course-description">
+                <p class="ellipsis-60">{{ course.description|ellipsis(60) }}</p>
+                <p class="ellipsis-20">{{ course.description|ellipsis(20) }}</p>
+            </div>
+        </div>
+        <div class="course-record">
+            <div class="course-num"><span>{{ course.lectures|count }}</span> {{ _('courses totally') }}</div>
+            <div class="learned-num"><span>{{ course|learn_count }}</span> {{ _('student(s) learned') }}</div>
+        </div>
+        <div class="shadow"></div>
+    </div>
+</div>

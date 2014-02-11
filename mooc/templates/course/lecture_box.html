@@ -1,0 +1,20 @@
+<div class="course-container">
+    <div class="course-box">
+        <div class="course-info">
+            <div class="icon small-icon">
+                <img src="{{ lecture.logo_url or url_for('static', filename='images/lecture_icon.png') }}" />
+            </div>
+            <div class="course-title">
+                {{ lecture.name }}
+            </div>
+            <div class="course-description">
+                <p>{{ lecture.description }}</p>
+            </div>
+        </div>
+        <div class="course-record">
+            <div class="course-num"><span>#{{ idx+1 }}</span></div>
+            <div class="learned-num"><span>{{ lecture.video_length / 60 }}</span> {{ _('Minute(s)') }}</div>
+        </div>
+        <div class="shadow"></div>
+    </div>
+</div>

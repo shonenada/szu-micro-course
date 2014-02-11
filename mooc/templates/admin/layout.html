@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>{{ web_title or site_title}}</title>
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {%- block base_stylesheet %}
+    <link href="{{ url_for('static', filename='components/bootstrap/docs/assets/css/bootstrap.css')}}" media="all" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/admin-theme.css') }}">
+    <link href="{{ url_for('static', filename='components/font-awesome/css/font-awesome.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{ url_for('static', filename='styles/flash-messages.css')}}" media="all" rel="stylesheet" type="text/css" />
+    {%- endblock %}
+    {%- block base_script %}
+    <script src="{{ url_for('static', filename='components/jquery/jquery.min.js') }}" language="javascript"></script>
+    <script src="{{ url_for('static', filename='scripts/plugins/cookies_for_ajax.js') }}" language="javascript"></script>
+    <script src="{{ url_for('static', filename='scripts/global.js') }}" language="javascript"></script>
+    {%- endblock %}
+    {%- block ie_fix %}
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!-- Le fav and touch icons -->
+    {%- endblock %}
+    {%- block custom_static %}
+    <!-- Demo page code -->
+    <style type="text/css">
+        #line-chart {
+            height:300px;
+            width:800px;
+            margin: 0px auto;
+            margin-top: 1em;
+        }
+        .brand { font-family: georgia, serif; }
+        .brand .first {
+            color: #ccc;
+            font-style: italic;
+        }
+        .brand .second {
+            color: #fff;
+            font-weight: bold;
+        }
+    </style>
+    {%- endblock %}
+</head>
+<!--[if lt IE 7 ]>
+<body class="ie ie6">
+<![endif]-->
+<!--[if IE 7 ]>
+<body class="ie ie7 ">
+<![endif]-->
+<!--[if IE 8 ]>
+<body class="ie ie8 ">
+<![endif]-->
+<!--[if IE 9 ]>
+<body class="ie ie9 ">
+<![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> 
+<body class=""> 
+<!--<![endif]-->
+{% include 'flash-message.html' %}
+    <div class="navbar">
+        <div class="navbar-inner">
+                <ul class="nav pull-right">
+                    <li id="fat-menu" class="dropdown">
+                        <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="icon-user"></i>
+                            {{ current_user.username }}
+                            <i class="icon-caret-down"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a tabindex="-1" href="{{ url_for('master.index') }}">{{ _('Homepage') }}</a></li>
+                            <li class="divider"></li>
+                            <li><a tabindex="-1" href="{{ url_for('account.signout') }}">{{ _('Sign Out') }}</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <a class="brand" href="{{ url_for('admin.index') }} "><span class="first">SZU</span> <span class="second">MicroLecture</span></a>
+        </div>
+    </div>
+
+    <div class="sidebar-nav">
+        <a href="#dashboard-menu" class="nav-header" data-toggle="collapse"><i class="icon-dashboard"></i>{{ _('Dashboard') }}</a>
+        <ul id="dashboard-menu" class="nav nav-list collapse in">
+            <li><a href="{{ url_for('admin.index') }}">{{ _('Dashboard') }}</a></li>
+            <li><a href="{{ url_for('admin.list_feedback') }}">{{ _('Feedback') }}</a></li>
+        </ul>
+        <a href="#accounts-menu" class="nav-header" data-toggle="collapse"><i class="icon-briefcase"></i>{{ _('Account Manage') }}</a>
+        <ul id="accounts-menu" class="nav nav-list collapse in">
+            <li><a href="{{ url_for('admin.list_account') }}">{{ _('Users Manage') }}</a></li>
+        </ul>
+        <a href="#course-menu" class="nav-header" data-toggle="collapse"><i class="icon-legal"></i>{{ _('Course Manage') }}</a>
+        <ul id="course-menu" class="nav nav-list collapse in">
+            <li><a href="{{ url_for('admin.list_subject') }}">{{ _('Subjects Manage') }}</a></li>
+            <li><a href="{{ url_for('admin.list_category') }}">{{ _('Categories Manage') }}</a></li>
+            <li><a href="{{ url_for('admin.list_course') }}">{{ _('Courses Manage') }}</a></li>
+            <li><a href="{{ url_for('admin.list_lecture') }}">{{ _('Lectures Manage') }}</a></li>
+            <li><a href="{{ url_for('admin.list_resource') }}">{{ _('Resource Manage') }}</a></li>
+        </ul>
+    </div>
+
+    <div class="content">
+        <div class="header">
+            <h1 class="page-title">{%- block title %}{{ _('Dashboard') }}{%- endblock %}</h1>
+        </div>
+
+        <ul class="breadcrumb">
+            <li><a href="{{ url_for('admin.index') }}">{{ _('Home') }}</a><span class="divider">/</span></li>
+            {%- block breadcrumb %}
+            <li class="active">{{ _('Dashboard') }}</li>
+            {%- endblock %}
+        </ul>
+
+        <div class="container-fluid">
+            {%- block content %}
+            <div class="row-fluid">
+                <div class="block span6">
+                    <a href="#tablewidget" class="block-heading" data-toggle="collapse">Users</a>
+                    <div id="tablewidget" class="block-body collapse in">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Username</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                                <tr>
+                                    <td>Chris</td>
+                                    <td>Albert</td>
+                                    <td>cab79</td>
+                                </tr>
+                              </tbody>
+                        </table>
+                        <p><a href="users.html">More...</a></p>
+                    </div>
+                </div>
+            </div>
+            {%- endblock %}
+            <footer>
+                <hr>
+                <p>&copy; 2013 <a href="http://www.shonenada.com" target="_blank">shonenada</a></p>
+            </footer>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='components/bootstrap/docs/assets/js/bootstrap.js' )}}"></script>
+    {%- block scripts %}
+    {%- endblock %}
+</body>
+</html>

@@ -28,9 +28,22 @@ pip-log.txt
 nosetests.xml
 
 # Translations
+*.pot
 *.mo
 
 # Mr Developer
 .mr.developer.cfg
 .project
 .pydevproject
+
+# Virtualenv
+venv/
+
+mooc/assets/components/
+
+# Configure files
+development.conf
+production.conf
+
+# Mac File
+.DS_Store

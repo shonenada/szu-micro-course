@@ -1,0 +1,22 @@
+@import 'func.styl'
+
+@keyframes move-up
+    0%
+        transform-translate3d 0 0 0
+    100%
+        transform-translate3d 0 -2px 0
+
+@keyframes move-down
+    0%
+        transform-translate3d 0 -2px 0
+    100%
+        transform-translate3d 0 0 0
+
+
+.container-animate-move-up
+    bind-animate move-up 200ms;
+    transform-translate3d 0 -2px 0;
+
+.container-animate-move-down
+    bind-animate move-down 200ms;
+    transform-translate3d 0 0 0

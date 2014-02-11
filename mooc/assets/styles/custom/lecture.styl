@@ -1,0 +1,202 @@
+#lecture-intro
+  width 100%
+  margin 0px
+  padding 25px
+  background #fff
+
+  h2
+    font-size 22px !important
+    color #515c73 !important
+    line-height 30px
+
+  p
+    font-size 14px
+    margin 10px 0 10px 0
+
+  #category_info
+    overflow hidden
+
+    ul li
+      float left
+
+      a
+        font-size 14px
+        margin 0
+        display block
+        height 40px
+        color #7b8896
+        line-height 40px
+        font-weight bold
+        transition 0.25s
+
+        &:hover
+          color #ff5400
+
+        &:before
+          padding 0 10px 0 10px
+          line-height 40px
+          content url('../images/arrow.png')
+
+    li:first-child
+      a
+        &:before
+          padding 0px
+          content ''
+
+    li:last-child
+      a
+        color #ff5400
+
+#lecture-info
+  width 100%
+  margin-top 20px
+
+  #lecture-info-left
+    width 69%
+    float left
+
+  #lecture-btns
+    width 100%
+    overflow hidden
+
+    ul
+      margin 0 
+
+    li:first-child
+      a
+        margin 0px 5px 0px 0px
+
+    ul li
+      float left
+
+      a
+        top-border-radius 5
+        font-weight bold
+        display block
+        color #7b8896
+        background #ccd7e0
+        padding 7px 21px 8px
+        font-size 14px
+        margin 0px 5px 0px 5px
+
+      a.current
+        background #fff
+        color #ff5400
+
+    ul li.ask
+      float right
+      margin-right 10px
+
+      a
+        background #ecf1f4
+
+      a:hover
+        background #ff5400
+        color: #fff
+
+  #lecture-tips
+    background #fff
+    padding 10px
+    font-size 14px
+    line-height 1.5em
+    top-border-radius 5
+    bottom-border-radius 5
+    -webkit-border-top-left-radius 0px
+    -moz-border-radius-topleft 0px
+    border-top-left-radius 0px
+    text-indent 1em
+
+    #lecture-questions
+      #ask-btn
+        background #fff
+        padding 5px
+        margin-top 10px
+        border-radius 3px
+        border 1px solid #acacac
+
+    .lecture-bar
+      ul
+        margin 0
+        padding 10px 0 10px 0
+      p
+        margin 0
+        padding 0
+
+    #lecture-quiz
+      .quiz-title
+        font-size 16px
+        font-weight bold
+
+        span
+          color #ff0000
+          font-size 13px
+
+      .quiz-option
+        font-size 14px
+
+        ul
+          padding 0 0 10px 0
+
+          label
+            margin 0
+
+    .lecture-hidden
+      display none
+
+    .resource-table
+      width 99%
+
+      thead
+        font-weight bold
+
+      tr 
+        border-bottom 1px solid #c9dae6
+    
+  #lecture-info-right
+    float right
+    width 30%
+
+    .shadow
+      bottom-border-radius 5
+
+    #lecture-who-learning
+      bottom-border-radius 5
+      top-border-radius 5
+      background #fff
+
+      h2
+        color #515c73
+        padding 10px 10px 10px 15px
+        font-size 15px
+        border-bottom 1px solid #dce5eb
+
+      #leanring
+        padding 20px
+
+      .content-list
+        display block
+        margin-bottom 15px
+        clear both
+        overflow hidden
+
+        &:last-child
+          margin-bottom 0px
+
+        .icon
+          float left
+
+        .icon img
+          width 40px
+          height 40px
+
+        .tip
+          margin-left 50px
+          
+          .tip-text
+            font-size 14px
+            color #a5b4c1
+
+          .course-name
+            float left
+            line-height 1.8em
+            font-size 16px

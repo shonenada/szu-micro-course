@@ -1,0 +1,73 @@
+{%- extends 'layout.html' %}
+
+{%- block left %}
+<div id="left">
+    <div class="tips-box">
+        <div class="tips">
+            <ul>
+                <li><a href="{{ url_for('account.setting') }}" class="current">{{ _('Basic Settings') }}</a>
+                <li><a href="{{ url_for('account.change_password') }}">{{ _('Change Password') }}</a>
+            </ul>
+        </div>
+        <div class="content">
+            <form id="settingForm" action="{{ url_for('account.setting') }}" method="post" class="user-setting">
+                {{ form.csrf_token }}
+                <ul>
+                    <li>
+                    {{ form.name.label }}
+                    {{ form.name() }}
+                    </li>
+                    <li>
+                    {{ form.stu_number.label }}
+                    {{ form.stu_number() }}
+                    </li>
+                    <li>
+                    {{ form.is_male.label }}
+                    {{ form.is_male() }}
+                    </li>
+                    <li>
+                    {{ form.college.label }}
+                    {{ form.college() }}
+                    </li>
+                    <li>
+                    {{ form.nickname.label }}
+                    {{ form.nickname() }}
+                    </li>
+                    <li>
+                    {{ form.card_id.label }}
+                    {{ form.card_id() }}
+                    </li>
+                    <li>
+                    {{ form.email.label }}
+                    {{ form.email() }}
+                    </li>
+                    <li>
+                    {{ form.phone.label }}
+                    {{ form.phone() }}
+                    </li>
+                    <li>
+                    {{ form.short_phone.label }}
+                    {{ form.short_phone() }}
+                    </li>
+                </ul>
+                <button class="btn">{{ _('Update') }}</button>
+            </form>
+        </div>
+    </div>
+        
+    <div class="shadow"></div>
+</div>
+{%- endblock %}
+
+{%- block right %}
+<div id="right">
+</div>
+{%- endblock %}
+
+{%- block endscript %}
+<script type="text/javascript">
+    $(function(){
+        $T.ajax_form($('#settingForm'));
+    });
+</script>
+{%- endblock %}

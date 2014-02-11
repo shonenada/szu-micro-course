@@ -1,0 +1,56 @@
+{%- extends 'admin/layout.html' %}
+{%- import 'utils.jinja' as utils %}
+
+{%- block breadcrumb %}
+<li><a href="{{ url_for(endpoints['list']) }}">{{ model_name }} Manage</a><span class="divider">/</span><li>
+<li class="active">Create {{ model_name }}</li>
+{%- endblock %}
+
+{%- block content %}
+<div class="row-fluid">
+    <div class="well">
+        <div id="tab-content" class="tab-content">
+            <div class="tab-pane active in" id="create">
+                <form id="create-form">
+                    {{ form.csrf_token }}
+                    {%- block form_fields %}
+                    {%- endblock %}
+                </form>
+            </div>
+            <div class="btn-toolbar">
+                <button class="btn btn-primary" id="save-btn"><i class="icon-save"></i> {{ _('Save') }}</button>
+                <a href="{{ url_for(endpoints['list']) }}" data-toggle="modal" class="btn">{{ _('Cancel') }}</a>
+            </div>
+        </div>
+    </div>
+
+{%- endblock %}
+
+{%- block scripts %}
+<script>
+$(function(){
+    $('#create-form').submit(function(){
+        $.ajax({
+            url: "{{ url_for(endpoints['create']) }}",
+            type: 'post',
+            dataType: 'json',
+            data: $(this).serialize(),
+            success: function(response) {
+                if(response.success){
+                    location.href = "{{ url_for(endpoints['list']) }}";
+                }
+                else{
+                    $T.flash_message(response.messages.join(', '), 'error');
+                }
+            }
+        });
+        return false;
+    });
+
+    $("#save-btn").click(function(){
+        $('#create-form').submit();
+    })
+
+})
+</script>
+{%- endblock %}

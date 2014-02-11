@@ -1,0 +1,22 @@
+{%- extends 'admin/base_list.html' %}
+
+{% block thead %}
+<th>{{ _("Resource's Name") }}</th>
+<th>{{ _("Resource's URL") }}</th>
+<th>{{ _('State') }}</th>
+{% endblock %}
+
+{%- block tbody %}
+{%- for item in pagination.items %}
+<tr>
+    <td>{{ item.name }}</td>
+    <td>{{ item.resource_url }}</td>
+    <td>{{ item.state }}</td>
+    <td>
+        <a href="{{ url_for(endpoints['edit'], mid=item.id) }}"><span class="icon-pencil"></span></a>
+         | 
+        <a href="#delete-modal" role="button" data="{{ item.id }}" class="delete-btns" data-toggle="modal"><span class="icon-remove"></span></a>
+    </td>
+</tr>
+{%- endfor %}
+{%- endblock %}
