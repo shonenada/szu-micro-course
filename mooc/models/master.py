@@ -41,7 +41,7 @@ class ModelMixin(object):
         for filte in filters:
             query = query.filter(filte)
 
-        if order_by:
+        if not order_by is None:
             query = query.order_by(order_by)
 
         pagination = query.paginate(
