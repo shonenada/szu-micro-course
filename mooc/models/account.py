@@ -124,11 +124,15 @@ class User(db.Model, UserMixin, ModelMixin):
             is_male = kwargs.pop('is_male')
             self.is_male = (is_male == True)
 
+        if 'state' in kwargs:
+            self.state = kwargs.pop('state')
+        else:
+            self.state = 'unactivated'
+
         db.Model.__init__(self, **kwargs)
 
         self.created = datetime.utcnow()
         self.last_login = datetime.utcnow()
-        self.state = 'unactivated'
 
     def __unicode__(self):
         return self.nickname
