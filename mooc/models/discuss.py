@@ -61,13 +61,7 @@ class Answer(db.Model, ModelMixin):
     parent_id = db.Column(db.Integer)
     up_down_record_id = db.Column(db.Integer,
                                   db.ForeignKey('up_down_record.id'))
-    state = db.Column(db.Enum(*STATE_VALUE))
-
-    def __init__(self, **kwargs):
-        db.Model.__init__(self, **kwargs)
-        self.up_count = 0
-        self.down_count = 0
-        self.state = 'normal'
+    state = db.Column(db.Enum(*STATE_VALUE), default='normal')
 
     @hybrid_property
     def like_count(self):
@@ -96,15 +90,9 @@ class Question(db.Model, ModelMixin):
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     anonymous = db.Column(db.Boolean, default=False)
     answers = db.relationship('Answer', backref='question', uselist=True)
-    state = db.Column(db.Enum(*STATE_VALUE))
+    state = db.Column(db.Enum(*STATE_VALUE), default='normal')
     tags = db.relationship('QuestionTag', secondary=question_tags,
                            backref=db.backref('questions'))
-
-    def __init__(self, **kwargs):
-        db.Model.__init__(self, **kwargs)
-        self.up_count = 0
-        self.read_count = 0
-        self.state = 'normal'
 
     @hybrid_property
     def answer_count(self):

@@ -17,28 +17,13 @@ class Resource(db.Model, ModelMixin):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship('User', backref='resources', uselist=False)
     resource_url = db.Column(db.String(250))
-    type = db.Column(db.Enum(*RESOURCE_TYPE))
+    type = db.Column(db.Enum(*RESOURCE_TYPE), default='other')
     created = db.Column(db.DateTime, default=datetime.utcnow)
     view_count = db.Column(db.Integer, default=0)
     download_count = db.Column(db.Integer, default=0)
     lecture_id = db.Column(db.Integer, db.ForeignKey('lecture.id'))
     lecture = db.relationship('Lecture', backref='resources', uselist=False)
-    state = db.Column(db.Enum(*RESOURCE_STATE))
-
-    def __init__(self, **kwargs):
-        if 'type' in kwargs:
-            self.type = kwargs.pop('type')
-        else:
-            self.type = 'other'
-
-        if 'state' in kwargs:
-            self.state = kwargs.pop('state')
-        else:
-            self.state = 'normal'
-
-        db.Model.__init__(self, **kwargs)
-        self.view_count = 0
-        self.download_count = 0
+    state = db.Column(db.Enum(*RESOURCE_STATE), default='normal')
 
     def __repr__(self):
         return "<CourseResource %s>" % self.name

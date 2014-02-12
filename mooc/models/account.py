@@ -92,7 +92,7 @@ class User(db.Model, UserMixin, ModelMixin):
     avatar = db.Column(db.String(250))
     created = db.Column(db.DateTime, default=datetime.utcnow)
     salt = db.Column(db.String(32), nullable=False)
-    state = db.Column(db.Enum(*USER_STATE_VALUES))
+    state = db.Column(db.Enum(*USER_STATE_VALUES), default='unactivated')
     learn_records = db.relationship('LearnRecord', backref='user',
                                     uselist=True)
     questions = db.relationship('Question', backref='author',
@@ -120,11 +120,6 @@ class User(db.Model, UserMixin, ModelMixin):
         if 'is_male' in kwargs:
             is_male = kwargs.pop('is_male')
             self.is_male = (is_male == True)
-
-        if 'state' in kwargs:
-            self.state = kwargs.pop('state')
-        else:
-            self.state = 'unactivated'
 
         db.Model.__init__(self, **kwargs)
 
@@ -232,18 +227,10 @@ class College(db.Model, ModelMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), unique=True, nullable=True)
-    order = db.Column(db.Integer)
+    order = db.Column(db.Integer, default=9999)
     szu_account_id = db.Column(db.Integer, db.ForeignKey('szu_account.id'))
     courses = db.relationship('Course', backref='college',
                               lazy='dynamic', uselist=True)
-
-    def __init__(self, **kwargs):
-        if 'order' in kwargs:
-            self.order = kwargs.pop('order')
-        else:
-            order = 9999
-
-        db.Model.__init__(self, **kwargs)
 
     def __str__(self):
         return ("%s" % self.name)
@@ -265,9 +252,6 @@ class Teacher(db.Model, ModelMixin):
     courses = db.relationship("Course", uselist=True,
                               backref=db.backref('teacher', uselist=False))
     szu_account_id = db.Column(db.Integer, db.ForeignKey('szu_account.id'))
-
-    def __init__(self, **kwargs):
-        db.Model.__init__(self, **kwargs)
 
     def __str__(self):
         return ("%s" % self.szu_account.user.name

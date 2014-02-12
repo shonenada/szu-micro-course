@@ -34,11 +34,7 @@ class Subject(db.Model, ModelMixin):
     name = db.Column(db.String(20))
     description = db.Column(db.Text)
     categories = db.relationship('Category', backref='subject')
-    state = db.Column(db.Enum(*SUBJECT_STATE_VALUES))
-
-    def __init__(self, **kwargs):
-        db.Model.__init__(self, **kwargs)
-        self.state = 'normal'
+    state = db.Column(db.Enum(*SUBJECT_STATE_VALUES), default='normal')
 
     def __str__(self):
         return ("%s" % self.name)
@@ -71,11 +67,7 @@ class Category(db.Model, ModelMixin):
     name = db.Column(db.String(20))
     subject_id = db.Column(db.Integer, db.ForeignKey('subject.id'))
     courses = db.relationship('Course', backref='category')
-    state = db.Column(db.Enum(*CATEGORY_STATE_VALUES))
-
-    def __init__(self, **kwargs):
-        db.Model.__init__(self, **kwargs)
-        self.state = 'normal'
+    state = db.Column(db.Enum(*CATEGORY_STATE_VALUES), default='normal')
 
     def __str__(self):
         return ("%s" % self.name)
@@ -103,8 +95,11 @@ class Course(db.Model, ModelMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30))
     description = db.Column(db.Text)
-    state = db.Column(db.Enum(*COURSE_STATE_VALUES))
-    logo_url = db.Column(db.String(50))
+    state = db.Column(db.Enum(*COURSE_STATE_VALUES), default='updating')
+    logo_url = db.Column(
+        db.String(50),
+        default=lambda: url_for('static',
+                                filename='images/default_course_logo.png'))
     created = db.Column(db.DateTime, default=datetime.utcnow)
     teacher_id = db.Column(db.Integer, db.ForeignKey('teacher.id'))
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
@@ -113,21 +108,6 @@ class Course(db.Model, ModelMixin):
                                backref=db.backref('course'), uselist=True)
     tags = db.relationship('Tag', secondary=course_tags,
                            backref=db.backref('courses'))
-
-    def __init__(self, **kwargs):
-        db.Model.__init__(self, **kwargs)
-        self.state = 'updating'
-        self.logo_url = url_for('static',
-                                filename='images/default_course_logo.png')
-
-    def set_finished(self):
-        self.state = 'finished'
-
-    def set_updating(self):
-        self.state = 'updating'
-
-    def set_coming(self):
-        self.state = 'coming'
 
     def delete(self, commit=True):
         for lecture in self.lectures:
@@ -167,13 +147,13 @@ class Lecture(db.Model, ModelMixin):
     chapter = db.Column(db.String(512))
     record_time = db.Column(db.DateTime)
     record_location = db.Column(db.String(256))
-    upload_time = db.Column(db.DateTime)
+    upload_time = db.Column(db.DateTime, default=datetime.utcnow)
     video_url = db.Column(db.String(150))
     video_length = db.Column(db.Integer)
     logo_url = db.Column(db.String(100))
-    state = db.Column(db.Enum(*LECTURE_STATE_VALUES))
+    state = db.Column(db.Enum(*LECTURE_STATE_VALUES), default='published')
     watch_count = db.Column(db.Integer, default=0)
-    order = db.Column(db.Integer, default=1)
+    order = db.Column(db.Integer, default=9999)
     play_count = db.Column(db.Integer, default=0)
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'))
     teacher_id = db.Column(db.Integer, db.ForeignKey('teacher.id'))
@@ -186,35 +166,6 @@ class Lecture(db.Model, ModelMixin):
                               uselist=True, lazy='dynamic')
     tags = db.relationship('Tag', secondary=lecture_tags,
                            backref=db.backref('lectures'))
-
-    def __init__(self, **kwargs):
-        if 'order' in kwargs:
-            self.order = kwargs.pop('order', None)
-        else:
-            self.order = 9999
-
-        if 'published' in kwargs:
-            self.published = kwargs.pop('published')
-        else:
-            self.published = False
-
-        db.Model.__init__(self, **kwargs)
-
-        self.video_url = ''
-        self.read_count = 0
-        self.play_count = 0
-        self.video_length = 0
-        self.upload_time = datetime.utcnow()
-        self.state = 'published'
-
-    def set_published(self):
-        self.state = 'published'
-
-    def set_recording(self):
-        self.state = 'recording'
-
-    def set_comming(self):
-        self.state = 'coming'
 
     def delete(self, commit=True):
         """Clean data in all relationships"""
@@ -310,8 +261,14 @@ class Comment(db.Model, ModelMixin):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship('User', backref='comments', uselist=False)
     lecture_id = db.Column(db.Integer, db.ForeignKey('lecture.id'))
-    lecture = db.relationship('Lecture', backref=db.backref('comments',
-        order_by=lambda: Comment.id.desc()), uselist=False)
+    lecture = db.relationship(
+        'Lecture',
+        backref=db.backref(
+            'comments',
+            order_by=lambda: Comment.id.desc(),
+            lazy='dynamic',
+        ),
+        uselist=False)
     star_count = db.Column(db.Integer, default=0)
     created = db.Column(db.DateTime, default=datetime.utcnow)
     state = db.Column(db.Enum(*STATE_VALUES), default='normal')
