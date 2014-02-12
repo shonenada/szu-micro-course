@@ -91,8 +91,6 @@ class User(db.Model, UserMixin, ModelMixin):
     qq = db.Column(db.String(15))
     avatar = db.Column(db.String(250))
     created = db.Column(db.DateTime, default=datetime.utcnow())
-    last_login = db.Column(db.DateTime, default=datetime.utcnow())
-    last_ip = db.Column(db.String(40))
     salt = db.Column(db.String(32), nullable=False)
     state = db.Column(db.Enum(*USER_STATE_VALUES))
     learn_records = db.relationship('LearnRecord', backref='user',
@@ -132,7 +130,6 @@ class User(db.Model, UserMixin, ModelMixin):
         db.Model.__init__(self, **kwargs)
 
         self.created = datetime.utcnow()
-        self.last_login = datetime.utcnow()
 
     def __unicode__(self):
         return self.nickname

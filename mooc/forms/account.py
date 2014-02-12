@@ -142,8 +142,6 @@ class ManageUserForm(Form):
     phone = StringField(label=_('Phone Number'))
     qq = StringField(label=_('QQ'))
     created = DateTimeField(label=_('Joined at'))
-    last_login = DateTimeField(label=_('Last-log at'))
-    last_ip = StringField(label=_('Last-log ip'))
     card_id = StringField(label=_('Card ID'))
     stu_number = StringField(label=_('Student Number'))
     short_phone = StringField(label=_('Short Phone Number'))
