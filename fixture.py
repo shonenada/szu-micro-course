@@ -134,7 +134,6 @@ def _init_lecture():
             teacher=mr_key,
             course=courses[0],
             order=1,
-            published=True,
             knowledge_point=u'<ul><li>知识点1</li><li>知识点2</li><li>...</li></ul>',
             record_time=datetime(2013, 11, 06),
             record_location=u'教学楼A101',
