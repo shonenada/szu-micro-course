@@ -43,17 +43,21 @@ def flash(message, category='message', form_errors=False):
 
 def jsonify(**kwargs):
 
-    def _itercheck(_dict):
-        for k in _dict:
-            if is_lazy_string(_dict[k]):
-                _dict[k] = unicode(_dict[k])
-            if isinstance(_dict[k], dict):
-                _itercheck(_dict[k])
-            if isinstance(_dict[k], (tuple, list)):
-                for i, x in enumerate(_dict[k]):
-                    if is_lazy_string(x):
-                        _dict[k][i] = unicode(x)
+    def _validate(var):
+        if isinstance(var, (tuple, list)):
+            for i, v in enumerate(var):
+                var[i] = _validate(v)
+        elif isinstance(var, dict):
+            for k in var:
+                var[k] = _validate[k]
+        else:
+            if is_lazy_string(var):
+                return unicode(var)
+            else:
+                return var
+        return var
 
-    _itercheck(kwargs)
+    for k in kwargs:
+        kwargs[k] = _validate(kwargs[k])
 
     return jify(**kwargs)
