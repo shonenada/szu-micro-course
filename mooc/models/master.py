@@ -126,6 +126,22 @@ class Feedback(db.Model, ModelMixin):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship('User', backref='feedbacks', uselist=False)
     ip = db.Column(db.String(40))
-    created = db.Column(db.DateTime, default=datetime.utcnow())
+    created = db.Column(db.DateTime, default=datetime.utcnow)
     feedback = db.Column(db.Text)
     state = db.Column(db.Enum(*STATE), default='normal')
+
+
+class Log(db.Model, ModelMixin):
+
+    LOGCATEGORY = ('signin', 'other')
+    LEVEL = ('danger', 'warn', 'normal')
+
+    id = db.Column(db.Integer, primary_key=True)
+    category = db.Column(db.Enum(*LOGCATEGORY))
+    level = db.Column(db.Enum(*LEVEL))
+    content = db.Column(db.Text)
+    created = db.Column(db.DateTime, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship('User', backref=db.backref('logs', lazy='dynamic'),
+                           uselist=False)
+

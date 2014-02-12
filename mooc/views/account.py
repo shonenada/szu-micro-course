@@ -6,6 +6,7 @@ from flask.ext.login import login_user, logout_user, current_user
 
 from mooc.extensions import rbac, csrf, db
 from mooc.utils.helpers import flash, jsonify
+from mooc.models.master import Log
 from mooc.models.account import User, SzuAccount, Role
 from mooc.forms.account import SignInForm, SettingForm, PasswordForm, SignUpForm
 
@@ -29,19 +30,32 @@ def signin():
         user = User.query.authenticate(username, raw_passwd)
 
         if user:
+            Log(
+                category='signin',
+                level='normal',
+                content=("%s sign in successfully. (IP: %s)" %
+                         (user.username, request.remote_addr)),
+                user=user,
+            ).save()
             login_user(user, force=True, remember=is_remember_me)
             return jsonify(
                 success=True,
                 messages=[
                     gettext('Logged in successfully, Welcome %(username)s',
-                    username=user.nickname or user.username)
+                    username=user.nickname or user.username),
                 ]
             )
 
         else:
+            Log(
+                category='signin',
+                level='warn',
+                content="%s sign in failed. (IP: %s)" %
+                         (username, request.remote_addr),
+            ).save()
             return jsonify(
                 success=False,
-                messages=[gettext('Wrong username or password')]
+                messages=[gettext('Wrong username or password')],
             )
 
     if form.errors:
@@ -82,11 +96,11 @@ def signup():
         user.save()
 
         return jsonify(
-                success=True,
-                messages=[
-                    gettext('Sign up successfully')
-                ]
-            )
+            success=True,
+            messages=[
+                gettext('Sign up successfully')
+            ]
+        )
 
     if form.errors:
         return jsonify(success=False, errors=True, messages=form.errors)
