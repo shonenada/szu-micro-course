@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MOOC 0.1.0\n"
 "Report-Msgid-Bugs-To: shonenada@gmail.com\n"
-"POT-Creation-Date: 2014-02-10 21:04+0800\n"
+"POT-Creation-Date: 2014-02-12 16:33+0800\n"
 "PO-Revision-Date: 2014-01-30 17:58+0800\n"
 "Last-Translator: Yaoda Liu <shonenada@gmail.com>\n"
 "Language-Team: zh <LL@li.org>\n"
@@ -149,12 +149,12 @@ msgid "Short Phone Number"
 msgstr "短号"
 
 #: forms/account.py:151 templates/admin/account/list.html:23
-#: templates/admin/resource/list.html:6
+#: templates/admin/resource/list.html:7
 msgid "State"
 msgstr "状态"
 
 #: forms/account.py:245
-msgid "Type"
+msgid "User's Type"
 msgstr "用户类型"
 
 #: forms/account.py:322
@@ -272,7 +272,7 @@ msgstr "短课 ID"
 msgid "Comment"
 msgstr "评论"
 
-#: forms/discuss.py:10 forms/master.py:63 templates/admin/feedback/list.html:15
+#: forms/discuss.py:10 forms/master.py:64 templates/admin/feedback/list.html:15
 msgid "Title"
 msgstr "标题"
 
@@ -280,10 +280,19 @@ msgstr "标题"
 msgid "Content"
 msgstr "内容"
 
-#: forms/master.py:70 templates/feedback.html:8 templates/layout.html:88
+#: forms/master.py:71
+msgid "Contact(Email/QQ)"
+msgstr "联系方式（邮箱或QQ号码）"
+
+#: forms/master.py:74 templates/about.html:9 templates/feedback.html:9
+#: templates/layout.html:88 templates/privacy.html:9
 #: templates/admin/layout.html:87 templates/admin/feedback/list.html:18
 msgid "Feedback"
 msgstr "意见反馈"
+
+#: forms/master.py:83
+msgid "This field is required."
+msgstr "该字段是必须的"
 
 #: forms/resource.py:16
 msgid "Resource Name"
@@ -299,7 +308,7 @@ msgstr "请选择类别"
 
 #: forms/resource.py:28
 msgid "Please choose the state."
-msgstr "请选择用户状态"
+msgstr "请选择状态"
 
 #: models/account.py:80
 msgid "Frozen"
@@ -342,11 +351,17 @@ msgstr "PDF"
 msgid "Video"
 msgstr "视频"
 
-#: templates/about.html:8 templates/layout.html:87
+#: templates/about.html:8 templates/feedback.html:8 templates/layout.html:87
+#: templates/privacy.html:8
 msgid "About Us"
 msgstr "关于我们"
 
-#: templates/feedback.html:16 templates/course/lecture.html:197
+#: templates/about.html:10 templates/feedback.html:10 templates/layout.html:89
+#: templates/privacy.html:10
+msgid "Privacy"
+msgstr "隐私政策"
+
+#: templates/feedback.html:22 templates/course/lecture.html:197
 msgid "Submit"
 msgstr "提交"
 
@@ -395,10 +410,6 @@ msgstr "用户设置"
 msgid "Sign Out"
 msgstr "退出"
 
-#: templates/layout.html:89 templates/privacy.html:7
-msgid "Privacy"
-msgstr "隐私政策"
-
 #: templates/layout.html:93
 msgid "copyright"
 msgstr "版权所有"
@@ -407,8 +418,8 @@ msgstr "版权所有"
 msgid "Shenzhen University"
 msgstr "深圳大学"
 
-#: templates/right.html:5 templates/discuss/question_list.html:58
-#: templates/discuss/tag_view.html:54
+#: templates/right.html:5 templates/discuss/question.html:82
+#: templates/discuss/question_list.html:58 templates/discuss/tag_view.html:54
 msgid "Hot Tags"
 msgstr "热门标签"
 
@@ -611,6 +622,10 @@ msgstr "资源名"
 msgid "Resource's URL"
 msgstr "资源 URL"
 
+#: templates/admin/resource/list.html:6
+msgid "Type"
+msgstr "类型"
+
 #: templates/course/course_box.html:16 templates/course/course_list.html:30
 msgid "courses totally"
 msgstr "个课程"
@@ -777,6 +792,15 @@ msgstr "%(secdiff)s 个月前"
 msgid "%(secdiff)s year(s) ago"
 msgstr "%(secdiff)s 年前"
 
+#: utils/admin.py:75 views/admin.py:84 views/admin.py:102 views/admin.py:111
+#: views/admin.py:122 views/admin.py:141
+msgid "Operated successfully"
+msgstr "操作成功"
+
+#: utils/admin.py:115 utils/admin.py:142
+msgid "Operated successfully!"
+msgstr "操作成功"
+
 #: views/account.py:36
 #, python-format
 msgid "Logged in successfully, Welcome %(username)s"
@@ -802,44 +826,27 @@ msgstr "修改成功"
 msgid "Wrong old password"
 msgstr "密码错误"
 
-#: views/admin.py:84 views/admin.py:102 views/admin.py:111 views/admin.py:122
-#: views/admin.py:141
-msgid "Operated successfully"
-msgstr "操作成功"
-
 #: views/course.py:116
 msgid "Submitted successfully."
 msgstr "提交成功"
 
-#: views/discuss.py:95 views/discuss.py:99
+#: views/discuss.py:97 views/discuss.py:101
 msgid "Error params"
 msgstr "错误参数"
 
-#: views/discuss.py:106
+#: views/discuss.py:108
 msgid "You have voted!"
 msgstr "你已投过票啦~"
 
-#: views/discuss.py:120
+#: views/discuss.py:122
 msgid "Success"
 msgstr "成功"
 
-#: views/discuss.py:129
+#: views/discuss.py:131
 msgid "Please answer the question"
 msgstr "请先回答问题"
 
-#: views/discuss.py:166 views/master.py:51
+#: views/discuss.py:168 views/master.py:52
 msgid "Submited successfully"
 msgstr "提交成功"
-
-#~ msgid "This field must be 4~6 digitals"
-#~ msgstr "该字段必须为 4~6 个数字"
-
-#~ msgid "Name"
-#~ msgstr "用户名"
-
-#~ msgid "Title is required"
-#~ msgstr "标题不能为空"
-
-#~ msgid "Content is required"
-#~ msgstr "内容不能为空"
 
