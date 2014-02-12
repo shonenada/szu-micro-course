@@ -25,7 +25,7 @@ class UpDownRecord(db.Model, ModelMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     up_or_down = db.Column(db.Integer, nullable=False)
-    craeted = db.Column(db.DateTime, default=datetime.utcnow())
+    created = db.Column(db.DateTime, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     answer = db.relationship(
         'Answer', uselist=False,
@@ -33,7 +33,6 @@ class UpDownRecord(db.Model, ModelMixin):
     isdeleted = db.Column(db.Boolean, default=False)
 
     def __init__(self, user, up_or_down):
-        self.created = datetime.utcnow()
         self.user = user
         self.isdeleted = False
         if up_or_down in (self.TYPE_UP, self.TYPE_DOWN):
@@ -53,8 +52,8 @@ class Answer(db.Model, ModelMixin):
     content = db.Column(db.Text)
     up_count = db.Column(db.Integer, default=0)
     down_count = db.Column(db.Integer, default=0)
-    created = db.Column(db.DateTime, default=datetime.utcnow())
-    edit_time = db.Column(db.DateTime, default=datetime.utcnow())
+    created = db.Column(db.DateTime, default=datetime.utcnow)
+    edit_time = db.Column(db.DateTime, default=datetime.utcnow)
     question_id = db.Column(db.Integer, db.ForeignKey('question.id'))
     lecture_id = db.Column(db.Integer, db.ForeignKey('lecture.id'))
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
@@ -68,8 +67,6 @@ class Answer(db.Model, ModelMixin):
         db.Model.__init__(self, **kwargs)
         self.up_count = 0
         self.down_count = 0
-        self.created = datetime.utcnow()
-        self.edit_time = datetime.utcnow()
         self.state = 'normal'
 
     @hybrid_property
@@ -91,8 +88,8 @@ class Question(db.Model, ModelMixin):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(20))
     content = db.Column(db.Text)
-    created = db.Column(db.DateTime, default=datetime.now)
-    edit_time = db.Column(db.DateTime, default=datetime.now)
+    created = db.Column(db.DateTime, default=datetime.utcnow)
+    edit_time = db.Column(db.DateTime, default=datetime.utcnow)
     read_count = db.Column(db.Integer, default=0)
     up_count = db.Column(db.Integer, default=0)
     lecture_id = db.Column(db.Integer, db.ForeignKey('lecture.id'))
@@ -107,8 +104,6 @@ class Question(db.Model, ModelMixin):
         db.Model.__init__(self, **kwargs)
         self.up_count = 0
         self.read_count = 0
-        self.created = datetime.utcnow()
-        self.edit_time = datetime.utcnow()
         self.state = 'normal'
 
     @hybrid_property

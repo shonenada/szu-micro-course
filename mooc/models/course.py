@@ -105,7 +105,7 @@ class Course(db.Model, ModelMixin):
     description = db.Column(db.Text)
     state = db.Column(db.Enum(*COURSE_STATE_VALUES))
     logo_url = db.Column(db.String(50))
-    created = db.Column(db.DateTime, default=datetime.utcnow())
+    created = db.Column(db.DateTime, default=datetime.utcnow)
     teacher_id = db.Column(db.Integer, db.ForeignKey('teacher.id'))
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
     college_id = db.Column(db.Integer, db.ForeignKey('college.id'))
@@ -116,7 +116,6 @@ class Course(db.Model, ModelMixin):
 
     def __init__(self, **kwargs):
         db.Model.__init__(self, **kwargs)
-        self.created = datetime.utcnow()
         self.state = 'updating'
         self.logo_url = url_for('static',
                                 filename='images/default_course_logo.png')
@@ -161,7 +160,7 @@ class Lecture(db.Model, ModelMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20))
     description = db.Column(db.Text)
-    created = db.Column(db.DateTime, default=datetime.utcnow())
+    created = db.Column(db.DateTime, default=datetime.utcnow)
     knowledge_point = db.Column(db.Text)
     prepare_knowledge = db.Column(db.Text)
     term = db.Column(db.String(512))
@@ -205,7 +204,6 @@ class Lecture(db.Model, ModelMixin):
         self.read_count = 0
         self.play_count = 0
         self.video_length = 0
-        self.created = datetime.utcnow()
         self.upload_time = datetime.utcnow()
         self.state = 'published'
 
@@ -275,7 +273,7 @@ class LearnRecord(db.Model, ModelMixin):
     __tablename__ = 'learn_record'
 
     id = db.Column(db.Integer, primary_key=True)
-    created = db.Column(db.DateTime, default=datetime.utcnow())
+    created = db.Column(db.DateTime, default=datetime.utcnow)
     star_count = db.Column(db.Integer, default=0)
     lecture_id = db.Column(db.Integer, db.ForeignKey('lecture.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
@@ -296,14 +294,14 @@ class Note(db.Model, ModelMixin):
     user = db.relationship('User', backref='notes', uselist=False)
     lecture_id = db.Column(db.Integer, db.ForeignKey('lecture.id'))
     lecture = db.relationship('Lecture', backref='notes', uselist=False)    
-    created = db.Column(db.DateTime, default=datetime.utcnow())
+    created = db.Column(db.DateTime, default=datetime.utcnow)
     star_count = db.Column(db.Integer, default=0)
     state = db.Column(db.Enum(*STATE_VALUES), default='normal')
 
 
 class Comment(db.Model, ModelMixin):
 
-    STATE_VALUES = ('normal', 'delete')
+    STATE_VALUES = ('normal', 'unverified', 'delete')
 
     __tablename__ = 'comment'
 
@@ -315,5 +313,5 @@ class Comment(db.Model, ModelMixin):
     lecture = db.relationship('Lecture', backref=db.backref('comments',
         order_by=lambda: Comment.id.desc()), uselist=False)
     star_count = db.Column(db.Integer, default=0)
-    created = db.Column(db.DateTime, default=datetime.utcnow())
+    created = db.Column(db.DateTime, default=datetime.utcnow)
     state = db.Column(db.Enum(*STATE_VALUES), default='normal')

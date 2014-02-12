@@ -90,7 +90,7 @@ class User(db.Model, UserMixin, ModelMixin):
     phone = db.Column(db.String(11))
     qq = db.Column(db.String(15))
     avatar = db.Column(db.String(250))
-    created = db.Column(db.DateTime, default=datetime.utcnow())
+    created = db.Column(db.DateTime, default=datetime.utcnow)
     salt = db.Column(db.String(32), nullable=False)
     state = db.Column(db.Enum(*USER_STATE_VALUES))
     learn_records = db.relationship('LearnRecord', backref='user',
@@ -103,7 +103,6 @@ class User(db.Model, UserMixin, ModelMixin):
                                       uselist=True, lazy='dynamic')
 
     def __init__(self, **kwargs):
-
         self.salt = uuid4().hex
 
         if 'username' in kwargs:
@@ -129,8 +128,6 @@ class User(db.Model, UserMixin, ModelMixin):
 
         db.Model.__init__(self, **kwargs)
 
-        self.created = datetime.utcnow()
-
     def __unicode__(self):
         return self.nickname
 
@@ -155,7 +152,7 @@ class User(db.Model, UserMixin, ModelMixin):
         return self.id
 
     def is_authenticated(self):
-        return (self.state == 'normal')
+        return (self.state in ('normal', 'unactivated'))
 
     def active(self):
         self.state = 'normal'

@@ -18,7 +18,7 @@ class Resource(db.Model, ModelMixin):
     user = db.relationship('User', backref='resources', uselist=False)
     resource_url = db.Column(db.String(250))
     type = db.Column(db.Enum(*RESOURCE_TYPE))
-    created = db.Column(db.DateTime)
+    created = db.Column(db.DateTime, default=datetime.utcnow)
     view_count = db.Column(db.Integer, default=0)
     download_count = db.Column(db.Integer, default=0)
     lecture_id = db.Column(db.Integer, db.ForeignKey('lecture.id'))
@@ -37,7 +37,6 @@ class Resource(db.Model, ModelMixin):
             self.state = 'normal'
 
         db.Model.__init__(self, **kwargs)
-        self.created = datetime.utcnow()
         self.view_count = 0
         self.download_count = 0
 
