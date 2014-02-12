@@ -5,9 +5,12 @@
     <div class="tips-box">
         <div class="tips">
             <ul>
-                <li><a href="javascript:void(0);" class="current">{{ _('About Us') }}</a></li>
+                <li><a href="javascript:void(0)" class="current">{{ _('About Us') }}</a></li>
+                <li><a href="{{ url_for('master.feedback') }}">{{ _('Feedback') }}</a></li>
+                <li><a href="{{ url_for('master.privacy') }}">{{ _('Privacy') }}</a></li>
             </ul>
         </div>
+
         <div class="content">
             <p>关于我们</p>
         </div>

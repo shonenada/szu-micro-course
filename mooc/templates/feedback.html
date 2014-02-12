@@ -5,13 +5,19 @@
     <div class="tips-box">
         <div class="tips">
             <ul>
+                <li><a href="{{ url_for('master.about') }}">{{ _('About Us') }}</a></li>
                 <li><a href="javascript:void(0)" class="current">{{ _('Feedback') }}</a></li>
+                <li><a href="{{ url_for('master.privacy') }}">{{ _('Privacy') }}</a></li>
             </ul>
         </div>
+
         <div class="content submit-form-container">
             <form id="feedbackForm" action="{{ url_for('master.feedback') }}" method="POST" class="submit-form">
                 {{ form.csrf_token }}
                 {{ form.title(placeholder=form.title.label.text) }}
+                {%- if current_user.is_anonymous() %}
+                {{ form.contact(placeholder=form.contact.label.text) }}
+                {%- endif %}
                 {{ form.feedback(cols="35", rows="20", placeholder=form.feedback.label.text) }}
                 <input type="submit" value="{{ _('Submit') }}" />
             </form>
