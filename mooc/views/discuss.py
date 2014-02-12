@@ -138,12 +138,10 @@ def answer(qid):
     return jsonify(success=True)
 
 
-@discuss_app.route('/question/ask', methods=['GET', 'POST'])
+@discuss_app.route('/question/post', methods=['GET', 'POST'])
 @rbac.allow(['local_user'], ['GET', 'POST'])
-def ask():
+def post():
     form = AskForm()
-    if request.method == 'GET':
-        return render_template('discuss/ask.html', form=form)
 
     if form.validate_on_submit():
         title = form.data.get('title')
@@ -171,6 +169,10 @@ def ask():
     
     if form.errors:
         return jsonify(success=False, errors=True, messages=form.errors)
+    hotest_tags = QuestionTag.query.order_by(QuestionTag.count.desc()).all()
+
+    return render_template('discuss/post.html',
+                           form=form, hotest_tags=hotest_tags)
 
 
 @discuss_app.route('/tag/<tag>')

@@ -1,6 +1,6 @@
-{% extends 'layout.html' %}
+{%- extends 'layout.html' %}
 
-{% block custom_static %}
+{%- block custom_static %}
 <link href="{{ url_for('static', filename='styles/plugins/bootstrap.min.css')}}" media="all" rel="stylesheet" />
 <link href="{{ url_for('static', filename='styles/fix.css')}}" media="all" rel="stylesheet" />
 <link href="{{ url_for('static', filename='styles/dropdown.css')}}" media="all" rel="stylesheet" />
@@ -37,8 +37,8 @@ $(function(){
     }
 })
 </script>
-{% endblock %}
-{% block left %}
+{%- endblock %}
+{%- block left %}
 <div id="player-container">
     <video src="{{ lecture.video_url }}" controls="controls" autoplay="autoplay" id="player">
         Your browser does not support the video tag.
@@ -58,14 +58,14 @@ $(function(){
         </form>
     </div>
 
-    {% for r in lecture.resources %}
-    {% if r.category in ('pdf') %}
+    {%- for r in lecture.resources %}
+    {%- if r.type in ('pdf') %}
     <div class="player-mask narrow-border online-viewer-container" id="online-view-{{ r.id }}">
         <a href="#" class="play-mask-close">关闭</a>
         <embed class="pdf-viewer" src="{{ r.resource_url }}"></embed>
     </div>
-    {% endif %}
-    {% if r.category in ('ppt', 'doc') %}
+    {%- endif %}
+    {%- if r.type in ('ppt', 'doc') %}
     <div class="player-mask narrow-border online-viewer-container" id="online-view-{{ r.id }}">
         <a href="#" class="play-mask-close">关闭</a>
         <a class="online-view-container" id="online-view-container-{{ r.id }}" style="display:block; width: 100%; height: 100%"></a>
@@ -99,8 +99,8 @@ $(function(){
                     }});
         </script>
     </div>
-    {% endif %}
-    {% endfor %}
+    {%- endif %}
+    {%- endfor %}
 </div>
 
 <div id="lecture-intro">
@@ -129,7 +129,7 @@ $(function(){
                 <li><a href="javascript:void(0);" id="btn-quiz" class="lecture-btns">{{ _('Quiz') }}</a></li>
                 <li><a href="javascript:void(0);" id="btn-video-resource" class="lecture-btns">{{ _('Resource of Course') }}</a></li>
                 <li><a href="javascript:void(0);" id="btn-comment" class="lecture-btns">{{ _('Comments of Course') }}</a></li>
-                <li class="ask"><a href="{{ url_for('discuss.ask', lecture_id=lecture.id) }}" id="ask-btn" class="lecture-btns">{{ _('Ask') }}</a></li>
+                <li class="ask"><a href="{{ url_for('discuss.post', lecture_id=lecture.id) }}" id="ask-btn" class="lecture-btns">{{ _('Post Dicussion') }}</a></li>
             </ul>
         </div>
 
@@ -140,25 +140,25 @@ $(function(){
 
             <div id="lecture-questions" class="lecture-bar lecture-hidden">
                 <ul>
-                    {% for index, q in lecture.questions|enumerate %}
+                    {%- for index, q in lecture.questions|enumerate %}
                     <li><a target="_blank" href="{{ url_for('discuss.view_question', qid=q.id) }}">{{ index+1 }}、{{ q.title }}</a></li>
-                    {% endfor %}
+                    {%- endfor %}
                 </ul>
             </div>
 
             <div id="lecture-quiz" class="lecture-bar lecture-hidden">
-                {% for index, quiz in quizs|enumerate %}
+                {%- for index, quiz in quizs|enumerate %}
                 <div class="quiz-item" id="quiz-item-{{quiz.id}}">
                     <div class="quiz-title" id="quiz-title-{{quiz.id}}">{{ index + 1 }}.{{ quiz.question }}<span></span></div>
                     <div class="quiz-option" id="quiz-option-{{quiz.id}}">
                         <ul>
-                            {% for op in quiz.options %}
+                            {%- for op in quiz.options %}
                             <li><label><input name="quiz-{{index}}" onclick="window.check_answer({{lecture.id}}, {{quiz.id}}, {{op.id}}, '{{op.content}}')" type="radio"/>{{ op.content }}</label></li>
-                            {% endfor %}
+                            {%- endfor %}
                         </ul>
                     </div>
                     </div>
-                {% endfor %}
+                {%- endfor %}
             </div>
 
             <div id="lecture-video-resource" class="lecture-bar lecture-hidden">
@@ -176,13 +176,13 @@ $(function(){
                         <td>{{ _('Video') }}</td>
                         <td><a href="{{ lecture.video_url }}">{{ _('Download') }}</a></td>
                     </tr>
-                    {% for r in lecture.resources %}
+                    {%- for r in lecture.resources %}
                     <tr>
                         <td>{{ r.name }}</td>
                         <td>{{ r.category|friendly_resource_category }}</td>
-                        <td>{% if r.category in ('ppt', 'doc', 'pdf') %}<a href="#online-view-{{ r.id }}" id="online-view-{{ r.id }}" data="{{ r.id }}" class="online-view">{{ _('Preview Online') }}</a>{% endif %} <a href="{{ lecture.video_url }}">{{ _('Download') }}</a></td>
+                        <td>{%- if r.category in ('ppt', 'doc', 'pdf') %}<a href="#online-view-{{ r.id }}" id="online-view-{{ r.id }}" data="{{ r.id }}" class="online-view">{{ _('Preview Online') }}</a>{%- endif %} <a href="{{ lecture.video_url }}">{{ _('Download') }}</a></td>
                     </tr>
-                    {% endfor %}
+                    {%- endfor %}
                     </tbody>
                 </table>
             </div>
@@ -227,7 +227,7 @@ $(function(){
         <div id="lecture-who-learning">
             <h2>{{ _("Who's learning?") }}</h2>
             <div id="leanring">
-                {% for l in learning %}
+                {%- for l in learning %}
                 <div class="content-list">
                     <div class="icon">
                         <img src="{{ l.user.get_avatar() }}">
@@ -241,16 +241,16 @@ $(function(){
                         <span class="course-name">{{ l.lecture.name }}</span>
                     </div>
                 </div>
-                {% endfor %}
+                {%- endfor %}
             </div>
         </div>
         <div class="shadow"></div>
     </div>
 </div>
-{% endblock %}
+{%- endblock %}
 
-{% block right %}
-{% endblock %}
+{%- block right %}
+{%- endblock %}
 
 {%- block endscript %}
 <script type="text/javascript">

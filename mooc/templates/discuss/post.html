@@ -9,15 +9,15 @@
     <div class="tips-box">
         <div class="tips">
             <ul>
-                <li><a href="javascript:void(0)" class="current">{{ _('Ask') }}</a></li>
+                <li><a href="javascript:void(0)" class="current">{{ _('Post Dicussion') }}</a></li>
             </ul>
         </div>
         <div class="content submit-form-container">
-            <form id="askForm" action="{{ url_for('discuss.ask') }}" method="POST" class="submit-form">
+            <form id="postForm" action="{{ url_for('discuss.post') }}" method="POST" class="submit-form">
                 {{ form.csrf_token }}
                 <li>{{ form.title(placeholder=form.title.label.text) }}</li>
                 <li>{{ form.content(cols="35", rows="20", placeholder=form.content.label.text) }}</li>
-                <input type="submit" value="{{ _('Ask') }}" />
+                <input type="submit" value="{{ _('Submit') }}" />
             </form>
         </div>
     </div>
@@ -29,9 +29,15 @@
 <div id="right">
     <div class="info-box">
         <div class="info-wrapper">
-            <div class="title">{{ _('Rule of asking') }}</div>
-            <div class="content list">
-                 
+            <div class="title">{{ _('Hot Tags') }}</div>
+            <div class="content">
+                <div class="list">
+                    <ul>
+                        {%- for t in hotest_tags %}
+                        <li class="tag-item"><a href="{{ url_for('discuss.tag', tag=t.tag) }}">{{ t.tag }}</a></li>
+                        {%- endfor %}
+                    </ul>
+                </div>
             </div>
         </div>
         <div class="shadow"></div>
@@ -42,7 +48,7 @@
 {%- block endscript %}
 <script type="text/javascript">
     $(function(){
-        $T.ajax_form($('#askForm'));
+        $T.ajax_form($('#postForm'));
     });
 </script>
 {%- endblock %}

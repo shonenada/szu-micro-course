@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MOOC 0.1.0\n"
 "Report-Msgid-Bugs-To: shonenada@gmail.com\n"
-"POT-Creation-Date: 2014-02-12 16:33+0800\n"
+"POT-Creation-Date: 2014-02-12 19:09+0800\n"
 "PO-Revision-Date: 2014-01-30 17:58+0800\n"
 "Last-Translator: Yaoda Liu <shonenada@gmail.com>\n"
 "Language-Team: zh <LL@li.org>\n"
@@ -148,8 +148,8 @@ msgstr "学生卡号"
 msgid "Short Phone Number"
 msgstr "短号"
 
-#: forms/account.py:151 templates/admin/account/list.html:23
-#: templates/admin/resource/list.html:7
+#: forms/account.py:151 forms/resource.py:25
+#: templates/admin/account/list.html:23 templates/admin/resource/list.html:7
 msgid "State"
 msgstr "状态"
 
@@ -201,12 +201,12 @@ msgstr "课程名"
 msgid "Logo"
 msgstr "Logo"
 
-#: forms/course.py:48 forms/course.py:84 models/account.py:187
+#: forms/course.py:48 forms/course.py:84 models/account.py:191
 #: templates/admin/course/list.html:6 templates/admin/lecture/list.html:6
 msgid "Teacher"
 msgstr "教师"
 
-#: forms/course.py:54 forms/resource.py:19 templates/admin/course/list.html:8
+#: forms/course.py:54 templates/admin/course/list.html:8
 #: templates/course/lecture.html:169
 msgid "Category"
 msgstr "分类"
@@ -302,6 +302,10 @@ msgstr "资源名"
 msgid "URL"
 msgstr "URL"
 
+#: forms/resource.py:19 templates/admin/resource/list.html:6
+msgid "Type"
+msgstr "类型"
+
 #: forms/resource.py:22
 msgid "Please choose the category"
 msgstr "请选择类别"
@@ -318,15 +322,15 @@ msgstr "冻结"
 msgid "Unactivated"
 msgstr "未激活"
 
-#: models/account.py:186
+#: models/account.py:190
 msgid "Undergrade"
 msgstr "本科生"
 
-#: models/account.py:186
+#: models/account.py:190
 msgid "Graduate"
 msgstr "研究生"
 
-#: models/account.py:187 services/resource.py:22 services/resource.py:26
+#: models/account.py:191 services/resource.py:23 services/resource.py:27
 msgid "Other"
 msgstr "其他"
 
@@ -335,19 +339,19 @@ msgstr "其他"
 msgid "Hot"
 msgstr "热门"
 
-#: services/resource.py:18
+#: services/resource.py:19
 msgid "PPT"
 msgstr "演示文稿"
 
-#: services/resource.py:19
+#: services/resource.py:20
 msgid "Docuement"
 msgstr "文档"
 
-#: services/resource.py:20
+#: services/resource.py:21
 msgid "PDF"
 msgstr "PDF"
 
-#: services/resource.py:21 templates/course/lecture.html:176
+#: services/resource.py:22 templates/course/lecture.html:176
 msgid "Video"
 msgstr "视频"
 
@@ -468,9 +472,8 @@ msgstr "加入于"
 msgid "Learnt Records"
 msgstr "学习记录"
 
-#: templates/account/people.html:45 templates/course/lecture.html:132
-#: templates/discuss/ask.html:12 templates/discuss/ask.html:20
-#: templates/discuss/question_list.html:11 templates/discuss/tag_view.html:9
+#: templates/account/people.html:45 templates/discuss/post.html:12
+#: templates/discuss/post.html:20 templates/discuss/question_list.html:11
 msgid "Ask"
 msgstr "提问"
 
@@ -622,10 +625,6 @@ msgstr "资源名"
 msgid "Resource's URL"
 msgstr "资源 URL"
 
-#: templates/admin/resource/list.html:6
-msgid "Type"
-msgstr "类型"
-
 #: templates/course/course_box.html:16 templates/course/course_list.html:30
 msgid "courses totally"
 msgstr "个课程"
@@ -640,11 +639,11 @@ msgstr "视频列表"
 
 #: templates/course/lecture.html:128
 msgid "Relatived Dicusses"
-msgstr "相关讨论"
+msgstr "讨论"
 
 #: templates/course/lecture.html:129
 msgid "Quiz"
-msgstr "课程评测"
+msgstr "小测"
 
 #: templates/course/lecture.html:130 templates/resource/list.html:9
 msgid "Resource of Course"
@@ -652,7 +651,11 @@ msgstr "课程资源"
 
 #: templates/course/lecture.html:131
 msgid "Comments of Course"
-msgstr "课程评论"
+msgstr "评论"
+
+#: templates/course/lecture.html:132 templates/discuss/tag_view.html:9
+msgid "Post Dicussion"
+msgstr "发布话题"
 
 #: templates/course/lecture.html:168
 msgid "Resource"
@@ -683,7 +686,7 @@ msgstr "谁也在学？"
 msgid "Minute(s)"
 msgstr "分钟"
 
-#: templates/discuss/ask.html:32
+#: templates/discuss/post.html:32
 msgid "Rule of asking"
 msgstr "提问准则"
 
@@ -792,12 +795,12 @@ msgstr "%(secdiff)s 个月前"
 msgid "%(secdiff)s year(s) ago"
 msgstr "%(secdiff)s 年前"
 
-#: utils/admin.py:75 views/admin.py:84 views/admin.py:102 views/admin.py:111
+#: utils/admin.py:76 views/admin.py:84 views/admin.py:102 views/admin.py:111
 #: views/admin.py:122 views/admin.py:141
 msgid "Operated successfully"
 msgstr "操作成功"
 
-#: utils/admin.py:115 utils/admin.py:142
+#: utils/admin.py:116 utils/admin.py:143
 msgid "Operated successfully!"
 msgstr "操作成功"
 

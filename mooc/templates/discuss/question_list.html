@@ -8,7 +8,7 @@
                 <li><a href="{{ url_for('discuss.lastest') }}" id="lastest"{%- if type == 'lastest' %} class="current"{%- endif %}>{{ _('Lastest') }}</a></li>
                 <li><a href="{{ url_for('discuss.hotest') }}" id="hotest"{%- if type == 'hotest' %} class="current"{%- endif %}>{{ _('Hot') }}</a></li>
                 <li><a href="{{ url_for('discuss.noanswer') }}" id="none-answer"{%- if type == 'noanswer' %} class="current"{%- endif %}>{{ _('No-Answered') }}</a></li>
-                <li class="right"><a href="{{ url_for('discuss.ask') }}" id="ask-btn">{{ _('Ask') }}</a></li>
+                <li class="right"><a href="{{ url_for('discuss.post') }}" id="post-btn">{{ _('Post Dicussion') }}</a></li>
             </ul>
         </div>
 
