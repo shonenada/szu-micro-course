@@ -11,7 +11,7 @@
 <script>
 $(function(){
     window.register_lecture_id({{ lecture.id }})
-
+    {%- if not current_user.is_anonymous() %}
     refresh_comment = function (res, data) {
         var box, clear, avatar_box, detial_container, user_info, content;
         box = $('<div class="detail-box underline-dashed"></div>');
@@ -35,6 +35,7 @@ $(function(){
          .removeAttr('checked')
          .removeAttr('selected');
     }
+    {%- endif %}
 })
 </script>
 {%- endblock %}
@@ -125,7 +126,7 @@ $(function(){
         <div id="lecture-btns">
             <ul>
                 <li><a href="javascript:void(0);" id="btn-knowledge-point" class="lecture-btns current">{{ _('Knowledge Points') }}</a></li>
-                <li><a href="javascript:void(0);" id="btn-questions" class="lecture-btns">{{ _('Relatived Dicusses') }}</a></li>
+                <li><a href="javascript:void(0);" id="btn-dicussion" class="lecture-btns">{{ _('Relatived Dicusses') }}</a></li>
                 <li><a href="javascript:void(0);" id="btn-quiz" class="lecture-btns">{{ _('Quiz') }}</a></li>
                 <li><a href="javascript:void(0);" id="btn-video-resource" class="lecture-btns">{{ _('Resource of Course') }}</a></li>
                 <li><a href="javascript:void(0);" id="btn-comment" class="lecture-btns">{{ _('Comments of Course') }}</a></li>
@@ -138,10 +139,11 @@ $(function(){
                 <p>{{ lecture.knowledge_point|safe }}</p>
             </div>
 
-            <div id="lecture-questions" class="lecture-bar lecture-hidden">
+            <div id="lecture-dicussion" class="lecture-bar lecture-hidden">
                 <ul>
+                {%- if lecture.questions.count() < 1 %}{{ _('No dicussions') }}{%- endif %}
                     {%- for index, q in lecture.questions|enumerate %}
-                    <li><a target="_blank" href="{{ url_for('discuss.view_question', qid=q.id) }}">{{ index+1 }}、{{ q.title }}</a></li>
+                    <li><a target="_blank" href="{{ url_for('discuss.view_question', qid=q.id) }}">{{ index + 1 }}、{{ q.title }}</a></li>
                     {%- endfor %}
                 </ul>
             </div>
@@ -188,6 +190,8 @@ $(function(){
             </div>
 
             <div id="lecture-comment" class="lecture-bar lecture-hidden">
+                {%- if lecture.comments.count() < 1 %}{{ _('No comments for this lecture.') }}{% endif %}
+                {%- if not current_user.is_anonymous() %}
                 <div id="lecture-comment-submit" class="submit-form-container">
                     <div class="form-title">{{ _('Post Comment') }}</div>
                     <form id="lectureCommentForm" action="{{ url_for('course.lecture_comment') }}" method="POST" class="submit-form">
@@ -197,6 +201,7 @@ $(function(){
                         <button>{{ _('Submit') }}</button>
                     </form>
                 </div>
+                {%- endif %}
                 <div id="lecture-comment-content">
                 {%- for comment in lecture.comments[:10] %}
                     <div class="detail-box underline-dashed">
