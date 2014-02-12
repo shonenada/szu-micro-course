@@ -15,8 +15,7 @@ def update_user_state(user_id, state):
         user.freeze()
     elif state == 'active':
         user.active()
-    db.session.add(user)
-    db.session.commit()
+    user.save()
 
 
 def change_user_password(user_id, new_password):
@@ -24,22 +23,30 @@ def change_user_password(user_id, new_password):
     if not user:
         raise RuntimeError('User is not found')
     user.change_password(new_password)
-    db.session.add(user)
-    db.session.commit()
+    user.save()
 
 
 def create_user(data):
     college = data.get('college', None)
-    user = User(data['username'], data['raw_passwd'],
-                data['nickname'], data['is_male'] is 'True')
-    user.name = data['name']
-    user.email = data['email']
-    user.phone = data['phone']
-    user.qq = data['qq']
-    user.state = data['state']
-    szu_account = SzuAccount(user, data['card_id'], data['stu_number'],
-                             college, data['szu_account_type'])
-    szu_account.short_phone = data['short_phone']
-    db.session.add(user)
-    db.session.add(szu_account)
+    user = User(
+        username=data['username'],
+        passwd=data['raw_passwd'],
+        nickname=data['nickname'],
+        is_male=data['is_male'] is 'True',
+        name=data['name'],
+        email=data['email'],
+        phone=data['phone'],
+        qq=data['qq'],
+        state=data['state'],
+    )
+    szu_account = SzuAccount(
+        user=user,
+        card_id=data['card_id'],
+        stu_number=data['stu_number'],
+        college=college,
+        szu_account_type=data['szu_account_type'],
+        short_phone=data['short_phone'],
+    )
+    user.save(commit=False)
+    szu_account.save(commit=False)
     db.session.commit()
