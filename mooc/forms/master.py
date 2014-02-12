@@ -1,10 +1,11 @@
-from flask.ext.babel import lazy_gettext as _
-from flask_wtf import Form
 from wtforms import StringField, TextAreaField
 from wtforms.fields import Field
 from wtforms.widgets import TextInput
 from wtforms.validators import InputRequired, Length
 from wtforms.validators import ValidationError
+from flask.ext.babel import lazy_gettext as _
+from flask.ext.wtf import Form
+from flask.ext.login import current_user
 
 
 class TagsField(Field):
@@ -66,9 +67,17 @@ class FeedbackForm(Form):
             Length(max=20),
         ],
     )
+    contact = StringField(
+        label=_('Contact(Email/QQ)'),
+    )
     feedback = TextAreaField(
         label=_('Feedback'),
         validators=[
             InputRequired(),
         ]
     )
+
+    def validate_contact(form, filed):
+        if current_user.is_anonymous():
+            if len(filed.data) < 1:
+                raise ValidationError(unicode(_('This field is required.')))

@@ -23,7 +23,7 @@
                 {%- for item in pagination.items %}
                 <tr>
                     <td>{{ item.title }}</td>
-                    <td>{%- if item.user %}{{ item.user.name or item.user.nickname or item.user.username }}{%- else %}{{ _('Anonymous') }}{%- endif %}
+                    <td>{%- if item.user %}{{ item.user.name or item.user.nickname or item.user.username }}{%- else %}{{ _('Anonymous') }} ({{ item.contact }}) {%- endif %}
                     <td>{{ item.created | date }}</td>
                     <td>{{ item.feedback }}</td>
                     <td>

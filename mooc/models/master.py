@@ -122,6 +122,7 @@ class Feedback(db.Model, ModelMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(30))
+    contact = db.Column(db.String(200))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship('User', backref='feedbacks', uselist=False)
     ip = db.Column(db.String(40))

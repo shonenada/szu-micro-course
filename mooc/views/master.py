@@ -39,6 +39,7 @@ def feedback():
     form = FeedbackForm(request.form)
     if form.validate_on_submit():
         feedback = Feedback(title=form.data['title'],
+                            contact=form.data['contact'],
                             feedback=form.data['feedback'])
         
         if not current_user.is_anonymous():

@@ -72,6 +72,7 @@ def noanswer():
 @rbac.allow(['anonymous'], ['GET'])
 def view_question(qid):
     question = Question.query.get(qid)
+    hotest_tags = QuestionTag.query.order_by(QuestionTag.count.desc()).all()
     answers = (Answer.query.filter(Answer.question==question)
                            .order_by(Answer.like_count.desc())
                            .order_by(Answer.created.desc())
@@ -80,6 +81,7 @@ def view_question(qid):
     question.save()
     return render_template(
         'discuss/question.html',
+        hotest_tags=hotest_tags,
         question=question,
         answers=answers
     )
