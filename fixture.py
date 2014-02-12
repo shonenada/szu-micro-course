@@ -153,7 +153,7 @@ def _init_resource():
             name=u'示范资源',
             lecture=lectures[0],
             resource_url='/static/upload/resources/pytest.pdf',
-            category='pdf',
+            type='pdf',
         ),
     )
     for r in resources:
