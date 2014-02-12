@@ -1,7 +1,8 @@
-from flask import request, render_template, current_app, jsonify
+from flask import request, render_template, current_app
+from flask.ext.babel import lazy_gettext as _
 
 from mooc.extensions import rbac
-from mooc.helpers import flash
+from mooc.utils.helpers import flash, jsonify
 
 
 def create_object():
@@ -72,11 +73,11 @@ def generate_create_controller(blueprint, model, form_model, **kwargs):
             else:
                 create_object(model, form.data)
 
-            flash(message='Operated successfully', category='notice')
+            flash(message=_('Operated successfully'), category='notice')
             return jsonify(success=True)
 
         if form.errors:
-            return jsonify(success=False, messages=form.errors.values())
+            return jsonify(success=False, messages=form.errors.values()[0])
 
         return render_template(
             'admin/%s/create.html' % module_name,
@@ -112,11 +113,11 @@ def generate_edit_controller(blueprint, model, form_model, **kwargs):
 
         if form.validate_on_submit():
             obj.edit(form.data)
-            flash('Operated successfully!', 'notice')
+            flash(message=_('Operated successfully!'), category='notice')
             return jsonify(success=True)
 
         if form.errors:
-            return jsonify(success=False, messages=form.errors.values())
+            return jsonify(success=False, messages=form.errors.values()[0])
 
         return render_template(
             'admin/%s/edit.html' % module_name,
@@ -139,7 +140,7 @@ def generate_delete_controller(blueprint, model, **kwargs):
     def delete_controller(mid):
         obj = model.query.get(mid)
         obj.delete()
-        flash(message='Operated successfully!', category='notice')
+        flash(message=_('Operated successfully!'), category='notice')
         return jsonify(success=True)
 
 

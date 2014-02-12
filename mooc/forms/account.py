@@ -242,7 +242,7 @@ class CreateUserForm(Form):
         allow_blank=False
     )
     szu_account_type = SelectField(
-        label=_('Type'),
+        label=_("User's Type"),
         choices=[
             (type_values[i], type_texts[i]) for i in xrange(len(type_texts))
         ]

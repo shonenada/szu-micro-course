@@ -15,14 +15,14 @@ class ResourceForm(Form):
 
     name = StringField(label=_('Resource Name'), validators=[InputRequired()])
     resource_url = StringField(label=_('URL'), validators=[InputRequired()])
-    category = SelectField(
-        label=_('Category'),
-        choices=[(Resource.RESOURCE_CATEGORY[i], Resource.RESOURCE_CATEGORY[i])
-                  for i in xrange(len(Resource.RESOURCE_CATEGORY))],
+    type = SelectField(
+        label=_('Type'),
+        choices=[(Resource.RESOURCE_TYPE[i], Resource.RESOURCE_TYPE[i])
+                  for i in xrange(len(Resource.RESOURCE_TYPE))],
         validators=[InputRequired(message=_('Please choose the category'))]
     )
     state = SelectField(
-        label=u'State',
+        label=_('State'),
         choices=[(Resource.RESOURCE_STATE[i],
                   Resource.RESOURCE_STATE[i]) for i in range(0, 2)],
         validators=[InputRequired(message=_("Please choose the state."))]
