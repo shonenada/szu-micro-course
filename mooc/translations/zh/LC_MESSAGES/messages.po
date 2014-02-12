@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MOOC 0.1.0\n"
 "Report-Msgid-Bugs-To: shonenada@gmail.com\n"
-"POT-Creation-Date: 2014-02-12 19:09+0800\n"
+"POT-Creation-Date: 2014-02-12 21:43+0800\n"
 "PO-Revision-Date: 2014-01-30 17:58+0800\n"
 "Last-Translator: Yaoda Liu <shonenada@gmail.com>\n"
 "Language-Team: zh <LL@li.org>\n"
@@ -54,21 +54,21 @@ msgid "Student Number is existed"
 msgstr "学号已存在"
 
 #: forms/account.py:39 forms/account.py:63 forms/account.py:132
-#: forms/account.py:167 templates/admin/account/list.html:18
+#: forms/account.py:165 templates/admin/account/list.html:18
 msgid "Username"
 msgstr "用户名"
 
-#: forms/account.py:40 forms/account.py:64 forms/account.py:168
-#: forms/account.py:323 forms/account.py:331 forms/account.py:339
+#: forms/account.py:40 forms/account.py:64 forms/account.py:166
+#: forms/account.py:321 forms/account.py:329 forms/account.py:337
 msgid "6~30 characters"
 msgstr "6~30 个字符"
 
-#: forms/account.py:47 forms/account.py:71 forms/account.py:175
+#: forms/account.py:47 forms/account.py:71 forms/account.py:173
 #: templates/admin/account/edit.html:14
 msgid "Password"
 msgstr "密码"
 
-#: forms/account.py:48 forms/account.py:72 forms/account.py:176
+#: forms/account.py:48 forms/account.py:72 forms/account.py:174
 msgid "6~20 characters"
 msgstr "6~20 个字符"
 
@@ -76,8 +76,8 @@ msgstr "6~20 个字符"
 msgid "Remember Me"
 msgstr "记住我"
 
-#: forms/account.py:79 forms/account.py:140 forms/account.py:183
-#: forms/account.py:264 templates/admin/account/list.html:19
+#: forms/account.py:79 forms/account.py:140 forms/account.py:181
+#: forms/account.py:262 templates/admin/account/list.html:19
 msgid "Real Name"
 msgstr "真实姓名"
 
@@ -85,46 +85,46 @@ msgstr "真实姓名"
 msgid "Your real name"
 msgstr "请输入您的真实姓名"
 
-#: forms/account.py:87 forms/account.py:134 forms/account.py:197
-#: forms/account.py:276 templates/admin/account/list.html:20
+#: forms/account.py:87 forms/account.py:134 forms/account.py:195
+#: forms/account.py:274 templates/admin/account/list.html:20
 msgid "Gender"
 msgstr "性别"
 
-#: forms/account.py:89 forms/account.py:136 forms/account.py:199
-#: forms/account.py:278
+#: forms/account.py:89 forms/account.py:136 forms/account.py:197
+#: forms/account.py:276
 msgid "Male"
 msgstr "男"
 
-#: forms/account.py:90 forms/account.py:137 forms/account.py:200
-#: forms/account.py:279
+#: forms/account.py:90 forms/account.py:137 forms/account.py:198
+#: forms/account.py:277
 msgid "Female"
 msgstr "女"
 
-#: forms/account.py:97 forms/account.py:148 forms/account.py:234
-#: forms/account.py:294 templates/admin/account/list.html:21
+#: forms/account.py:97 forms/account.py:146 forms/account.py:232
+#: forms/account.py:292 templates/admin/account/list.html:21
 msgid "Student Number"
 msgstr "学号"
 
-#: forms/account.py:103 forms/account.py:240 forms/account.py:283
+#: forms/account.py:103 forms/account.py:238 forms/account.py:281
 #: forms/course.py:51 templates/admin/course/list.html:7
 #: templates/admin/lecture/list.html:8
 msgid "College"
 msgstr "学院"
 
-#: forms/account.py:108 forms/account.py:190 forms/account.py:270
+#: forms/account.py:108 forms/account.py:188 forms/account.py:268
 #: templates/admin/account/list.html:22
 msgid "Nickname"
 msgstr "昵称"
 
-#: forms/account.py:141 forms/account.py:204 forms/account.py:300
+#: forms/account.py:141 forms/account.py:202 forms/account.py:298
 msgid "Email"
 msgstr "邮箱"
 
-#: forms/account.py:142 forms/account.py:210 forms/account.py:306
+#: forms/account.py:142 forms/account.py:208 forms/account.py:304
 msgid "Phone Number"
 msgstr "手机号码"
 
-#: forms/account.py:143 forms/account.py:222
+#: forms/account.py:143 forms/account.py:220
 msgid "QQ"
 msgstr "QQ 号码"
 
@@ -132,50 +132,42 @@ msgstr "QQ 号码"
 msgid "Joined at"
 msgstr "加入于"
 
-#: forms/account.py:145
-msgid "Last-log at"
-msgstr "最后登录于"
-
-#: forms/account.py:146
-msgid "Last-log ip"
-msgstr "最后登录 IP"
-
-#: forms/account.py:147 forms/account.py:228 forms/account.py:288
+#: forms/account.py:145 forms/account.py:226 forms/account.py:286
 msgid "Card ID"
 msgstr "学生卡号"
 
-#: forms/account.py:149 forms/account.py:216 forms/account.py:312
+#: forms/account.py:147 forms/account.py:214 forms/account.py:310
 msgid "Short Phone Number"
 msgstr "短号"
 
-#: forms/account.py:151 forms/resource.py:25
+#: forms/account.py:149 forms/resource.py:25
 #: templates/admin/account/list.html:23 templates/admin/resource/list.html:7
 msgid "State"
 msgstr "状态"
 
-#: forms/account.py:245
+#: forms/account.py:243
 msgid "User's Type"
 msgstr "用户类型"
 
-#: forms/account.py:322
+#: forms/account.py:320
 msgid "Old Password"
 msgstr "旧密码"
 
-#: forms/account.py:330 templates/admin/account/edit.html:43
+#: forms/account.py:328 templates/admin/account/edit.html:41
 msgid "New Password"
 msgstr "新密码"
 
-#: forms/account.py:338
+#: forms/account.py:336
 msgid "Confirm Password"
 msgstr "确认密码"
 
-#: forms/course.py:15 models/account.py:80 models/discuss.py:50
-#: models/discuss.py:85
+#: forms/course.py:15 models/account.py:80 models/discuss.py:49
+#: models/discuss.py:76
 msgid "Normal"
 msgstr "正常"
 
-#: forms/course.py:15 models/account.py:81 models/discuss.py:50
-#: models/discuss.py:85
+#: forms/course.py:15 models/account.py:81 models/discuss.py:49
+#: models/discuss.py:76
 msgid "Deleted"
 msgstr "已删除"
 
@@ -201,13 +193,13 @@ msgstr "课程名"
 msgid "Logo"
 msgstr "Logo"
 
-#: forms/course.py:48 forms/course.py:84 models/account.py:191
+#: forms/course.py:48 forms/course.py:84 models/account.py:180
 #: templates/admin/course/list.html:6 templates/admin/lecture/list.html:6
 msgid "Teacher"
 msgstr "教师"
 
 #: forms/course.py:54 templates/admin/course/list.html:8
-#: templates/course/lecture.html:169
+#: templates/course/lecture.html:173
 msgid "Category"
 msgstr "分类"
 
@@ -220,7 +212,7 @@ msgstr "标签"
 msgid "Lecture Name"
 msgstr "短课名"
 
-#: forms/course.py:70 templates/course/lecture.html:127
+#: forms/course.py:70 templates/course/lecture.html:130
 msgid "Knowledge Points"
 msgstr "知识点"
 
@@ -322,19 +314,19 @@ msgstr "冻结"
 msgid "Unactivated"
 msgstr "未激活"
 
-#: models/account.py:190
+#: models/account.py:179
 msgid "Undergrade"
 msgstr "本科生"
 
-#: models/account.py:190
+#: models/account.py:179
 msgid "Graduate"
 msgstr "研究生"
 
-#: models/account.py:191 services/resource.py:23 services/resource.py:27
+#: models/account.py:180 services/resource.py:23 services/resource.py:27
 msgid "Other"
 msgstr "其他"
 
-#: models/discuss.py:50 models/discuss.py:85
+#: models/discuss.py:49 models/discuss.py:76
 #: templates/discuss/question_list.html:9
 msgid "Hot"
 msgstr "热门"
@@ -351,7 +343,7 @@ msgstr "文档"
 msgid "PDF"
 msgstr "PDF"
 
-#: services/resource.py:22 templates/course/lecture.html:176
+#: services/resource.py:22 templates/course/lecture.html:180
 msgid "Video"
 msgstr "视频"
 
@@ -365,7 +357,8 @@ msgstr "关于我们"
 msgid "Privacy"
 msgstr "隐私政策"
 
-#: templates/feedback.html:22 templates/course/lecture.html:197
+#: templates/feedback.html:22 templates/course/lecture.html:202
+#: templates/discuss/post.html:20
 msgid "Submit"
 msgstr "提交"
 
@@ -378,7 +371,7 @@ msgid "Home"
 msgstr "首页"
 
 #: templates/layout.html:41 templates/course/category.html:6
-#: templates/course/course_list.html:7 templates/course/lecture.html:111
+#: templates/course/course_list.html:7 templates/course/lecture.html:114
 #: templates/course/subject.html:6
 msgid "Courses"
 msgstr "课程库"
@@ -422,8 +415,9 @@ msgstr "版权所有"
 msgid "Shenzhen University"
 msgstr "深圳大学"
 
-#: templates/right.html:5 templates/discuss/question.html:82
-#: templates/discuss/question_list.html:58 templates/discuss/tag_view.html:54
+#: templates/right.html:5 templates/discuss/post.html:32
+#: templates/discuss/question.html:82 templates/discuss/question_list.html:58
+#: templates/discuss/tag_view.html:54
 msgid "Hot Tags"
 msgstr "热门标签"
 
@@ -431,7 +425,7 @@ msgstr "热门标签"
 msgid "Activity"
 msgstr "最新动态"
 
-#: templates/right.html:34 templates/course/lecture.html:239
+#: templates/right.html:34 templates/course/lecture.html:250
 msgid "learnt"
 msgstr "学习了"
 
@@ -460,7 +454,7 @@ msgid "Change Password"
 msgstr "修改密码"
 
 #: templates/account/change_password.html:29 templates/account/setting.html:53
-#: templates/admin/account/edit.html:46
+#: templates/admin/account/edit.html:44
 msgid "Update"
 msgstr "更新"
 
@@ -472,8 +466,7 @@ msgstr "加入于"
 msgid "Learnt Records"
 msgstr "学习记录"
 
-#: templates/account/people.html:45 templates/discuss/post.html:12
-#: templates/discuss/post.html:20 templates/discuss/question_list.html:11
+#: templates/account/people.html:45
 msgid "Ask"
 msgstr "提问"
 
@@ -505,7 +498,7 @@ msgstr "忘记密码"
 msgid "Sign Up"
 msgstr "注册"
 
-#: templates/admin/base_list.html:35 templates/admin/account/edit.html:56
+#: templates/admin/base_list.html:35 templates/admin/account/edit.html:54
 #: templates/admin/account/list.html:52 templates/admin/feedback/list.html:43
 msgid "Delete Confirmation"
 msgstr "删除确认"
@@ -515,14 +508,14 @@ msgid "Are you sure you want to delete the record?"
 msgstr "您确认要删除该记录吗？"
 
 #: templates/admin/base_list.html:41 templates/admin/base_new.html:22
-#: templates/admin/account/create.html:34 templates/admin/account/edit.html:37
-#: templates/admin/account/edit.html:62 templates/admin/account/list.html:58
+#: templates/admin/account/create.html:34 templates/admin/account/edit.html:35
+#: templates/admin/account/edit.html:60 templates/admin/account/list.html:58
 #: templates/admin/feedback/list.html:49
 msgid "Cancel"
 msgstr "取消"
 
-#: templates/admin/base_list.html:42 templates/admin/account/edit.html:36
-#: templates/admin/account/edit.html:63 templates/admin/account/list.html:59
+#: templates/admin/base_list.html:42 templates/admin/account/edit.html:34
+#: templates/admin/account/edit.html:61 templates/admin/account/list.html:59
 #: templates/admin/feedback/list.html:50
 msgid "Delete"
 msgstr "删除"
@@ -580,7 +573,7 @@ msgstr "显示"
 msgid "Profile"
 msgstr "个人资料"
 
-#: templates/admin/account/edit.html:59 templates/admin/account/list.html:55
+#: templates/admin/account/edit.html:57 templates/admin/account/list.html:55
 msgid "Are you sure you want to delete the user?"
 msgstr "您确认要删除该用户吗？"
 
@@ -637,58 +630,63 @@ msgstr "学生学习了"
 msgid "Video List"
 msgstr "视频列表"
 
-#: templates/course/lecture.html:128
+#: templates/course/lecture.html:131
 msgid "Relatived Dicusses"
 msgstr "讨论"
 
-#: templates/course/lecture.html:129
+#: templates/course/lecture.html:132
 msgid "Quiz"
 msgstr "小测"
 
-#: templates/course/lecture.html:130 templates/resource/list.html:9
+#: templates/course/lecture.html:133 templates/resource/list.html:9
 msgid "Resource of Course"
 msgstr "课程资源"
 
-#: templates/course/lecture.html:131
+#: templates/course/lecture.html:134
 msgid "Comments of Course"
 msgstr "评论"
 
-#: templates/course/lecture.html:132 templates/discuss/tag_view.html:9
+#: templates/course/lecture.html:135 templates/discuss/post.html:12
+#: templates/discuss/question_list.html:11 templates/discuss/tag_view.html:9
 msgid "Post Dicussion"
 msgstr "发布话题"
 
-#: templates/course/lecture.html:168
+#: templates/course/lecture.html:146
+msgid "No dicussions"
+msgstr "该课程没有相关讨论。"
+
+#: templates/course/lecture.html:172
 msgid "Resource"
 msgstr "资源"
 
-#: templates/course/lecture.html:170 templates/course/lecture.html:177
-#: templates/course/lecture.html:183 templates/resource/list.html:26
+#: templates/course/lecture.html:174 templates/course/lecture.html:181
+#: templates/course/lecture.html:187 templates/resource/list.html:26
 msgid "Download"
 msgstr "下载"
 
-#: templates/course/lecture.html:175
+#: templates/course/lecture.html:179
 msgid "Download Video"
 msgstr "下载视频"
 
-#: templates/course/lecture.html:183 templates/resource/list.html:26
+#: templates/course/lecture.html:187 templates/resource/list.html:26
 msgid "Preview Online"
 msgstr "在线浏览"
 
-#: templates/course/lecture.html:192
+#: templates/course/lecture.html:197
 msgid "Post Comment"
 msgstr "发表评论"
 
-#: templates/course/lecture.html:228
+#: templates/course/lecture.html:209
+msgid "No comments for this lecture."
+msgstr "该课程没有评论。"
+
+#: templates/course/lecture.html:239
 msgid "Who's learning?"
 msgstr "谁也在学？"
 
 #: templates/course/lecture_box.html:16
 msgid "Minute(s)"
 msgstr "分钟"
-
-#: templates/discuss/post.html:32
-msgid "Rule of asking"
-msgstr "提问准则"
 
 #: templates/discuss/question.html:11
 msgid "From"
@@ -804,28 +802,28 @@ msgstr "操作成功"
 msgid "Operated successfully!"
 msgstr "操作成功"
 
-#: views/account.py:36
+#: views/account.py:44
 #, python-format
 msgid "Logged in successfully, Welcome %(username)s"
 msgstr "登录成功！ %(username)s 欢迎~"
 
-#: views/account.py:44
+#: views/account.py:58
 msgid "Wrong username or password"
 msgstr "帐号或密码错误"
 
-#: views/account.py:87
+#: views/account.py:101
 msgid "Sign up successfully"
 msgstr "注册成功"
 
-#: views/account.py:106
+#: views/account.py:120
 msgid "Logged out successfully."
 msgstr "退出成功"
 
-#: views/account.py:149 views/account.py:183
+#: views/account.py:163 views/account.py:212
 msgid "Modified successfully."
 msgstr "修改成功"
 
-#: views/account.py:173
+#: views/account.py:194
 msgid "Wrong old password"
 msgstr "密码错误"
 
@@ -849,7 +847,16 @@ msgstr "成功"
 msgid "Please answer the question"
 msgstr "请先回答问题"
 
-#: views/discuss.py:168 views/master.py:52
+#: views/discuss.py:166 views/master.py:52
 msgid "Submited successfully"
 msgstr "提交成功"
+
+#~ msgid "Last-log at"
+#~ msgstr "最后登录于"
+
+#~ msgid "Last-log ip"
+#~ msgstr "最后登录 IP"
+
+#~ msgid "Rule of asking"
+#~ msgstr "提问准则"
 
