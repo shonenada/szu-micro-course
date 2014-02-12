@@ -29,6 +29,8 @@ $(function(){
 
         $('#lecture-comment-content').prepend(box);
         
+        $('#no-comments-box').fadeOut();
+
         $(':input', form)
          .not(':button, :submit, :reset, :hidden')
          .val('')
@@ -190,7 +192,6 @@ $(function(){
             </div>
 
             <div id="lecture-comment" class="lecture-bar lecture-hidden">
-                {%- if lecture.comments.count() < 1 %}{{ _('No comments for this lecture.') }}{% endif %}
                 {%- if not current_user.is_anonymous() %}
                 <div id="lecture-comment-submit" class="submit-form-container">
                     <div class="form-title">{{ _('Post Comment') }}</div>
@@ -203,6 +204,11 @@ $(function(){
                 </div>
                 {%- endif %}
                 <div id="lecture-comment-content">
+                {%- if lecture.comments.count() < 1 %}
+                <div id="no-comments-box">
+                {{ _('No comments for this lecture.') }}
+                </div>
+                {%- endif %}
                 {%- for comment in lecture.comments[:10] %}
                     <div class="detail-box underline-dashed">
                         <div class="avatar avatar-small">
