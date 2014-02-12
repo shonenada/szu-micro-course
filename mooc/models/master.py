@@ -133,12 +133,13 @@ class Feedback(db.Model, ModelMixin):
 
 class Log(db.Model, ModelMixin):
 
-    LOGCATEGORY = ('signin', 'other')
+    LOGCATEGORY = ('signin', 'change_password')
     LEVEL = ('danger', 'warn', 'normal')
 
     id = db.Column(db.Integer, primary_key=True)
     category = db.Column(db.Enum(*LOGCATEGORY))
     level = db.Column(db.Enum(*LEVEL))
+    ip = db.Column(db.String(70))
     content = db.Column(db.Text)
     created = db.Column(db.DateTime, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
