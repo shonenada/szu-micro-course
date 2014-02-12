@@ -49,7 +49,7 @@ def jsonify(**kwargs):
                 var[i] = _validate(v)
         elif isinstance(var, dict):
             for k in var:
-                var[k] = _validate[k]
+                var[k] = _validate(var[k])
         else:
             if is_lazy_string(var):
                 return unicode(var)

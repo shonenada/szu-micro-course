@@ -50,7 +50,7 @@ def signin():
             Log(
                 category='signin',
                 level='warn',
-                content="%s sign in successfully." % (user.username),
+                content="%s sign in failed." % (username),
                 ip=request.remote_addr,
             ).save()
             return jsonify(
