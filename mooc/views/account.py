@@ -6,6 +6,7 @@ from flask.ext.login import login_user, logout_user, current_user
 
 from mooc.extensions import rbac, csrf, db
 from mooc.utils.helpers import flash, jsonify
+from mooc.models.master import Log
 from mooc.models.account import User, SzuAccount, Role
 from mooc.forms.account import SignInForm, SettingForm, PasswordForm, SignUpForm
 
@@ -29,19 +30,32 @@ def signin():
         user = User.query.authenticate(username, raw_passwd)
 
         if user:
+            Log(
+                category='signin',
+                level='normal',
+                content="%s sign in successfully." % (user.username),
+                user=user,
+                ip=request.remote_addr,
+            ).save()
             login_user(user, force=True, remember=is_remember_me)
             return jsonify(
                 success=True,
                 messages=[
                     gettext('Logged in successfully, Welcome %(username)s',
-                    username=user.nickname or user.username)
+                    username=user.nickname or user.username),
                 ]
             )
 
         else:
+            Log(
+                category='signin',
+                level='warn',
+                content="%s sign in successfully." % (user.username),
+                ip=request.remote_addr,
+            ).save()
             return jsonify(
                 success=False,
-                messages=[gettext('Wrong username or password')]
+                messages=[gettext('Wrong username or password')],
             )
 
     if form.errors:
@@ -82,11 +96,11 @@ def signup():
         user.save()
 
         return jsonify(
-                success=True,
-                messages=[
-                    gettext('Sign up successfully')
-                ]
-            )
+            success=True,
+            messages=[
+                gettext('Sign up successfully')
+            ]
+        )
 
     if form.errors:
         return jsonify(success=False, errors=True, messages=form.errors)
@@ -144,12 +158,12 @@ def setting():
         user.szu_account.save()
 
         return jsonify(
-                success=True,
-                messages=[
-                    gettext('Modified successfully.')
-                ],
-                next=url_for('account.setting')
-            )
+            success=True,
+            messages=[
+                gettext('Modified successfully.')
+            ],
+            next=url_for('account.setting')
+        )
 
     if form.errors:
         return jsonify(success=False, errors=True, messages=form.errors)
@@ -164,26 +178,41 @@ def change_password():
     form = PasswordForm(formdata=request.form)
 
     if form.validate_on_submit():
-        user = current_user
-        if not user.check_password(form.data.get('old_password')):
+        if not current_user.check_password(form.data.get('old_password')):
+
+            Log(
+                category='change_password',
+                level='warn',
+                content='%s change password failed' % current_user.username,
+                user=current_user,
+                ip=request.remote_addr,
+            ).save()
 
             return jsonify(
-                    success=False,
-                    messages=[
-                        gettext('Wrong old password')
-                    ]
-                )
+                success=False,
+                messages=[
+                    gettext('Wrong old password')
+                ]
+            )
 
-        user.change_password(form.data.get('new_password'))
-        user.save()
+        Log(
+            category='change_password',
+            level='normal',
+            content='%s change password successfully' % current_user.username,
+            user=current_user,
+            ip=request.remote_addr,
+        ).save()
+
+        current_user.change_password(form.data.get('new_password'))
+        current_user.save()
 
         return jsonify(
-                success=True,
-                messages=[
-                    gettext('Modified successfully.')
-                ],
-                next=url_for('account.change_password')
-            )
+            success=True,
+            messages=[
+                gettext('Modified successfully.')
+            ],
+            next=url_for('account.change_password')
+        )
 
     if form.errors:
         return jsonify(success=False, errors=True, messages=form.errors)
