@@ -138,10 +138,13 @@ def answer(qid):
     return jsonify(success=True)
 
 
-@discuss_app.route('/question/post', methods=['GET', 'POST'])
+@discuss_app.route('/post', methods=['GET', 'POST'])
 @rbac.allow(['local_user'], ['GET', 'POST'])
 def post():
     form = AskForm()
+
+    lecture_id = request.args.get('lid', None)
+    lecture = Lecture.query.get(lecture_id)
 
     if form.validate_on_submit():
         title = form.data.get('title')
@@ -153,13 +156,10 @@ def post():
             lecture=None,
             author=current_user
         )
-        lecture_id = request.args.get('lecture_id', None)
 
-        if lecture_id:
-            lecture = Lecture.query.get(lecture_id)
+        if lecture:
             new_question.lecture = lecture
-
-        new_question.save()
+            new_question.save()
 
         return jsonify(
             success=True,
@@ -169,9 +169,9 @@ def post():
     
     if form.errors:
         return jsonify(success=False, errors=True, messages=form.errors)
+    
     hotest_tags = QuestionTag.query.order_by(QuestionTag.count.desc()).all()
-
-    return render_template('discuss/post.html',
+    return render_template('discuss/post.html', lecture=lecture,
                            form=form, hotest_tags=hotest_tags)
 
 

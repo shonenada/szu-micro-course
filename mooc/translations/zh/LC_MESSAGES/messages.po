@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MOOC 0.1.0\n"
 "Report-Msgid-Bugs-To: shonenada@gmail.com\n"
-"POT-Creation-Date: 2014-02-12 21:43+0800\n"
+"POT-Creation-Date: 2014-02-14 16:10+0800\n"
 "PO-Revision-Date: 2014-01-30 17:58+0800\n"
 "Last-Translator: Yaoda Liu <shonenada@gmail.com>\n"
 "Language-Team: zh <LL@li.org>\n"
@@ -358,7 +358,7 @@ msgid "Privacy"
 msgstr "隐私政策"
 
 #: templates/feedback.html:22 templates/course/lecture.html:202
-#: templates/discuss/post.html:20
+#: templates/discuss/post.html:23
 msgid "Submit"
 msgstr "提交"
 
@@ -415,7 +415,7 @@ msgstr "版权所有"
 msgid "Shenzhen University"
 msgstr "深圳大学"
 
-#: templates/right.html:5 templates/discuss/post.html:32
+#: templates/right.html:5 templates/discuss/post.html:35
 #: templates/discuss/question.html:82 templates/discuss/question_list.html:58
 #: templates/discuss/tag_view.html:54
 msgid "Hot Tags"
@@ -649,7 +649,7 @@ msgstr "评论"
 #: templates/course/lecture.html:135 templates/discuss/post.html:12
 #: templates/discuss/question_list.html:11 templates/discuss/tag_view.html:9
 msgid "Post Dicussion"
-msgstr "发布话题"
+msgstr "发起讨论"
 
 #: templates/course/lecture.html:146
 msgid "No dicussions"
@@ -687,6 +687,11 @@ msgstr "谁也在学？"
 #: templates/course/lecture_box.html:16
 msgid "Minute(s)"
 msgstr "分钟"
+
+#: templates/discuss/post.html:18
+#, python-format
+msgid "You are posting dicussion for lecture %(lecture_name)s"
+msgstr "您正在发起《%(lecture_name)s》相关的讨论。"
 
 #: templates/discuss/question.html:11
 msgid "From"
