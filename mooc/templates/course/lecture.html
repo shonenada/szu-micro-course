@@ -128,11 +128,11 @@ $(function(){
         <div id="lecture-btns">
             <ul>
                 <li><a href="javascript:void(0);" id="btn-knowledge-point" class="lecture-btns current">{{ _('Knowledge Points') }}</a></li>
-                <li><a href="javascript:void(0);" id="btn-dicussion" class="lecture-btns">{{ _('Relatived Dicusses') }}</a></li>
+                <li><a href="javascript:void(0);" id="btn-discussion" class="lecture-btns">{{ _('Relatived Dicusses') }}</a></li>
                 <li><a href="javascript:void(0);" id="btn-quiz" class="lecture-btns">{{ _('Quiz') }}</a></li>
                 <li><a href="javascript:void(0);" id="btn-video-resource" class="lecture-btns">{{ _('Resource of Course') }}</a></li>
                 <li><a href="javascript:void(0);" id="btn-comment" class="lecture-btns">{{ _('Comments of Course') }}</a></li>
-                <li class="ask"><a href="{{ url_for('discuss.post', lid=lecture.id) }}" id="ask-btn" class="lecture-btns">{{ _('Post Dicussion') }}</a></li>
+                <li class="ask"><a href="{{ url_for('discuss.post', lid=lecture.id) }}" id="ask-btn" target="_blank">{{ _('Post Dicussion') }}</a></li>
             </ul>
         </div>
 
@@ -141,16 +141,32 @@ $(function(){
                 <p>{{ lecture.knowledge_point|safe }}</p>
             </div>
 
-            <div id="lecture-dicussion" class="lecture-bar lecture-hidden">
+            <div id="lecture-discussion" class="lecture-bar lecture-hidden">
                 <ul>
-                {%- if lecture.questions.count() < 1 %}{{ _('No dicussions') }}{%- endif %}
+                    {%- if lecture.questions.count() < 1 %}{{ _('No dicussions') }}{%- endif %}
                     {%- for index, q in lecture.questions|enumerate %}
-                    <li><a target="_blank" href="{{ url_for('discuss.view_question', qid=q.id) }}">{{ index + 1 }}、{{ q.title }}</a></li>
+                    <li>
+                        <div class="single-box">
+                            <div class="user-avatar">
+                                <a href="{{ url_for('account.people', username=q.author.username) }}" target="_blank"><img src="{{ q.author.get_avatar(size=40) }}" /></a>
+                            </div>
+                            <div class="discussion-content">
+                                <div class="userinfo">
+                                    <a href="{{ url_for('account.people', username=q.author.username) }}" target="_blank">{{ q.author.username }}</a> {{ _('has post discussion') }}
+                                    <span class="time"> {{ q.created | friendly_time }} </span>
+                                </div>
+                                <div class="discussion-title">
+                                    <a target="_blank" href="{{ url_for('discuss.view_question', qid=q.id) }}">{{ q.title }}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
                     {%- endfor %}
                 </ul>
             </div>
 
             <div id="lecture-quiz" class="lecture-bar lecture-hidden">
+                {%- if quizs.count() < 1 %}{{ _('No quizs') }}{%- endif %}
                 {%- for index, quiz in quizs|enumerate %}
                 <div class="quiz-item" id="quiz-item-{{quiz.id}}">
                     <div class="quiz-title" id="quiz-title-{{quiz.id}}">{{ index + 1 }}.{{ quiz.question }}<span></span></div>

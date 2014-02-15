@@ -117,7 +117,7 @@
     .lecture-bar
       ul
         margin 0
-        padding 10px 0 10px 0
+        // padding 10px 0 10px 0
       p
         margin 0
         padding 0
@@ -200,3 +200,44 @@
             float left
             line-height 1.8em
             font-size 16px
+
+
+#lecture-discussion
+  text-indent 0px
+  overflow hidden
+  padding-bottom 5px
+  margin-bottom 5px
+
+  li
+    border-bottom 1px #dfdfdf solid
+  
+  .user-avatar
+    float left
+
+    img
+      width 40px
+      height 40px
+      border-radius 5px
+
+  .discussion-content
+    margin-left 50px
+
+    .userinfo
+      float left
+      width 100%
+
+      &, a
+        font-size 12px
+        color #afafaf
+
+      a:hover
+        text-decoration underline
+        color: #7f7f7f
+
+      span.time
+        color #afafaf
+        float right
+
+    .discussion-title
+      a
+        font-weight bold
