@@ -13,7 +13,7 @@
             </ul>
         </div>
         <div class="content submit-form-container">
-            <form id="postForm" action="{{ url_for('discuss.post') }}" method="POST" class="submit-form">
+            <form id="postForm" action="" method="POST" class="submit-form">
                 {%- if lecture %}
                 <div id="post-tips">{{ _('You are posting dicussion for lecture %(lecture_name)s', lecture_name=lecture.name) }}</div>
                 {%- endif %}
