@@ -54,7 +54,7 @@ def course(course_id):
 @rbac.allow(['anonymous'], ['GET'])
 def lecture(lecture_id):
     form = LectureCommentForm()
-    lecture = Lecture.query.get(lecture_id)
+    lecture = Lecture.query.get_or_404(lecture_id)
     who_is_learning = (LearnRecord.query.filter_by(lecture_id=lecture_id)
                                   .limit(10).all())
     quizs = (Quiz.query.filter_by(lecture_id=lecture_id)

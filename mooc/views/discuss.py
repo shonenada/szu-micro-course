@@ -143,7 +143,7 @@ def answer(qid):
 def post():
     form = AskForm()
 
-    lecture_id = request.args.get('lid', None)
+    lecture_id = int(request.args.get('lid', 0))
     lecture = Lecture.query.get(lecture_id)
 
     if form.validate_on_submit():
@@ -153,18 +153,18 @@ def post():
         new_question = Question(
             title=title,
             content=content,
-            lecture=None,
             author=current_user
         )
 
         if lecture:
             new_question.lecture = lecture
-            new_question.save()
+
+        new_question.save()
 
         return jsonify(
             success=True,
             messages=[gettext('Submited successfully')],
-            next=url_for('discuss.view_question', qid=new_question.id),
+            next=url_for('discuss.view_question', qid=new_question.id) if new_question.id else '',
         )
     
     if form.errors:
