@@ -70,9 +70,8 @@ def create_lecture(data):
         chapter=data['chapter'],
         term=data['term'],
         record_time=data['record_time'],
-        record_location=data['record_address'],
+        record_location=data['record_location'],
         video_url=data['video_url'],
         video_length=data['video_length'],
         tags=data['tags'],
-
     ).save()

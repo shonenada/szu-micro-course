@@ -42,7 +42,7 @@ class TagsField(Field):
                 q_tag = self.tag_model.query.filter_by(tag=tag).first()
 
                 if not q_tag:
-                    q_tag = self.tag_model(tag)
+                    q_tag = self.tag_model(tag=tag)
                 self.data.append(q_tag)
         else:
             self.data = []

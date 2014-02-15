@@ -53,7 +53,7 @@ class CourseForm(Form):
     category = QuerySelectField(
         label=_('Category'),
         query_factory=categories, allow_blank=False)
-    tags = TagsField(label=_('Tags'), tag_model=Tag)
+    tags = TagsField(tag_model=Tag, label=_('Tags'))
 
 
 class LectureForm(Form):
@@ -83,7 +83,7 @@ class LectureForm(Form):
     teacher = QuerySelectField(
         label=_('Teacher'),
         query_factory=teachers, allow_blank=True)
-    tags = TagsField(label=_('Tags'), tag_model=Tag)
+    tags = TagsField(tag_model=Tag, label=_('Tags'))
 
 
 class LectureCommentForm(Form):
