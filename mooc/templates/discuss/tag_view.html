@@ -6,7 +6,9 @@
         <div class="tips">
             <ul>
                 <li><a href="javascript:void(0)" class="current">{{ tag }}</a></li>
+                {%- if not current_user.is_anonymous() %}
                 <li class="right"><a href="{{ url_for('discuss.post') }}" id="post-btn">{{ _('Post Dicussion') }}</a></li>
+                {%- endif %}
             </ul>
         </div>
         <div class="content list">

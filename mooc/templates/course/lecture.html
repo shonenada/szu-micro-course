@@ -132,7 +132,9 @@ $(function(){
                 <li><a href="javascript:void(0);" id="btn-quiz" class="lecture-btns">{{ _('Quiz') }}</a></li>
                 <li><a href="javascript:void(0);" id="btn-video-resource" class="lecture-btns">{{ _('Resource of Course') }}</a></li>
                 <li><a href="javascript:void(0);" id="btn-comment" class="lecture-btns">{{ _('Comments of Course') }}</a></li>
+                {%- if not current_user.is_anonymous() %}
                 <li class="ask"><a href="{{ url_for('discuss.post', lid=lecture.id) }}" id="ask-btn" target="_blank">{{ _('Post Dicussion') }}</a></li>
+                {%- endif %}
             </ul>
         </div>
 
