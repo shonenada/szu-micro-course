@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MOOC 0.1.0\n"
 "Report-Msgid-Bugs-To: shonenada@gmail.com\n"
-"POT-Creation-Date: 2014-02-14 16:10+0800\n"
+"POT-Creation-Date: 2014-02-18 14:40+0800\n"
 "PO-Revision-Date: 2014-01-30 17:58+0800\n"
 "Last-Translator: Yaoda Liu <shonenada@gmail.com>\n"
 "Language-Team: zh <LL@li.org>\n"
@@ -199,7 +199,7 @@ msgid "Teacher"
 msgstr "教师"
 
 #: forms/course.py:54 templates/admin/course/list.html:8
-#: templates/course/lecture.html:173
+#: templates/course/lecture.html:191
 msgid "Category"
 msgstr "分类"
 
@@ -343,7 +343,7 @@ msgstr "文档"
 msgid "PDF"
 msgstr "PDF"
 
-#: services/resource.py:22 templates/course/lecture.html:180
+#: services/resource.py:22 templates/course/lecture.html:198
 msgid "Video"
 msgstr "视频"
 
@@ -357,7 +357,7 @@ msgstr "关于我们"
 msgid "Privacy"
 msgstr "隐私政策"
 
-#: templates/feedback.html:22 templates/course/lecture.html:202
+#: templates/feedback.html:22 templates/course/lecture.html:220
 #: templates/discuss/post.html:23
 msgid "Submit"
 msgstr "提交"
@@ -416,8 +416,8 @@ msgid "Shenzhen University"
 msgstr "深圳大学"
 
 #: templates/right.html:5 templates/discuss/post.html:35
-#: templates/discuss/question.html:82 templates/discuss/question_list.html:58
-#: templates/discuss/tag_view.html:54
+#: templates/discuss/question.html:82 templates/discuss/question_list.html:60
+#: templates/discuss/tag_view.html:56
 msgid "Hot Tags"
 msgstr "热门标签"
 
@@ -425,7 +425,7 @@ msgstr "热门标签"
 msgid "Activity"
 msgstr "最新动态"
 
-#: templates/right.html:34 templates/course/lecture.html:250
+#: templates/right.html:34 templates/course/lecture.html:268
 msgid "learnt"
 msgstr "学习了"
 
@@ -458,31 +458,32 @@ msgstr "修改密码"
 msgid "Update"
 msgstr "更新"
 
-#: templates/account/people.html:27
-msgid "Joined on"
-msgstr "加入于"
+#: templates/account/people.html:37
+#, python-format
+msgid "Joined on %(time)s"
+msgstr "%(time)s 加入"
 
-#: templates/account/people.html:44
+#: templates/account/people.html:54
 msgid "Learnt Records"
 msgstr "学习记录"
 
-#: templates/account/people.html:45
+#: templates/account/people.html:55
 msgid "Ask"
 msgstr "提问"
 
-#: templates/account/people.html:46
+#: templates/account/people.html:56
 msgid "Answer"
 msgstr "回答"
 
-#: templates/account/people.html:54
+#: templates/account/people.html:64
 msgid "He/She has not leanrt any course"
 msgstr "TA 还没有学任何课程"
 
-#: templates/account/people.html:64
+#: templates/account/people.html:74
 msgid "He/She has not asked any questions"
 msgstr "TA 还没提问问题"
 
-#: templates/account/people.html:74
+#: templates/account/people.html:84
 msgid "He/She has not answered any questions"
 msgstr "TA 没回答过任何问题"
 
@@ -602,7 +603,7 @@ msgid "Date"
 msgstr "日期"
 
 #: templates/admin/feedback/list.html:26
-#: templates/discuss/question_list.html:39 templates/discuss/tag_view.html:35
+#: templates/discuss/question_list.html:41 templates/discuss/tag_view.html:37
 msgid "Anonymous"
 msgstr "匿名"
 
@@ -646,41 +647,49 @@ msgstr "课程资源"
 msgid "Comments of Course"
 msgstr "评论"
 
-#: templates/course/lecture.html:135 templates/discuss/post.html:12
-#: templates/discuss/question_list.html:11 templates/discuss/tag_view.html:9
+#: templates/course/lecture.html:136 templates/discuss/post.html:12
+#: templates/discuss/question_list.html:12 templates/discuss/tag_view.html:10
 msgid "Post Dicussion"
 msgstr "发起讨论"
 
-#: templates/course/lecture.html:146
+#: templates/course/lecture.html:148
 msgid "No dicussions"
 msgstr "该课程没有相关讨论。"
 
-#: templates/course/lecture.html:172
+#: templates/course/lecture.html:157
+msgid "has post discussion"
+msgstr "发起了讨论"
+
+#: templates/course/lecture.html:171
+msgid "No quizs"
+msgstr "该课程还没有设定小测"
+
+#: templates/course/lecture.html:190
 msgid "Resource"
 msgstr "资源"
 
-#: templates/course/lecture.html:174 templates/course/lecture.html:181
-#: templates/course/lecture.html:187 templates/resource/list.html:26
+#: templates/course/lecture.html:192 templates/course/lecture.html:199
+#: templates/course/lecture.html:205 templates/resource/list.html:26
 msgid "Download"
 msgstr "下载"
 
-#: templates/course/lecture.html:179
+#: templates/course/lecture.html:197
 msgid "Download Video"
 msgstr "下载视频"
 
-#: templates/course/lecture.html:187 templates/resource/list.html:26
+#: templates/course/lecture.html:205 templates/resource/list.html:26
 msgid "Preview Online"
 msgstr "在线浏览"
 
-#: templates/course/lecture.html:197
+#: templates/course/lecture.html:215
 msgid "Post Comment"
 msgstr "发表评论"
 
-#: templates/course/lecture.html:209
+#: templates/course/lecture.html:227
 msgid "No comments for this lecture."
 msgstr "该课程没有评论。"
 
-#: templates/course/lecture.html:239
+#: templates/course/lecture.html:257
 msgid "Who's learning?"
 msgstr "谁也在学？"
 
@@ -701,8 +710,8 @@ msgstr "来自"
 msgid "'s Questions"
 msgstr "课程的问题"
 
-#: templates/discuss/question.html:18 templates/discuss/question_list.html:22
-#: templates/discuss/tag_view.html:18
+#: templates/discuss/question.html:18 templates/discuss/question_list.html:24
+#: templates/discuss/tag_view.html:20
 msgid "view(s)"
 msgstr "次浏览"
 
@@ -726,7 +735,7 @@ msgstr "最新"
 msgid "No-Answered"
 msgstr "无回答"
 
-#: templates/discuss/question_list.html:25 templates/discuss/tag_view.html:21
+#: templates/discuss/question_list.html:27 templates/discuss/tag_view.html:23
 msgid "answer(s)"
 msgstr "个回答"
 
@@ -820,15 +829,15 @@ msgstr "帐号或密码错误"
 msgid "Sign up successfully"
 msgstr "注册成功"
 
-#: views/account.py:120
+#: views/account.py:121
 msgid "Logged out successfully."
 msgstr "退出成功"
 
-#: views/account.py:163 views/account.py:212
+#: views/account.py:164 views/account.py:213
 msgid "Modified successfully."
 msgstr "修改成功"
 
-#: views/account.py:194
+#: views/account.py:195
 msgid "Wrong old password"
 msgstr "密码错误"
 
@@ -864,4 +873,7 @@ msgstr "提交成功"
 
 #~ msgid "Rule of asking"
 #~ msgstr "提问准则"
+
+#~ msgid "Joined on"
+#~ msgstr "加入于"
 
