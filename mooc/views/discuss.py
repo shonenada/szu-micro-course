@@ -64,7 +64,7 @@ def noanswer():
         'discuss/question_list.html',
         hotest_tags=hotest_tags,
         question_pagination=questions,
-        type='noanswer'
+        type='noanswer',
     )
 
 
@@ -79,11 +79,22 @@ def view_question(qid):
                            .all())
     question.read_count += 1
     question.save()
+
+    if not current_user.is_anonymous():
+        records = current_user.up_down_records
+        ups = [up.answer for up in records if up.up_or_down == UpDownRecord.TYPE_UP]
+        downs = [d.answer for d in records if d.up_or_down == UpDownRecord.TYPE_DOWN]
+    else:
+        ups = []
+        downs = []
+
     return render_template(
         'discuss/question.html',
         hotest_tags=hotest_tags,
         question=question,
-        answers=answers
+        answers=answers,
+        ups=ups,
+        downs=downs,
     )
 
 

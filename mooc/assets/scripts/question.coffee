@@ -12,8 +12,10 @@ $ ->
                     count = parseInt $("#answer-" + aid + " .up_count a").html()
                     if (action == 'up')
                         $("#answer-" + aid + " .up_count a").html(count + 1)
+                        $("#answer-" + aid + " .vote-up").addClass("vote-btn-click")
                     else if (action == 'down')
                         $("#answer-" + aid + " .up_count a").html(count - 1)
+                        $("#answer-" + aid + " .vote-down").addClass("vote-btn-click")
                     return ;
                 else
                     $T.flash_message(res.message, 'error')
@@ -49,7 +51,7 @@ $ ->
                     setTimeout ->
                         document.location = document.location;
                         return ;
-                    , 2000
+                    , 1000
                     return ;
                 else
                     $T.flash_message(res.message, 'error')

@@ -35,15 +35,16 @@
             {%- if not a.parent %}
             <div style="margin: 20px 0 20px 0;"></div>
             <li id="answer-{{ a.id }}">
+                {%- if not current_user.is_anonymous() %}
                 <span class="vote-btns">
-                    <a href="#vote-up" class="vote-up" data="{{ a.id }}">
-                        <span class="vote-btn"></span>
+                    <a href="#vote-up" data="{{ a.id }}" class="vote-up{%- if a in ups %} vote-btn-click{%- endif %}">
+                        <span class="vote-btn iconfont common-iconfont">&#xf013c;</span>
                     </a>
-
-                    <a href="#vote-down" class="vote-down" data="{{ a.id }}">
-                        <span class="vote-btn"></span>
+                    <a href="#vote-down" data="{{ a.id }}" class="vote-down{%- if a in downs %} vote-btn-click{%- endif %}">
+                        <span class="vote-btn iconfont common-iconfont">&#xf013d;</span>
                      </a>
                 </span>
+                {%- endif %}
                 <span class="avatar"><img src="{{ question.author.get_avatar() }}" /></span>
                 <div class="answer-info">
                     <span class="author">{{ a.author.nickname }}</span>
