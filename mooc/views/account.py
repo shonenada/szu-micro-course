@@ -113,12 +113,13 @@ def forgot_password():
     return render_template('account/forgot.html')
 
 
-@account_app.route('/logout')
+@account_app.route('/signout')
 @rbac.allow(['anonymous'], ['GET'])
 def signout():
+    next = request.args.get('next') or url_for('master.index')
     logout_user()
     flash(_('Logged out successfully.'), 'notice')
-    return redirect(url_for('master.index'))
+    return redirect(next)
 
 
 @account_app.route('/<username>')
