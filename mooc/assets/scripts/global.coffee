@@ -55,15 +55,23 @@ $ ->
                 type: form.attr('method')
                 success: (res) ->
                     if (res.success)
-                        $T.flash_message(res.messages.join(''), 'notice')
+                        if (res.messages)
+                            $T.flash_message(res.messages.join(''), 'notice')
+                        
+                        if (res.jump_immediatelly)
+                            timeout = 0;
+                        else
+                            timeout = 2000;
+                        
                         if (res.next)
                             setTimeout ->
                                 document.location = res.next
-                            , 2000
+                            , timeout
                         else if (!res.stay)
                             setTimeout ->
                                 document.location = document.referrer;
-                            , 2000
+                            , timeout
+                        
                         if (res.callback)
                             eval(res.callback + '(res, form.serializeObject())')
                     else
