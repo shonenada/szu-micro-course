@@ -82,7 +82,7 @@ class User(db.Model, UserMixin, ModelMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(30), nullable=True)
-    hashed_password = db.Column(db.String(40))
+    hashed_password = db.Column(db.String(128))
     nickname = db.Column(db.String(16), unique=True)
     name = db.Column(db.String(20))
     is_male = db.Column(db.Boolean, default=True)
@@ -92,7 +92,7 @@ class User(db.Model, UserMixin, ModelMixin):
     avatar = db.Column(db.String(250))
     created = db.Column(db.DateTime, default=datetime.utcnow)
     salt = db.Column(db.String(32), nullable=False)
-    state = db.Column(db.Enum(*USER_STATE_VALUES), default='unactivated')
+    state = db.Column(db.Enum(*USER_STATE_VALUES), default='normal')
     learn_records = db.relationship('LearnRecord', backref='user',
                                     uselist=True)
     questions = db.relationship('Question', backref='author',
@@ -124,10 +124,10 @@ class User(db.Model, UserMixin, ModelMixin):
         db.Model.__init__(self, **kwargs)
 
     def __unicode__(self):
-        return self.nickname
+        return self.username
 
     def __repr__(self):
-        return "<User:%s(%s)>" % (self.username, self.nickname)
+        return "<User: %s>" % (self.username)
 
     def change_password(self, raw_passwd):
         self.salt = uuid4().hex
