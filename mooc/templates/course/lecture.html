@@ -150,7 +150,7 @@ $(function(){
                     <li>
                         <div class="single-box">
                             <div class="user-avatar">
-                                <a href="{{ url_for('account.people', username=q.author.username) }}" target="_blank"><img src="{{ q.author.get_avatar(size=40) }}" /></a>
+                                <a href="{{ url_for('account.people', username=q.author.username) }}" target="_blank"><img src="{%- if q.author %}{{ q.author.get_avatar(size=40) }}{%- endif %}" /></a>
                             </div>
                             <div class="discussion-content">
                                 <div class="userinfo">

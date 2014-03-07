@@ -24,7 +24,7 @@ $(function() {
         </div>
         <div class="profile">
             <p class="username">{{ user.nickname or user.username }}</p>
-            <p><span class="iconfont common-iconfont">&#xf0063;</span> {{ _('Joined on %(time)s', time=user.created|date('%Y年%m月%d日') ) }}</p>
+            <p><span class="iconfont common-iconfont">&#xf0063;</span> {{ _('Joined on %(time)s', time=user.created|date('%Y-%m-%d') ) }}</p>
             <p>
                 <ul class="user-info">
                     {%- if user.szu_account.college.name %}

@@ -38,12 +38,11 @@ def signin():
                 ip=request.remote_addr,
             ).save()
             login_user(user, force=True, remember=is_remember_me)
+            flash(_('Logged in successfully, Welcome %(username)s',
+                    username=user.nickname or user.username), 'notice')
             return jsonify(
                 success=True,
-                messages=[
-                    gettext('Logged in successfully, Welcome %(username)s',
-                    username=user.nickname or user.username),
-                ]
+                jump_immediatelly=True,
             )
 
         else:
