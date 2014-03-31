@@ -121,3 +121,13 @@ def lecture_comment():
 
     if form.errors:
         return jsonify(success=False, errors=True, messages=form.errors)
+
+
+@course_app.route('/search', methods=['POST'])
+@rbac.allow(['anonymous'], methods=['POST'])
+def coruse_search():
+    keyword = request.form.get('keyword')
+    if keyword and len(keyword) > 0:
+        param = "%%%s%%" % keyword
+        courses = Course.query.filter(Course.name.like(param)).all()
+        return render_template('course/search.html', courses=courses, keyword=keyword)
