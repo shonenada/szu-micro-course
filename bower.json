@@ -1,8 +1,22 @@
 {
-    "name": "mooc",
-    "version": "0.1",
-    "dependencies": {
-        "jquery": "~1.10.2",
-        "reset-css": "http://meyerweb.com/eric/tools/css/reset/reset.css"
-    }
+  "name": "mooc",
+  "version": "0.1",
+  "dependencies": {
+    "bootstrap": "2.1.1",
+    "font-awesome": "2.0"
+  },
+  "homepage": "https://github.com/shonenada/mooc",
+  "authors": [
+    "shonenada <shonenada@gmail.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "mooc/assets/components",
+    "test",
+    "tests"
+  ]
 }
