@@ -41,7 +41,7 @@ def create_user(data):
     )
     szu_account = SzuAccount(
         user=user,
-        card_id=data['card_id'],
+        card_num=data['card_num'],
         stu_number=data['stu_number'],
         college=college,
         szu_account_type=data['szu_account_type'],
