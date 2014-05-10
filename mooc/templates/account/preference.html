@@ -1,0 +1,43 @@
+{%- extends 'layout.html' %}
+
+{%- block left %}
+<div id="left">
+    <div class="tips-box">
+        <div class="tips">
+            <ul>
+                <li><a href="{{ url_for('account.setting') }}">{{ _('Basic Settings') }}</a>
+                <li><a href="{{ url_for('account.change_password') }}">{{ _('Change Password') }}</a>
+                <li><a href="{{ url_for('account.preference') }}" class="current">{{ _('Preference') }}</a>
+            </ul>
+        </div>
+        <div class="content">
+            <form id="preferenceForm" action="{{ url_for('account.preference') }}" method="post" class="user-preference">
+                {{ form.csrf_token }}
+                <ul>
+                    <li>
+                    {{ form.tags.label }}
+                    <br />
+                    {{ form.tags(class="tags_field") }}
+                    </li>
+                </ul>
+                <button class="btn">{{ _('Update') }}</button>
+            </form>
+        </div>
+    </div>
+        
+    <div class="shadow"></div>
+</div>
+{%- endblock %}
+
+{%- block right %}
+<div id="right">
+</div>
+{%- endblock %}
+
+{%- block endscript %}
+<script type="text/javascript">
+    $(function(){
+        $T.ajax_form($('#settingForm'));
+    });
+</script>
+{%- endblock %}
