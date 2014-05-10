@@ -12,21 +12,25 @@ from mooc.models.discuss import Question, Answer, QuestionTag
 
 def _init_role():
     global roles
-    roles = (
+    roles = [
         Role('anonymous'), Role('local_user'), Role('student'),
         Role('teacher'), Role('super_admin')
-    )
+    ]
     roles[2].parents.append(roles[1])
     roles[3].parents.append(roles[1])
     roles[4].parents.append(roles[1])
-    for role in roles:
-        db.session.add(role)
+    db.session.add_all(roles)
 
 
 def _init_college():
-    global csse
-    csse = College(name=u'计算机与软件学院', order=13)
-    db.session.add(csse)
+    global colleges
+    colleges = [
+        College(name=u'计算机与软件学院', order=13),
+        College(name=u'师范学院', order=0),
+        College(name=u'文学院', order=1),
+        College(name=u'外国语学院', order=2),
+    ]
+    db.session.add_all(colleges)
 
 
 def _init_user():
@@ -55,16 +59,16 @@ def _init_szu_account():
     global shonenada_account, key_account
     shonenada_account = SzuAccount(
         user=shonenada,
-        card_id='112020',
+        card_num='112020',
         stu_number='2011150000',
-        college=csse,
+        college=colleges[0],
         szu_account_type='undergrade'
     )
     key_account = SzuAccount(
         user=key,
-        card_id='113030',
+        card_num='113030',
         stu_number='2011150999',
-        college=csse,
+        college=colleges[0],
         szu_account_type='teacher'
     )
     db.session.add(shonenada_account)
@@ -83,51 +87,53 @@ def _init_teacher():
 
 def _init_tags():
     global tags
-    tags = (
-    )
-    for t in tags:
-        db.session.add(t)
+    tags = [
+        Tag(tag=u'加法器'),
+        Tag(tag=u'数字逻辑与数字系统'),
+        Tag(tag=u'蔡晔'),
+        Tag(tag=u'多位加法器'),
+        Tag(tag=u'串行加法器'),
+    ]
+    db.session.add_all(tags)
 
 
 def _init_subject():
     global subjects
-    subjects = (
+    subjects = [
         Subject(name=u'电类', description=u'电类'),
-    )
-    for subject in subjects:
-        db.session.add(subject)
+    ]
+    db.session.add_all(subjects)
 
 
 def _init_category():
     global categorys
-    categorys = (
+    categorys = [
         Category(
             name=u'数字电子技术',
             subject=subjects[0]
         ),
-    )
-    for category in categorys:
-        db.session.add(category)
+    ]
+    db.session.add_all(categorys)
 
 
 def _init_course():
     global courses
-    courses = (
+    courses = [
         Course(
             name=u'数字逻辑与数字系统.多位加法器：串行加法器',
             description=u'课程介绍数字逻辑与数字系统',
             teacher=mr_key,
             category=categorys[0]
         ),
-    )
+    ]
     for course in courses:
-        course.college = csse
+        course.college = colleges[0]
         db.session.add(course)
 
 
 def _init_lecture():
     global lectures
-    lectures = (
+    lectures = [
         Lecture(
             name=u'多位加法器：串行加法器',
             description=u'本课程为您讲解多位加法器：串行加法器',
@@ -140,23 +146,21 @@ def _init_lecture():
             video_url='http://mooc.shonenada.com/static/upload/videos/2013-11-06.caiye.mp4',
             video_length=16
         ),
-    )
-    for lecture in lectures:
-        db.session.add(lecture)
+    ]
+    db.session.add_all(lectures)
 
 
 def _init_resource():
     global resources
-    resources = (
+    resources = [
         Resource(
             name=u'示范资源',
             lecture=lectures[0],
             resource_url='/static/upload/resources/pytest.pdf',
             type='pdf',
         ),
-    )
-    for r in resources:
-        db.session.add(r)
+    ]
+    db.session.add_all(resources)
 
 
 def _init_learn_record():
@@ -169,21 +173,20 @@ def _init_learn_record():
 
 def _init_quiz_option():
     global options
-    options = (
+    options = [
         QuizOption(content=u'各位同时相加', is_answer=True),
         QuizOption(content=u'不同位顺序相加', is_answer=False),
         QuizOption(content=u'存在着进位信号的传递', is_answer=True),
         QuizOption(content=u'进行相加的数的大小', is_answer=False),
         QuizOption(content=u'正确答案', is_answer=True),
         QuizOption(content=u'错误答案', is_answer=False),
-    )
-    for option in options:
-        db.session.add(option)
+    ]
+    db.session.add_all(options)
 
 
 def _init_quiz():
     global quizs
-    quizs = (
+    quizs = [
         Quiz(
             question=u'串行加法器的特点',
             time_at=350,
@@ -199,7 +202,7 @@ def _init_quiz():
             time_at=3,
             lecture=lectures[0],
         ),
-    )
+    ]
     quizs[0].options.append(options[0])
     quizs[0].options.append(options[1])
 
@@ -209,25 +212,23 @@ def _init_quiz():
     quizs[2].options.append(options[4])
     quizs[2].options.append(options[5])
 
-    for quiz in quizs:
-        db.session.add(quiz)
+    db.session.add_all(quizs)
 
 
 def _init_question_tag():
     global question_tags
-    question_tags = (
+    question_tags = [
         QuestionTag(tag=u'问题标签1'),
         QuestionTag(tag=u'问题标签2'),
         QuestionTag(tag=u'问题标签3'),
         QuestionTag(tag=u'问题标签4')
-    )
-    for qt in question_tags:
-        db.session.add(qt)
+    ]
+    db.session.add_all(question_tags)
 
 
 def _init_question():
     global questions
-    questions = (
+    questions = [
         Question(
             title=u'没有对应课程的问题',
             content=u'问题内容',
@@ -240,22 +241,29 @@ def _init_question():
             author=shonenada,
             anonymous=True
         ),
-    )
+    ]
     questions[1].tags.append(question_tags[1])
     questions[0].tags.append(question_tags[1])
     questions[1].tags.append(question_tags[0])
     questions[0].tags.append(question_tags[3])
 
-    for question in questions:
-        db.session.add(question)
+    db.session.add_all(questions)
 
 
 def _init_answer():
     global answers
-    answers = (
-    )
-    for answer in answers:
-        db.session.add(answer)
+    answers = [
+    ]
+    db.session.add_all(answers)
+
+
+def _init_lecutre_tags():
+    lectures[0].tags.append(tags[0])
+    lectures[0].tags.append(tags[1])
+    lectures[0].tags.append(tags[2])
+    lectures[0].tags.append(tags[3])
+    lectures[0].tags.append(tags[4])
+    db.session.add(lectures[0])
 
 
 def init_db():
@@ -276,4 +284,5 @@ def init_db():
     _init_question_tag()
     _init_question()
     _init_answer()
+    _init_lecutre_tags()
     db.session.commit()
