@@ -7,6 +7,7 @@
             <ul>
                 <li><a href="{{ url_for('account.setting') }}" class="current">{{ _('Basic Settings') }}</a>
                 <li><a href="{{ url_for('account.change_password') }}">{{ _('Change Password') }}</a>
+                <li><a href="{{ url_for('account.preference') }}">{{ _('Preference') }}</a>
             </ul>
         </div>
         <div class="content">
@@ -34,8 +35,8 @@
                     {{ form.nickname() }}
                     </li>
                     <li>
-                    {{ form.card_id.label }}
-                    {{ form.card_id() }}
+                    {{ form.card_num.label }}
+                    {{ form.card_num() }}
                     </li>
                     <li>
                     {{ form.email.label }}
