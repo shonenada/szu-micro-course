@@ -16,8 +16,12 @@ master_app = Blueprint('master', __name__)
 @master_app.route('/')
 @rbac.allow(['anonymous'], ['GET'])
 def index():
+    recommends = list()
+    tags = [r.tag for r in current_user.recommends]
+    for tag in tags:
+        recommends.extend(tag.courses)
     subjects = Subject.query.filter(Subject.state != 'deleted').all()
-    return render_template('index.html', subjects=subjects)
+    return render_template('index.html', subjects=subjects, recommends=recommends)
 
 
 @master_app.route('/about')
