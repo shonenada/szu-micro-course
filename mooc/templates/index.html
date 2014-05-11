@@ -18,9 +18,9 @@
         {% endfor %}
     </div>
     {% endif %}
-    {% for s in subjects %}
+    {% for s in categories %}
     <div class="course-category">
-        <span class="course-category-title"><a href="{{ url_for('course.subject', sid=s.id) }}">{{ s.name }}</a></span>
+        <span class="course-category-title"><a href="{{ url_for('course.course', course_id=s.id) }}">{{ s.name }}</a></span>
         {% for course in s.courses[:6] %}
         <a href="{{ url_for('course.course', course_id=course.id) }}" class="course_box_wrapper">{% include 'course/course_box.html' %}</a>
         {% endfor %}
