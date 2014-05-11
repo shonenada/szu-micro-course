@@ -258,6 +258,11 @@ def _init_answer():
 
 
 def _init_lecutre_tags():
+    courses[0].tags.append(tags[0])
+    courses[0].tags.append(tags[1])
+    courses[0].tags.append(tags[2])
+    courses[0].tags.append(tags[3])
+    courses[0].tags.append(tags[4])
     lectures[0].tags.append(tags[0])
     lectures[0].tags.append(tags[1])
     lectures[0].tags.append(tags[2])
