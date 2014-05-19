@@ -55,6 +55,7 @@ def createdb(config, destory):
                                        LearnRecord, lecture_tags, course_tags)
         from mooc.models.discuss import UpDownRecord, Answer, Question
         from mooc.models.resource import Resource
+        from mooc.models.recommend import Recommend
         db.create_all()
     print 'Created Database!'
 

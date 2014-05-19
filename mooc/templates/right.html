@@ -4,10 +4,9 @@
         <div id="search-course" class="info-wrapper">
             <div class="title">{{ _('Search Course') }}</div>
             <div class="content">
-                <form action="{{ url_for('course.coruse_search') }}" method="post">
-                <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
-                <input type="text" name="keyword" />
-                <button>{{ _('Search') }}</button>
+                <form action="{{ url_for('course.coruse_search') }}" method="post" class="search-form">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+                    <input type="text" name="keyword" />
                 </form>
             </div>
         </div>
@@ -44,7 +43,7 @@
                     </div>
                     <div class="tip">
                         <div>
-                        <span class="tip-text username">{{ record.user.nickname }}</span>
+                        <span class="tip-text username"><a href="{{ url_for('account.people', username=record.user.username) }}">{{ record.user.nickname }}</a></span>
                         <span class="tip-text time">{{ record.created | friendly_time }}</span>
                         <span class="tip-text">{{ _('learnt') }}</span>
                         </div>

@@ -6,8 +6,9 @@ from flask.ext.babel import lazy_gettext as _, gettext
 from mooc.extensions import rbac, db, csrf
 from mooc.utils.helpers import flash
 from mooc.models.master import Tag, Feedback
-from mooc.models.course import Subject
+from mooc.models.course import Category
 from mooc.forms.master import FeedbackForm
+from mooc.services.account import get_user_recommends
 
 
 master_app = Blueprint('master', __name__)
@@ -16,8 +17,10 @@ master_app = Blueprint('master', __name__)
 @master_app.route('/')
 @rbac.allow(['anonymous'], ['GET'])
 def index():
-    subjects = Subject.query.filter(Subject.state != 'deleted').all()
-    return render_template('index.html', subjects=subjects)
+    recommends = get_user_recommends(current_user)
+    categories = Category.query.filter(Category.state != 'deleted').all()
+    return render_template('index.html', categories=categories,
+                           recommends=recommends)
 
 
 @master_app.route('/about')

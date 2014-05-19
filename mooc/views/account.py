@@ -6,9 +6,12 @@ from flask.ext.login import login_user, logout_user, current_user
 
 from mooc.extensions import rbac, csrf, db
 from mooc.utils.helpers import flash, jsonify
-from mooc.models.master import Log
+from mooc.models.master import Log, Tag
 from mooc.models.account import User, SzuAccount, Role
-from mooc.forms.account import SignInForm, SettingForm, PasswordForm, SignUpForm
+from mooc.models.recommend import Recommend
+from mooc.forms.account import (SignInForm, SettingForm, PasswordForm,
+                                SignUpForm, PreferenceForm)
+from mooc.services.account import get_user_recommends
 
 
 account_app = Blueprint('account', __name__, url_prefix='/account')
@@ -128,10 +131,11 @@ def people(username):
     if not user:
         abort(404)
     else:
+        recommends = get_user_recommends(user)
         get_type = SzuAccount.get_type
         return render_template(
             'account/people.html',
-            user=user,
+            user=user, recommends=recommends,
             get_type=get_type)
 
 
@@ -141,7 +145,7 @@ def people(username):
 def setting():
     user = current_user
     data = {'college': user.szu_account.college,
-            'card_id': user.szu_account.card_id,
+            'card_num': user.szu_account.card_num,
             'stu_number': user.szu_account.stu_number,
             'short_phone': user.szu_account.short_phone}
     form = SettingForm(
@@ -218,3 +222,32 @@ def change_password():
         return jsonify(success=False, errors=True, messages=form.errors)
 
     return render_template('account/change_password.html', form=form)
+
+
+@csrf.exempt
+@account_app.route('/preference', methods=['GET', 'POST'])
+@rbac.allow(['local_user'], ['GET', 'POST'])
+def preference():
+    tags = list()
+    recommends = current_user.recommends
+    for recommend in recommends:
+        tags.append(recommend.tag)
+    form = PreferenceForm(formdata=request.form, tags=tags)
+
+    if form.validate_on_submit():
+        tags = form.data['tags']
+        user_recommends = current_user.recommends
+        for rec in user_recommends:
+            if not rec.tag in tags:
+                current_user.recommends.remove(rec)
+            if rec.tag in tags:
+                tags.remove(rec.tag)
+
+        for tag in tags:
+            recommend = Recommend(user=current_user, tag=tag)
+            db.session.add(recommend)
+            current_user.recommends.append(recommend)
+        db.session.add(current_user)
+        db.session.commit()
+
+    return render_template('account/preference.html', form=form)

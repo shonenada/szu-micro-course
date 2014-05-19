@@ -181,7 +181,8 @@ class SzuAccount(db.Model, ModelMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    card_id = db.Column(db.String(6), unique=True)
+    college_id = db.Column(db.Integer, db.ForeignKey('college.id'))
+    card_num = db.Column(db.String(6), unique=True)
     stu_number = db.Column(db.String(10), unique=True)
     short_phone = db.Column(db.String(6), unique=True)
     szu_account_type = db.Column(db.Enum(*TYPE_VALUES))
@@ -228,7 +229,6 @@ class College(db.Model, ModelMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), unique=True, nullable=True)
     order = db.Column(db.Integer, default=9999)
-    szu_account_id = db.Column(db.Integer, db.ForeignKey('szu_account.id'))
     courses = db.relationship('Course', backref='college',
                               lazy='dynamic', uselist=True)
 

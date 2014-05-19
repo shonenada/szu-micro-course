@@ -41,7 +41,7 @@ def create_user(data):
     )
     szu_account = SzuAccount(
         user=user,
-        card_id=data['card_id'],
+        card_num=data['card_num'],
         stu_number=data['stu_number'],
         college=college,
         szu_account_type=data['szu_account_type'],
@@ -50,3 +50,15 @@ def create_user(data):
     user.save(commit=False)
     szu_account.save(commit=False)
     db.session.commit()
+
+
+def get_user_recommends(user):
+    recommends = list()
+    if not user or user.is_anonymous():
+        return None
+
+    tags = [r.tag for r in user.recommends]
+    for tag in tags:
+        recommends.extend(tag.courses)
+
+    return recommends

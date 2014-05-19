@@ -4,10 +4,13 @@ from wtforms import (StringField, BooleanField, PasswordField,
                      SelectField, DateTimeField, IntegerField)
 from wtforms.validators import InputRequired, Email, Length, Regexp, EqualTo
 from wtforms.validators import ValidationError
-from wtforms.ext.sqlalchemy.fields import QuerySelectField
+from wtforms.ext.sqlalchemy.fields import (QuerySelectField,
+                                           QuerySelectMultipleField)
 from flask.ext.babel import lazy_gettext as _
 
 from mooc.models.account import User, SzuAccount, College
+from mooc.models.master import Tag
+from mooc.models.recommend import Recommend
 
 
 state_values = User.USER_STATE_VALUES
@@ -25,8 +28,8 @@ SPHONE_RE = '(?:^\d{3,6}$)|(?:^$)'
 SPHONE_ME = _('Short Phone must be length from 3 to 6 digitals')
 QQ_RE = '(?:^\d{6,12}$)|(?:^$)'
 QQ_ME = _('QQ must be length from 6 to 12 digitals')
-CARD_ID_RE = '(?:^\d{5,6}$)|(?:^$)'
-CARD_ID_ME = _('Card ID must be length of 5 or 6 digitals')
+CARD_NUM_RE = '(?:^\d{5,6}$)|(?:^$)'
+CARD_NUM_ME = _('Card ID must be length of 5 or 6 digitals')
 
 USER_EXISTED = _('Username is existed')
 NICKNAME_EXISTED = _('Nickname is existed')
@@ -142,7 +145,7 @@ class ManageUserForm(Form):
     phone = StringField(label=_('Phone Number'))
     qq = StringField(label=_('QQ'))
     created = DateTimeField(label=_('Joined at'))
-    card_id = StringField(label=_('Card ID'))
+    card_num = StringField(label=_('Card ID'))
     stu_number = StringField(label=_('Student Number'))
     short_phone = StringField(label=_('Short Phone Number'))
     state = SelectField(
@@ -222,10 +225,10 @@ class CreateUserForm(Form):
             Regexp(regex=QQ_RE, message=QQ_ME),
         ],
     )
-    card_id = StringField(
-        label=_('Card ID'),
+    card_num = StringField(
+        label=_('Card Number'),
         validators=[
-            Regexp(regex=CARD_ID_RE, message=CARD_ID_ME),
+            Regexp(regex=CARD_NUM_RE, message=CARD_NUM_ME),
         ],
     )
     stu_number = StringField(
@@ -282,10 +285,10 @@ class SettingForm(Form):
         query_factory=get_colleges,
         allow_blank=False
     )
-    card_id = StringField(
+    card_num = StringField(
         label=_('Card ID'),
         validators=[
-            Regexp(regex=CARD_ID_RE, message=CARD_ID_ME),
+            Regexp(regex=CARD_NUM_RE, message=CARD_NUM_ME),
         ],
     )
     stu_number = StringField(
@@ -338,4 +341,14 @@ class PasswordForm(Form):
         validators=[
             EqualTo('new_password'),
         ]
+    )
+
+
+class PreferenceForm(Form):
+
+    tags = QuerySelectMultipleField(
+        label=_('Prefer Tags'),
+        description=_('Please choose the tags you like~'),
+        query_factory=lambda: Tag.query.all(),
+        get_label=lambda x: x.tag,
     )

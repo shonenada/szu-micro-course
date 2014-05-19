@@ -73,7 +73,7 @@ def list_account():
 def edit_account(uid):
     user = User.query.get(uid)
     data = {
-        'card_id': user.szu_account.card_id,
+        'card_num': user.szu_account.card_num,
         'stu_number': user.szu_account.stu_number,
         'short_phone': user.szu_account.short_phone,
     }
