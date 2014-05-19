@@ -99,7 +99,7 @@ $(function() {
                         <div class="tip">
                             <div>
                                 <span class="tip-text username">
-                                    {{ course.name | ellipsis(15)}}
+                                    <a href="{{ url_for('course.course', course_id=course.id) }}">{{ course.name | ellipsis(15)}}</a>
                                 </span>
                                 <span class="tip-text time">
                                 </span>

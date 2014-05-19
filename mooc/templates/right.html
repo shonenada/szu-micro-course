@@ -43,7 +43,7 @@
                     </div>
                     <div class="tip">
                         <div>
-                        <span class="tip-text username">{{ record.user.nickname }}</span>
+                        <span class="tip-text username"><a href="{{ url_for('account.people', username=record.user.username) }}">{{ record.user.nickname }}</a></span>
                         <span class="tip-text time">{{ record.created | friendly_time }}</span>
                         <span class="tip-text">{{ _('learnt') }}</span>
                         </div>
