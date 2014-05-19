@@ -50,3 +50,15 @@ def create_user(data):
     user.save(commit=False)
     szu_account.save(commit=False)
     db.session.commit()
+
+
+def get_user_recommends(user):
+    recommends = list()
+    if not user or user.is_anonymous():
+        return None
+
+    tags = [r.tag for r in user.recommends]
+    for tag in tags:
+        recommends.extend(tag.courses)
+
+    return recommends

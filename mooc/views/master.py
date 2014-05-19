@@ -8,6 +8,7 @@ from mooc.utils.helpers import flash
 from mooc.models.master import Tag, Feedback
 from mooc.models.course import Category
 from mooc.forms.master import FeedbackForm
+from mooc.services.account import get_user_recommends
 
 
 master_app = Blueprint('master', __name__)
@@ -16,11 +17,7 @@ master_app = Blueprint('master', __name__)
 @master_app.route('/')
 @rbac.allow(['anonymous'], ['GET'])
 def index():
-    recommends = list()
-    if not current_user.is_anonymous():
-        tags = [r.tag for r in current_user.recommends]
-        for tag in tags:
-            recommends.extend(tag.courses)
+    recommends = get_user_recommends(current_user)
     categories = Category.query.filter(Category.state != 'deleted').all()
     return render_template('index.html', categories=categories,
                            recommends=recommends)

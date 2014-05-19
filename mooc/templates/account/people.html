@@ -86,5 +86,31 @@ $(function() {
 
 {%- block right %}
 <div id="right">
+    <div id="people-recommendation" class="info-box">
+        <div class="info-wrapper bottom">
+            <div class="title">{{ _("Recommends") }}</div>
+            <div class="content">
+                {% if recommends %}
+                {% for course in recommends %}
+                    <div class="list">
+                    <div class="icon">
+                        <img src="{{ course.logo_url }}" />
+                    </div>
+                    <div class="tip">
+                        <div>
+                            <span class="tip-text username">
+                                {{ course.name | ellipsis(15)}}
+                            </span>
+                            <span class="tip-text time">
+                            </span>
+                            <span class="tip-text">
+                            </span>
+                        </div>
+                    </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
 </div>
 {%- endblock %}

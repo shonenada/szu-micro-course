@@ -11,6 +11,7 @@ from mooc.models.account import User, SzuAccount, Role
 from mooc.models.recommend import Recommend
 from mooc.forms.account import (SignInForm, SettingForm, PasswordForm,
                                 SignUpForm, PreferenceForm)
+from mooc.services.account import get_user_recommends
 
 
 account_app = Blueprint('account', __name__, url_prefix='/account')
@@ -130,10 +131,11 @@ def people(username):
     if not user:
         abort(404)
     else:
+        recommends = get_user_recommends(user)
         get_type = SzuAccount.get_type
         return render_template(
             'account/people.html',
-            user=user,
+            user=user, recommends=recommends,
             get_type=get_type)
 
 
