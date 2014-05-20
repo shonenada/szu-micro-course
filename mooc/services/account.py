@@ -53,12 +53,13 @@ def create_user(data):
 
 
 def get_user_recommends(user):
-    recommends = list()
+    recommends = set()
     if not user or user.is_anonymous():
         return None
 
     tags = [r.tag for r in user.recommends]
     for tag in tags:
-        recommends.extend(tag.courses)
+        for course in tag.courses:
+            recommends.add(course)
 
     return recommends
