@@ -94,7 +94,8 @@ class User(db.Model, UserMixin, ModelMixin):
     salt = db.Column(db.String(32), nullable=False)
     state = db.Column(db.Enum(*USER_STATE_VALUES), default='normal')
     learn_records = db.relationship('LearnRecord', backref='user',
-                                    uselist=True)
+                                    uselist=True,
+                                    order_by='desc(LearnRecord.created)')
     questions = db.relationship('Question', backref='author',
                                 uselist=True, lazy='dynamic')
     answers = db.relationship('Answer', backref='author',
