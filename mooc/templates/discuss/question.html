@@ -45,7 +45,7 @@
                      </a>
                 </span>
                 {%- endif %}
-                <span class="avatar"><img src="{{ question.author.get_avatar() }}" /></span>
+                <span class="avatar"><img src="{{ a.author.get_avatar() }}" /></span>
                 <div class="answer-info">
                     <span class="author">{{ a.author.nickname }}</span>
                     <span class="time">{{ a.created | friendly_time }}</span>
@@ -61,6 +61,7 @@
         </ul>
     </div>
 
+    {%- if not current_user.is_anonymous() %}
     <div id="re-answer">
         <form id="re-answer-form" action="{{ url_for('discuss.answer', qid=question.id) }}">
             <label>{{ _('Reply:') }}</label>
@@ -72,6 +73,7 @@
         </form>
     </div>
     <div class="shadow"></div>
+    {%- endif %}
 
 </div>
 {%- endblock %}

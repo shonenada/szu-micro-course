@@ -41,6 +41,7 @@ $(function(){
 })
 </script>
 {%- endblock %}
+
 {%- block left %}
 <div id="player-container">
     <video src="{{ lecture.video_url }}" controls="controls" autoplay="autoplay" id="player">
@@ -74,32 +75,13 @@ $(function(){
         <a class="online-view-container" id="online-view-container-{{ r.id }}" style="display:block; width: 100%; height: 100%"></a>
         <script type="text/javascript">
             $(document).ready(function() {
-                if(window['ViewerMode'] == 'html'){$("#html5mode").hide();}else{$("#html5mode").show();}
+                if(window['ViewerMode'] == 'html'){
+                    $("#html5mode").hide();
+                }
+                else{
+                    $("#html5mode").show();
+                }
             });
-            var fp = new FlexPaperViewer(
-                    '/static/scripts/plugins/flexpaper/FlexPaperViewer',
-                    'online-view-container-{{ r.id }}', { config : {
-                        SwfFile : "{{ r.resource_url }}",
-                        Scale : 1.0,
-                        ZoomTime : 0.01,
-                        ZoomInterval : 0.2,
-                        FitPageOnLoad : false,
-                        FitWidthOnLoad : true,
-                        FullScreenAsMaxWindow : false,
-                        ProgressiveLoading : false,
-                        MinZoomSize : 0.2,
-                        MaxZoomSize : 5,
-                        SearchMatchAll : false,
-                        InitViewMode : 'Portrait',
-                        PrintPaperAsBitmap : false,
-                        RenderingOrder : 'flash,html',
-                        ViewModeToolsVisible : true,
-                        ZoomToolsVisible : true,
-                        NavToolsVisible : true,
-                        CursorToolsVisible : true,
-                        SearchToolsVisible : true,
-                        localeChain: 'zh_CN'
-                    }});
         </script>
     </div>
     {%- endif %}
