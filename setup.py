@@ -14,7 +14,7 @@ metadata = {'name': 'szu-mooc',
             'platforms': ['linux'],
             'package_data': {"": ['*.html', '*.jpg', '*.png', '*.css', '*.js',
                                   '*.ico', '*.coffee', '*.less', '*.stylus']},
-            'install_required': install_required,
+            'install_requires': install_required,
             'description': 'A MOOC system for SZU.'}
 
 
